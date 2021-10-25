@@ -71,7 +71,7 @@
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: 
+        search: false
     }
 </script>
 
@@ -107,46 +107,6 @@
 
 
         
-            <div id="switch-btn" class="switch-btn">
-                <div class="icon">
-                    <div class="icon-ctn">
-                        <div class="icon-wrap icon-house" data-idx="0">
-                            <div class="birdhouse"></div>
-                            <div class="birdhouse_holes"></div>
-                        </div>
-                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
-                            <div class="ribbon"></div>
-                        </div>
-                        
-                        <div class="icon-wrap icon-link hide" data-idx="2">
-                            <div class="loopback_l"></div>
-                            <div class="loopback_r"></div>
-                        </div>
-                        
-                        
-                        <div class="icon-wrap icon-me hide" data-idx="3">
-                            <div class="user"></div>
-                            <div class="shoulder"></div>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-                <div class="tips-box hide">
-                    <div class="tips-arrow"></div>
-                    <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
-                        
-                        <li>友情链接</li>
-                        
-                        
-                        <li>关于我</li>
-                        
-                    </ul>
-                </div>
-            </div>
-        
 
         <div id="switch-area" class="switch-area">
             <div class="switch-wrap">
@@ -156,33 +116,21 @@
                         
                             <li><a href="/">主页</a></li>
                         
-                            <li><a href="/archives/">所有文章</a></li>
-                        
-                            <li><a href="/tags/">标签云</a></li>
-                        
-                            <li><a href="/about/">关于我</a></li>
+                            <li><a href="/archives/">文章</a></li>
                         
                         </ul>
                     </nav>
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
-                            
-                                <a class="fa GitHub" href="#" title="GitHub"></a>
-                            
                                 <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2636876456" title="QQ"></a>
                             
                         </ul>
                     </nav>
                 </section>
                 
-                
-                <section class="switch-part switch-part2">
-                    <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/awd/" rel="tag">awd</a></li></ul>
-                    </div>
-                </section>
                 
                 
                 
@@ -199,12 +147,6 @@
                 </section>
                 
 
-                
-                
-                <section class="switch-part switch-part4">
-                
-                    <div id="js-aboutme">专注于前端</div>
-                </section>
                 
             </div>
         </div>
@@ -231,11 +173,7 @@
                 
                     <li><a href="/">主页</a></li>
                 
-                    <li><a href="/archives/">所有文章</a></li>
-                
-                    <li><a href="/tags/">标签云</a></li>
-                
-                    <li><a href="/about/">关于我</a></li>
+                    <li><a href="/archives/">文章</a></li>
                 
                 <div class="clearfix"></div>
                 </ul>
@@ -243,11 +181,9 @@
             <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
-                            
-                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
-                            
                                 <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2636876456" title="QQ"></a>
                             
                         </ul>
             </nav>
@@ -344,7 +280,7 @@
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2016-2021 xia0ji233
+                2021 xia0ji233
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
@@ -421,6 +357,23 @@
         }
     
 </script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
