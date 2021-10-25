@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>xia0ji233&#39;s Blog</title>
+  <icon>http://example.com/icon.png</icon>
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2021-10-25T04:32:03.260Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>xia0ji233</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>babyfengshui_33c3_2016 writeup</title>
+    <link href="http://example.com/2021/08/15/babyfengshui_33c3_2016%20writeup/"/>
+    <id>http://example.com/2021/08/15/babyfengshui_33c3_2016%20writeup/</id>
+    <published>2021-08-15T02:00:00.000Z</published>
+    <updated>2021-10-25T04:32:03.260Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;好久没有更新博客了，因为作者太懒了，又懒又菜，今天来康康这道题，buuoj的&lt;a href=&quot;https://buuoj.cn/challenges#babyfengshui_33c3_2016&quot;&gt;babyfengshui_33c3_2016&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="pwn" scheme="http://example.com/categories/ctf/pwn/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ret2dl_resolve</title>
+    <link href="http://example.com/2021/07/19/ret2dl_resolve/"/>
+    <id>http://example.com/2021/07/19/ret2dl_resolve/</id>
+    <published>2021-07-19T02:00:00.000Z</published>
+    <updated>2021-10-25T04:34:41.532Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;有这么一个漏洞，他能在程序不提供任何输出函数的情况下执行&lt;code&gt;system(&amp;quot;/bin/sh&amp;quot;)&lt;/code&gt;，没错，他就是&lt;code&gt;ret2dl_resolve&lt;/code&gt;，这个我也认为是栈溢出的最后一关了，因此我现在就算是栈溢出毕业了吧hhhh。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="pwn" scheme="http://example.com/categories/ctf/pwn/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>canary保护学习报告:通过字符串泄露canary</title>
+    <link href="http://example.com/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/"/>
+    <id>http://example.com/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/</id>
+    <published>2021-07-15T02:00:00.000Z</published>
+    <updated>2021-10-25T04:27:35.492Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;据学长说，那一次的ctf出题人一句“我就没打算让pwn有解”让全场所有pwner直呼内行，pwn1看似简单实则在比赛过程中能出比赛也快结束了。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="pwn" scheme="http://example.com/categories/ctf/pwn/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SROP</title>
+    <link href="http://example.com/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/"/>
+    <id>http://example.com/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/</id>
+    <published>2021-06-29T02:00:00.000Z</published>
+    <updated>2021-10-25T05:22:41.193Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;今天开始以学习了花式的栈溢出ROP攻击，BROP这个东西朴实无华且用处不大，思想能了解，但是现在谁打个pwn还不给elf呢，不给libc文件都会被喷死，还敢不给elf？因此跳过这个学习一下SROP。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="pwn" scheme="http://example.com/categories/ctf/pwn/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>2021华东南赛区国赛线下赛</title>
+    <link href="http://example.com/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/"/>
+    <id>http://example.com/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/</id>
+    <published>2021-06-19T14:00:00.000Z</published>
+    <updated>2021-10-17T14:38:41.454Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这两天来到了福州打awd的线下赛，这是我第一次打awd，收获很多。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    
+    <category term="awd" scheme="http://example.com/tags/awd/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>axb_2019_fmt32 wp</title>
+    <link href="http://example.com/2021/06/08/axb_2019_fmt32%20wp/"/>
+    <id>http://example.com/2021/06/08/axb_2019_fmt32%20wp/</id>
+    <published>2021-06-08T02:00:00.000Z</published>
+    <updated>2021-10-25T04:29:40.451Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;临近期末考试了，终于可以光明正大地水博客了。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="pwn" scheme="http://example.com/categories/ctf/pwn/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>格式化字符串漏洞利用</title>
+    <link href="http://example.com/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/"/>
+    <id>http://example.com/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/</id>
+    <published>2021-06-05T02:00:00.000Z</published>
+    <updated>2021-10-25T04:39:26.324Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;格式化字符串漏洞是printf函数比较常见的漏洞，常见的漏洞形式就是&lt;code&gt;printf(s);&lt;/code&gt;如果s字符是我们可控的话，那就会导致任意位置读和写等严重的后果。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="pwn" scheme="http://example.com/categories/ctf/pwn/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>cachelab实验报告:模拟cache的功能</title>
+    <link href="http://example.com/2021/05/22/cachelab/"/>
+    <id>http://example.com/2021/05/22/cachelab/</id>
+    <published>2021-05-22T14:00:00.000Z</published>
+    <updated>2021-10-25T05:23:54.463Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;code&gt;lab&lt;/code&gt;从这里开始变得难了起来了，这次要模拟计算机里的一个硬件-&lt;code&gt;cache&lt;/code&gt;的工作，关于&lt;code&gt;cache&lt;/code&gt;，百度百科介绍的比我好，这边请&lt;a href=&quot;https://baike.baidu.com/item/CACHE%E5%AD%98%E5%82%A8%E5%99%A8/12789048?fr=aladdin&quot;&gt;———&amp;gt;&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="csapp" scheme="http://example.com/categories/csapp/"/>
+    
+    <category term="lab" scheme="http://example.com/categories/csapp/lab/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>动态调试工具的使用</title>
+    <link href="http://example.com/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/"/>
+    <id>http://example.com/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/</id>
+    <published>2021-05-22T02:00:00.000Z</published>
+    <updated>2021-10-25T04:38:33.709Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;做了这么久的&lt;code&gt;pwn&lt;/code&gt;之后又得兼顾一下&lt;code&gt;re&lt;/code&gt;了哈哈哈。废话不多说，这周学了动态调试器的使用，并且轻松解出了那几道题目。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="re" scheme="http://example.com/categories/ctf/re/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>系统调用</title>
+    <link href="http://example.com/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://example.com/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/</id>
+    <published>2021-05-22T02:00:00.000Z</published>
+    <updated>2021-10-25T04:42:29.725Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;code&gt;today&lt;/code&gt;新的知识又增长了，发现了&lt;code&gt;getshell&lt;/code&gt;的另一种方式：&lt;code&gt;syscall&lt;/code&gt;和&lt;code&gt;srop&lt;/code&gt;。故事还要源于…(此处省略万字输出)&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="re" scheme="http://example.com/categories/ctf/re/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ret2libc实战</title>
+    <link href="http://example.com/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/"/>
+    <id>http://example.com/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/</id>
+    <published>2021-05-13T02:00:00.000Z</published>
+    <updated>2021-10-25T04:36:58.197Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;code&gt;ret2libc&lt;/code&gt;是一个&lt;code&gt;pwner&lt;/code&gt;必备的基础知识。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ret2libc&lt;/code&gt;为&lt;code&gt; return to libc&lt;/code&gt;的缩写，我们需要执行&lt;code&gt;libc&lt;/code&gt;函数里面的&lt;code&gt;system(&amp;quot;/bin/sh&amp;quot;)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;下面为32位程序并且带.so文件的题目:&lt;a href=&quot;https://buuoj.cn/challenges#[OGeek2019]babyrop&quot;&gt;buuctfOGeek2019]babyrop&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="pwn" scheme="http://example.com/categories/ctf/pwn/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>archlab实验报告：y86命令使用</title>
+    <link href="http://example.com/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/"/>
+    <id>http://example.com/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/</id>
+    <published>2021-05-10T14:00:00.000Z</published>
+    <updated>2021-10-25T05:51:14.729Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;下载文件之后：&lt;/p&gt;
+&lt;p&gt;脑瓜子嗡嗡的，&lt;code&gt;writeup&lt;/code&gt;看不懂，只能先去看看已有的实验报告，然后先做个总结——&lt;/p&gt;
+&lt;p&gt;先把里面的&lt;code&gt;sim.tar&lt;/code&gt;解压了，然后进入目录之后&lt;code&gt;make clean&lt;/code&gt;，&lt;code&gt;make&lt;/code&gt;会在里面的所有文件该生成的文件生成了。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="csapp" scheme="http://example.com/categories/csapp/"/>
+    
+    <category term="lab" scheme="http://example.com/categories/csapp/lab/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>RSA解密</title>
+    <link href="http://example.com/2021/05/08/RSA/"/>
+    <id>http://example.com/2021/05/08/RSA/</id>
+    <published>2021-05-08T02:00:00.000Z</published>
+    <updated>2021-10-25T04:38:09.396Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;code&gt;RSA&lt;/code&gt;解密简介:&lt;code&gt;RSA&lt;/code&gt;是1977年由罗纳德·李维斯特（&lt;code&gt;Ron Rivest&lt;/code&gt;）、阿迪·萨莫尔（&lt;code&gt;Adi Shamir&lt;/code&gt;）和伦纳德·阿德曼（&lt;code&gt;Leonard Adleman&lt;/code&gt;）一起提出的。当时他们三人都在麻省理工学院工作。&lt;code&gt;RSA&lt;/code&gt;就是他们三人姓氏开头字母拼在一起组成的 。(from 百度百科)&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="crypto" scheme="http://example.com/categories/ctf/crypto/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>红帽杯2019 easyRe</title>
+    <link href="http://example.com/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/"/>
+    <id>http://example.com/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/</id>
+    <published>2021-05-06T02:00:00.000Z</published>
+    <updated>2021-10-25T04:32:54.331Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;code&gt;pwn&lt;/code&gt;题做完&lt;code&gt;re&lt;/code&gt;题当然也不能少，&lt;code&gt;buu&lt;/code&gt;上除了那些水题，开始做一些带点技术含量的题目了。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="re" scheme="http://example.com/categories/ctf/re/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ret2libc学习报告</title>
+    <link href="http://example.com/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/"/>
+    <id>http://example.com/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/</id>
+    <published>2021-05-01T02:00:00.000Z</published>
+    <updated>2021-10-25T04:37:24.493Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在做&lt;code&gt;pwn&lt;/code&gt;题的时候，我们会想尽一切办法执行函数&lt;code&gt;system(&amp;quot;/bin/sh&amp;quot;)&lt;/code&gt;，那么执行这个需要两点：&lt;/p&gt;
+&lt;p&gt;1.找到&lt;code&gt;system()&lt;/code&gt;函数。&lt;/p&gt;
+&lt;p&gt;2.找到&lt;code&gt;&amp;quot;/bin/sh&amp;quot;&lt;/code&gt;字符串。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="pwn" scheme="http://example.com/categories/ctf/pwn/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>canary保护学习报告:通过字符串泄露canary</title>
+    <link href="http://example.com/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/"/>
+    <id>http://example.com/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/</id>
+    <published>2021-05-01T02:00:00.000Z</published>
+    <updated>2021-10-24T14:25:34.811Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这几天一直在跟着团队的进度做&lt;code&gt;csapp&lt;/code&gt;的实验报告，突然想拿题来练手了才发现自己还是有点菜的。这次的任务是做一道简简单单的带&lt;code&gt;canary&lt;/code&gt;保护的一题，做了很长时间问了很多师傅，也算把这个方法搞搞明白了，但是不确定能不能完全说的明白，那么下面就开始吧。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="ctf" scheme="http://example.com/categories/ctf/"/>
+    
+    <category term="pwn" scheme="http://example.com/categories/ctf/pwn/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>bufblab实验报告:32位程序缓冲区溢出攻击</title>
+    <link href="http://example.com/2021/04/30/buflab/"/>
+    <id>http://example.com/2021/04/30/buflab/</id>
+    <published>2021-04-29T16:10:00.000Z</published>
+    <updated>2021-10-25T05:23:48.383Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在此实验开始之前，弄清楚给你的三个文件分别干嘛的。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bufbomb&lt;/code&gt;：实验需要攻击的程序&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;hex2raw&lt;/code&gt;：根据填写的字节生成攻击字符串&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;makecookie&lt;/code&gt;：对每个实验用户生成一个八位十六进制的字节序列，用于识别用户。(可能是用来打分的)&lt;/p&gt;
+&lt;p&gt;在&lt;code&gt;gdb&lt;/code&gt;要运行的时候，一定要输入&lt;code&gt;r -u &amp;lt;your id&amp;gt;&lt;/code&gt;，终端运行要输入&lt;code&gt;./bufbomb -u &amp;lt;your id&amp;gt;&lt;/code&gt;，否则你是运行不了的。那咱们先输入&lt;code&gt;./makecookie -q&lt;/code&gt;生成你的&lt;code&gt;cookie（id）&lt;/code&gt;,最好先找个地儿保存一下。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="csapp" scheme="http://example.com/categories/csapp/"/>
+    
+    <category term="lab" scheme="http://example.com/categories/csapp/lab/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>attacklab实验报告:代码注入以及rop攻击</title>
+    <link href="http://example.com/2021/04/25/attqacklab/"/>
+    <id>http://example.com/2021/04/25/attqacklab/</id>
+    <published>2021-04-25T14:00:00.000Z</published>
+    <updated>2021-10-25T05:22:05.955Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;今天来康康attack lab啊&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="csapp" scheme="http://example.com/categories/csapp/"/>
+    
+    <category term="lab" scheme="http://example.com/categories/csapp/lab/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>bomblab实验报告:二进制安全与逆向分析</title>
+    <link href="http://example.com/2021/04/19/bomblab/"/>
+    <id>http://example.com/2021/04/19/bomblab/</id>
+    <published>2021-04-19T14:00:00.000Z</published>
+    <updated>2021-10-25T05:20:07.767Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;先观察给的.c文件，发现是要输入六组语句并且判断正误的，并且很容易发现判断函数phase_i(i=1,2…6)要有一个错误，炸弹即爆炸，那我们就要用到gdb调试了,在终端输入&lt;code&gt;gdb bomb&lt;/code&gt;进入调试&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="csapp" scheme="http://example.com/categories/csapp/"/>
+    
+    <category term="lab" scheme="http://example.com/categories/csapp/lab/"/>
+    
+    
+  </entry>
+  
+</feed>
