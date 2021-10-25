@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="先观察给的.c文件，发现是要输入六组语句并且判断正误的，并且很容易发现判断函数phase_i(i&#x3D;1,2…6)要有一个错误，炸弹即爆炸，那我们就要用到gdb调试了,在终端输入gdb bomb进入调试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bomblab实验报告:二进制安全与逆向分析">
+<meta property="og:url" content="http://example.com/2021/04/19/bomblab/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s Blog">
+<meta property="og:description" content="先观察给的.c文件，发现是要输入六组语句并且判断正误的，并且很容易发现判断函数phase_i(i&#x3D;1,2…6)要有一个错误，炸弹即爆炸，那我们就要用到gdb调试了,在终端输入gdb bomb进入调试">
+<meta property="og:locale">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/dVN392JXrMQjDwu.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/J7O8Yjl9kKnC1SN.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/Kil6fnbgrRJH4hm.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/HRzX9CYaBQLN1Sc.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/JPg3Rp4u7Tjr6If.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/etqlSa591MrFCVp.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/mz7utwg8CNbLYPU.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/fTMdxrpsWg1ocXE.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/usg2zr6lbFYjwhE.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/sQSBH3YFexy6dNJ.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/JaWfPYRIysXc9qU.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/SiLjU51Z3BroAk9.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/25/EWxXJ2PuAQ3HoIc.png">
+<meta property="article:published_time" content="2021-04-19T14:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-25T05:20:07.767Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/04/25/dVN392JXrMQjDwu.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>bomblab实验报告:二进制安全与逆向分析 | xia0ji233&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-bomblab" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/04/19/bomblab/" class="article-date">
+      <time datetime="2021-04-19T14:00:00.000Z" itemprop="datePublished">2021-04-19</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      bomblab实验报告:二进制安全与逆向分析
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/csapp/">csapp</a><a class="article-category-link" href="/categories/csapp/lab/">lab</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>先观察给的.c文件，发现是要输入六组语句并且判断正误的，并且很容易发现判断函数phase_i(i=1,2…6)要有一个错误，炸弹即爆炸，那我们就要用到gdb调试了,在终端输入<code>gdb bomb</code>进入调试</p>
+<span id="more"></span>
+
+<h2 id="phase-1"><a href="#phase-1" class="headerlink" title="phase_1"></a>phase_1</h2><p>首先在phase_1处断点（命令：<code>b phase_1</code>）找到phase_1的拆弹语句。然后<code>r</code>运行，先随便输入点东西这里我输入了很多a,断在该处之后单步调试，因为要进入函数内部，我们用命令<code>step</code>或者<code>s</code>进行单步调试。调试发现一个<code>strings_not_equal</code>函数，跟进去看发现寄存器<code>rdi</code>为我们输入的很多个a，而寄存器<code>rsi</code>已经有了一句话。</p>
+<p><img src="https://i.loli.net/2021/04/25/dVN392JXrMQjDwu.png" alt="bomblab_phase_1_1.png"></p>
+<p>那么能直接断定这个就是我们的拆弹语句，重新调试进去输入那个语句<code>Border relations with Canada have never been better.</code>发现成功拆掉了这个炸弹，那么phase_1就拆掉了。</p>
+<h2 id="phase-2"><a href="#phase-2" class="headerlink" title="phase_2"></a>phase_2</h2><p>拆完了之后就看向phase_2，我们先<code>delete</code>    清除所有断点然后<code>b phase_2</code>新增断点，<code>r</code>之后先输入之前的拆弹语句来到phase_2，我们照例输入很多的a，<code>s</code>单步调试进去发现有一个函数叫<code>read_six_numbers</code>，跟进去发现</p>
+<p><img src="https://i.loli.net/2021/04/25/J7O8Yjl9kKnC1SN.png" alt="bomblab_phase_2_1.png"></p>
+<p>调用了<code>scanf</code>函数并且能看到参数<code>%d %d %d %d %d %d</code>，那无疑我们这次应该输入六个整数。那就先猜，就先输入6个0也罢，但此时我们不能’s’单步调试了，因为<code>scanf</code>内部构造很复杂，<code>s</code>单步调试会把你键盘按烂的。因此我们用<code>next</code>或<code>n</code>单步调试，跳过了<code>scanf</code>函数的内部，成功给了6个整数，然后继续调试，发现</p>
+<p><img src="https://i.loli.net/2021/04/25/Kil6fnbgrRJH4hm.png" alt="bomblab_phase_2_2.png"></p>
+<p><code>ptr[rsp]=1</code>才能跳转避免执行到<code>explode</code>函数，我们稍微调试一下也可以发现<code>ptr[rsp]</code>存了第一个输入的数值，那么就可以很容易得到第一个整数是<code>1</code>，我们把第一个值改成1，其它的照常不变，发现第一个数躲过了爆炸，那么说明我们的方案可行，接下来只需要把剩下五个数判断完了就可以了。继续<code>n</code>单步调试，发现第二个测试的数是</p>
+<p><img src="https://i.loli.net/2021/04/25/HRzX9CYaBQLN1Sc.png" alt="bomblab_phase_2_3.png"></p>
+<p>一样的是比较<code>eax</code>上面我们可以看到有一个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add eax,eax</span><br></pre></td></tr></table></figure>
+
+<p>然后再比较，那么第二个数不就应该是2了吗？，虽然我也不知道为什么<code>ptr[rbx]</code>它就是第二个数，但是稍微想想也知道肯定是依次对你的输入去判断的，所以第二个数是2了。同理，他每次都加上自己，那么每次输入的数就是前面数的两倍，那清晰了，答案应该就是<code>1 2 4 8 16 32</code>。清除断点输入后发现没有爆炸，那么phase_2也拆弹成功了。</p>
+<h2 id="phase-3"><a href="#phase-3" class="headerlink" title="phase_3"></a>phase_3</h2><p>然后断点下在phase_3，接着运行到那边。运行到scanf发现格式化字符串为”%d %d”，那就是两个整数，并且看到后面有一个<code>cmp eax,1</code>，并且要求<code>eax&gt;1</code>，否则就执行爆炸函数了，<code>eax</code>在<code>scanf</code>之后获得了<code>scanf</code>函数的返回值，scanf的返回值就是输入数的个数。那我们就随便输入俩数看看。</p>
+<p><img src="https://i.loli.net/2021/04/25/JPg3Rp4u7Tjr6If.png" alt="bomblab_phase_3_1.png"></p>
+<p>继续调试发现，如果<code>ptr[rsp+8]</code>大于<code>7</code>会发生跳转不妨先输入大于<code>7</code>的值看看会跳转到哪儿，输入之后，好的，成功爆炸，躲不掉的那种哦。</p>
+<p><img src="https://i.loli.net/2021/04/25/etqlSa591MrFCVp.png" alt="bomblab_phase_3_2.png"></p>
+<p>那看来我们第一个数只能输入<code>0~7</code>之内的值，我们先输入<code>0 0</code>来看看，继续单步调试发现</p>
+<p><img src="https://i.loli.net/2021/04/25/mz7utwg8CNbLYPU.png" alt="bomblab_phase_3_3.png"></p>
+<p>那说明我们应该输入<code>0 207</code>，因为<code>eax</code>被赋值了<code>0xcf</code>，然后又比较中也含有<code>eax</code>重新来一遍发现竟然过了，直接能进入到phase_4的那种，那么你就会思考，<code>1~7</code>会发生什么，据测试，每个数对应了一个整数，你可以理解为有一个函数<code>f(x)x∈[0,7]∩Z</code>然后你必须正确输入<code>x f(x)</code>的其中一个对应。那你可能还会想，负数有没有对应，其实我也试过，负数直接就不行了，因为<code>jg</code>指令是判断无符号数的，负数就会被看成一个很大的正整数，那么你还是不可避免的爆炸了。</p>
+<h2 id="phase-4"><a href="#phase-4" class="headerlink" title="phase_4"></a>phase_4</h2><p>在<code>phase_4</code>处断点，依次输入前三条拆弹语句，第四句老规矩输入很多<code>a</code>，<code>s</code>单步调试进入<code>scanf</code>，发现语句依然是<code>%d %d</code>，好嘛，又是两个整型，那重来，先<code>0 0</code>，<code>n</code>单步调试进去发现有一个语句<code>cmp eax,2 jne</code>，<code>jne</code>为<code>jump not equal</code>这个判断也很简单，就是看<code>scanf</code>有没有输入2个数，它都是<code>%d %d</code>了，肯定你只能输入两个数啊，不是两个就爆炸了(<del>Ps:别问我为什么这么肯定的</del>)。</p>
+<p><img src="https://i.loli.net/2021/04/25/fTMdxrpsWg1ocXE.png" alt="bomblab_phase_4_1.png"></p>
+<p>输入两个<code>0</code>发现莫名其妙过了，其实我想就这么水过去的，但是还得去分析的。</p>
+<p><code>disassemble func4</code>查看一下它那个函数的汇编代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Dump of assembler code for function func4:</span><br><span class="line">   0x08048d0b &lt;+0&gt;:	sub    $0x1c,%esp</span><br><span class="line">   0x08048d0e &lt;+3&gt;:	mov    %ebx,0x14(%esp)</span><br><span class="line">   0x08048d12 &lt;+7&gt;:	mov    %esi,0x18(%esp)</span><br><span class="line">   0x08048d16 &lt;+11&gt;:	mov    0x20(%esp),%eax</span><br><span class="line">   0x08048d1a &lt;+15&gt;:	mov    0x24(%esp),%edx</span><br><span class="line">   0x08048d1e &lt;+19&gt;:	mov    0x28(%esp),%esi </span><br><span class="line">   0x08048d22 &lt;+23&gt;:	mov    %esi,%ecx</span><br><span class="line">   0x08048d24 &lt;+25&gt;:	sub    %edx,%ecx       </span><br><span class="line">   0x08048d26 &lt;+27&gt;:	mov    %ecx,%ebx</span><br><span class="line">   0x08048d28 &lt;+29&gt;:	shr    $0x1f,%ebx    </span><br><span class="line">   0x08048d2b &lt;+32&gt;:	add    %ebx,%ecx     </span><br><span class="line">   0x08048d2d &lt;+34&gt;:	sar    %ecx          </span><br><span class="line">   0x08048d2f &lt;+36&gt;:	lea    (%ecx,%edx,1),%ebx    </span><br><span class="line">   0x08048d32 &lt;+39&gt;:	cmp    %eax,%ebx</span><br><span class="line">   0x08048d34 &lt;+41&gt;:	jle    0x8048d4d &lt;func4+66&gt;</span><br><span class="line">   0x08048d36 &lt;+43&gt;:	lea    -0x1(%ebx),%ecx</span><br><span class="line">   0x08048d39 &lt;+46&gt;:	mov    %ecx,0x8(%esp)</span><br><span class="line">   0x08048d3d &lt;+50&gt;:	mov    %edx,0x4(%esp)</span><br><span class="line">   0x08048d41 &lt;+54&gt;:	mov    %eax,(%esp)</span><br><span class="line">   0x08048d44 &lt;+57&gt;:	call   0x8048d0b &lt;func4&gt;</span><br><span class="line">   0x08048d49 &lt;+62&gt;:	add    %eax,%ebx   </span><br><span class="line">   0x08048d4b &lt;+64&gt;:	jmp    0x8048d66 &lt;func4+91&gt;</span><br><span class="line">   0x08048d4d &lt;+66&gt;:	cmp    %eax,%ebx  </span><br><span class="line">   0x08048d4f &lt;+68&gt;:	jge    0x8048d66 &lt;func4+91&gt;</span><br><span class="line">   0x08048d51 &lt;+70&gt;:	mov    %esi,0x8(%esp)</span><br><span class="line">   0x08048d55 &lt;+74&gt;:	lea    0x1(%ebx),%edx </span><br><span class="line">   0x08048d58 &lt;+77&gt;:	mov    %edx,0x4(%esp)</span><br><span class="line">   0x08048d5c &lt;+81&gt;:	mov    %eax,(%esp)</span><br><span class="line">   0x08048d5f &lt;+84&gt;:	call   0x8048d0b &lt;func4&gt;</span><br><span class="line">   0x08048d64 &lt;+89&gt;:	add    %eax,%ebx  </span><br><span class="line">   0x08048d66 &lt;+91&gt;:	mov    %ebx,%eax   </span><br><span class="line">   0x08048d68 &lt;+93&gt;:	mov    0x14(%esp),%ebx</span><br><span class="line">   0x08048d6c &lt;+97&gt;:	mov    0x18(%esp),%esi</span><br><span class="line">   0x08048d70 &lt;+101&gt;:	add    $0x1c,%esp</span><br><span class="line">   0x08048d73 &lt;+104&gt;:	ret    </span><br><span class="line">End of assembler dump.</span><br></pre></td></tr></table></figure>
+
+<p>这个函数先放在这我们先看后面有哪些条件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test   eax, eax</span><br><span class="line">jne    phase_4+76 &lt;phase_4+76&gt; </span><br><span class="line">cmp    dword ptr [rsp + 0xc], 0</span><br><span class="line">je     phase_4+81 &lt;phase_4+81&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>第一次是跳转会爆炸，第二次是不跳转会爆，那么换言之，两次都必须等于，那么第一次的<code>test eax,eax</code>它干什么了呢？先想一想它怎么判断两个数相等，两个数相等当且仅当它们之差为0时成立，字符串也同理。那么换言之，它就判断<code>eax</code>的值是不是<code>0</code>而已相等为<code>0</code>，不相等则不为<code>0</code>。那么很清楚了，防止它跳转，我们要保证<code>eax</code>寄存器值为0。下面就是判断第二个输入的值是否为0了，为0跳转。</p>
+<p><img src="https://i.loli.net/2021/04/25/usg2zr6lbFYjwhE.png" alt="bomblab_phase_4_2.png"></p>
+<p>实际上，这里的<code>ptr[rsp+0xc]</code>就是我们输入第二个数的低八位。因此第二个数只能输入<code>0</code>因为第一次比较用到了寄存器比较，我们也不知道运行这个函数之后函数的返回值是多少(<code>rax</code>保存函数返回值)，只能去调试看看。因此这个答案是<code>0 0</code></p>
+<h2 id="phase-5"><a href="#phase-5" class="headerlink" title="phase_5"></a>phase_5</h2><p>依然先断点，输入之前四句拆弹语句。到这里之后随便输入点东西，发现了</p>
+<p><img src="https://i.loli.net/2021/04/25/sQSBH3YFexy6dNJ.png" alt="bomblab_phase_5_1.png"></p>
+<p>这回是要输入一串字符串，而且还有长度检测，不等于6直接爆炸qwq。</p>
+<p>那我们先随便输入一个<code>aaaaaa</code>看看情况</p>
+<p><img src="https://i.loli.net/2021/04/25/JaWfPYRIysXc9qU.png" alt="bomblab_phase_5_2.png"></p>
+<p>很明显，有一个循环，以<code>eax</code>为循环变量，依次对输入的字符进行一系列的操作。具体操作是：先对字符<code>and 0xf</code>然后把结果保存在<code>rdx</code>里面，返回的字符是<code>0x4024b0+rdx</code>,最后这个保存到<code>rsp+rax+0x10</code>里面，在往栈底偏移<code>0x10</code>的地方起一个保存好的字符串。接下来又要怎么操作呢？接着单步调试看看：</p>
+<p><img src="https://i.loli.net/2021/04/25/SiLjU51Z3BroAk9.png" alt="bomblab_phase_5_3.png"></p>
+<p>发现在<code>rsp+0x10</code>那个位置的字符串要被<code>&quot;flyers&quot;</code>字符串比较，相等跳转，不跳转就炸了，那么唯一没有看的就是刚刚那个<code>0x4024b0+rdx</code>到底是什么了。但是可以猜测这应该是一个字符串，然后<code>rdx</code>做偏移取字符串的下标对应的字符。<code>print (char *)0x4024b0</code>查看这个字符串发现输出了一个很长的东西<code>maduiersnfotvbylSo you think you can stop the bomb with ctrl-c, do you?</code>因为可以看到它的偏移被<code>and 0xf</code>可以很容易证明这个偏移肯定小于等于<code>0xf</code>，那么我们取出16位的字符串<code>maduiersnfotvbyl</code>,<code>flyers</code>的话，它的偏移可以是：<code>9 15 14 5 6 7</code>这里建议大家写脚本跑一下，自己硬算也可以的。为了防止字符无效，我们尽量取满可能，因为偏移是固定的，但是高四位不管是什么都是可以的，反正最后要被<code>and 0xf</code></p>
+<p><img src="https://i.loli.net/2021/04/25/EWxXJ2PuAQ3HoIc.png" alt="bomblab_phase_5_4.png"></p>
+<p>因为每个字符都是相互独立的，所以你可以在这六行任意取一个可读字符最后拼接成字符串。因为有些字符不可编辑，所以采取这种措施是最妙的。</p>
+<h2 id="phase-6"><a href="#phase-6" class="headerlink" title="phase_6"></a>phase_6</h2><p>待更新</p>
+<p>因为作者目前比较菜，phase_6和secret_bomb都不会做，如果上面有哪里说的不对的恳请指正。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2021-04-19, 22:00:00</p>
+        <p><span>最后更新:</span>2021-10-25, 13:20:07</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/04/19/bomblab/" title="bomblab实验报告:二进制安全与逆向分析">http://example.com/2021/04/19/bomblab/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/04/19/bomblab/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/04/25/attqacklab/">
+                    attacklab实验报告:代码注入以及rop攻击
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#phase-1"><span class="toc-number">1.</span> <span class="toc-text">phase_1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phase-2"><span class="toc-number">2.</span> <span class="toc-text">phase_2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phase-3"><span class="toc-number">3.</span> <span class="toc-text">phase_3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phase-4"><span class="toc-number">4.</span> <span class="toc-text">phase_4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phase-5"><span class="toc-number">5.</span> <span class="toc-text">phase_5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phase-6"><span class="toc-number">6.</span> <span class="toc-text">phase_6</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"bomblab实验报告:二进制安全与逆向分析　| xia0ji233's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/04/25/attqacklab/" title="上一篇: attacklab实验报告:代码注入以及rop攻击">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021 xia0ji233
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

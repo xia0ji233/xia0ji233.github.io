@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="这几天一直在跟着团队的进度做csapp的实验报告，突然想拿题来练手了才发现自己还是有点菜的。这次的任务是做一道简简单单的带canary保护的一题，做了很长时间问了很多师傅，也算把这个方法搞搞明白了，但是不确定能不能完全说的明白，那么下面就开始吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="canary保护学习报告:通过字符串泄露canary">
+<meta property="og:url" content="http://example.com/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s Blog">
+<meta property="og:description" content="这几天一直在跟着团队的进度做csapp的实验报告，突然想拿题来练手了才发现自己还是有点菜的。这次的任务是做一道简简单单的带canary保护的一题，做了很长时间问了很多师傅，也算把这个方法搞搞明白了，但是不确定能不能完全说的明白，那么下面就开始吧。">
+<meta property="og:locale">
+<meta property="og:image" content="https://i.loli.net/2021/05/01/XSkKpCyAZN1uslE.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/01/uPz4Uq21LEdsOvF.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/01/lb8YdQVfKAI32oh.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/01/vyebYQpIdxDh3nl.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/01/uWeGAhXz3JHSqKM.png">
+<meta property="article:published_time" content="2021-05-01T02:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-24T14:25:34.811Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/05/01/XSkKpCyAZN1uslE.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>canary保护学习报告:通过字符串泄露canary | xia0ji233&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-绕过canary保护" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/" class="article-date">
+      <time datetime="2021-05-01T02:00:00.000Z" itemprop="datePublished">2021-05-01</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      canary保护学习报告:通过字符串泄露canary
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/pwn/">pwn</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>这几天一直在跟着团队的进度做<code>csapp</code>的实验报告，突然想拿题来练手了才发现自己还是有点菜的。这次的任务是做一道简简单单的带<code>canary</code>保护的一题，做了很长时间问了很多师傅，也算把这个方法搞搞明白了，但是不确定能不能完全说的明白，那么下面就开始吧。</p>
+<span id="more"></span>
+
+<h1 id="canary保护"><a href="#canary保护" class="headerlink" title="canary保护"></a>canary保护</h1><p><code>canary</code>就是一段简简单单的cookie，它一般在上个函数所保存的<code>ebp</code>之前(即靠近栈顶的那个方向)下面一个图能描述一个带<code>canary</code>保护的栈帧，应该还是比较清楚的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">↑栈顶</span><br><span class="line">buf//函数的缓冲区，一般用于保存局部变量</span><br><span class="line">canary</span><br><span class="line">ebp//上一个函数保存的ebp</span><br><span class="line">eip//返回地址</span><br><span class="line">argument 1</span><br><span class="line">argument 2</span><br><span class="line">argument 3</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">↓栈底</span><br></pre></td></tr></table></figure>
+
+<p>如果企图用大量数据覆盖缓冲区并且修改返回地址的数据达到劫持<code>eip</code>的目的那么就会修改<code>canary</code>的值，那么在返回的时候检测到<code>canary</code>的值发生改变后就会直接抛出异常并且停止执行程序。并且每次<code>canary</code>的值都是随机的，普通方法几乎是突破不了的。但是我们可以先想办法泄露<code>canary</code>的值，然后再把<code>canary</code>插入到<code>payload</code>当中，这样的话，就算我溢出了，但是并没有修改<code>canary</code>的值，也就没办法检测到我有没有栈溢出了。在64位的程序当中，<code>canary</code>就是一个七字节的数据带一个<code>\x00</code>字节，并且<code>\x00</code>字节在最低位。</p>
+<p>那么回想一下字符串是什么？字符串就是一串连着的字节序，不管它原本在这个地方的定义是什么，我说它是字符串，他就可以是字符串，因为计算机它不管是存什么数据它终归也只是0和1的组成。例如<code>0x61626364</code>它看上去好像是一个<code>int</code>型变量，但是它储存也只是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">64 63 62 61</span><br></pre></td></tr></table></figure>
+
+<p>如果我把它看成字符串那也没错，它可以代表字符串<code>dcba</code>，它们存储的数据是一模一样的。但是有一个问题：计算机里基本上都是又很多字节连在一起，那如果后面还有很多数据，怎么样才能只表示字符串<code>dcba</code>呢？那就需要一个特殊字节<code>\x00</code>了，识别字符串会从一个字符指针开始，然后依次增大指针的值，只要指针所指向的地址不是<code>\x00</code>字节，那么它就可以是这个字符串中的一员。那如果我输入一个字符串，溢出了但没完全溢出呢？我们把字符串填充地恰到好处，刚好紧挨着<code>canary</code>，那么在之后如果<code>printf</code>这个字符串的话，就会把<code>canary</code>一起输出出来，我们就获取了<code>canary</code>。但是注意，canary最后一个字节是<code>\x00</code>，不会被接受，因此在获取canary的时候注意末尾加上<code>\x00</code>字节。</p>
+<p>下面来看道例题：</p>
+<h2 id="Bugku-Pwn4"><a href="#Bugku-Pwn4" class="headerlink" title="Bugku - Pwn4"></a>Bugku - Pwn4</h2><p>下载文件照例拖进虚拟机<code>checksec</code>检查一下各种保护</p>
+<p><img src="https://i.loli.net/2021/05/01/XSkKpCyAZN1uslE.png" alt="Bugku_pwn4_1.png"></p>
+<p>发现只开启了<code>canary</code>和堆栈不可执行的保护，堆栈不可执行那么就不能注入代码，一般就直接<code>rop</code>攻击，这没什么好讲的。拖进<code>IDA-F5</code>主函数看看</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf[<span class="number">48</span>]; <span class="comment">// [rsp+10h] [rbp-240h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> v5[<span class="number">520</span>]; <span class="comment">// [rsp+40h] [rbp-210h] BYREF</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v6; <span class="comment">// [rsp+248h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v6 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  init(argc, argv, envp);</span><br><span class="line">  write(<span class="number">1</span>, <span class="string">&quot;Welcome!\n&quot;</span>, <span class="number">0x10</span>uLL);</span><br><span class="line">  write(<span class="number">1</span>, <span class="string">&quot;Please leave your name(Within 36 Length):&quot;</span>, <span class="number">0x29</span>uLL);</span><br><span class="line">  read(<span class="number">0</span>, buf, <span class="number">0x300</span>uLL);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Hello %s\n&quot;</span>, buf);</span><br><span class="line">  write(<span class="number">1</span>, <span class="string">&quot;Please leave a message(Within 0x200 Length):&quot;</span>, <span class="number">0x2C</span>uLL);</span><br><span class="line">  read(<span class="number">0</span>, v5, <span class="number">0x300</span>uLL);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;your message is :%s \nBye~&quot;</span>, v5);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到这里执行了两次<code>read()</code>函数，并且读取的大小远远超过缓冲区开辟的大小，基本上可以说无限制吧。然后第一次<code>read</code>之后还有一次<code>printf()</code>输出，那很明显，第一次就让你泄露canary，第二次就去执行<code>shell</code>函数，如果不确定缓冲区的大小，那么可以双击buf变量看看和离本函数<code>rbp</code>的相对偏移。</p>
+<p><img src="https://i.loli.net/2021/05/01/uPz4Uq21LEdsOvF.png" alt="Bugku_pwn4_2.png"></p>
+<p>可以看到相对<code>rbp</code>的偏移为<code>-0x240</code>而且<code>canary</code>在<code>rbp-8</code>的位置，那么我们第一次的<code>payload</code>就很容易得知是<code>b&#39;a&#39;*(0x240-8-1)</code>了。然后用<code>recv</code>函数接受它输出的字符串，那么我们知道前面的<code>Hello</code>+<code>sapce</code>以及我们输入的<code>0x237</code>个<code>a</code>一共有<code>0x23e</code>个字节，这些都是垃圾数据，在接收完这些数据之后我们再往后接收七个字节，这些数据就是<code>canary</code>。那么分析到这里我们的<code>exp</code>就很好写了</p>
+<p><img src="https://i.loli.net/2021/05/01/lb8YdQVfKAI32oh.png" alt="Bugku_pwn4_3.png"></p>
+<p>在这里<code>p.sendline</code>对应<code>b&#39;a&#39;*0x237</code>然后你可以直接<code>p.recvline()</code>直接接收完垃圾数据或者是<code>p.recv(0x23e)</code>指定接收数据的长度的，因为<code>p.sendline()</code>会在指定的字符串之后添加一个<code>\n</code>字节，所以你前面只能有<code>0x237</code> 个填充的字节，然后此时<code>p.recvline()</code>在接收到<code>\n</code>字节后停止，这个和之前讲的字符串的判定类似。但是如果直接<code>p.send()</code>的话就可以填充满，并且你只能用第一个方法接收垃圾数据。那这样的话canary就成功被我们泄露并且保存了，接下来就是构造<code>shell</code>函数了。我们<code>shift+F12</code>查看字符串，一般<code>pwn</code>题的突破口都在这里，甚至逆向题也是如此。</p>
+<p><img src="https://i.loli.net/2021/05/01/vyebYQpIdxDh3nl.png" alt="Bugku_pwn4_4.png"></p>
+<p>查到<code>bin/sh(0x601068)</code>字符串，并且<code>system</code>函数直接在表里可以查到<code>0x400660</code>，但是<del>往后面调用了system函数以及堆了那个参数之后才</del>注意到这是64位程序，所以我们很轻(jian)松(nan)地可以得知这题肯定要用<code>rop</code>去传参给<code>rdi</code>寄存器了，32位和64位的传参差异我就不过多赘述了，前面博客很多次提到过了。那么这个时候我们先写出要执行的汇编代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">movq $0x601068,%rdi</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p>但是一般来说，带一个那么多位立即数的且指令一模一样的是不可能直接让你找到的。此时肯定不能莽撞，只可智取，我们因为栈上的数据我们可以随意写(只是不能写代码，写了也不能执行啊)，那么我们重新看一看栈的结构</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">canary</span><br><span class="line">rbp</span><br><span class="line">rip</span><br></pre></td></tr></table></figure>
+
+<p>我们如果在rip位置放一个<code>pop %rdi</code>的话，那么<code>rip</code>下方的数据就能直接被传出来，然后后面再放上<code>system</code>函数就完成了整个提权函数的构造了，那么我们的<code>payload</code>就直接是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=...+canary+fake_rbp+pop_rdi+bin_sh_addr+system_addr</span><br></pre></td></tr></table></figure>
+
+<p>找rop碎片的方法在前面的attacklab中有提到很多的，大家可以翻翻我前面的博客，所以我们完整的exp就可以出炉了：</p>
+<p><img src="https://i.loli.net/2021/05/01/uWeGAhXz3JHSqKM.png" alt="Bugku_pwn4_5.png"></p>
+<p>今天真的学到了很多知识，非常的开心，但是对于初入ctf的小白我来说，还有很长的路要走。加油！</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2021-05-01, 10:00:00</p>
+        <p><span>最后更新:</span>2021-10-24, 22:25:34</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/" title="canary保护学习报告:通过字符串泄露canary">http://example.com/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">
+                    ret2libc学习报告
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/04/30/buflab/">
+                    bufblab实验报告:32位程序缓冲区溢出攻击
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#canary%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.</span> <span class="toc-text">canary保护</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Bugku-Pwn4"><span class="toc-number">1.1.</span> <span class="toc-text">Bugku - Pwn4</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"canary保护学习报告:通过字符串泄露canary　| xia0ji233's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" title="上一篇: ret2libc学习报告">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/04/30/buflab/" title="下一篇: bufblab实验报告:32位程序缓冲区溢出攻击">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021 xia0ji233
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

