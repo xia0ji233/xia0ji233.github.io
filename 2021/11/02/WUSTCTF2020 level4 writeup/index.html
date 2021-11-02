@@ -15,15 +15,15 @@
 
 
 
-<meta name="description" content="今天开始以学习了花式的栈溢出ROP攻击，BROP这个东西朴实无华且用处不大，思想能了解，但是现在谁打个pwn还不给elf呢，不给libc文件都会被喷死，还敢不给elf？因此跳过这个学习一下SROP。">
+<meta name="description" content="好久没刷re了，来刷点re啊。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SROP">
-<meta property="og:url" content="http://example.com/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:title" content="WUSTCTF2020 level4 writeup">
+<meta property="og:url" content="http://example.com/2021/11/02/WUSTCTF2020%20level4%20writeup/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="今天开始以学习了花式的栈溢出ROP攻击，BROP这个东西朴实无华且用处不大，思想能了解，但是现在谁打个pwn还不给elf呢，不给libc文件都会被喷死，还敢不给elf？因此跳过这个学习一下SROP。">
+<meta property="og:description" content="好久没刷re了，来刷点re啊。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-06-29T02:00:00.000Z">
-<meta property="article:modified_time" content="2021-10-25T05:22:41.193Z">
+<meta property="article:published_time" content="2021-11-02T02:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-02T18:10:31.985Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
 
@@ -59,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>SROP | xia0ji233&#39;s blog</title>
+<title>WUSTCTF2020 level4 writeup | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -202,11 +202,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-SROP学习报告" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-WUSTCTF2020 level4 writeup" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" class="article-date">
-      <time datetime="2021-06-29T02:00:00.000Z" itemprop="datePublished">2021-06-29</time>
+      <a href="/2021/11/02/WUSTCTF2020%20level4%20writeup/" class="article-date">
+      <time datetime="2021-11-02T02:00:00.000Z" itemprop="datePublished">2021-11-02</time>
 </a>
 
 
@@ -221,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      SROP
+      WUSTCTF2020 level4 writeup
     </h1>
   
 
@@ -230,7 +230,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/pwn/">pwn</a>
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/re/">re</a>
     </div>
 
 
@@ -242,12 +242,32 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>今天开始以学习了花式的栈溢出ROP攻击，BROP这个东西朴实无华且用处不大，思想能了解，但是现在谁打个pwn还不给elf呢，不给libc文件都会被喷死，还敢不给elf？因此跳过这个学习一下SROP。</p>
+        <p>好久没刷re了，来刷点re啊。</p>
 <span id="more"></span>
 
-<p>SROP主要攻击方式就是针对linux系统调用的一个弱点进行攻击的，在进行系统调用的时候，内核会发出signal挂起我们正在运行的程序，并且保存上下文（上下文即所有寄存器的值），然后这个上下文还是以一个结构体的形式存在于栈里面的。此时从用户态切换到内核态，说明现在在执行系统调用，执行完成系统调用的时候会进行系统调用的返回，这个返回又要调用15号的系统调用，恢复上下文并且切换到用户态。这样子系统调用的方法有一个弱点就是，如果我控制了栈，在它挂起的时候我偷偷修改rip=syscall,rax=59(execeve的系统调用号),rdi=”/bin/sh”,rsi=0,rdx=0。那么在结束系统调用的时候就会执行execeve(“/bin/sh”)打开一个shell。</p>
-<p>在就是说在结束系统调用的时候会进行这么一个系统调用，那么如果我本身没有系统调用而调用了这个系统调用会怎么样呢？答案是还会把栈顶的上下文给返回，当然没有精心构造过栈而直接调用肯定是会出错的。攻击的时候我就让它准备好dl_sigreturn的系统调用，然后在预期的栈顶构造一个只执行execeve(“/bin/sh”)的上下文，那么就可以直接完成打开shell的攻击。</p>
-<p>以上都是我根据srop以及一些师傅的资料自己理解的，如有错误那挺正常的，也请师傅们能指出我的错误，感激不尽。</p>
+<p>buuctf的<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#[WUSTCTF2020]level4">[WUSTCTF2020]level4</a></p>
+<h2 id="静态分析文件"><a href="#静态分析文件" class="headerlink" title="静态分析文件"></a>静态分析文件</h2><p>下载发现是一个64位的elf文件，IDA打开分析。照例先看看明显的字符串明文，发现有left，right，然后还有三种打印(type1,type2,type3)。观察符号列表发现有type1和type2函数。跟进去发现跟我们二叉树的递归输出十分相似，并且type1 先递归了a1+1再递归a1+2，差不多他们就是左子树和右子树。那么type1就是一个后根遍历。然后type2是再中间输出的，是一个中根遍历，那么type3大概率就应该是先根遍历，这里他没有，那么先根遍历大概率就是flag。根据中序遍历和其它一个遍历可以求另外一个遍历，这个在数据结构课里有讲。</p>
+<h2 id="动态调试"><a href="#动态调试" class="headerlink" title="动态调试"></a>动态调试</h2><p>那么先运行一遍可以发现得到了两个结果</p>
+<p>![1](/[WUSTCTF2020]level4 writeup/1.png)</p>
+<p>正解显然就是考一个数据结构嘛，但是一个题目总得有多种解法，这里我选择修改函数结构，让它从一个后序遍历变成先序遍历，这里需要patch elf我们先找到type2函数观察它的汇编代码</p>
+<p>![2](/[WUSTCTF2020]level4 writeup/2.png)</p>
+<p>很明显</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jz      short loc_4007FD</span><br></pre></td></tr></table></figure>
+
+<p>这一条指令对应了if (*a1)的跳转，那么一直到最后的call putchar之前应该都是if范围内的东西，这里需要注意的是，函数调用要把之前的一切准备都算进来。定位找到字节码，然后交换位置，将开头到第二个call type2的指令和之后的到putchar指令对换位置，然后patch上去即可。</p>
+<p>满心欢喜patch之后却发现没有得到想要的结果，为什么呢？</p>
+<p>这里需要理解一下jmp跳转指令了，call和jmp两个指令实际上都属于无条件跳转指令，为什么加以区分呢，call它在跳转之后一定会有一个返回的动作，而jmp则不需要。如果自己去尝试编码的话就会发现它的编码开头都是E8 +4个字节定位代码位置。然后它是怎么定位的呢？首先E8开始，之后四个字节为小端表示这条指令(jmp xxx)的下一条指令的位置到 目标代码地址位置的差值(后者减前者)。举个例子，比如我有如下的机器代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nop  90//1</span><br><span class="line">nop  90//2</span><br><span class="line">nop  90//3</span><br><span class="line">nop  90//4</span><br><span class="line">jmp xxx E8 ?? ?? ?? ??//5</span><br><span class="line">nop  90//6</span><br><span class="line">nop  90//7</span><br><span class="line">nop  90//8</span><br></pre></td></tr></table></figure>
+
+<p>当编码的4个字节都为00时，那么这条jmp指令的跳转位置就是第六条指令。</p>
+<p>如果为01 00 00 00时，那么这条指令跳转的位置是第七条指令。</p>
+<p>如果为02 00 00 00时，那么这条指令跳转的位置是第8条指令。</p>
+<p>以此类推，注意里面的数值表示字节，而不是指令的数目，如果想往回挑，那么则需要用相应负数的补码表示偏移。</p>
+<p>讲完这些之后就能理解为什么简单的交换代码位置会导致patch失败了，因为指令的地址改变了，所以原来这么多偏移量它已经对应不上相应的函数了。因此需要自己手动操作一下，调整call指令的偏移使之成功patch，这里建议使用keypatch插件，在更改这条指令只需直接输入call 地址，则可以快速完成patch，不用自己算偏移编码。</p>
+<p>![3](/[WUSTCTF2020]level4 writeup/3.png)</p>
+<p>可以看到代码逻辑按照我们预期的方向更改了，那么我们跑一下，直接输出flag。</p>
+<p>![4](/[WUSTCTF2020]level4 writeup/4.png)</p>
+<p>flag: wctf2020{This_IS_A_7reE}</p>
 
       
     </div>
@@ -256,13 +276,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></p>
+        <p><span>本文标题:</span><a href="/2021/11/02/WUSTCTF2020%20level4%20writeup/">WUSTCTF2020 level4 writeup</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
-        <p><span>发布时间:</span>2021-06-29, 10:00:00</p>
-        <p><span>最后更新:</span>2021-10-25, 13:22:41</p>
+        <p><span>发布时间:</span>2021-11-02, 10:00:00</p>
+        <p><span>最后更新:</span>2021-11-03, 02:10:31</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" title="SROP">http://example.com/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2021/11/02/WUSTCTF2020%20level4%20writeup/" title="WUSTCTF2020 level4 writeup">http://example.com/2021/11/02/WUSTCTF2020%20level4%20writeup/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/11/02/WUSTCTF2020%20level4%20writeup/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -274,16 +294,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">
-                    浙江2020省赛pwn1
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">
-                    2021华东南赛区国赛线下赛
+                <a href="/2021/11/01/ciscn2019_final_3%20writeup/">
+                    ciscn2019_final_3 writeup
                 </a>
             </div>
         
@@ -295,7 +309,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">静态分析文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95"><span class="toc-number">2.</span> <span class="toc-text">动态调试</span></a></li></ol>
         
     </div>
     <style>
@@ -331,7 +345,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"SROP　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"WUSTCTF2020 level4 writeup　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -351,15 +365,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/" title="上一篇: 浙江2020省赛pwn1">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/" title="下一篇: 2021华东南赛区国赛线下赛">
+            <a href="/2021/11/01/ciscn2019_final_3%20writeup/" title="下一篇: ciscn2019_final_3 writeup">
                 <i class="fa fa-angle-right"></i>
             </a>
         
