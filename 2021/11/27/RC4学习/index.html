@@ -15,24 +15,17 @@
 
 
 
-<meta name="description" content="今天解决了一件困扰了我很久的事情，那就是对于elf文件的patch。以前我在做pwn题的时候，遇到C++文件总是束手无策。">
+<meta name="description" content="最近有点颓废了，想学内核很难进行，逆向光刷题看着也很难，pwn刷题就是处于刷的感觉似曾相识，没有一点提升的感觉，所以我决定先攻一下逆向，把常见加解密算法先学了，今天先来这个RC4">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于C++文件换libc版本的问题">
-<meta property="og:url" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:title" content="RC4加密的学习">
+<meta property="og:url" content="http://example.com/2021/11/27/RC4%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="今天解决了一件困扰了我很久的事情，那就是对于elf文件的patch。以前我在做pwn题的时候，遇到C++文件总是束手无策。">
+<meta property="og:description" content="最近有点颓废了，想学内核很难进行，逆向光刷题看着也很难，pwn刷题就是处于刷的感觉似曾相识，没有一点提升的感觉，所以我决定先攻一下逆向，把常见加解密算法先学了，今天先来这个RC4">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/1.png">
-<meta property="og:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/2.png">
-<meta property="og:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/3.png">
-<meta property="og:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/4.png">
-<meta property="og:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/5.png">
-<meta property="og:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/6.png">
-<meta property="article:published_time" content="2021-11-01T02:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-11T13:03:28.000Z">
+<meta property="article:published_time" content="2021-11-27T02:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-27T14:12:31.491Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -66,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>关于C++文件换libc版本的问题 | xia0ji233&#39;s blog</title>
+<title>RC4加密的学习 | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -209,11 +202,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-关于C++文件换libc版本的问题" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-RC4学习" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
-      <time datetime="2021-11-01T02:00:00.000Z" itemprop="datePublished">2021-11-01</time>
+      <a href="/2021/11/27/RC4%E5%AD%A6%E4%B9%A0/" class="article-date">
+      <time datetime="2021-11-27T02:00:00.000Z" itemprop="datePublished">2021-11-27</time>
 </a>
 
 
@@ -228,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      关于C++文件换libc版本的问题
+      RC4加密的学习
     </h1>
   
 
@@ -237,7 +230,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/pwn/">pwn</a>
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/crypto/">crypto</a>
     </div>
 
 
@@ -249,43 +242,24 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>今天解决了一件困扰了我很久的事情，那就是对于elf文件的patch。以前我在做pwn题的时候，遇到C++文件总是束手无策。</p>
+        <p>最近有点颓废了，想学内核很难进行，逆向光刷题看着也很难，pwn刷题就是处于刷的感觉似曾相识，没有一点提升的感觉，所以我决定先攻一下逆向，把常见加解密算法先学了，今天先来这个RC4</p>
 <span id="more"></span>
 
-<p>在换过对应的版本之后，libc总是报错。就如下面这张图片</p>
-<p><img src="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/1.png" alt="1"></p>
-<p>在此问了肥猫师傅给我的解决办法，解决办法很早就给了我的，但是我到现在才搞明白，弄懂,下面是肥猫师傅的原话。</p>
-<p><img src="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/2.png" alt="2"></p>
-<p>在此之前我一直都是用patchelf封装的脚本加上glibc all in one配合完美换libc版本，对于C程序是没有任何问题的。但是C++出现了问题，那么我们就先看看C和C++编译链接之后出来的文件的依赖库的结构。</p>
-<p>那么为了测试就先写出两个版本的hello world程序。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//C</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Hello world\n&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="RC4加密"><a href="#RC4加密" class="headerlink" title="RC4加密"></a>RC4加密</h2><p>我初识RC4是在国赛，记得很清楚的一点就是不停地取模256，那题当时靠着网上资料勉强算过去了。但是还是想系统地学一下，网上教程千篇一律，我决定自己模拟一边它的算法过程然后再理解一遍。</p>
+<p>既然是加密，脱离不了三个概念，明文，密文，密钥。RC4是对称加密，我也才知道，一直以为是不可逆的那种hash加密，所以既然它是对称加密，那么对于加密和解密过程，他们所用的密钥相同。它生成密钥的过程如下：</p>
+<p>生成密钥需要一个长度不多于256长度的字符串作为种子生成随机密钥，这是我自己的理解，因为它确实给我的感觉就是这样的随机。它初始生成了一个长度为256的S串，初始S[i]=i，后面根据用字符串种子作为一个变换规则T，交换S密钥里的各个值，这样的交换好处在于我们可以保证S串密钥为一个双射（满足单射和满射，这个概念高中应该讲过，不赘述）。然后给的一个字符串种子呢，就会被放进T中，T的长度也为256，如果所给字符串种子长度小于256，则会进行轮换，直到它长度严格等于256为止。举个例子，在RC4加密中，如果我给定字符串种子为abcd，那么T的值将是[‘a’,’b’,’c’,’d’,’a’,’b’,’c’,’d’,’a’,’b’,’c’,’d’,……’a’,’b’,’c’,’d’]，对于任意0&lt;=i&lt;256，</p>
+<p>T[i]=Seed[i%len(Seed)]</p>
+<p>那么有了这个T之后呢，我们可以开始进行密钥变换了，做以下规则的变换(字符串均转成ASCII码计算)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">j=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">    j=(j+S[i]+T[i])%<span class="number">256</span></span><br><span class="line">    swap(S[i],S[j])</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//C++</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;Hello world&quot;</span>&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从这一步我们也可以看出来，S初值我们都是知道的，T在确定了字符串种子之后也是确定的，那么由此可以算出密钥S。我们平时习惯说那个字符串是密钥，但是从这里可以看出来，字符串只是用来确定密钥的，因为在这之后，T和给的字符串已经都用不到了。所以这也是我为什么说那个字符串是种子而不是密钥，因为它没有参与加密的运算，我们刚刚算的那么快乐压根都没有出现明文这种，没有明文怎么能算加密呢对吧。</p>
+<p>最后我们看看它是如何加密的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(m)):</span><br><span class="line">    i=(i+<span class="number">1</span>)%<span class="number">256</span></span><br><span class="line">    j=(j+S[i])%<span class="number">256</span></span><br><span class="line">    c[k]=m[k]^S[(S[i]+S[j])%<span class="number">256</span>]</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
 
-<p>分别用gcc和g++命令编译得到1和2可执行文件。</p>
-<p>查看动态链接的关系。</p>
-<p><img src="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/3.png" alt="3"></p>
-<p>可以看到C++程序多了三项依赖，查一下自己glibc all in one libs中找得到一下依赖项</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">libc.so.6</span><br><span class="line">libm.so.6</span><br><span class="line">ld.so.6</span><br></pre></td></tr></table></figure>
+<p>有木有感觉很熟悉，跟前面生成密钥的算法差不多。这个算法如果不了解RC4，直接逆上去的话，怕能直接破防。我有体会我给你们演示一遍，首先i初值知道，c[k]知道，然后要算明文的话m[k]=c[k]^S[(S[i]+S[j])%256]然后呢，i最终值不知道，j最终值不知道，就，时间静止了呗。但是其实它最后就做一个异或，就不用管它了呗，跟它一样从头往后再异或一遍，不就回来了吗。这也就是它为什么也叫对称加密，它不仅密钥用的是一个，加密解密算法都是一样的，没错，加密即解密。RC4解密只需要对密文再加密一次就可以得到明文了。</p>
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">m=<span class="string">&#x27;I love xia0ji233&#x27;</span></span><br><span class="line">S=[i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>)]</span><br><span class="line">key=<span class="string">&#x27;cat flag&#x27;</span></span><br><span class="line">T=[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> S:</span><br><span class="line">    T.append(key[i%<span class="built_in">len</span>(key)])</span><br><span class="line">j=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">    j=(j+S[i]+<span class="built_in">ord</span>(T[i]))%<span class="number">256</span></span><br><span class="line">    t=S[i]</span><br><span class="line">    S[i]=S[j]</span><br><span class="line">    S[j]=t</span><br><span class="line"></span><br><span class="line">i,j=<span class="number">0</span>,<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(m)):</span><br><span class="line">    i=(i+<span class="number">1</span>)%<span class="number">256</span></span><br><span class="line">    j=(j+S[i])%<span class="number">256</span></span><br><span class="line">    t=<span class="built_in">ord</span>(m[k])^S[(S[i]+S[j])%<span class="number">256</span>]</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">hex</span>(t)[<span class="number">2</span>:],end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"><span class="comment">#2ef1bae658e6e938ca2af63e95e372d</span></span><br></pre></td></tr></table></figure>
 
-<p>我们换库的原因是因为malloc的分配以及各个函数在libc中的偏移在不同版本中都有着很大的区别，偏移问题不大，只需要在本地打出之后连接远程靶机的时候替换一下自己的libc即可。但是在打堆题的时候，不同libc分配有本质区别，比如，2.27的tcache允许直接double free，但是2.23和2.29之后都不允许直接的double free。以及2.34 的libc 中很多hook已经被删除，并不能利用。总之，在打堆题的时候版本是一个很重要的东西，不同版本利用手段都会有本质区别的。</p>
-<p>我们patchelf的时候一般是指定链接器，然后再指定runpath到我们自己下载的库文件。那我们把这两个项换上2.23的libc之后ldd看看他们的依赖关系。</p>
-<p><img src="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/4.png" alt="2"></p>
-<p>可以看到两个文件都已经换上了2.23版本的libc，但是C++编译出来的文件出现了报错，报错是在我们换上的libc.so.6中报出的，然后报错的提醒是因为这个libstdc++.so.6。那么就可以确定一点了，c++自己额外提供了库，而这个库是libstdc++.so.6，而这一项指定到了我们系统的/lib/x86_64-linux-gnu/libstdc++.so.6这个库文件中，而这个库文件是对应了我们安装的版本的，因此我们需要去找一找2.23版本的这个C++的库，并且patch之后指向那个库应该就可以解决。这里可以学肥猫师傅的做法，先用docker装一个16版本的ubuntu，因为16版本刚好对应了libc的版本2.23。</p>
-<p>这里先去用docker拉一个ubuntu16.04的镜像然后用如下命令进入这个镜像。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#docker run -it ubuntu:16.04 /bin/bash</span><br></pre></td></tr></table></figure>
-
-<p>进入之后装上g++和vim，用vim写一个hello world 并且编译之后ldd查看文件依赖关系，找到libstdc++.so.6指向的具体路径然后用docker cp命令拷贝到自己目录下，然后建议丢进libs目录，此时为C++文件再加一个patchelf命令，我这里用了如下命令，自己看情况改改路径即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$patchelf --replace-needed libstdc++.so.6 &#x27;/home/xiaoji233/pwn-tools/glibc-all-in-one/libs/2.23-0ubuntu11.3_amd64/libstdc++.so.6.0.21&#x27;  filename</span><br></pre></td></tr></table></figure>
-
-<p>那么，改完了之后我们ldd看看情况。</p>
-<p><img src="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/5.png" alt="5"></p>
-<p>可以看到libstdc++.so.6已经指向了我们所给的库，并且也没有上面两行的报错了，因此这样就完成了一个C++程序的版本更换。</p>
-<p>最后我们运行看看。</p>
-<p><img src="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/6.png" alt="6"></p>
-<p>完美成功运行。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>小总结一波：在更换C程序的时候需要用patchelf更改链接器的版本和runpath，C++程序换libc版本的时候需要额外指定一个libstdc++.so.6这个库才能正常运行。</p>
-<p>总而言之，解决这个问题心情十分爽快，也希望本篇博客能帮到很多人。</p>
+<p>把它放到CyberChef中加密发现结果一致，本次可能说就是学了个寂寞吧，因为我最后只要知道它加密解密算法一致这个结论就可以了。但是最重要的还是学会了如何分辨这样的加解密以及它加解密的一个特性，也算小有成就吧，瞬间不emo了哈哈哈哈。</p>
 
       
     </div>
@@ -294,13 +268,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/">关于C++文件换libc版本的问题</a></p>
+        <p><span>本文标题:</span><a href="/2021/11/27/RC4%E5%AD%A6%E4%B9%A0/">RC4加密的学习</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
-        <p><span>发布时间:</span>2021-11-01, 10:00:00</p>
-        <p><span>最后更新:</span>2021-11-11, 21:03:28</p>
+        <p><span>发布时间:</span>2021-11-27, 10:00:00</p>
+        <p><span>最后更新:</span>2021-11-27, 22:12:31</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/" title="关于C++文件换libc版本的问题">http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2021/11/27/RC4%E5%AD%A6%E4%B9%A0/" title="RC4加密的学习">http://example.com/2021/11/27/RC4%E5%AD%A6%E4%B9%A0/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/11/27/RC4%E5%AD%A6%E4%B9%A0/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -312,16 +286,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2021/11/01/ciscn2019_final_3%20writeup/">
-                    ciscn2019_final_3 writeup
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2021/10/31/zjctf2021%20%E5%86%B3%E8%B5%9B/">
-                    2021浙江省决赛
+                <a href="/2021/11/23/pwnable_input/">
+                    pwnable input writeup
                 </a>
             </div>
         
@@ -333,7 +301,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">总结</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#RC4%E5%8A%A0%E5%AF%86"><span class="toc-number">1.</span> <span class="toc-text">RC4加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#demo"><span class="toc-number">2.</span> <span class="toc-text">demo</span></a></li></ol>
         
     </div>
     <style>
@@ -369,7 +337,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"关于C++文件换libc版本的问题　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"RC4加密的学习　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -389,15 +357,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2021/11/01/ciscn2019_final_3%20writeup/" title="上一篇: ciscn2019_final_3 writeup">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2021/10/31/zjctf2021%20%E5%86%B3%E8%B5%9B/" title="下一篇: 2021浙江省决赛">
+            <a href="/2021/11/23/pwnable_input/" title="下一篇: pwnable input writeup">
                 <i class="fa fa-angle-right"></i>
             </a>
         
