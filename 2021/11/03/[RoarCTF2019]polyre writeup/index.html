@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="buu刷题记录-RoarCTF2019 polyre">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RoarCTF2019 polyre writeup writeup">
+<meta property="og:url" content="http://example.com/2021/11/03/[RoarCTF2019]polyre%20writeup/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="buu刷题记录-RoarCTF2019 polyre">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2021/11/03/[RoarCTF2019]polyre%20writeup/1.png">
+<meta property="og:image" content="http://example.com/2021/11/03/[RoarCTF2019]polyre%20writeup/2.png">
+<meta property="og:image" content="http://example.com/2021/11/03/[RoarCTF2019]polyre%20writeup/3.png">
+<meta property="og:image" content="http://example.com/2021/11/03/[RoarCTF2019]polyre%20writeup/4.png">
+<meta property="og:image" content="http://example.com/2021/11/03/[RoarCTF2019]polyre%20writeup/5.png">
+<meta property="og:image" content="http://example.com/2021/11/03/[RoarCTF2019]polyre%20writeup/6.png">
+<meta property="article:published_time" content="2021-11-03T02:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-15T12:22:38.165Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/11/03/[RoarCTF2019]polyre%20writeup/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>RoarCTF2019 polyre writeup writeup | xia0ji233&#39;s blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xia0ji233</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">学习应该像呼吸一样自然</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/friends">友链</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"> </a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/friends">友链</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-[RoarCTF2019]polyre writeup" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/11/03/%5BRoarCTF2019%5Dpolyre%20writeup/" class="article-date">
+      <time datetime="2021-11-03T02:00:00.000Z" itemprop="datePublished">2021-11-03</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RoarCTF2019 polyre writeup writeup
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/re/">re</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>buu刷题记录-<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#[RoarCTF2019]polyre">RoarCTF2019 polyre</a></p>
+<span id="more"></span>
+
+<h2 id="初步分析"><a href="#初步分析" class="headerlink" title="初步分析"></a>初步分析</h2><p>拿到文件ida打开，发现是很绝望的究极无敌的代码混淆——控制流平坦化。</p>
+<p><img src="/2021/11/03/[RoarCTF2019]polyre%20writeup/1.png" alt="1"></p>
+<h3 id="控制流平坦化介绍"><a href="#控制流平坦化介绍" class="headerlink" title="控制流平坦化介绍"></a>控制流平坦化介绍</h3><p>控制流平坦化(control flow flattening)的基本思想主要是通过一个主分发器来控制程序基本块的执行流程，例如下图是正常的执行流程 </p>
+<p><img src="/2021/11/03/[RoarCTF2019]polyre%20writeup/2.png" alt="2"></p>
+<p>在经过控制流平台化的混淆之后，会变成如下的结构</p>
+<p><img src="/2021/11/03/[RoarCTF2019]polyre%20writeup/3.png" alt="3"></p>
+<p>流程图看起来就像是同一级的关系，块之间失去了层次分明，逻辑可读性变得更差。</p>
+<p>就好比我们平时做的堆菜单题，选择菜单的时候，逻辑基本就是</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">    menu();</span><br><span class="line">	<span class="keyword">int</span> num=getnum();</span><br><span class="line">    <span class="keyword">switch</span>(num)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            add();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            edit();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">delete</span>();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">            show();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            error_choice();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是有时候经过ida反编译并不是那么清晰的，我也不知道它是不是特意加了混淆还是ida本身的问题，反编译代码变成了下面的情况</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">                <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">                    menu();</span><br><span class="line">					<span class="keyword">int</span> num=getnum();</span><br><span class="line">                    <span class="keyword">if</span>(num!=<span class="number">1</span>)&#123;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    add();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(num&gt;<span class="number">2</span>)&#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                edit();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(num!=<span class="number">3</span>)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            show();</span><br><span class="line">		&#125;</span><br><span class="line">        <span class="keyword">if</span>(num!=<span class="number">4</span>)&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        edit();</span><br><span class="line">	&#125;</span><br><span class="line">    error_choice;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这么说吧，两个代码实现的功能是一样的，但是明显下面的可读性就变差了很多。我也不知道是不是这个在作妖，就是觉得很像，提出来讲一讲hhh。</p>
+<p>但是好像又没有关系，因为它们块之间的关系本来就是平坦的，后面只是用while替代switch进行进一步混淆，但是其实有menu函数一看便知，所以它在这里加这样的逻辑混淆的确是无用功。</p>
+<p>那么我猜控制流平坦化的流程就是：</p>
+<p>①将所有块平坦化</p>
+<p>②用switch分发</p>
+<p>③把switch转成如上的那种while循环包起来的代码。</p>
+<p>至于平坦化了之后如何实现前后的逻辑的关系呢？其实很简单，比如下面这个逻辑</p>
+<p>假如明天下雨，那么我带伞，然后出门，否则我带上我的自行车，然后出门，写成伪代码是下面的逻辑</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (rain)&#123;</span><br><span class="line">	get_umb();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">	get_bike();</span><br><span class="line">&#125;</span><br><span class="line">go_out();</span><br></pre></td></tr></table></figure>
+
+<p>代码这么写起来看起来逻辑还是十分清晰的，那么如果加控制流平坦化混淆它会变成什么样呢？这里很明显出现三个语句块，如果rain条件成立，那么get_umb()，否则get_bike()，最后一定会执行go_out()。那么get_umb和get_bike就是一个二选一的关系，这俩块跟go_out又是先后的关系，这是我们一眼可以看出来的逻辑。</p>
+<p>控制流平坦化第一步就是拆掉他们这样的逻辑关系，甭管有多少块，全部用while(1)+switch去控制，如下代码所示。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	ch=rain;</span><br><span class="line">	<span class="keyword">switch</span>(ch)&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">0</span>：</span><br><span class="line">			get_bike();</span><br><span class="line">			ch=<span class="number">2</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">			get_umb();</span><br><span class="line">			ch=<span class="number">2</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">			get_bike();</span><br><span class="line">			flag=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(flag)&#123;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以发现平坦化了之后略微有一点点不可读，但是还能接受，但是它往往不会让你看的那么容易，因为它ch不可能就1，2，3，4这么给你弄好了，我再进一步加混淆。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	ch=(rain*<span class="number">2</span>+<span class="number">9876</span>)*<span class="number">9</span>+<span class="number">100</span>;</span><br><span class="line">	<span class="keyword">switch</span>(ch)&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">88984</span>：</span><br><span class="line">			get_bike();</span><br><span class="line">			ch=ch*<span class="number">9</span>+<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">89002</span>:</span><br><span class="line">			get_umb();</span><br><span class="line">			ch=(ch<span class="number">-18</span>)*<span class="number">9</span>+<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">800857</span>:</span><br><span class="line">			get_bike();</span><br><span class="line">			flag=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(flag)&#123;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果块再多，运算再复杂，你可能都不能一眼看出来下不下雨和带不带伞是一个什么联系了。</p>
+<p>然后switch再同如上的menu这样变换一下逻辑，就更难读了，也就是我们题目中看到的这个样子，可以发现，它平坦的块已经是特别密集了，疯狂while(1)然后中间条件判断去break。</p>
+<p>以上分析均为自己个人理解，并使用自己最朴素的语言讲述出来的。</p>
+<h3 id="抵抗控制流平坦化"><a href="#抵抗控制流平坦化" class="headerlink" title="抵抗控制流平坦化"></a>抵抗控制流平坦化</h3><p>既然有人研究出了这样的代码混淆，自然也有人研究出了对应的解法，这里放项目地址<a target="_blank" rel="noopener" href="https://github.com/cq674350529/deflat">https://github.com/cq674350529/deflat</a></p>
+<p>该项目以angr作为依赖，在个人使用的时候我把它源码download下来还需要把它flat_control_flow目录下的deflat.py移动到上一层目录才能正常使用，使用方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$python(3) deflat.py -f [file_name] --addr [function_addr]</span><br></pre></td></tr></table></figure>
+
+<p>这里function_addr即为添加了此混淆的函数地址。放着跑个几分钟，就能跑出来一个控制流比较清晰的elf文件了。</p>
+<p><img src="/2021/11/03/[RoarCTF2019]polyre%20writeup/4.png" alt="4"></p>
+<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><p>我们用ida反编译能得到以下代码</p>
+<figure class="highlight cc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">main</span><span class="params">(<span class="keyword">int</span> a1, <span class="keyword">char</span> **a2, <span class="keyword">char</span> **a3)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">signed</span> __int64 v4; <span class="comment">// [rsp+1E0h] [rbp-110h]</span></span><br><span class="line">  <span class="keyword">int</span> i; <span class="comment">// [rsp+1E8h] [rbp-108h]</span></span><br><span class="line">  <span class="keyword">int</span> v6; <span class="comment">// [rsp+1ECh] [rbp-104h]</span></span><br><span class="line">  <span class="keyword">int</span> v7; <span class="comment">// [rsp+1ECh] [rbp-104h]</span></span><br><span class="line">  <span class="keyword">char</span> s1[<span class="number">48</span>]; <span class="comment">// [rsp+1F0h] [rbp-100h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> s[<span class="number">60</span>]; <span class="comment">// [rsp+220h] [rbp-D0h] BYREF</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v10; <span class="comment">// [rsp+25Ch] [rbp-94h]</span></span><br><span class="line">  <span class="keyword">char</span> *v11; <span class="comment">// [rsp+260h] [rbp-90h]</span></span><br><span class="line">  <span class="keyword">int</span> v12; <span class="comment">// [rsp+26Ch] [rbp-84h]</span></span><br><span class="line">  <span class="keyword">bool</span> v13; <span class="comment">// [rsp+272h] [rbp-7Eh]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int8 v14; <span class="comment">// [rsp+273h] [rbp-7Dh]</span></span><br><span class="line">  <span class="keyword">int</span> v15; <span class="comment">// [rsp+274h] [rbp-7Ch]</span></span><br><span class="line">  <span class="keyword">char</span> *v16; <span class="comment">// [rsp+278h] [rbp-78h]</span></span><br><span class="line">  <span class="keyword">int</span> v17; <span class="comment">// [rsp+284h] [rbp-6Ch]</span></span><br><span class="line">  <span class="keyword">int</span> v18; <span class="comment">// [rsp+288h] [rbp-68h]</span></span><br><span class="line">  <span class="keyword">bool</span> v19; <span class="comment">// [rsp+28Fh] [rbp-61h]</span></span><br><span class="line">  <span class="keyword">char</span> *v20; <span class="comment">// [rsp+290h] [rbp-60h]</span></span><br><span class="line">  <span class="keyword">int</span> v21; <span class="comment">// [rsp+298h] [rbp-58h]</span></span><br><span class="line">  <span class="keyword">bool</span> v22; <span class="comment">// [rsp+29Fh] [rbp-51h]</span></span><br><span class="line">  __int64 v23; <span class="comment">// [rsp+2A0h] [rbp-50h]</span></span><br><span class="line">  <span class="keyword">bool</span> v24; <span class="comment">// [rsp+2AFh] [rbp-41h]</span></span><br><span class="line">  __int64 v25; <span class="comment">// [rsp+2B0h] [rbp-40h]</span></span><br><span class="line">  __int64 v26; <span class="comment">// [rsp+2B8h] [rbp-38h]</span></span><br><span class="line">  __int64 v27; <span class="comment">// [rsp+2C0h] [rbp-30h]</span></span><br><span class="line">  __int64 v28; <span class="comment">// [rsp+2C8h] [rbp-28h]</span></span><br><span class="line">  <span class="keyword">int</span> v29; <span class="comment">// [rsp+2D0h] [rbp-20h]</span></span><br><span class="line">  <span class="keyword">int</span> v30; <span class="comment">// [rsp+2D4h] [rbp-1Ch]</span></span><br><span class="line">  <span class="keyword">char</span> *v31; <span class="comment">// [rsp+2D8h] [rbp-18h]</span></span><br><span class="line">  <span class="keyword">int</span> v32; <span class="comment">// [rsp+2E0h] [rbp-10h]</span></span><br><span class="line">  <span class="keyword">int</span> v33; <span class="comment">// [rsp+2E4h] [rbp-Ch]</span></span><br><span class="line">  <span class="keyword">bool</span> v34; <span class="comment">// [rsp+2EBh] [rbp-5h]</span></span><br><span class="line"></span><br><span class="line">  v10 = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">0x30</span>uLL);</span><br><span class="line">  <span class="built_in">memset</span>(s1, <span class="number">0</span>, <span class="built_in"><span class="keyword">sizeof</span></span>(s1));</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Input:&quot;</span>);</span><br><span class="line">  v11 = s;</span><br><span class="line">  <span class="keyword">if</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">goto</span> LABEL_43;</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    __isoc99_scanf(<span class="string">&quot;%s&quot;</span>, v11);</span><br><span class="line">    v6 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> ( dword_603058 &lt; <span class="number">10</span> || ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) == <span class="number">0</span> )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">LABEL_43:</span><br><span class="line">    __isoc99_scanf(<span class="string">&quot;%s&quot;</span>, v11);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">      v12 = v6;</span><br><span class="line">    <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> );</span><br><span class="line">    v13 = v12 &lt; <span class="number">64</span>;</span><br><span class="line">    <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> )</span><br><span class="line">      ;</span><br><span class="line">    <span class="keyword">if</span> ( !v13 )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    v14 = s[v6];</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">      v15 = v14;</span><br><span class="line">    <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> );</span><br><span class="line">    <span class="keyword">if</span> ( v15 == <span class="number">10</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v16 = &amp;s[v6];</span><br><span class="line">      *v16 = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    v17 = v6 + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">      v6 = v17;</span><br><span class="line">    <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> );</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; ; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">      v18 = i;</span><br><span class="line">    <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> );</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">      v19 = v18 &lt; <span class="number">6</span>;</span><br><span class="line">    <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> );</span><br><span class="line">    <span class="keyword">if</span> ( !v19 )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">      v20 = s;</span><br><span class="line">    <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> );</span><br><span class="line">    v4 = *(_QWORD *)&amp;v20[<span class="number">8</span> * i];</span><br><span class="line">    v7 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v21 = v7;</span><br><span class="line">      <span class="keyword">do</span></span><br><span class="line">        v22 = v21 &lt; <span class="number">64</span>;</span><br><span class="line">      <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> );</span><br><span class="line">      <span class="keyword">if</span> ( !v22 )</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      v23 = v4;</span><br><span class="line">      v24 = v4 &lt; <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">if</span> ( v4 &gt;= <span class="number">0</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        v27 = v4;</span><br><span class="line">        <span class="keyword">do</span></span><br><span class="line">          v28 = <span class="number">2</span> * v27;</span><br><span class="line">        <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> );</span><br><span class="line">        v4 = v28;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        v25 = <span class="number">2</span> * v4;</span><br><span class="line">        <span class="keyword">do</span></span><br><span class="line">          v26 = v25;</span><br><span class="line">        <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> );</span><br><span class="line">        v4 = v26 ^ <span class="number">0xB0004B7679FA26B3</span>LL;</span><br><span class="line">      &#125;</span><br><span class="line">      v29 = v7;</span><br><span class="line">      <span class="keyword">do</span></span><br><span class="line">        v7 = v29 + <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> );</span><br><span class="line">    &#125;</span><br><span class="line">    v30 = <span class="number">8</span> * i;</span><br><span class="line">    v31 = &amp;s1[<span class="number">8</span> * i];</span><br><span class="line">    <span class="keyword">if</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> )</span><br><span class="line">LABEL_55:</span><br><span class="line">      *(_QWORD *)v31 = v4;</span><br><span class="line">    *(_QWORD *)v31 = v4;</span><br><span class="line">    <span class="keyword">if</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> )</span><br><span class="line">      <span class="keyword">goto</span> LABEL_55;</span><br><span class="line">    v32 = i + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">    v33 = <span class="built_in">memcmp</span>(s1, &amp;unk_402170, <span class="number">0x30</span>uLL);</span><br><span class="line">  <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> );</span><br><span class="line">  v34 = v33 != <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> )</span><br><span class="line">    ;</span><br><span class="line">  <span class="keyword">if</span> ( v34 )</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Wrong!&quot;</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Correct!&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> v10;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>自习一看其实就发现其实它还是加了一些混淆，比如里面重复的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> ( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> )</span><br></pre></td></tr></table></figure>
+
+<p>这个表达式实际上是永远为假的，它因为dword_603058这个全局变量是在bss段上的，bss段上为未初始化的全局变量，所以它就是0。而且查一下它的交叉引用表也会发现与它相关的指令都是作为源操作数而非目的操作数，而且也没有取它地址做某些操作，在此基础之上我们基本可以认为它就是不变的。</p>
+<p><img src="/2021/11/03/[RoarCTF2019]polyre%20writeup/5.png" alt="5"></p>
+<p>所以这去了混淆之后还有一百多行的代码其实是他自己手动疯狂加的混淆。所以这里直接把所有的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">do</span></span></span><br><span class="line"><span class="function">	xxx</span></span><br><span class="line"><span class="function"><span class="title">while</span> <span class="params">( dword_603058 &gt;= <span class="number">10</span> &amp;&amp; ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) != <span class="number">0</span> )</span></span></span><br></pre></td></tr></table></figure>
+
+<p>全部替换成xxx就好了，因为它只执行一次就退出了。</p>
+<p>此外还有一些永为1的表达式。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( dword_603058 &lt; <span class="number">10</span> || ((((_BYTE)dword_603054 - <span class="number">1</span>) * (_BYTE)dword_603054) &amp; <span class="number">1</span>) == <span class="number">0</span> )</span><br><span class="line">      <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这种情况下我我们直接把while循环去了，然后把这个语句之后在while循环语句内的所有语句都删了。</p>
+<p>然后得到了以下的代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">main</span><span class="params">(<span class="keyword">int</span> a1, <span class="keyword">char</span> **a2, <span class="keyword">char</span> **a3)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">signed</span> __int64 v4; <span class="comment">// [rsp+1E0h] [rbp-110h]</span></span><br><span class="line">  <span class="keyword">int</span> i; <span class="comment">// [rsp+1E8h] [rbp-108h]</span></span><br><span class="line">  <span class="keyword">int</span> v6; <span class="comment">// [rsp+1ECh] [rbp-104h]</span></span><br><span class="line">  <span class="keyword">int</span> v7; <span class="comment">// [rsp+1ECh] [rbp-104h]</span></span><br><span class="line">  <span class="keyword">char</span> s1[<span class="number">48</span>]; <span class="comment">// [rsp+1F0h] [rbp-100h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> s[<span class="number">60</span>]; <span class="comment">// [rsp+220h] [rbp-D0h] BYREF</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v10; <span class="comment">// [rsp+25Ch] [rbp-94h]</span></span><br><span class="line">  <span class="keyword">char</span> *v11; <span class="comment">// [rsp+260h] [rbp-90h]</span></span><br><span class="line">  <span class="keyword">int</span> v12; <span class="comment">// [rsp+26Ch] [rbp-84h]</span></span><br><span class="line">  <span class="keyword">bool</span> v13; <span class="comment">// [rsp+272h] [rbp-7Eh]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int8 v14; <span class="comment">// [rsp+273h] [rbp-7Dh]</span></span><br><span class="line">  <span class="keyword">int</span> v15; <span class="comment">// [rsp+274h] [rbp-7Ch]</span></span><br><span class="line">  <span class="keyword">char</span> *v16; <span class="comment">// [rsp+278h] [rbp-78h]</span></span><br><span class="line">  <span class="keyword">int</span> v17; <span class="comment">// [rsp+284h] [rbp-6Ch]</span></span><br><span class="line">  <span class="keyword">int</span> v18; <span class="comment">// [rsp+288h] [rbp-68h]</span></span><br><span class="line">  <span class="keyword">bool</span> v19; <span class="comment">// [rsp+28Fh] [rbp-61h]</span></span><br><span class="line">  <span class="keyword">char</span> *v20; <span class="comment">// [rsp+290h] [rbp-60h]</span></span><br><span class="line">  <span class="keyword">int</span> v21; <span class="comment">// [rsp+298h] [rbp-58h]</span></span><br><span class="line">  <span class="keyword">bool</span> v22; <span class="comment">// [rsp+29Fh] [rbp-51h]</span></span><br><span class="line">  __int64 v23; <span class="comment">// [rsp+2A0h] [rbp-50h]</span></span><br><span class="line">  <span class="keyword">bool</span> v24; <span class="comment">// [rsp+2AFh] [rbp-41h]</span></span><br><span class="line">  __int64 v25; <span class="comment">// [rsp+2B0h] [rbp-40h]</span></span><br><span class="line">  __int64 v26; <span class="comment">// [rsp+2B8h] [rbp-38h]</span></span><br><span class="line">  __int64 v27; <span class="comment">// [rsp+2C0h] [rbp-30h]</span></span><br><span class="line">  __int64 v28; <span class="comment">// [rsp+2C8h] [rbp-28h]</span></span><br><span class="line">  <span class="keyword">int</span> v29; <span class="comment">// [rsp+2D0h] [rbp-20h]</span></span><br><span class="line">  <span class="keyword">int</span> v30; <span class="comment">// [rsp+2D4h] [rbp-1Ch]</span></span><br><span class="line">  <span class="keyword">char</span> *v31; <span class="comment">// [rsp+2D8h] [rbp-18h]</span></span><br><span class="line">  <span class="keyword">int</span> v32; <span class="comment">// [rsp+2E0h] [rbp-10h]</span></span><br><span class="line">  <span class="keyword">int</span> v33; <span class="comment">// [rsp+2E4h] [rbp-Ch]</span></span><br><span class="line">  <span class="keyword">bool</span> v34; <span class="comment">// [rsp+2EBh] [rbp-5h]</span></span><br><span class="line"></span><br><span class="line">  v10 = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">0x30</span>uLL);</span><br><span class="line">  <span class="built_in">memset</span>(s1, <span class="number">0</span>, <span class="keyword">sizeof</span>(s1));</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Input:&quot;</span>);</span><br><span class="line">  v11 = s;</span><br><span class="line">  __isoc99_scanf(<span class="string">&quot;%s&quot;</span>, v11);</span><br><span class="line">  v6 = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">//输入部分，碰到\n截止</span></span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    v12 = v6;</span><br><span class="line">    v13 = v12 &lt; <span class="number">64</span>;</span><br><span class="line">    <span class="keyword">if</span> ( !v13 )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    v14 = s[v6];</span><br><span class="line">    v15 = v14;</span><br><span class="line">    <span class="keyword">if</span> ( v15 == <span class="number">10</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v16 = &amp;s[v6];</span><br><span class="line">      *v16 = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    v17 = v6 + <span class="number">1</span>;</span><br><span class="line">    v6 = v17;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; ; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    v18 = i;</span><br><span class="line">    v19 = v18 &lt; <span class="number">6</span>;<span class="comment">//这里可以看出只有6组</span></span><br><span class="line">    <span class="keyword">if</span> ( !v19 )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    v20 = s;</span><br><span class="line">    v4 = *(_QWORD *)&amp;v20[<span class="number">8</span> * i];<span class="comment">//转为了QWORD，每组八个字节</span></span><br><span class="line">    v7 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v21 = v7;</span><br><span class="line">      v22 = v21 &lt; <span class="number">64</span>;</span><br><span class="line">      <span class="keyword">if</span> ( !v22 )</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      v23 = v4;</span><br><span class="line">      v24 = v4 &lt; <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">if</span> ( v4 &gt;= <span class="number">0</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        v27 = v4;</span><br><span class="line">        v28 = <span class="number">2</span> * v27;</span><br><span class="line">        v4 = v28;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        v25 = <span class="number">2</span> * v4;</span><br><span class="line">        v26 = v25;</span><br><span class="line">        v4 = v26 ^ <span class="number">0xB0004B7679FA26B3</span>LL;</span><br><span class="line">      &#125;</span><br><span class="line">      v29 = v7;</span><br><span class="line">      v7 = v29 + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    v30 = <span class="number">8</span> * i;</span><br><span class="line">    v31 = &amp;s1[<span class="number">8</span> * i];</span><br><span class="line">    *(_QWORD *)v31 = v4;</span><br><span class="line">    v32 = i + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  v33 = <span class="built_in">memcmp</span>(s1, &amp;unk_402170, <span class="number">0x30</span>uLL);</span><br><span class="line">  v34 = v33 != <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( v34 )</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Wrong!&quot;</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Correct!&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> v10;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实最后看来也就是将输入的字符串分为6组，每组八个字节。然后作为long long 类型进行64次变换。</p>
+<p>主要变换逻辑如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( v4 &gt;= <span class="number">0</span> )</span><br><span class="line">&#123;</span><br><span class="line">    v27 = v4;</span><br><span class="line">    v28 = <span class="number">2</span> * v27;</span><br><span class="line">    v4 = v28;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    v25 = <span class="number">2</span> * v4;</span><br><span class="line">    v26 = v25;</span><br><span class="line">    v4 = v26 ^ <span class="number">0xB0004B7679FA26B3</span>LL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果大于0则直接*2，否则再异或一个0xB0004B7679FA26B3LL。</p>
+<p>然后最后跟unk_402170做一个memcmp，那么就已知结果逆向输入了。主要我们需要怎么判断它是否&gt;0呢，其实很简单，我们可以看到如果&gt;0就单纯*2了，否则还会异或一个奇数，那么就从最低位的奇偶入手，如果是偶数则/2，如果不是那么就先异或再/2就好了。但是需要注意，负数/2并不能单纯右移一位，还要再高位添1才能保证是负数/2。</p>
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><p>据此写出脚本</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> s[] =</span><br><span class="line">&#123;</span><br><span class="line">  <span class="number">0x96</span>, <span class="number">0x62</span>, <span class="number">0x53</span>, <span class="number">0x43</span>, <span class="number">0x6D</span>, <span class="number">0xF2</span>, <span class="number">0x8F</span>, <span class="number">0xBC</span>, </span><br><span class="line">  <span class="number">0x16</span>, <span class="number">0xEE</span>, <span class="number">0x30</span>, <span class="number">0x05</span>, <span class="number">0x78</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x52</span>, </span><br><span class="line">  <span class="number">0xEC</span>, <span class="number">0x08</span>, <span class="number">0x5F</span>, <span class="number">0x93</span>, <span class="number">0xEA</span>, <span class="number">0xB5</span>, <span class="number">0xC0</span>, <span class="number">0x4D</span>, </span><br><span class="line">  <span class="number">0x50</span>, <span class="number">0xF4</span>, <span class="number">0x53</span>, <span class="number">0xD8</span>, <span class="number">0xAF</span>, <span class="number">0x90</span>, <span class="number">0x2B</span>, <span class="number">0x34</span>, </span><br><span class="line">  <span class="number">0x81</span>, <span class="number">0x36</span>, <span class="number">0x2C</span>, <span class="number">0xAA</span>, <span class="number">0xBC</span>, <span class="number">0x0E</span>, <span class="number">0x25</span>, <span class="number">0x8B</span>, </span><br><span class="line">  <span class="number">0xE4</span>, <span class="number">0x8A</span>, <span class="number">0xC6</span>, <span class="number">0xA2</span>, <span class="number">0x81</span>, <span class="number">0x9F</span>, <span class="number">0x75</span>, <span class="number">0x55</span>, </span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> key=<span class="number">0xB0004B7679FA26B3</span>uLL;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> *p=(<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> *)s;</span><br><span class="line">    <span class="keyword">int</span> iter=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(iter&lt;<span class="number">6</span>)&#123;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> k=*p;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">64</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(k%<span class="number">2</span>)&#123;</span><br><span class="line">                k^=key;</span><br><span class="line">                k/=<span class="number">2</span>;</span><br><span class="line">                k |= <span class="number">0x8000000000000000</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                k/=<span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">8</span>;j++)&#123;</span><br><span class="line">            write(<span class="number">1</span>,((<span class="keyword">char</span> *)&amp; k)+j,<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        p++;</span><br><span class="line">        iter++;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="get-flag"><a href="#get-flag" class="headerlink" title="get flag"></a>get flag</h2><p><img src="/2021/11/03/[RoarCTF2019]polyre%20writeup/6.png" alt="6"></p>
+<p>flag:<code>flag&#123;6ff29390-6c20-4c56-ba70-a95758e3d1f8&#125;</code></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/11/03/%5BRoarCTF2019%5Dpolyre%20writeup/">RoarCTF2019 polyre writeup writeup</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2021-11-03, 10:00:00</p>
+        <p><span>最后更新:</span>2021-12-15, 20:22:38</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/11/03/%5BRoarCTF2019%5Dpolyre%20writeup/" title="RoarCTF2019 polyre writeup writeup">http://example.com/2021/11/03/[RoarCTF2019]polyre%20writeup/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/11/03/[RoarCTF2019]polyre%20writeup/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2021/11/03/%E7%BD%91%E9%BC%8E%E6%9D%AF2020%E9%9D%92%E9%BE%99%E7%BB%84%20singal%20writeup/">
+                    网鼎杯2020青龙组singal writeup
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/11/02/WUSTCTF2020%20level4%20writeup/">
+                    WUSTCTF2020 level4 writeup
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">初步分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%B5%81%E5%B9%B3%E5%9D%A6%E5%8C%96%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">控制流平坦化介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%B5%E6%8A%97%E6%8E%A7%E5%88%B6%E6%B5%81%E5%B9%B3%E5%9D%A6%E5%8C%96"><span class="toc-number">1.2.</span> <span class="toc-text">抵抗控制流平坦化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">代码分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">3.</span> <span class="toc-text">exp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#get-flag"><span class="toc-number">4.</span> <span class="toc-text">get flag</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"RoarCTF2019 polyre writeup writeup　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/11/03/%E7%BD%91%E9%BC%8E%E6%9D%AF2020%E9%9D%92%E9%BE%99%E7%BB%84%20singal%20writeup/" title="上一篇: 网鼎杯2020青龙组singal writeup">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/11/02/WUSTCTF2020%20level4%20writeup/" title="下一篇: WUSTCTF2020 level4 writeup">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/12/08/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/">校园网模拟登录</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/27/RC4%E5%AD%A6%E4%B9%A0/">RC4加密的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/23/pwnable_input/">pwnable input writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/19/Re/">正则表达式的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/10/npuctf_2020_level2/">npuctf_2020_level2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/10/SWPUCTF_2019_p1KkHeap/">SWPUCTF_2019_p1KkHeap writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/07/de1ctf_2019_weapon/">de1ctf_2019_weapon writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/06/zjctf2021%20pwn2/">2021浙江省赛pwn2复盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/04/wdb2018_guess%20writeup/">wdb2018_guess writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/03/%E7%BD%91%E9%BC%8E%E6%9D%AF2020%E9%9D%92%E9%BE%99%E7%BB%84%20singal%20writeup/">网鼎杯2020青龙组singal writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/03/%5BRoarCTF2019%5Dpolyre%20writeup/">RoarCTF2019 polyre writeup writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/02/WUSTCTF2020%20level4%20writeup/">WUSTCTF2020 level4 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/ciscn2019_final_3%20writeup/">ciscn2019_final_3 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/">关于C++文件换libc版本的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/zjctf2021%20%E5%86%B3%E8%B5%9B/">2021浙江省决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/lctf2016_pwn200%20writeup/">lctf2016_pwn200 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/2021%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9BRSA/">2021江西省赛RSA writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/">2020浙江省赛 pwn2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/gyctf_2020_document/">gyctf_2020_document write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/">2021浙江省预赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">浙江2020省赛pwn1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      
+<footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021 xia0ji233
+            </div>
+            
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-212718070-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
