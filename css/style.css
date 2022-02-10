@@ -2127,10 +2127,10 @@ aside.comment-bar:active {
 }
 .article-entry .highlight {
   border-radius: 2px;
-  max-height: 50em;
+  max-height: 10000em;
   margin-top: 0.5em;
   margin-bottom: 1em;
-  overflow: auto;
+  overflow: hidden;
   -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.05);
   box-shadow: 1px 1px 1px rgba(0,0,0,0.05);
 }
@@ -2139,6 +2139,7 @@ aside.comment-bar:active {
   border: none;
   margin: 0;
   padding: 0;
+  padding-bottom: 5px;
 }
 .article-entry .highlight table {
   margin: 0;
