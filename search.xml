@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>C++文件的输入输出问题</title>
+      <link href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+      <url>/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<p>今天写这篇博客纯粹就是遇到点问题，不知道有没有人遇到过。</p><span id="more"></span><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近打CF的时候发现交上去一个答案发生了非预期退出，而且是在样例里面发生的，于是我赶紧把程序扒下来最大限度地确定出现问题的代码段，最终出现了以下代码写的程序。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="built_in">freopen</span>(<span class="string">&quot;1.in&quot;</span>,<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> q;</span><br><span class="line">cin&gt;&gt;q;</span><br><span class="line"><span class="keyword">while</span>(q--)&#123;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> s,t;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%lld %lld&quot;</span>,&amp;s,&amp;t);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;s=%lld t=%lld\n&quot;</span>,s,t); </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>首先万能头文件，然后我打开了一个文件把标准输入流重定向到一个文件中，并且关闭了 $cin$ 和 $cout$ 的同步流，大概率问题是出在这里的，然后就一些常规操作没什么好说的。</p><p>我的 $1.in$ 的文件内容如下图所示：</p><p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/1.png" alt="1"></p><p>是正常的输入数据，并且文件编码为 $UTF-8$ 没有任何问题。</p><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>那么我们开 $DEV$ 运行以下先。</p><p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/2.png" alt="2"></p><p>可以看到程序运行出现了非预期结果。</p><p>由于 $DEV$ 不方便调试我们便把 $IDE$ 换成了 $VScode$ 。</p><p>这里我们在 $scanf$ 和 $printf$ 分别打一个断点，然后开启调试模式。</p><p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/3.png" alt="3"></p><p>这里 $s$ 和 $t$ 是随机值正常，因为我们并没有初始化 $s$ 和 $t$ 。</p><p>那么我们 $F10$ 步过看看结果。</p><p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/4.png" alt="4"></p><p>过了 $scanf$ 却没有成功读入数据！！！这是为什么？</p><p>我开始尝试找不同的原因，原因1就是怀疑文件读入的问题，所以我们先注释重定向那一行测试看看。</p><p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/5.png" alt="5"></p><p>运行结果是正常的，这么看来问题似乎解决了。</p><p>但是提交给oj是实实在在地报错了，因此我们尝试注释其它代码看看情况，这里我们接着选择注释这个关闭同步流的代码。</p><p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/6.png" alt="6"></p><p>这回居然正常读入了数据！什么鬼？</p><p>因为刚刚我把 $freopen$ 注释了是确确实实读入没有什么问题了，但是现在似乎把</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br></pre></td></tr></table></figure><p>给关闭了程序也是能正常进行的。</p><p>而且这里我还测试了第三种情况：两者都打开，把 $long long$ 换回 $int$ 类型。</p><p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/7.png" alt="7"></p><p>居然也是正常读入？也就是说，打开文件，在关闭同步流的情况下使用 $scanf$ 读入 $long long$ 数据类型会导致读入不成功，而且注释了打开文件提交给 oj 测评返回了错误结果。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我个人感觉可能涉及到底层的一些问题了。因为自己测试确实三种情况同时满足会导致读入数据失败。这三种情况分别是</p><ol><li>重定向 $stdin$ 到一个文件</li><li>关闭IO同步流</li><li>用 $scanf$ 读入 $long long$ 数据</li></ol><p>一般来说，$scanf$ 不接收到 $EOF$ 信号是会一直等待你输入的。常见的 $EOF$ 基本就是读到文件尾，或者手动给终端了一个 $Ctrl + Z$ 信号给程序，这应该算外部中断了。就基本不会遇到 $scanf$ 读入失败的情况。要真的能有这么好数据那不是可以随便泄露？如果上一个栈帧保存的一些变量的地址刚好在这，我这里故意读入失败那就直接泄露地址，我没见过这样的情况。</p><p>当然我比较浅薄，只能看到表面上的一些东西，如果你有深层次点的合理的解释麻烦你也联系我，我也不想就在这里留一个错误的结论，期待这个问题能早点解决。</p><p>下面我也给出以下本次实验用到的<a href="%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/broken.zip">附件</a>供大家测试，看看能不能是版本的问题。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> ICPC </category>
+          
+          <category> stdin </category>
+          
+          <category> stdout </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>最近公共祖先求解</title>
       <link href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/"/>
       <url>/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/</url>
