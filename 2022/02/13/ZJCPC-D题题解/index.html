@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="今天来复盘一下上次省赛考到的题目，异常地折磨人。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZJCPC-D. Shortest Path Query">
+<meta property="og:url" content="http://example.com/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="今天来复盘一下上次省赛考到的题目，异常地折磨人。">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/1.png">
+<meta property="og:image" content="http://example.com/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/2.png">
+<meta property="og:image" content="http://example.com/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/3.png">
+<meta property="og:image" content="http://example.com/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/4.png">
+<meta property="article:published_time" content="2022-02-13T14:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-12T19:15:15.610Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>ZJCPC-D. Shortest Path Query | xia0ji233&#39;s blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xia0ji233</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">学习应该像呼吸一样自然</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/friends">友链</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xia0ji233</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xia0ji233 </a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/friends">友链</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-ZJCPC-D题题解" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/" class="article-date">
+      <time datetime="2022-02-13T14:00:00.000Z" itemprop="datePublished">2022-02-13</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ZJCPC-D. Shortest Path Query
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ICPC/">ICPC</a><a class="article-category-link" href="/categories/ICPC/%E5%9B%BE%E8%AE%BA/">图论</a><a class="article-category-link" href="/categories/ICPC/%E5%9B%BE%E8%AE%BA/LCA/">LCA</a><a class="article-category-link" href="/categories/ICPC/%E5%9B%BE%E8%AE%BA/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/">最短路径</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>今天来复盘一下上次省赛考到的题目，异常地折磨人。</p>
+<span id="more"></span>
+
+<p>先说一下这题比赛的情况吧，基本上呢，银奖中等偏上的队伍都是做出来了的。</p>
+<p>那我们就看看这题吧。</p>
+<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p><img src="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/1.png" alt="1"></p>
+<p>什么思路在题目名字这里就一目了然了，那自然是最短路径。</p>
+<p>而当我一眼扫过去看到这个数据量的时候瞬间惊呆。$1≤n≤100000，1≤m≤200000$，不仅如此，还有 $q$ 次询问最短路径，$q≤200000$ 当时一看，这玩你妈。给一个点都勉强能过了，这有这么多点，如果按照常规思路，一次单源最短路径复杂度 $nlog_2n$ 然后 $q$ 次询问，总复杂度就是 $qnlog_2n$ 全部以最大值带进去妥妥的超时。所以当时比赛的时候看到这个题目是直接放弃了的，而且英文不好的我留下了悔恨的眼泪。</p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><p>但是它还有一个条件，那就是，直接相连的两个点当中，其中一个点的编号一定是另一个点的二进制前缀，这就说明了一点，$2$ 它一定不会跟 $3,6,12……$ 等点连接起来的，因为它们的前缀是 $11_{2}$，而 $2_{10}$ 是 $10_{2}$ 开头的，那么这样的话我们就可以构造一棵 $tire$ 树。像这样子。</p>
+<p><img src="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/2.png" alt="2"></p>
+<p>可以很明显的看出来是一个完全二叉树，这里我们假设往左子树走二进制右添一个 $0$，向左走二进制右添一个 $1$。那你可能会想，这明明边的范围是比点多的，怎么可能是一棵树。没错，但是我们看看，它能不能边横向添加？答案当然是否定的，因为一个得是另一个的前缀，同层次的话二进制位数相同，但是实际值不同，因此不可能满足这个条件。那么我们看看能不能连到其它不是我的祖先的节点呢？答案当然还是否定的，因为我简历的 $tire$ 就是根据二进制后面添 $0$ 还是添 $1$ 来确定分支的，如果你都不是由我在后面添 $0$ 或者是添 $1$ 得到的那你就不可能是我的前缀，也不是我的孙子节点。</p>
+<p>当然在图中 $1$ 和 $4$ 是可以直接相连的，虽然越级但是满足条件。所以它严格意义上来说不是树，但它怎么当成树呢？如果我把一个节点两个直接相连的子图当成子树，问题就解决了。因为两个子图之间肯定没有线连接，这个在刚刚已经证明过了。</p>
+<p>对于每一个节点，我们都去寻找它祖先的最短路径。因为一个节点最多有 $log_2n$ 个祖先，所以跑一下最短路算法问题还是不大的。我们定义 $dis[i][k]$ 为节点 $i$ 到达往上 $k$ 个祖先的最短路径。那么对于任意两点的最短路径，我只需要寻找它们的最近公共祖先，然后答案就是 $a$ 到最近公共祖先的最短路加上 $b$ 到最近公共祖先的最短路。当然我们还有一个情况得考虑，因为 $dis[i][k]$ 的定义仅仅是到它祖先的最短路径，而不是到这个节点的最短路径。因此它祖先的祖先可能有更优的路线。</p>
+<p><img src="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/3.png" alt="3"></p>
+<p>就比如这样一个图，图中我把关键数据标注出来了，无关数据没有标注。</p>
+<p>如果说我要求 $8$ 和 $11$ 的最短路，按照我刚刚的定义很容易算的出来，它们的 $LCA$ 是 $2$，然后 $8$ 和 $11$ 到 $2$ 的最短路径都是 $2$，所以我算出来 $8$ 到 $11$ 的最短路径是 $4$，但是显然这里还有一个更优的解，那就是 $8\to1\to11$ 这样才只有 $2$ 的距离。但是最优的路线只可能存在于它的祖先上面了，其它地方不可能有。因此我们在用刚刚那个算法的时候还得兼顾一下查找 $LCA$ 的祖先的答案。</p>
+<p>这样子的话，假如我们能在规定时间内预处理完数据，那么我们每次查询的时间复杂度就只有 $O(log_2n)$ 了，也不会超时。那么我们看看怎么去预处理这个 $dis$ 数组。</p>
+<p>我们只需要以每一个节点为根节点，和根节点的子节点作为一张图去跑单源最短路即可。对于 $1$ 来说，它的复杂度会是 $O(nlog_2n)$ ，每向下走一层，根节点数量翻倍，子节点数量减半。第二层中，总共复杂度将是 $O(2 \times \frac{n}{2}log_2\frac{n}{2})$ 这么算下来这一层接近 $O(nlog_2n)$ ，此后每一层都接近 $O(nlog_2n)$。它一共有几层呢？$log_2n$层。所以预处理的时间复杂度仅仅只有 $O(n(log_2n)^2)$ 这个时间复杂度是完全不会超时的。</p>
+<p>我们肯定还是选择 $dijsktra$ 算法作为我们的单源最短路算法，加上一个优先队列优化，单源最短路需要每一个点给一个 $d$ 数组标记所有节点到源点的最短路，但是这样空间会炸。所以我们每次跑最短路空间得共用，如何保证他们不会串呢？用标记数组。比如我在以 $1$ 为根节点的时候，我就给标记打上 $1$，当我要更新 $d$ 里面的值的时候我先比较一下上一个使用 $d$ 数组的时候这个标记是否为我当前的根节点，如果是则更新，如果不是，则先初始化为一个很大的值。一般情况下我们选择 $INF=0x3f3f3f3f3f3f3f3f$ 因为这样不容易溢出，也能表示无穷大。</p>
+<p>但是呢，想想 $dijsktra$ 算法还有什么需要注意的？那就是每次选完一个点的时候，它不会再被更新，这个时候我需要再打上一个标记，防止它被其它相连的边重复更新答案。一般情况下我们是选择 $0,1$ 的，但是这里我们要一起用我们就选择根节点的值呗，如果当前根节点和这个值不相等说明这个点没有被添加，那就添加并将标记更新为当前的根节点。</p>
+<p>那么思路清晰了我们就开写。</p>
+<h3 id="循序渐进"><a href="#循序渐进" class="headerlink" title="循序渐进"></a>循序渐进</h3><p>首先开这么几个数组</p>
+<ul>
+<li>$d[i]$ 表示 $i$ 点到当前根节点的最短路径</li>
+<li>$vis1[i]$ 表示 $i$ 节点上一次被 $vis1[i]$ 节点标记为已经添加最短路的答案</li>
+<li>$vis2[i]$ 表示 $i$ 节点的 $d[i]$ 上一次是在以 $vis2[i]$ 为根节点时更新的</li>
+</ul>
+<p>图的话我们采用经典链式前向星存储，优先队列我们存储这么两个信息：</p>
+<ol>
+<li>x节点的最短路径</li>
+<li>x节点</li>
+</ol>
+<p>我们肯定每次是以最路径为关键字进行小根堆构造的，这样保证每次 $pop$ 出来的答案都是当前未被添加的节点中最小的那个答案。</p>
+<p>于是我们不难写出以下代码。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dijkstra</span><span class="params">(<span class="keyword">int</span> root)</span></span>&#123;</span><br><span class="line">	p.<span class="built_in">push</span>(&#123;<span class="number">0</span>,root&#125;);<span class="comment">//先把根节点丢进去</span></span><br><span class="line">	d[root]=<span class="number">0</span>;<span class="comment">//自己到自己肯定就是0</span></span><br><span class="line">	vis2[root]=root;<span class="comment">//自己这个答案肯定要被标记，防止下面找到被初始化，当然你如果严格规定所得节点必须&lt;root也没关系，因为下面会被初始化为INF。</span></span><br><span class="line">	<span class="keyword">while</span>(!p.<span class="built_in">empty</span>())&#123;</span><br><span class="line">		<span class="keyword">auto</span> x=p.<span class="built_in">top</span>();</span><br><span class="line">		p.<span class="built_in">pop</span>();</span><br><span class="line">		<span class="keyword">int</span> point=x.second;<span class="comment">//当前找到了一个距离最短的节点</span></span><br><span class="line">		<span class="keyword">if</span>(vis1[point]==root)<span class="keyword">continue</span>;<span class="comment">//如果已经被添加过了那么就不做以下处理</span></span><br><span class="line">		vis1[point]=root;<span class="comment">//把这个节点标记为已经添加进了答案中</span></span><br><span class="line">		dis[point][<span class="built_in">cal_c</span>(point,root)]=d[point];<span class="comment">//更新答案，这里的cal_c用于判断root在point的第几个祖先，我们设父亲为第一个祖先。</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=head[point];i;i=edge[i].next)&#123;<span class="comment">//更新所有与之相连的点的答案</span></span><br><span class="line">			<span class="keyword">int</span> to=edge[i].to;</span><br><span class="line">			<span class="keyword">if</span>(to&lt;root)<span class="keyword">continue</span>;<span class="comment">//基本判断防止找到root的父亲</span></span><br><span class="line">			<span class="keyword">if</span>(vis2[to]!=root)&#123;<span class="comment">//如果不是root说明上一次使用d[to]数组的还是上一次……啊不，是没用过d[to]这个值，所以要被初始化为一个无穷大</span></span><br><span class="line">				d[to]=INF;</span><br><span class="line">				vis2[to]=root;<span class="comment">//标记</span></span><br><span class="line">			&#125; </span><br><span class="line">			<span class="keyword">if</span>(d[point]+edge[i].w&lt;d[to])&#123;<span class="comment">//单源最短路判断</span></span><br><span class="line">				d[to]=d[point]+edge[i].w;</span><br><span class="line">				p.<span class="built_in">push</span>(&#123;d[to],to&#125;);<span class="comment">//push进优先队列中</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么结合代码中你的注释相信你已经不难理解这个 $dijsktra$ 算法了。</p>
+<p>我们再看看查询这部分的代码应该怎么写，无非就是先求出 $LCA$ ，然后循环 $LCA$ 以及 $LCA$ 祖先的答案。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(q--)&#123;</span><br><span class="line">    <span class="keyword">int</span> x,y;</span><br><span class="line">    cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">    <span class="keyword">int</span> lca=<span class="built_in">LCA</span>(x,y);<span class="comment">//先求最近公共祖先</span></span><br><span class="line">    <span class="keyword">int</span> lx=<span class="built_in">cal_c</span>(x,lca),ly=<span class="built_in">cal_c</span>(y,lca);<span class="comment">//算出他们在那个点的第几个祖先</span></span><br><span class="line">    <span class="keyword">int</span> ans=INF;</span><br><span class="line">    <span class="keyword">while</span>(lca)&#123;</span><br><span class="line">        ans=<span class="built_in">min</span>(ans,dis[x][lx]+dis[y][ly]);<span class="comment">//寻找最小值</span></span><br><span class="line">        lx++,ly++;<span class="comment">//每次往上看看那个祖先</span></span><br><span class="line">        lca&gt;&gt;=<span class="number">1</span>;<span class="comment">//完全二叉树怎么找自己的父亲，这个不难吧？</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(ans==INF)<span class="built_in">printf</span>(<span class="string">&quot;-1\n&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);<span class="comment">//输出答案</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重要的部分写完了之后那么整个程序就呼之欲出了，但是一定得注意，不开 $long long$ 见祖宗哦。</p>
+<p>然后还有一点就是，既然你开了 $long long$ 一定不要忘了 $inf$ ，不要漏写一半，不然真到比赛要么哭罚时，要么哭整整一题了，不管前者后者，都是很伤的，建议先记在心里。</p>
+<p>标程</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 100005</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 0x3f3f3f3f3f3f3f3f</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; P;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">eee</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> next;</span><br><span class="line">	<span class="keyword">int</span> to;</span><br><span class="line">	<span class="keyword">int</span> w;</span><br><span class="line">&#125;edge[maxn&lt;&lt;<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> head[maxn],dis[maxn][<span class="number">30</span>],cnt,n,m;</span><br><span class="line"><span class="keyword">int</span> vis1[maxn];</span><br><span class="line"><span class="keyword">int</span> vis2[maxn];</span><br><span class="line"><span class="keyword">int</span> d[maxn];</span><br><span class="line">priority_queue&lt;P,vector&lt;P&gt;,greater&lt;P&gt; &gt; p;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">cal_c</span><span class="params">(<span class="keyword">int</span> child,<span class="keyword">int</span> ancestor)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(child&gt;ancestor)&#123;</span><br><span class="line">		cnt++;</span><br><span class="line">		child&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">	edge[++cnt].next=head[x];</span><br><span class="line">	edge[cnt].to=y;</span><br><span class="line">	edge[cnt].w=w;</span><br><span class="line">	head[x]=cnt;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dijkstra</span><span class="params">(<span class="keyword">int</span> root)</span></span>&#123;</span><br><span class="line">	p.<span class="built_in">push</span>(&#123;<span class="number">0</span>,root&#125;);</span><br><span class="line">	d[root]=<span class="number">0</span>;</span><br><span class="line">	vis2[root]=root;</span><br><span class="line">	<span class="keyword">while</span>(!p.<span class="built_in">empty</span>())&#123;</span><br><span class="line">		<span class="keyword">auto</span> x=p.<span class="built_in">top</span>();</span><br><span class="line">		p.<span class="built_in">pop</span>();</span><br><span class="line">		<span class="keyword">int</span> point=x.second;</span><br><span class="line">		<span class="keyword">if</span>(vis1[point]==root)<span class="keyword">continue</span>;</span><br><span class="line">		vis1[point]=root;</span><br><span class="line">		dis[point][<span class="built_in">cal_c</span>(point,root)]=d[point];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=head[point];i;i=edge[i].next)&#123;</span><br><span class="line">			<span class="keyword">int</span> to=edge[i].to;</span><br><span class="line">			<span class="keyword">if</span>(to&lt;root)<span class="keyword">continue</span>;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">if</span>(vis2[to]!=root)&#123;</span><br><span class="line">				d[to]=INF;</span><br><span class="line">				vis2[to]=root;</span><br><span class="line">			&#125; </span><br><span class="line">			<span class="keyword">if</span>(d[point]+edge[i].w&lt;d[to])&#123;</span><br><span class="line">				d[to]=d[point]+edge[i].w;</span><br><span class="line">				p.<span class="built_in">push</span>(&#123;d[to],to&#125;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LCA</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(a!=b)&#123;</span><br><span class="line">		<span class="keyword">if</span>(a&gt;b)a&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> b&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//freopen(&quot;1.in&quot;,&quot;r&quot;,stdin);</span></span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> x,y,w;</span><br><span class="line">		cin&gt;&gt;x&gt;&gt;y&gt;&gt;w;</span><br><span class="line">		<span class="built_in">add</span>(x,y,w);</span><br><span class="line">		<span class="built_in">add</span>(y,x,w);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">memset</span>(dis,<span class="number">0x3f</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(dis)); </span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">dijkstra</span>(i);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> q;</span><br><span class="line">	cin&gt;&gt;q;</span><br><span class="line">	<span class="keyword">while</span>(q--)&#123;</span><br><span class="line">		<span class="keyword">int</span> x,y;</span><br><span class="line">		cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">		<span class="keyword">int</span> lca=<span class="built_in">LCA</span>(x,y);</span><br><span class="line">		<span class="keyword">int</span> lx=<span class="built_in">cal_c</span>(x,lca),ly=<span class="built_in">cal_c</span>(y,lca);</span><br><span class="line">		<span class="keyword">int</span> ans=INF;</span><br><span class="line">		<span class="keyword">while</span>(lca)&#123;</span><br><span class="line">			ans=<span class="built_in">min</span>(ans,dis[x][lx]+dis[y][ly]);</span><br><span class="line">			lx++,ly++;</span><br><span class="line">			lca&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(ans==INF)<span class="built_in">printf</span>(<span class="string">&quot;-1\n&quot;</span>);</span><br><span class="line">		<span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>蒟蒻的提交记录。</p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/gym/103055/problem/D">测评网站</a></p>
+<p><img src="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/4.png" alt="8"></p>
+<p>至于踩的那几个坑嘛，就是 $long long$ 的问题了，然后还有一点就是输入的问题，这个具体看我上一篇博客吧，我到现在还没太弄懂，不过至少能注意规避的技巧了：那就是千万别在开</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+
+<p>的情况下用 $scanf$ 去读取 $long long$ 数据，不然你会怀疑人生。</p>
+<p>希望这次省赛能超越上次的自己吧，$xia0ji233,fighting！！！$</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/">ZJCPC-D. Shortest Path Query</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
+        <p><span>发布时间:</span>2022-02-13, 22:00:00</p>
+        <p><span>最后更新:</span>2022-02-13, 03:15:15</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/" title="ZJCPC-D. Shortest Path Query">http://example.com/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/">
+                    C++文件的输入输出问题
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">题目简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">题目分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E5%BA%8F%E6%B8%90%E8%BF%9B"><span class="toc-number">2.1.</span> <span class="toc-text">循序渐进</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"ZJCPC-D. Shortest Path Query　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/" title="下一篇: C++文件的输入输出问题">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/">ZJCPC-D. Shortest Path Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/">C++文件的输入输出问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/">最近公共祖先求解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/11/%E6%B4%9B%E8%B0%B7P6037%E9%A2%98%E8%A7%A3/">洛谷P6037题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/07/%E6%B4%9B%E8%B0%B7P2656%E9%A2%98%E8%A7%A3/">洛谷P2656题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/04/%E4%BA%8C%E5%88%86%E5%9B%BE%E5%85%A5%E9%97%A8/">二分图入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/02/actf_2019_onerepeater%20writeup/">actf_2019_onerepeater writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/27/malloc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">malloc源码分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/23/%E5%88%86%E5%9D%97%E5%85%A5%E9%97%A82/">分块入门2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/22/%E5%88%86%E5%9D%97%E5%85%A5%E9%97%A8/">分块入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/AES%E5%8A%A0%E5%AF%86/">AES加密学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/16/%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E8%BF%9B%E9%98%B6/">启发式搜索算法进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/15/%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/">启发式搜索算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/15/%5BRoarCTF2019%5Dpolyre%20writeup/">RoarCTF2019 polyre writeup writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/08/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/">校园网模拟登录</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/27/RC4%E5%AD%A6%E4%B9%A0/">RC4加密的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/23/pwnable_input/">pwnable input writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/19/Re/">正则表达式的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/10/SWPUCTF_2019_p1KkHeap/">SWPUCTF_2019_p1KkHeap writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/10/npuctf_2020_level2/">npuctf_2020_level2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/07/de1ctf_2019_weapon/">de1ctf_2019_weapon writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/06/zjctf2021%20pwn2/">2021浙江省赛pwn2复盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/04/wdb2018_guess%20writeup/">wdb2018_guess writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/03/%E7%BD%91%E9%BC%8E%E6%9D%AF2020%E9%9D%92%E9%BE%99%E7%BB%84%20singal%20writeup/">网鼎杯2020青龙组singal writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/02/WUSTCTF2020%20level4%20writeup/">WUSTCTF2020 level4 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/ciscn2019_final_3%20writeup/">ciscn2019_final_3 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/">关于C++文件换libc版本的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/zjctf2021%20%E5%86%B3%E8%B5%9B/">2021浙江省决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/lctf2016_pwn200%20writeup/">lctf2016_pwn200 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/2021%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9BRSA/">2021江西省赛RSA writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/">2020浙江省赛 pwn2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/gyctf_2020_document/">gyctf_2020_document write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/">2021浙江省预赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">浙江2020省赛pwn1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      
+<footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021-2022 xia0ji233
+            </div>
+            
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-212718070-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
