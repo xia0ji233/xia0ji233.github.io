@@ -15,24 +15,17 @@
 
 
 
-<meta name="description" content="今天解决了一件困扰了我很久的事情，那就是对于elf文件的patch。以前我在做pwn题的时候，遇到C++文件总是束手无策。">
+<meta name="description" content="很烦啊，最近复习图论，贼艰难，很多题目基本多多少少都要用树形dp。而我专注于搞图论和数据结构，dp完全就是略知一二，逃避没有用，不会就去学，碰到困难就去面对。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于C++文件换libc版本的问题">
-<meta property="og:url" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:title" content="树形dp的学习">
+<meta property="og:url" content="http://example.com/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="今天解决了一件困扰了我很久的事情，那就是对于elf文件的patch。以前我在做pwn题的时候，遇到C++文件总是束手无策。">
+<meta property="og:description" content="很烦啊，最近复习图论，贼艰难，很多题目基本多多少少都要用树形dp。而我专注于搞图论和数据结构，dp完全就是略知一二，逃避没有用，不会就去学，碰到困难就去面对。">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/1.png">
-<meta property="og:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/2.png">
-<meta property="og:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/3.png">
-<meta property="og:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/4.png">
-<meta property="og:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/5.png">
-<meta property="og:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/6.png">
-<meta property="article:published_time" content="2021-11-01T02:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-20T14:37:26.585Z">
+<meta property="article:published_time" content="2022-02-14T03:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-13T17:51:59.325Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -66,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>关于C++文件换libc版本的问题 | xia0ji233&#39;s blog</title>
+<title>树形dp的学习 | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -209,11 +202,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-关于C++文件换libc版本的问题" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-树形dp学习" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
-      <time datetime="2021-11-01T02:00:00.000Z" itemprop="datePublished">2021-11-01</time>
+      <a href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/" class="article-date">
+      <time datetime="2022-02-14T03:00:00.000Z" itemprop="datePublished">2022-02-14</time>
 </a>
 
 
@@ -228,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      关于C++文件换libc版本的问题
+      树形dp的学习
     </h1>
   
 
@@ -237,7 +230,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/pwn/">pwn</a>
+    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a><a class="article-category-link" href="/categories/icpc/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%A0%91%E5%BD%A2dp/">树形dp</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/">图论</a>
     </div>
 
 
@@ -249,43 +242,20 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>今天解决了一件困扰了我很久的事情，那就是对于elf文件的patch。以前我在做pwn题的时候，遇到C++文件总是束手无策。</p>
+        <p>很烦啊，最近复习图论，贼艰难，很多题目基本多多少少都要用树形dp。而我专注于搞图论和数据结构，dp完全就是略知一二，逃避没有用，不会就去学，碰到困难就去面对。</p>
 <span id="more"></span>
 
-<p>在换过对应的版本之后，libc总是报错。就如下面这张图片</p>
-<p><img src="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/1.png" alt="1"></p>
-<p>在此问了肥猫师傅给我的解决办法，解决办法很早就给了我的，但是我到现在才搞明白，弄懂,下面是肥猫师傅的原话。</p>
-<p><img src="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/2.png" alt="2"></p>
-<p>在此之前我一直都是用patchelf封装的脚本加上glibc all in one配合完美换libc版本，对于C程序是没有任何问题的。但是C++出现了问题，那么我们就先看看C和C++编译链接之后出来的文件的依赖库的结构。</p>
-<p>那么为了测试就先写出两个版本的hello world程序。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//C</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Hello world\n&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>树上dp其实跟普通的dp差不多，甚至会比普通的dp写起来简单，但是前提是要理解。</p>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>洛谷<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1352">P1352</a>这个真的是典中典了，我看几乎所有的技术博客都会拿这个当作树形dp的入门题，那我也不例外。</p>
+<h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>某大学有 $n$ 个职员，编号为 $1\ldots n$。</p>
+<p>他们之间有从属关系，也就是说他们的关系就像一棵以校长为根的树，父结点就是子结点的直接上司。</p>
+<p>现在有个周年庆宴会，宴会每邀请来一个职员都会增加一定的快乐指数 $r_i$，但是呢，如果某个职员的直接上司来参加舞会了，那么这个职员就无论如何也不肯来参加舞会了。</p>
+<p>所以，请你编程计算，邀请哪些职员可以使快乐指数最大，求最大的快乐指数。</p>
+<hr>
+<p>其实我觉得这个跟有依赖的背包题有异曲同工之妙，不通的是，他们不是依赖，而是互斥，选了一个人之后则不能选另一个人。而依赖背包则是选了一个则必须选另外一个，当然另外一个没有这个限制，否则两个物品直接合并一个物品啦。</p>
+<p>这里很明显就是 $n$ 个人 $n-1$ 对关系，可以算做一棵树，但是这棵树是有向的，最顶级的那个上司就是树根了。这里我们肯定得先建一个有向图来保存这个关系，然后我们需要自底向上分析策略。对于每一个叶子节点，它们没有下级，对他们来说只有参加或者不参加，这里我们设 $dp[i][0]$ 为第 $i$ 个人不来参加的最优解，$dp[i][1]$ 为第 $i$ 个人来参加的最优解，注意这个最优解是对于它以及它的所有子孙节点的最优解。我们假设节点 $i$ 有k个节点分别为 $a_1,a_2\dots a_k$ ，那么可以写出如下状态转移方程。<br>$$<br>\left {<br>\begin{aligned}<br>dp[i][0] &amp; = \sum _{x=1} ^{k} \max(dp[a_x][0],dp[a_x][1]) \<br>dp[i][1] &amp; = \sum _{x=1} ^{k} dp[a_x][0]<br>\end{aligned}<br>\right.<br>$$<br>这里很明显，对于本人不参加，那么自己的下属可参加可不参加，但是自己参加了自己的下属一定不能参加，而自己不参加选择下属参加还是不参加也是选取最优结果的，因此能得到上面的状态转移方程。然后就是最基本的树的操作了：建边，找根，dfs，状态转移，最后结果就是 $\max(dp[root][1],dp[root][0])$，所以这道题是真的入门题。</p>
+<h4 id="标程"><a href="#标程" class="headerlink" title="标程"></a>标程</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 6500</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">eee</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> to;</span><br><span class="line">	<span class="keyword">int</span> next;</span><br><span class="line">&#125;edge[maxn];</span><br><span class="line"><span class="keyword">int</span> root[maxn],degree[maxn],cnt,n,dp[maxn][<span class="number">2</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	degree[y]++;</span><br><span class="line">	edge[++cnt].next=root[x];</span><br><span class="line">	edge[cnt].to=y;</span><br><span class="line">	root[x]=cnt;</span><br><span class="line">	<span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=root[x];i;i=edge[i].next)&#123;</span><br><span class="line">		<span class="keyword">int</span> v=edge[i].to;</span><br><span class="line">		<span class="built_in">dfs</span>(v);</span><br><span class="line">		dp[x][<span class="number">0</span>]+=<span class="built_in">max</span>(dp[v][<span class="number">1</span>],dp[v][<span class="number">0</span>]);<span class="comment">//状态转移方程</span></span><br><span class="line">		dp[x][<span class="number">1</span>]+=dp[v][<span class="number">0</span>];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;dp[i][<span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> x,y;</span><br><span class="line">		cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">		<span class="built_in">add</span>(y,x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(!degree[i])&#123;<span class="comment">//找根</span></span><br><span class="line">			<span class="built_in">dfs</span>(i);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">max</span>(dp[i][<span class="number">1</span>],dp[i][<span class="number">0</span>]));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//C++</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;Hello world&quot;</span>&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>分别用gcc和g++命令编译得到1和2可执行文件。</p>
-<p>查看动态链接的关系。</p>
-<p><img src="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/3.png" alt="3"></p>
-<p>可以看到C++程序多了三项依赖，查一下自己glibc all in one libs中找得到一下依赖项</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">libc.so.6</span><br><span class="line">libm.so.6</span><br><span class="line">ld.so.6</span><br></pre></td></tr></table></figure>
-
-<p>我们换库的原因是因为malloc的分配以及各个函数在libc中的偏移在不同版本中都有着很大的区别，偏移问题不大，只需要在本地打出之后连接远程靶机的时候替换一下自己的libc即可。但是在打堆题的时候，不同libc分配有本质区别，比如，2.27的tcache允许直接double free，但是2.23和2.29之后都不允许直接的double free。以及2.34 的libc 中很多hook已经被删除，并不能利用。总之，在打堆题的时候版本是一个很重要的东西，不同版本利用手段都会有本质区别的。</p>
-<p>我们patchelf的时候一般是指定链接器，然后再指定runpath到我们自己下载的库文件。那我们把这两个项换上2.23的libc之后ldd看看他们的依赖关系。</p>
-<p><img src="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/4.png" alt="2"></p>
-<p>可以看到两个文件都已经换上了2.23版本的libc，但是C++编译出来的文件出现了报错，报错是在我们换上的libc.so.6中报出的，然后报错的提醒是因为这个libstdc++.so.6。那么就可以确定一点了，c++自己额外提供了库，而这个库是libstdc++.so.6，而这一项指定到了我们系统的/lib/x86_64-linux-gnu/libstdc++.so.6这个库文件中，而这个库文件是对应了我们安装的版本的，因此我们需要去找一找2.23版本的这个C++的库，并且patch之后指向那个库应该就可以解决。这里可以学肥猫师傅的做法，先用docker装一个16版本的ubuntu，因为16版本刚好对应了libc的版本2.23。</p>
-<p>这里先去用docker拉一个ubuntu16.04的镜像然后用如下命令进入这个镜像。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#docker run -it ubuntu:16.04 /bin/bash</span><br></pre></td></tr></table></figure>
-
-<p>进入之后装上g++和vim，用vim写一个hello world 并且编译之后ldd查看文件依赖关系，找到libstdc++.so.6指向的具体路径然后用docker cp命令拷贝到自己目录下，然后建议丢进libs目录，此时为C++文件再加一个patchelf命令，我这里用了如下命令，自己看情况改改路径即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$patchelf --replace-needed libstdc++.so.6 &#x27;/home/xiaoji233/pwn-tools/glibc-all-in-one/libs/2.23-0ubuntu11.3_amd64/libstdc++.so.6.0.21&#x27;  filename</span><br></pre></td></tr></table></figure>
-
-<p>那么，改完了之后我们ldd看看情况。</p>
-<p><img src="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/5.png" alt="5"></p>
-<p>可以看到libstdc++.so.6已经指向了我们所给的库，并且也没有上面两行的报错了，因此这样就完成了一个C++程序的版本更换。</p>
-<p>最后我们运行看看。</p>
-<p><img src="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/6.png" alt="6"></p>
-<p>完美成功运行。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>小总结一波：在更换C程序的时候需要用patchelf更改链接器的版本和runpath，C++程序换libc版本的时候需要额外指定一个libstdc++.so.6这个库才能正常运行。</p>
-<p>总而言之，解决这个问题心情十分爽快，也希望本篇博客能帮到很多人。</p>
 
       
     </div>
@@ -294,13 +264,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/">关于C++文件换libc版本的问题</a></p>
+        <p><span>本文标题:</span><a href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/">树形dp的学习</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2021-11-01, 10:00:00</p>
-        <p><span>最后更新:</span>2021-11-20, 22:37:26</p>
+        <p><span>发布时间:</span>2022-02-14, 11:00:00</p>
+        <p><span>最后更新:</span>2022-02-14, 01:51:59</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/" title="关于C++文件换libc版本的问题">http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/" title="树形dp的学习">http://example.com/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -312,16 +282,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2021/11/01/ciscn2019_final_3%20writeup/">
-                    ciscn2019_final_3 writeup
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2021/10/31/zjctf2021%20%E5%86%B3%E8%B5%9B/">
-                    2021浙江省决赛
+                <a href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/">
+                    洛谷P1948题解
                 </a>
             </div>
         
@@ -333,7 +297,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">总结</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">例题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">题目分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">标程</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -369,7 +333,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"关于C++文件换libc版本的问题　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"树形dp的学习　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -389,15 +353,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2021/11/01/ciscn2019_final_3%20writeup/" title="上一篇: ciscn2019_final_3 writeup">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2021/10/31/zjctf2021%20%E5%86%B3%E8%B5%9B/" title="下一篇: 2021浙江省决赛">
+            <a href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/" title="下一篇: 洛谷P1948题解">
                 <i class="fa fa-angle-right"></i>
             </a>
         
