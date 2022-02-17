@@ -15,15 +15,15 @@
 
 
 
-<meta name="description" content="很烦啊，最近复习图论，贼艰难，很多题目基本多多少少都要用树形dp。而我专注于搞图论和数据结构，dp完全就是略知一二，逃避没有用，不会就去学，碰到困难就去面对。">
+<meta name="description" content="今天学习一下新的字符串算法——manacher算法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="树形dp的学习">
-<meta property="og:url" content="http://example.com/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="manacher的学习">
+<meta property="og:url" content="http://example.com/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="很烦啊，最近复习图论，贼艰难，很多题目基本多多少少都要用树形dp。而我专注于搞图论和数据结构，dp完全就是略知一二，逃避没有用，不会就去学，碰到困难就去面对。">
+<meta property="og:description" content="今天学习一下新的字符串算法——manacher算法。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-02-14T03:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-13T17:59:09.899Z">
+<meta property="article:published_time" content="2022-02-18T03:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-17T17:43:08.530Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
 
@@ -59,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>树形dp的学习 | xia0ji233&#39;s blog</title>
+<title>manacher的学习 | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -202,11 +202,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-树形dp学习" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-manacher算法学习" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/" class="article-date">
-      <time datetime="2022-02-14T03:00:00.000Z" itemprop="datePublished">2022-02-14</time>
+      <a href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" class="article-date">
+      <time datetime="2022-02-18T03:00:00.000Z" itemprop="datePublished">2022-02-18</time>
 </a>
 
 
@@ -221,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      树形dp的学习
+      manacher的学习
     </h1>
   
 
@@ -230,7 +230,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a><a class="article-category-link" href="/categories/icpc/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%A0%91%E5%BD%A2dp/">树形dp</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/">图论</a>
+    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串</a><a class="article-category-link" href="/categories/icpc/%E5%AD%97%E7%AC%A6%E4%B8%B2/manacher/">manacher</a><a class="article-category-link" href="/categories/icpc/%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%9B%9E%E6%96%87%E4%B8%B2/">回文串</a>
     </div>
 
 
@@ -242,22 +242,30 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>很烦啊，最近复习图论，贼艰难，很多题目基本多多少少都要用树形dp。而我专注于搞图论和数据结构，dp完全就是略知一二，逃避没有用，不会就去学，碰到困难就去面对。</p>
+        <p>今天学习一下新的字符串算法——manacher算法。</p>
 <span id="more"></span>
 
-<p>树上dp其实跟普通的dp差不多，甚至会比普通的dp写起来简单，但是前提是要理解。</p>
-<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>洛谷<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1352">P1352</a>这个真的是典中典了，我看几乎所有的技术博客都会拿这个当作树形dp的入门题，那我也不例外。</p>
-<h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>某大学有 $n$ 个职员，编号为 $1\ldots n$。</p>
-<p>他们之间有从属关系，也就是说他们的关系就像一棵以校长为根的树，父结点就是子结点的直接上司。</p>
-<p>现在有个周年庆宴会，宴会每邀请来一个职员都会增加一定的快乐指数 $r_i$，但是呢，如果某个职员的直接上司来参加舞会了，那么这个职员就无论如何也不肯来参加舞会了。</p>
-<p>所以，请你编程计算，邀请哪些职员可以使快乐指数最大，求最大的快乐指数。</p>
-<hr>
-<p>其实我觉得这个跟有依赖的背包题有异曲同工之妙，不通的是，他们不是依赖，而是互斥，选了一个人之后则不能选另一个人。而依赖背包则是选了一个则必须选另外一个，当然另外一个没有这个限制，否则两个物品直接合并一个物品啦。</p>
-<p>这里很明显就是 $n$ 个人 $n-1$ 对关系，可以算做一棵树，但是这棵树是有向的，最顶级的那个上司就是树根了。这里我们肯定得先建一个有向图来保存这个关系，然后我们需要自底向上分析策略。对于每一个叶子节点，它们没有下级，对他们来说只有参加或者不参加，这里我们设 $dp[i][0]$ 为第 $i$ 个人不来参加的最优解，$dp[i][1]$ 为第 $i$ 个人来参加的最优解，注意这个最优解是对于它以及它的所有子孙节点的最优解。我们假设节点 $i$ 有k个节点分别为 $a_1,a_2\dots a_k$ ，那么可以写出如下状态转移方程。 </p>
-<p>$dp[i][1]  = \sum _{x=1} ^{k} dp[a_x][0]$</p>
-<p>$dp[i][0]  = \sum _{x=1} ^{k} \max(dp[a_x][0],dp[a_x][1])$</p>
-<p>这里很明显，对于本人不参加，那么自己的下属可参加可不参加，但是自己参加了自己的下属一定不能参加，而自己不参加选择下属参加还是不参加也是选取最优结果的，因此能得到上面的状态转移方程。然后就是最基本的树的操作了：建边，找根，dfs，状态转移，最后结果就是 $\max(dp[root][1],dp[root][0])$，所以这道题是真的入门题。</p>
-<h4 id="标程"><a href="#标程" class="headerlink" title="标程"></a>标程</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 6500</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">eee</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> to;</span><br><span class="line">	<span class="keyword">int</span> next;</span><br><span class="line">&#125;edge[maxn];</span><br><span class="line"><span class="keyword">int</span> root[maxn],degree[maxn],cnt,n,dp[maxn][<span class="number">2</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	degree[y]++;</span><br><span class="line">	edge[++cnt].next=root[x];</span><br><span class="line">	edge[cnt].to=y;</span><br><span class="line">	root[x]=cnt;</span><br><span class="line">	<span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=root[x];i;i=edge[i].next)&#123;</span><br><span class="line">		<span class="keyword">int</span> v=edge[i].to;</span><br><span class="line">		<span class="built_in">dfs</span>(v);</span><br><span class="line">		dp[x][<span class="number">0</span>]+=<span class="built_in">max</span>(dp[v][<span class="number">1</span>],dp[v][<span class="number">0</span>]);<span class="comment">//状态转移方程</span></span><br><span class="line">		dp[x][<span class="number">1</span>]+=dp[v][<span class="number">0</span>];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;dp[i][<span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> x,y;</span><br><span class="line">		cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">		<span class="built_in">add</span>(y,x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(!degree[i])&#123;<span class="comment">//找根</span></span><br><span class="line">			<span class="built_in">dfs</span>(i);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">max</span>(dp[i][<span class="number">1</span>],dp[i][<span class="number">0</span>]));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="manacher简介"><a href="#manacher简介" class="headerlink" title="manacher简介"></a>manacher简介</h2><blockquote>
+<p><strong>最长回文子串</strong>（英语：<strong>Longest palindromic substring</strong>）是计算机科学中的问题，在一个<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%AD%97%E7%AC%A6%E4%B8%B2">字符串</a>中查找一个最长的连续的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%9B%9E%E6%96%87">回文</a>的子串，例如“banana”最长回文子串是“anana”。最长回文子串并不一定是唯一的，比如在“abracadabra”中，没有超过3个字符的回文子串，但是有两个回文字符串长度都是3：“ada”和“aca”。在一些应用中，我们求出全部的极大回文子串（不被其他回文串包含的回文子串）。</p>
+<p>Manacher于1975年发现了一种线性时间算法[<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2#cite_note-1">1]</a>，可以在列出给定字符串中从任意位置开始的所有回文子串。并且，Apostolico, Breslauer &amp; Galil [<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2#cite_note-2">2]</a>发现，同样的算法也可以在任意位置查找全部极大回文子串，并且时间复杂度是线性的。因此，他们提供了一种时间复杂度为线性的最长回文子串解法。另外，Jeuring (1994)[<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2#cite_note-3">3]</a>, Gusfield (1997)[<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2#cite_note-4">4]</a>发现了基于后缀树的算法。也存在已知的高效并行算法。(from wiki)</p>
+</blockquote>
+<h2 id="manacher实现"><a href="#manacher实现" class="headerlink" title="manacher实现"></a>manacher实现</h2><p>实现起来的话，其实我个人认为是比较简单的。首先防止奇偶序列的问题，我们在所有的字符之间以及末尾添加<code>#</code>让它变成奇数，再在首尾分别添加<code>$</code>和<code>~</code>作为截至判断的区分。</p>
+<p>我将变量做如下定义：</p>
+<ul>
+<li>$s$ ：所求字符串</li>
+<li>$p[i]$ ：代表以字符 $s[i]$ 为中心的最长回文半径。即满足在 $0\le j\le p[i]$ 的条件下 $s[i+j]==s[i-j]$ 永远成立。</li>
+<li>$wx$ ：目前所求的最远回文半径延伸的地方。即当前情况下的 $\max(i+p[i])$。  </li>
+<li>$idx$ ：代表之前所求最远回文半径的中心。即取得wx时的 $i$ 的值。</li>
+</ul>
+<p>那么有了这个定义之后我们主要就是求这个p数组了，怎么求呢？</p>
+<p>首先，如果我所在的位置在之前一个大的回文半径当中，那么我可以直接参考之前对称的那个位置上的p的值，比如下面这个例子。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a a a a b a a a a...</span><br><span class="line">    ↑   ↑   ↑   ↑</span><br><span class="line">    j idx   i   wx</span><br></pre></td></tr></table></figure>
+
+<p>这种情况下，我们不难发现，$p[i]$ 至少是大于等于 $p[j]$ 的，如果省略号后面马上跟一个 $b$ 的话，那么它的 $p$ 的值可能会涨，但是我们就不用判断它周围两边相不相等了啊。如果多了，那么我比较的次数就更少了。但是呢，其实可以发现，我们管的范围只能到wx，多余wx我们肯定不敢保证数据完全对称可用，所以这里我们限制一下 $p[i]$ 最大可赋值为 $wx-i$ 即可。</p>
+<p>所以我们的核心代码就是这样的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;len2;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(mx&gt;i)&#123;</span><br><span class="line">    	p[i]=<span class="built_in">min</span>(p[<span class="number">2</span>*idx-i],mx-i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">   		 p[i]=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(new_s[i+p[i]]==new_s[i-p[i]])&#123;<span class="comment">//继续扩展看看有没有可能</span></span><br><span class="line">    	p[i]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(i+p[i]&gt;mx)&#123;	</span><br><span class="line">    	mx=i+p[i];</span><br><span class="line">    	idx=i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="标程"><a href="#标程" class="headerlink" title="标程"></a>标程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 22000005</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">char</span> new_s[maxn];</span><br><span class="line"><span class="keyword">char</span> s[maxn&lt;&lt;<span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> p[maxn];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//freopen(&quot;2.in&quot;,&quot;r&quot;,stdin);</span></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s);</span><br><span class="line">	new_s[<span class="number">0</span>]=<span class="string">&#x27;$&#x27;</span>;</span><br><span class="line">	new_s[<span class="number">1</span>]=<span class="string">&#x27;#&#x27;</span>;</span><br><span class="line">	<span class="keyword">int</span> len1=<span class="built_in">strlen</span>(s),len2;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len1;i++)&#123;</span><br><span class="line">		new_s[<span class="number">2</span>*i+<span class="number">3</span>]=<span class="string">&#x27;#&#x27;</span>;</span><br><span class="line">		new_s[<span class="number">2</span>*i+<span class="number">2</span>]=s[i];</span><br><span class="line">	&#125;</span><br><span class="line">	len2=<span class="built_in">strlen</span>(new_s)+<span class="number">1</span>;</span><br><span class="line">	new_s[len2<span class="number">-1</span>]=<span class="string">&#x27;~&#x27;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> mx=<span class="number">0</span>,idx=<span class="number">0</span>,j=<span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;len2;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(mx&gt;i)&#123;</span><br><span class="line">			p[i]=<span class="built_in">min</span>(p[<span class="number">2</span>*idx-i],mx-i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			p[i]=<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">while</span>(new_s[i+p[i]]==new_s[i-p[i]])&#123;</span><br><span class="line">			p[i]++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(i+p[i]&gt;mx)&#123;</span><br><span class="line">			mx=i+p[i];</span><br><span class="line">			idx=i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> ans=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len2;i++)&#123;</span><br><span class="line">		ans=<span class="built_in">max</span>(ans,p[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -267,13 +275,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/">树形dp的学习</a></p>
+        <p><span>本文标题:</span><a href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">manacher的学习</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2022-02-14, 11:00:00</p>
-        <p><span>最后更新:</span>2022-02-14, 01:59:09</p>
+        <p><span>发布时间:</span>2022-02-18, 11:00:00</p>
+        <p><span>最后更新:</span>2022-02-18, 01:43:08</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/" title="树形dp的学习">http://example.com/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" title="manacher的学习">http://example.com/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -285,16 +293,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2022/02/16/KMP%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">
-                    KMP算法的学习
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/">
-                    洛谷P1948题解
+                <a href="/2022/02/16/KMP%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">
+                    KMP算法的学习
                 </a>
             </div>
         
@@ -306,7 +308,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">例题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">题目分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">标程</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#manacher%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">manacher简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#manacher%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">manacher实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">标程</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -342,7 +344,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"树形dp的学习　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"manacher的学习　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -362,15 +364,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2022/02/16/KMP%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" title="上一篇: KMP算法的学习">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/" title="下一篇: 洛谷P1948题解">
+            <a href="/2022/02/16/KMP%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" title="下一篇: KMP算法的学习">
                 <i class="fa fa-angle-right"></i>
             </a>
         
