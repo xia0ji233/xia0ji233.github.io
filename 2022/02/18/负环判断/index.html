@@ -15,15 +15,15 @@
 
 
 
-<meta name="description" content="洛谷P1948题解。">
+<meta name="description" content="前面讲到了spfa，然后有一个判断负环的操作，这个判断负环有更好的思路。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="洛谷P1948题解">
-<meta property="og:url" content="http://example.com/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:title" content="负环判断">
+<meta property="og:url" content="http://example.com/2022/02/18/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="洛谷P1948题解。">
+<meta property="og:description" content="前面讲到了spfa，然后有一个判断负环的操作，这个判断负环有更好的思路。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-02-13T15:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-20T23:43:37.493Z">
+<meta property="article:published_time" content="2022-02-18T03:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-21T10:38:25.444Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
 
@@ -59,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>洛谷P1948题解 | xia0ji233&#39;s blog</title>
+<title>负环判断 | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -202,11 +202,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-洛谷P1948题解" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-负环判断" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/" class="article-date">
-      <time datetime="2022-02-13T15:00:00.000Z" itemprop="datePublished">2022-02-13</time>
+      <a href="/2022/02/18/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/" class="article-date">
+      <time datetime="2022-02-18T03:00:00.000Z" itemprop="datePublished">2022-02-18</time>
 </a>
 
 
@@ -221,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      洛谷P1948题解
+      负环判断
     </h1>
   
 
@@ -230,7 +230,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/algorithm/">algorithm</a><a class="article-category-link" href="/categories/icpc/algorithm/%E4%BA%8C%E5%88%86/">二分</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/">图论</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/">最短路径</a>
+    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/">图论</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/spfa/">spfa</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/%E8%B4%9F%E7%8E%AF/">负环</a>
     </div>
 
 
@@ -242,20 +242,13 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1948">洛谷P1948</a>题解。</p>
+        <p>前面讲到了<code>spfa</code>，然后有一个判断负环的操作，这个判断负环有更好的思路。</p>
 <span id="more"></span>
 
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>多年以后，笨笨长大了，成为了电话线布置师。由于地震使得某市的电话线全部损坏，笨笨是负责接到震中市的负责人。该市周围分布着$N(1&lt;=N&lt;=1000)$根据$1……n$顺序编号的废弃的电话线杆，任意两根线杆之间没有电话线连接，一共有$p(1&lt;=p&lt;=10000)$对电话杆可以拉电话线。其他的由于地震使得无法连接。</p>
-<p>第i对电线杆的两个端点分别是$a_i,b_i$，它们的距离为$l_i(1&lt;=l_i&lt;=1000000)$。数据中每对$(a_i,b_i)$只出现一次。编号为1的电话杆已经接入了全国的电话网络，整个市的电话线全都连到了编号N的电话线杆上。也就是说，笨笨的任务仅仅是找一条将1号和N号电线杆连起来的路径，其余的电话杆并不一定要连入电话网络。</p>
-<p>电信公司决定支援灾区免费为此市连接k对由笨笨指定的电话线杆，对于此外的那些电话线，需要为它们付费，总费用决定于其中最长的电话线的长度(每根电话线仅连接一对电话线杆)。如果需要连接的电话线杆不超过k对，那么支出为0.</p>
-<p>请你计算一下，将电话线引导震中市最少需要在电话线上花多少钱？</p>
-<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><p>有一说一，不看题解我是万万想不到的，这得是多厉害猜想得到这题是用二分去解决的。不过如果能发现这题的答案的单调性，也许真的可以写出来。</p>
-<p>首先第一点我想的肯定就是最短路啦，但是本题目求的并不是最短路，仔细看，如果路线个数少于 $k$ 个，则0元购，否则将会取得所有路线的最长的一条路径作为费用。可以看到这个题目它并不具备无后效性，它属于有后效性，有后效性即前面做出的选择对之后的选择有影响，如果题目就是求总共的最短路那么它就是无后效性。因为我当前在一个点上的时候你不需要去管我怎么到的这，因为就一个最短路径的值在这里，不管你前面怎么走的这个值是不会影响后面的结果的。</p>
-<p>那么这是一个有后效性的题目那怎么办呢，答案是二分。</p>
-<p>二分的判断条件就是，在我预算为mid的时候能否成功建成，很容易可以找到规律，如果mid能建成，那么&gt;mid的情况一定能建成，如果mid不能建成，那么&lt;mid的情况一定也不能建成，以此作为二分的依据。我们跑最短路的时候只需要检测路线上有多少个超过mid的边即可，如果超过k，说明预算一定超过mid，如果没到，说明预算太多了，大于mid的答案就都排除了，然后每次二分跑一次单源最短路。在 $n=1000$ 的情况下复杂度完全允许。</p>
-<p>就是说，还得多练习，不然完全想不到能用这样的方法去做。</p>
+<p>设$cnt[i]$为$s$到$i$的最短路中已经经过的路径条数，如果超过 $n$ 个边，那就说明有 $n-1$ 个点，必产生了负环，如果没有负环绝对是不会找到回路的。</p>
+<h2 id="洛谷P3385"><a href="#洛谷P3385" class="headerlink" title="洛谷P3385"></a><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3385">洛谷P3385</a></h2><p>emm直接给标程吧，就是最朴实无华的 $spfa$ 负环判断。</p>
 <p>标程</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 5005</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 0x3f3f3f3f</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; P;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">eee</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> next;</span><br><span class="line">    <span class="keyword">int</span> to;</span><br><span class="line">    <span class="keyword">int</span> w;</span><br><span class="line">&#125;edge[maxn*maxn*<span class="number">2</span>];</span><br><span class="line"> <span class="keyword">int</span> n,m,k,cnt,root[maxn],d[maxn],vis[maxn];</span><br><span class="line"> priority_queue&lt;P,vector&lt;P&gt;,greater&lt;P&gt;&gt;s;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">    edge[++cnt].next=root[x];</span><br><span class="line">    edge[cnt].w=w;</span><br><span class="line">    edge[cnt].to=y;</span><br><span class="line">    root[x]=cnt;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(d,<span class="number">0x3f</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(d));</span><br><span class="line">    <span class="comment">//memset(vis,0,sizeof(vis));</span></span><br><span class="line">    d[<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="comment">//vis[1]=1;</span></span><br><span class="line">    s.<span class="built_in">push</span>(&#123;<span class="number">0</span>,<span class="number">1</span>&#125;);</span><br><span class="line">    <span class="keyword">while</span>(!s.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        <span class="keyword">auto</span> p=s.<span class="built_in">top</span>();</span><br><span class="line">        s.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">int</span> point=p.second;</span><br><span class="line">        <span class="keyword">if</span>(d[point]&lt;p.first)<span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=root[point];i;i=edge[i].next)&#123;</span><br><span class="line">            <span class="keyword">int</span> to=edge[i].to;</span><br><span class="line">            <span class="keyword">if</span>(vis[to])<span class="keyword">continue</span>;</span><br><span class="line">            <span class="comment">//vis[to]=1;</span></span><br><span class="line">            <span class="keyword">if</span>(d[to]&gt;d[point]+(edge[i].w&gt;x?<span class="number">1</span>:<span class="number">0</span>))&#123;</span><br><span class="line">                <span class="comment">//vis[to]=1;</span></span><br><span class="line">                d[to]=d[point]+(edge[i].w&gt;x?<span class="number">1</span>:<span class="number">0</span>);</span><br><span class="line">                s.<span class="built_in">push</span>(&#123;d[to],to&#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//printf(&quot;mid=%d:d[n]=%d\n&quot;,x,d[n]);</span></span><br><span class="line"><span class="comment">//    for(int i=1;i&lt;=n;i++)&#123;</span></span><br><span class="line"><span class="comment">//        printf(&quot;%d &quot;,d[i]);</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line">    <span class="comment">//putchar(10);</span></span><br><span class="line">    <span class="keyword">if</span>(d[n]==INF)<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span>(d[n]&gt;k)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//freopen(&quot;P1948_2.in&quot;,&quot;r&quot;,stdin);</span></span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m&gt;&gt;k;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> x,y,w;</span><br><span class="line">        cin&gt;&gt;x&gt;&gt;y&gt;&gt;w;</span><br><span class="line">        <span class="built_in">add</span>(x,y,w);</span><br><span class="line">        <span class="built_in">add</span>(y,x,w);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">1</span>,r=<span class="number">1000000</span>,ans=<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;=r)&#123;</span><br><span class="line">        <span class="keyword">int</span> mid = l+r&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> value=<span class="built_in">bfs</span>(mid);</span><br><span class="line">        <span class="keyword">if</span>(value==<span class="number">-1</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;-1\n&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(value==<span class="number">1</span>)&#123;</span><br><span class="line">            l=mid+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            r=mid<span class="number">-1</span>;</span><br><span class="line">            ans=mid;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 2005</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">eee</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> next;</span><br><span class="line">    <span class="keyword">int</span> to;</span><br><span class="line">    <span class="keyword">int</span> w;</span><br><span class="line">&#125;edge[maxn&lt;&lt;<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> root[maxn],dis[maxn],e_cnt[maxn],in_que[maxn],cnt;</span><br><span class="line"><span class="keyword">int</span> n,m;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">    edge[++cnt].to=y;</span><br><span class="line">    edge[cnt].w=w;</span><br><span class="line">    edge[cnt].next=root[x];</span><br><span class="line">    root[x]=cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sync</span><span class="params">()</span></span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">    cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    cout.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">spfa</span><span class="params">(<span class="keyword">int</span> s)</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(dis,<span class="number">0x3f</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(dis));</span><br><span class="line">    <span class="built_in">memset</span>(e_cnt,<span class="number">0</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(e_cnt));</span><br><span class="line">    <span class="built_in">memset</span>(in_que,<span class="number">0</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(in_que));</span><br><span class="line">    queue&lt;<span class="keyword">int</span>&gt;q;</span><br><span class="line">    dis[s]=<span class="number">0</span>;</span><br><span class="line">    q.<span class="built_in">push</span>(s);</span><br><span class="line">    e_cnt[s]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(q.<span class="built_in">size</span>())&#123;</span><br><span class="line">        <span class="keyword">int</span> u=q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        in_que[u]=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=root[u];i;i=edge[i].next)&#123;</span><br><span class="line">            <span class="keyword">int</span> v=edge[i].to,w=edge[i].w;</span><br><span class="line">            <span class="keyword">if</span>(dis[v]&gt;dis[u]+w)&#123;</span><br><span class="line">                dis[v]=dis[u]+w;</span><br><span class="line">                <span class="keyword">if</span>(!in_que[v])&#123;</span><br><span class="line">                    q.<span class="built_in">push</span>(v);</span><br><span class="line">                    e_cnt[v]++;</span><br><span class="line">                    <span class="keyword">if</span>(e_cnt[v]&gt;n)&#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    in_que[v]=<span class="number">1</span>;</span><br><span class="line">                &#125;    </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//freopen(&quot;P3385_9.in&quot;,&quot;r&quot;,stdin);</span></span><br><span class="line">    <span class="built_in">sync</span>();</span><br><span class="line">    <span class="keyword">int</span> t;</span><br><span class="line">    cin&gt;&gt;t;</span><br><span class="line">    <span class="keyword">while</span>(t--)&#123;</span><br><span class="line">        cnt=<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">memset</span>(root,<span class="number">0</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(root));</span><br><span class="line">        <span class="built_in">memset</span>(edge,<span class="number">0</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(edge));</span><br><span class="line">        cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> x,y,w;</span><br><span class="line">            cin&gt;&gt;x&gt;&gt;y&gt;&gt;w;</span><br><span class="line">            <span class="built_in">add</span>(x,y,w);</span><br><span class="line">            <span class="keyword">if</span>(w&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="built_in">add</span>(y,x,w);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">spfa</span>(<span class="number">1</span>))&#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;YES&quot;</span>&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;NO&quot;</span>&lt;&lt;endl;</span><br><span class="line">        &#125;        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -265,13 +258,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/">洛谷P1948题解</a></p>
+        <p><span>本文标题:</span><a href="/2022/02/18/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/">负环判断</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2022-02-13, 23:00:00</p>
-        <p><span>最后更新:</span>2022-02-21, 07:43:37</p>
+        <p><span>发布时间:</span>2022-02-18, 11:00:00</p>
+        <p><span>最后更新:</span>2022-02-21, 18:38:25</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/" title="洛谷P1948题解">http://example.com/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/02/18/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/" title="负环判断">http://example.com/2022/02/18/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/18/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -284,15 +277,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/">
-                    树形dp的学习
+                <a href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">
+                    manacher的学习
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/">
-                    ZJCPC-D. Shortest Path Query
+                <a href="/2022/02/16/KMP%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">
+                    KMP算法的学习
                 </a>
             </div>
         
@@ -304,7 +297,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">题目分析</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B4%9B%E8%B0%B7P3385"><span class="toc-number">1.</span> <span class="toc-text">洛谷P3385</span></a></li></ol>
         
     </div>
     <style>
@@ -340,7 +333,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"洛谷P1948题解　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"负环判断　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -360,7 +353,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/" title="上一篇: 树形dp的学习">
+            <a href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" title="上一篇: manacher的学习">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -368,7 +361,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/" title="下一篇: ZJCPC-D. Shortest Path Query">
+            <a href="/2022/02/16/KMP%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" title="下一篇: KMP算法的学习">
                 <i class="fa fa-angle-right"></i>
             </a>
         
