@@ -15,20 +15,17 @@
 
 
 
-<meta name="description" content="最近在和战队一起的比赛中又出现了诸多想要学习的知识点，那就是re和QRcode，今天先学一下这个正则吧。">
+<meta name="description" content="差分约束系统，就是给出一组形如 $x_i-x_j\le d$ 的不等式，求出这组不等式的一组解。这类问题通常转化为图论中的最短路来解。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="正则表达式的使用">
-<meta property="og:url" content="http://example.com/2021/11/19/Re/index.html">
+<meta property="og:title" content="差分约束的学习笔记">
+<meta property="og:url" content="http://example.com/2022/02/22/%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="最近在和战队一起的比赛中又出现了诸多想要学习的知识点，那就是re和QRcode，今天先学一下这个正则吧。">
+<meta property="og:description" content="差分约束系统，就是给出一组形如 $x_i-x_j\le d$ 的不等式，求出这组不等式的一组解。这类问题通常转化为图论中的最短路来解。">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2021/11/19/Re/1.png">
-<meta property="og:image" content="http://example.com/2021/11/19/Re/2.png">
-<meta property="article:published_time" content="2021-11-19T02:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-20T14:37:28.902Z">
+<meta property="article:published_time" content="2022-02-22T03:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-22T09:46:48.941Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/11/19/Re/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -62,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>正则表达式的使用 | xia0ji233&#39;s blog</title>
+<title>差分约束的学习笔记 | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -205,11 +202,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Re" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-差分约束学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2021/11/19/Re/" class="article-date">
-      <time datetime="2021-11-19T02:00:00.000Z" itemprop="datePublished">2021-11-19</time>
+      <a href="/2022/02/22/%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+      <time datetime="2022-02-22T03:00:00.000Z" itemprop="datePublished">2022-02-22</time>
 </a>
 
 
@@ -224,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      正则表达式的使用
+      差分约束的学习笔记
     </h1>
   
 
@@ -233,7 +230,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/re/">re</a>
+    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/">图论</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF/">单源最短路</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF/spfa/">spfa</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F/">差分约束</a>
     </div>
 
 
@@ -245,37 +242,24 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>最近在和战队一起的比赛中又出现了诸多想要学习的知识点，那就是re和QRcode，今天先学一下这个正则吧。</p>
+        <p>差分约束系统，就是给出一组形如 $x_i-x_j\le d$ 的不等式，求出这组不等式的一组解。这类问题通常转化为图论中的最短路来解。</p>
 <span id="more"></span>
 
-<p>那么我已开始接触正则呢，应该是在学爬虫的时候，因为当时爬虫学的不太好也就没有接着学正则匹配。后来在换了linux系统之后经常会用到一个很有用的东西，那就是|grep。不得不说这个在找东西的时候真的是很有用的，比如</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ls -l | grep &quot;&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>那我们转换一下，假设 $x_i$ 为点 $i$ 的单源最短路长度，$x_j$ 为点 $j$ 的单源最短路长度。那么以上不等式就可以转换成 $dis[i]-dis[j]\le d\to dis[i]\le dis[j]+d$。</p>
+<p>那么这个就转变成了 $j\to i$ 一条权值为 $d$ 的边的最短路搜索了。因为如果一条边 $i\to j$ 权值为 $d$ ，那么必然有 $dis[i]\le dis[j]+d$ ，如果不满足这个条件。我们用反证法证明一下这个结论，设一条边 $i\to j$ 权值为 $d$，且满足 $dis[i] &gt; dis[j]+d$，那么在一次单源最短路算法时，必然会导致 $i$ 点被松弛。即发生</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(dis[i]&gt;dis[j]+d)&#123;</span><br><span class="line">    dis[i]=dis[j]+d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>那么本次和Nepnep战队参加xctf分区赛也是有一道修复二维码的题目，当时师傅们可能有些点没注意到，导致最后修复的二维码多达16000的扫描结果。</p>
-<p><img src="/2021/11/19/Re/1.png" alt="1"></p>
-<p>得到结果之后本以为要经历漫长的人工过滤，可是咱们战队的一位爷爷直接solved，而这位爷爷就是直接用了正则匹配。</p>
-<p><img src="/2021/11/19/Re/2.png" alt="2"></p>
-<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><p>正则表达式（英语：Regular Expression，常简写为regex、regexp或RE），又称正则表示式、正则表示法、规则表达式、常规表示法，是计算机科学的一个概念。正则表达式使用单个字符串来描述、匹配一系列匹配某个句法规则的字符串。在很多文本编辑器里，正则表达式通常被用来检索、替换那些匹配某个模式的文本。</p>
-<p>许多程序设计语言都支持利用正则表达式进行字符串操作。例如，在Perl中就内建了一个功能强大的正则表达式引擎。正则表达式这个概念最初是由Unix中的工具软件（例如sed和grep）普及开的。</p>
-<p>以上来自维基百科。</p>
-<h3 id="转义符"><a href="#转义符" class="headerlink" title="转义符"></a>转义符</h3><p>右斜杠(\)老转义符了，在右斜杠之后的一个字将会带有特殊含义，如果要匹配右斜杠则需要双写。</p>
-<h3 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h3><p>通配符我们熟知的就是星号(*)和问号(?)，一般情况下它们分别代表任意多个字符或者是任意一个字符，在正则表达式中存在三种类似的符号，并且不能匹配任意字符，只能代表前面一个字符的数量。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+：匹配一个或多个字符</span><br><span class="line">?：匹配一个或零个字符</span><br><span class="line">*：匹配零个或多个字符</span><br></pre></td></tr></table></figure>
+<p>那么我们可以得出结论：$dis[i]$ 一定不会比 $dis[j]+d$ 大，当 $i\to j$ 有一条权值为 $d$ 的边时。当然可以比它小，如果其它边有更短的走法。</p>
+<p>所以当存在不等式 $x_i-x_j\le d$ 的时候，我们只需要建一条 $i\to j$ 权值为 $d$ 的边就能满足这个不等式了。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>我们就根据不等式组建图，然后跑单源最短路。这里需要注意的是，如果图不连通，那并不是无解，说明它们不在同一个不等式组，相互之间都没有关联，那就分别求单源最短路即可。为了防止这个情况，我们一般都会添加一个超级源点，这个源点为 $0$ 或者是 $n+1$。然后建立一条源点到其它所有点的一条权值为 $d$ 的有向边。 </p>
+<p>我们添加了 $0\to i(1\le i\le n)$ 权值为 $0$ 的有向边，相当于增加了以下约束条件：</p>
+<p>$dis[i]\le dis[0]+0$ </p>
+<p>添加这个约束条件问题是不大的，因为我们很容易看出来，在找到一组解的时候，给所有的未知数都加上一个相同的值，是不会影响结果的。这个结论是很容易的出来的，因为我们的表达式都是一正一负，然后带进不等式之后加上的常数都会消掉，还能解决图不连通的问题，一举多得。添加这个约束条件之后，我们可以发现得到的值一定都是负数，那么如果一定要正解的话，那么直接给所有的dis加上一个 $\max(dis)$ 就完了。</p>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5960">洛谷P5960</a></p>
+<p>就依然是一个板子，然后最后判断以下负环无解的情况，没有就输出所有的 $dis$。</p>
+<p>标程</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 5005</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">eee</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> next;</span><br><span class="line">    <span class="keyword">int</span> to;</span><br><span class="line">    <span class="keyword">int</span> w;</span><br><span class="line">&#125;edge[maxn&lt;&lt;<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> root[maxn],degree[maxn],dis[maxn],e_cnt[maxn],in_que[maxn],cnt,n,m;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">    edge[++cnt].next=root[x];</span><br><span class="line">    edge[cnt].to=y;</span><br><span class="line">    edge[cnt].w=w;</span><br><span class="line">    degree[y]++;</span><br><span class="line">    root[x]=cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">spfa</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(dis,<span class="number">0x3f</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(dis));</span><br><span class="line">    queue&lt;<span class="keyword">int</span>&gt;q;</span><br><span class="line">    q.<span class="built_in">push</span>(<span class="number">0</span>);</span><br><span class="line">    dis[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    e_cnt[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    in_que[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(q.<span class="built_in">size</span>())&#123;</span><br><span class="line">        <span class="keyword">int</span> u=q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        in_que[u]=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=root[u];i;i=edge[i].next)&#123;</span><br><span class="line">            <span class="keyword">int</span> v=edge[i].to,w=edge[i].w;</span><br><span class="line">            <span class="keyword">if</span>(dis[v]&gt;dis[u]+w)&#123;</span><br><span class="line">                dis[v]=dis[u]+w;</span><br><span class="line">                e_cnt[v]++;</span><br><span class="line">                <span class="keyword">if</span>(e_cnt[v]&gt;n)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(!in_que[v])&#123;</span><br><span class="line">                    in_que[v]=<span class="number">1</span>;</span><br><span class="line">                    q.<span class="built_in">push</span>(v);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sync</span><span class="params">()</span></span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line">    cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    cout.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">sync</span>();</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m; </span><br><span class="line">    <span class="keyword">while</span>(m--)&#123;</span><br><span class="line">        <span class="keyword">int</span> x,y,w;</span><br><span class="line">        cin&gt;&gt;x&gt;&gt;y&gt;&gt;w;</span><br><span class="line">        <span class="built_in">add</span>(y,x,w);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="built_in">add</span>(<span class="number">0</span>,i,<span class="number">0</span>);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">spfa</span>())&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;NO\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> M=<span class="number">1e9</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        cout&lt;&lt;dis[i]&lt;&lt;<span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>例如</p>
-<p>‘a+’可以匹配’a’,’aa’,’aaa’,’aaaa’……等字符串。</p>
-<p>‘a?’可以匹配’a’或者空串</p>
-<p>‘a*’则可以匹配第一种情况和第二种情况的并集。</p>
-<h3 id="匹配任意字符"><a href="#匹配任意字符" class="headerlink" title="匹配任意字符"></a>匹配任意字符</h3><p>[]方括号用于匹配单个字符。</p>
-<p>例如</p>
-<p>[abcde]可以匹配a,b,c,d,e中的任意一个字符。</p>
-<p>如果加上^则代表匹配除了列表以外的所有字符。</p>
-<p>例如</p>
-<p>[^a]表示匹配所有非’a’的字符。</p>
-<h3 id="匹配次数限定"><a href="#匹配次数限定" class="headerlink" title="匹配次数限定"></a>匹配次数限定</h3><p>{}用于限定匹配次数</p>
-<p>例如：</p>
-<p>[ab]{3}表示[ab]匹配三次，[ab]{3,}表示至少匹配三次。</p>
-<p>就先学这么多吧，后续再学就再加。</p>
 
       
     </div>
@@ -284,13 +268,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2021/11/19/Re/">正则表达式的使用</a></p>
+        <p><span>本文标题:</span><a href="/2022/02/22/%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">差分约束的学习笔记</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2021-11-19, 10:00:00</p>
-        <p><span>最后更新:</span>2021-11-20, 22:37:28</p>
+        <p><span>发布时间:</span>2022-02-22, 11:00:00</p>
+        <p><span>最后更新:</span>2022-02-22, 17:46:48</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2021/11/19/Re/" title="正则表达式的使用">http://example.com/2021/11/19/Re/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/11/19/Re/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/02/22/%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="差分约束的学习笔记">http://example.com/2022/02/22/%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/22/%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -302,16 +286,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2021/11/23/pwnable_input/">
-                    pwnable input writeup
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2021/11/10/SWPUCTF_2019_p1KkHeap/">
-                    SWPUCTF_2019_p1KkHeap writeup
+                <a href="/2022/02/21/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/">
+                    负环判断
                 </a>
             </div>
         
@@ -323,7 +301,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E4%B9%89%E7%AC%A6"><span class="toc-number">1.1.</span> <span class="toc-text">转义符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="toc-number">1.2.</span> <span class="toc-text">通配符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E4%BB%BB%E6%84%8F%E5%AD%97%E7%AC%A6"><span class="toc-number">1.3.</span> <span class="toc-text">匹配任意字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E6%AC%A1%E6%95%B0%E9%99%90%E5%AE%9A"><span class="toc-number">1.4.</span> <span class="toc-text">匹配次数限定</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">例题</span></a></li></ol>
         
     </div>
     <style>
@@ -359,7 +337,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"正则表达式的使用　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"差分约束的学习笔记　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -379,15 +357,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2021/11/23/pwnable_input/" title="上一篇: pwnable input writeup">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2021/11/10/SWPUCTF_2019_p1KkHeap/" title="下一篇: SWPUCTF_2019_p1KkHeap writeup">
+            <a href="/2022/02/21/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/" title="下一篇: 负环判断">
                 <i class="fa fa-angle-right"></i>
             </a>
         
