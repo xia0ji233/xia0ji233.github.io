@@ -205,6 +205,74 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-buflab" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/04/30/buflab/" class="article-date">
+      <time datetime="2021-04-29T16:10:00.000Z" itemprop="datePublished">2021-04-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>在此实验开始之前，弄清楚给你的三个文件分别干嘛的。</p>
+<p><code>bufbomb</code>：实验需要攻击的程序</p>
+<p><code>hex2raw</code>：根据填写的字节生成攻击字符串</p>
+<p><code>makecookie</code>：对每个实验用户生成一个八位十六进制的字节序列，用于识别用户。(可能是用来打分的)</p>
+<p>在<code>gdb</code>要运行的时候，一定要输入<code>r -u &lt;your id&gt;</code>，终端运行要输入<code>./bufbomb -u &lt;your id&gt;</code>，否则你是运行不了的。那咱们先输入<code>./makecookie -q</code>生成你的<code>cookie（id）</code>,最好先找个地儿保存一下。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/csapp/">csapp</a><a class="article-category-link" href="/categories/csapp/lab/">lab</a>
+    </div>
+
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2021/04/30/buflab/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-attqacklab" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
