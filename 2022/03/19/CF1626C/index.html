@@ -15,15 +15,15 @@
 
 
 
-<meta name="description" content="勇敢小鸡，不怕困难。时隔多日，又来复习图论算法了，本来想的是搞一下差分约束的，但是发现前置知识是spfa算法，所以就先来学习一下这个。">
+<meta name="description" content="一道思维好题，写篇题解纪念一下。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="spfa算法的学习">
-<meta property="og:url" content="http://example.com/2022/02/21/spfa%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="CF1626C">
+<meta property="og:url" content="http://example.com/2022/03/19/CF1626C/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="勇敢小鸡，不怕困难。时隔多日，又来复习图论算法了，本来想的是搞一下差分约束的，但是发现前置知识是spfa算法，所以就先来学习一下这个。">
+<meta property="og:description" content="一道思维好题，写篇题解纪念一下。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-02-21T03:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-21T00:52:00.904Z">
+<meta property="article:published_time" content="2022-03-19T03:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-19T11:34:59.335Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
 
@@ -59,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>spfa算法的学习 | xia0ji233&#39;s blog</title>
+<title>CF1626C | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -202,11 +202,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-spfa算法学习" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-CF1626C" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2022/02/21/spfa%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" class="article-date">
-      <time datetime="2022-02-21T03:00:00.000Z" itemprop="datePublished">2022-02-21</time>
+      <a href="/2022/03/19/CF1626C/" class="article-date">
+      <time datetime="2022-03-19T03:00:00.000Z" itemprop="datePublished">2022-03-19</time>
 </a>
 
 
@@ -221,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      spfa算法的学习
+      CF1626C
     </h1>
   
 
@@ -230,7 +230,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/">图论</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/">最短路径</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/spfa/">spfa</a>
+    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E6%80%9D%E7%BB%B4/">思维</a>
     </div>
 
 
@@ -242,32 +242,24 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>勇敢小鸡，不怕困难。时隔多日，又来复习图论算法了，本来想的是搞一下差分约束的，但是发现前置知识是<code>spfa</code>算法，所以就先来学习一下这个。</p>
+        <p>一道思维好题，写篇题解纪念一下。</p>
 <span id="more"></span>
 
-<h2 id="spfa算法介绍"><a href="#spfa算法介绍" class="headerlink" title="spfa算法介绍"></a>spfa算法介绍</h2><p>SPFA算法是求解单源最短路径问题的一种算法，由理查德·贝尔曼（Richard Bellman） 和 莱斯特·福特 创立的。有时候这种算法也被称为 Moore-Bellman-Ford 算法，因为 Edward F. Moore 也为这个算法的发展做出了贡献。它的原理是对图进行V-1次松弛操作，得到所有可能的最短路径。<strong>其优于dijkstra算法的方面是边的权值可以为负数、实现简单，缺点是时间复杂度过高，高达 O(VE)。但算法可以进行若干种优化，提高了效率。</strong></p>
-<p>算法的思路：<br>我们用数组dis记录每个结点的最短路径估计值，用邻接表或邻接矩阵来存储图G。我们采取的方法是动态逼近法：设立一个先进先出的队列用来保存待优化的结点，优化时每次取出队首结点u，并且用u点当前的最短路径估计值对离开u点所指向的结点v进行松弛操作，如果v点的最短路径估计值有所调整，且v点不在当前的队列中，就将v点放入队尾。这样不断从队列中取出结点来进行松弛操作，直至队列空为止</p>
-<p>我们要知道带有负环的图是没有最短路径的，所以我们在执行算法的时候，要判断图是否带有负环，方法有两种：</p>
+<h3 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h3><p>有 $n$ 个敌人，你需要在第 $k_i$ 秒用至少 $h_i$ 的攻击力打败这个敌人。</p>
+<p>攻击力的计算方式如下：</p>
 <ol>
-<li>开始算法前，调用拓扑排序进行判断（一般不采用，浪费时间）</li>
-<li>如果某个点进入队列的次数超过N次则存在负环（N为图的顶点数）</li>
+<li> 第一秒时，你有 $1$ 攻击力</li>
+<li> 对于后面的任意一秒，若前一秒你的攻击力为 $x$，则这一秒你的攻击力可以为 $x+1$ 或 $1$</li>
 </ol>
-<h2 id="spfa算法浅谈"><a href="#spfa算法浅谈" class="headerlink" title="spfa算法浅谈"></a>spfa算法浅谈</h2><p><code>spfa</code>算法的话，一般单源最短路基本用不到 ，<code>dijkstra</code>算法比它优很多，唯有需要处理负权图的时候会想到他。差分约束无解的情况就是存在负环，因此这个得学。</p>
-<p>大概流程可以描述为以下文字。</p>
-<ol>
-<li>源点入队，源点距离初始化为0，其它初始化为 $inf$。</li>
-<li>出队一个点并遍历与之之间相连的点，进行松弛操作。也就是我们经常见到的 <code>if(dis[to]&gt;w+dis[from])dis[to]=dis[from+w]</code>。</li>
-<li>如果对一个点进行了松弛那么判断它有没有在队列中，如果不在则入队，并判断入队次数有没有超过点的个数，如果超过则goto 6。</li>
-<li>如果队列不为空则goto 2。</li>
-<li>结束，输出结果。</li>
-<li>结束，输出存在负环的对应答案。</li>
-</ol>
-<p>下面来一道例题。</p>
-<h2 id="洛谷P1396"><a href="#洛谷P1396" class="headerlink" title="洛谷P1396"></a><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1396">洛谷P1396</a></h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>妈妈下班回家，街坊邻居说小明被一群陌生人强行押上了警车！妈妈丰富的经验告诉她小明被带到了 t 区，而自己在 s区。</p>
-<p>该市有 m 条大道连接 n 个区，一条大道将两个区相连接，每个大道有一个拥挤度。小明的妈妈虽然很着急，但是不愿意拥挤的人潮冲乱了她优雅的步伐。所以请你帮她规划一条从 s 至 t 的路线，使得经过道路的拥挤度最大值最小。</p>
-<h3 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h3><p>这题其实有点差强人意，因为这个是要判断所经过边的最大值的最小值，但是我们主要还是练习spfa为主。</p>
-<p>标程</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 10005</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">eee</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> to;</span><br><span class="line">    <span class="keyword">int</span> next;</span><br><span class="line">    <span class="keyword">int</span> w;</span><br><span class="line">&#125;edge[maxn&lt;&lt;<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> root[maxn],cnt,dis[maxn],in_que[maxn];</span><br><span class="line"><span class="keyword">int</span> n,m,s,t;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">    edge[++cnt].to=y;</span><br><span class="line">    edge[cnt].w=w;</span><br><span class="line">    edge[cnt].next=root[x];</span><br><span class="line">    root[x]=cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sync</span><span class="params">()</span></span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">    cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">    cout.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">spfa</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(dis,<span class="number">0x3f</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(dis));</span><br><span class="line">    queue&lt;<span class="keyword">int</span>&gt;q;</span><br><span class="line">    q.<span class="built_in">push</span>(s);</span><br><span class="line">    dis[s]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        <span class="keyword">int</span> u=q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=root[u];i;i=edge[i].next)&#123;</span><br><span class="line">            <span class="keyword">int</span> v=edge[i].to,w=edge[i].w;</span><br><span class="line">            <span class="comment">//printf(&quot;%d %d %d\n&quot;,u,v,w);</span></span><br><span class="line">            <span class="keyword">if</span>(dis[v]&gt;<span class="built_in">max</span>(dis[u],w))&#123;</span><br><span class="line">                dis[v]=<span class="built_in">max</span>(dis[u],w);</span><br><span class="line">                <span class="keyword">if</span>(!in_que[v])&#123;</span><br><span class="line">                    q.<span class="built_in">push</span>(v);</span><br><span class="line">                    in_que[v]=<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        in_que[u]=<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//freopen(&quot;P1396_1.in&quot;,&quot;r&quot;,stdin);</span></span><br><span class="line">    <span class="built_in">sync</span>();</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m&gt;&gt;s&gt;&gt;t;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> x,y,w;</span><br><span class="line">        cin&gt;&gt;x&gt;&gt;y&gt;&gt;w;</span><br><span class="line">        <span class="built_in">add</span>(x,y,w);</span><br><span class="line">        <span class="built_in">add</span>(y,x,w);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">spfa</span>();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,dis[t]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一秒内，如果你的攻击力为 $x$，则你就需要消耗 $x$ 的能量。</p>
+<p>请问，在你打败所有敌人的情况下，最少需要消耗多少能量。</p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><p>在一秒内，你可以继承之前的攻击力，但是继承攻击力的代价就是你要花费相当于继承之后攻击力的法力值来保存你的攻击力。只有当前攻击力大于当前出现的怪物的血量的时候，你才能杀死他。在任意一秒，你可以选择摆烂，但是摆烂的代价就是会丢失上一秒的攻击力，使你在下一秒的时候无法有之前那么高的攻击，摆烂可以选择从 $0$ 开始或者从 $1$ 开始。显然可以发现，当 $k_i\ge h_i$ 的时候，主角总是有办法杀死所有的怪物的。 </p>
+<p>在杀死所有的怪物的怪物下要保证消耗的法力值最少，那就需要我们合理分配增加攻击的时间了。我们不难得出以下结论：</p>
+<p>如果在第 $k_i$ 秒遇到了血量为 $h_i$ 的怪物，那么在 $(k_i-h_i,k_i]$ 的时间区间内，我不能出现摆烂的情况，即攻击力不能掉，在 $k_i-h_i$ 的时刻，攻击力不能减为 $0$。</p>
+<p>那么第 $i$ 个怪物需要我花费的最少法力值就是从 $1$ 到 $h_i$ 的等差数列，假设我打完怪物之后我都能立刻摆烂，那么不难得出总法力消耗就是 $\sum _{i=1}^{n} \sum _{j=1}^{h_i} j$ 。但是并不是每一次打完怪物我都能摆烂，如果我摆烂到 $0$，剩下的时间不足以我积攒足够的攻击去击杀接下来的怪物那就不能摆烂而是接着蓄力。</p>
+<p>对于每一个怪物我们都构造一个区间，区间范围为 $[k_i-h_i+1,k_i]$ ，当区间出现相交，则合并两个区间，最后根据区间长度计算法力值即可。</p>
+<p>对于每一个区间我观察我的左端点是否会落在上一个区间内，如果在，则需要合并前面的区间，因为我们默认按照 $k_i$ 排序了，也就是按照区间右端点值排序，所以我可以用 $\text{lower_bound}$ 来寻找合并的区间。因为如果最后一个怪物它要求我从第一秒开始蓄力的话，那么前面的所有区间我都要合并，所以这里必须考虑合并的区间。对于合并的区间我们修改 $l$ 为其中最小值，$r$ 为其中最大值。然后在计算区间的时候特判一下连续的区间是否相等，达到只计算一次的目的即可。</p>
+<h3 id="标程"><a href="#标程" class="headerlink" title="标程"></a>标程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 105</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">int</span> h[maxn],k[maxn],l[maxn],r[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="built_in">memset</span>(l,<span class="number">0</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(l));</span><br><span class="line">	<span class="built_in">memset</span>(r,<span class="number">0</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(l));</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)cin&gt;&gt;k[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)cin&gt;&gt;h[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		l[i]=k[i]-h[i]+<span class="number">1</span>;</span><br><span class="line">		r[i]=k[i];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(l[i]&lt;=r[i<span class="number">-1</span>])&#123;</span><br><span class="line">			<span class="keyword">int</span> j=i;</span><br><span class="line">			<span class="keyword">int</span> p=<span class="built_in">lower_bound</span>(r+<span class="number">1</span>,r+<span class="number">1</span>+i,l[i])-r;</span><br><span class="line">			<span class="comment">//if(p==0)p++;</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=p;j&lt;=i;j++)&#123;</span><br><span class="line">				l[j]=<span class="built_in">min</span>(l[p],l[i]);</span><br><span class="line">				r[j]=r[i];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> ans=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(l[i]==l[i<span class="number">-1</span>]&amp;&amp;r[i]==r[i<span class="number">-1</span>])<span class="keyword">continue</span>;</span><br><span class="line">		<span class="keyword">int</span> num=r[i]-l[i]+<span class="number">1</span>;</span><br><span class="line">		ans+=<span class="number">1ll</span>*(num+<span class="number">1</span>)*num/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(l[i]-r[i<span class="number">-1</span>]&gt;<span class="number">1</span>&amp;&amp;l[i<span class="number">-1</span>]!=<span class="number">0</span>)&#123;</span><br><span class="line">			;<span class="comment">//ans+=l[i]-r[i-1]-1;</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//freopen(&quot;1.in&quot;,&quot;r&quot;,stdin);</span></span><br><span class="line">	<span class="keyword">int</span> t;</span><br><span class="line">	cin&gt;&gt;t;</span><br><span class="line">	<span class="keyword">while</span>(t--)<span class="built_in">solve</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -277,13 +269,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2022/02/21/spfa%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">spfa算法的学习</a></p>
+        <p><span>本文标题:</span><a href="/2022/03/19/CF1626C/">CF1626C</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2022-02-21, 11:00:00</p>
-        <p><span>最后更新:</span>2022-02-21, 08:52:00</p>
+        <p><span>发布时间:</span>2022-03-19, 11:00:00</p>
+        <p><span>最后更新:</span>2022-03-19, 19:34:59</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2022/02/21/spfa%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" title="spfa算法的学习">http://example.com/2022/02/21/spfa%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/21/spfa%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/03/19/CF1626C/" title="CF1626C">http://example.com/2022/03/19/CF1626C/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/03/19/CF1626C/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -295,16 +287,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2022/02/21/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/">
-                    负环判断
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">
-                    manacher的学习
+                <a href="/2022/03/08/Kruskal%E9%87%8D%E6%9E%84%E6%A0%91/">
+                    Kruskal 重构树的学习笔记
                 </a>
             </div>
         
@@ -316,7 +302,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#spfa%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">spfa算法介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spfa%E7%AE%97%E6%B3%95%E6%B5%85%E8%B0%88"><span class="toc-number">2.</span> <span class="toc-text">spfa算法浅谈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B4%9B%E8%B0%B7P1396"><span class="toc-number">3.</span> <span class="toc-text">洛谷P1396</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">3.2.</span> <span class="toc-text">题目分析</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-Description"><span class="toc-number">1.</span> <span class="toc-text">Problem Description</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number"></span> <span class="toc-text">题目分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">标程</span></a></li></ol>
         
     </div>
     <style>
@@ -352,7 +338,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"spfa算法的学习　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"CF1626C　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -372,15 +358,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2022/02/21/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/" title="上一篇: 负环判断">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" title="下一篇: manacher的学习">
+            <a href="/2022/03/08/Kruskal%E9%87%8D%E6%9E%84%E6%A0%91/" title="下一篇: Kruskal 重构树的学习笔记">
                 <i class="fa fa-angle-right"></i>
             </a>
         
