@@ -15,17 +15,23 @@
 
 
 
-<meta name="description" content="今天学习一下新的字符串算法——manacher算法。">
+<meta name="description" content="最近需要下载钉钉的录屏回放，但是管理员禁止了下载，找到了众多的方法都不得行，后面自己开辟了一个方法（我也不敢确定是不是没有人用这个方法，反正这个方法不是通过搜索得到的。。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="manacher的学习">
-<meta property="og:url" content="http://example.com/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="关于钉钉保存回放的方式">
+<meta property="og:url" content="http://example.com/2022/02/14/Dingtalk/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="今天学习一下新的字符串算法——manacher算法。">
+<meta property="og:description" content="最近需要下载钉钉的录屏回放，但是管理员禁止了下载，找到了众多的方法都不得行，后面自己开辟了一个方法（我也不敢确定是不是没有人用这个方法，反正这个方法不是通过搜索得到的。。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-02-18T03:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-20T23:37:58.019Z">
+<meta property="og:image" content="http://example.com/2022/02/14/Dingtalk/1.png">
+<meta property="og:image" content="http://example.com/2022/02/14/Dingtalk/2.png">
+<meta property="og:image" content="http://example.com/2022/02/14/Dingtalk/3.png">
+<meta property="og:image" content="http://example.com/2022/02/14/Dingtalk/4.png">
+<meta property="og:image" content="http://example.com/2022/02/14/Dingtalk/5.png">
+<meta property="article:published_time" content="2022-02-14T03:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-20T15:33:01.708Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/02/14/Dingtalk/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +65,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>manacher的学习 | xia0ji233&#39;s blog</title>
+<title>关于钉钉保存回放的方式 | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -202,11 +208,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-manacher算法学习" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Dingtalk" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" class="article-date">
-      <time datetime="2022-02-18T03:00:00.000Z" itemprop="datePublished">2022-02-18</time>
+      <a href="/2022/02/14/Dingtalk/" class="article-date">
+      <time datetime="2022-02-14T03:00:00.000Z" itemprop="datePublished">2022-02-14</time>
 </a>
 
 
@@ -221,7 +227,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      manacher的学习
+      关于钉钉保存回放的方式
     </h1>
   
 
@@ -229,10 +235,6 @@
       
       <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串</a><a class="article-category-link" href="/categories/icpc/%E5%AD%97%E7%AC%A6%E4%B8%B2/manacher/">manacher</a><a class="article-category-link" href="/categories/icpc/%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%9B%9E%E6%96%87%E4%B8%B2/">回文串</a>
-    </div>
-
 
         
         <div class="clearfix"></div>
@@ -242,31 +244,30 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>今天学习一下新的字符串算法——manacher算法。</p>
+        <p>最近需要下载钉钉的录屏回放，但是管理员禁止了下载，找到了众多的方法都不得行，后面自己开辟了一个方法（我也不敢确定是不是没有人用这个方法，反正这个方法不是通过搜索得到的。。</p>
 <span id="more"></span>
 
-<h2 id="manacher简介"><a href="#manacher简介" class="headerlink" title="manacher简介"></a>manacher简介</h2><blockquote>
-<p><strong>最长回文子串</strong>（英语：<strong>Longest palindromic substring</strong>）是计算机科学中的问题，在一个<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%AD%97%E7%AC%A6%E4%B8%B2">字符串</a>中查找一个最长的连续的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%9B%9E%E6%96%87">回文</a>的子串，例如“banana”最长回文子串是“anana”。最长回文子串并不一定是唯一的，比如在“abracadabra”中，没有超过3个字符的回文子串，但是有两个回文字符串长度都是3：“ada”和“aca”。在一些应用中，我们求出全部的极大回文子串（不被其他回文串包含的回文子串）。</p>
-<p>Manacher于1975年发现了一种线性时间算法[<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2#cite_note-1">1]</a>，可以在列出给定字符串中从任意位置开始的所有回文子串。并且，Apostolico, Breslauer &amp; Galil [<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2#cite_note-2">2]</a>发现，同样的算法也可以在任意位置查找全部极大回文子串，并且时间复杂度是线性的。因此，他们提供了一种时间复杂度为线性的最长回文子串解法。另外，Jeuring (1994)[<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2#cite_note-3">3]</a>, Gusfield (1997)[<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2#cite_note-4">4]</a>发现了基于后缀树的算法。也存在已知的高效并行算法。(from wiki)</p>
-</blockquote>
-<h2 id="manacher实现"><a href="#manacher实现" class="headerlink" title="manacher实现"></a>manacher实现</h2><p>实现起来的话，其实我个人认为是比较简单的。首先防止奇偶序列的问题，我们在所有的字符之间以及末尾添加<code>#</code>让它变成奇数，再在首尾分别添加<code>$</code>和<code>~</code>作为截至判断的区分。</p>
-<p>我将变量做如下定义：</p>
-<ul>
-<li>$s$ ：所求字符串</li>
-<li>$p[i]$ ：代表以字符 $s[i]$ 为中心的最长回文半径。即满足在 $0\le j\le p[i]$ 的条件下 $s[i+j]==s[i-j]$ 永远成立。</li>
-<li>$wx$ ：目前所求的最远回文半径延伸的地方。即当前情况下的 $\max(i+p[i])$。  </li>
-<li>$idx$ ：代表之前所求最远回文半径的中心。即取得wx时的 $i$ 的值。</li>
-</ul>
-<p>那么有了这个定义之后我们主要就是求这个p数组了，怎么求呢？</p>
-<p>首先，如果我所在的位置在之前一个大的回文半径当中，那么我可以直接参考之前对称的那个位置上的p的值，比如下面这个例子。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a a a a b a a a a...</span><br><span class="line">    ↑   ↑   ↑   ↑</span><br><span class="line">    j idx   i   wx</span><br></pre></td></tr></table></figure>
+<p>先说说我通过搜索资源得到了些什么方法吧，其实大多数就指向一种方法——通过fd抓包找到m3u8的下载地址，然而我在用fd抓包的时候并没有找到m3u8的下载地址，也有说用旧版本的钉钉的，但是我发现根本扫不上去，于是我仔细观察fd得到的包，发现播放视频的时候大部分出现了 .TS文件格式的url请求。</p>
+<p><img src="/2022/02/14/Dingtalk/1.png" alt="1"></p>
+<p>可以看到每过一会就会请求一个对应的 <code>ts</code> 文件，我也去搜了一下 <code>ts</code> 文件的含义，差不多就是视频的切片。因此如果我能得到所有的ts的下载地址，那么我就相当于得到了这个视频。</p>
+<p>但是在请求这个 <code>ts</code> 文件的时候必须加上一个 <code>auth_key</code> 参数，然后这个参数貌似也是个随机的散列值，目前信息有限没办法计算出这个散列值的排布规律，但是我能得到一个最朴素的做法：暴力得到所有的 <code>ts</code> 的url，然后一个一个下载，最后用 <code>ffmpeg</code> 去合并就好了。</p>
+<p>然而这里我们并不需要看完所有的视频，我们可以快进，我理解的原理是这样的：假如把你的视频切成 20S一片，在你需要的时候请求，然而假如我不看完，直接跳过这个请求，那么它马上就会请求下一个视频的地址，然后此时被我们捕获到了，之后循环往复我们就能快速地得到所有的请求url，这里的话仅复制url可以快速把url全部复制过来。</p>
+<p>这里我选择按键模拟器去点击这个右键播放，然后间隔频率设置成0.2S，每看1S跳过50S，相当于快进50倍，一个50min的视频我们在1min就能整完，这个效率还是不错的，如果发现ts有丢失那么你可以定位到那个地方重新观察一下请求，然后url复制过来。</p>
+<p><img src="/2022/02/14/Dingtalk/2.png" alt="2"></p>
+<p>我本来想这么多url用爬虫读取url一个个爬然后保存的，结果不知道为啥报错了，于是我选择最蠢的办法：cmd命令。</p>
+<p>在所有url前加上start，然后后缀改一下bat，为了防止电脑卡顿，在每一个start前加上一个暂停的命令，然后我们得到了一个这样的文件：</p>
+<p><img src="/2022/02/14/Dingtalk/3.png" alt="3"></p>
+<p>最后就是枯燥的请求了，这个等着吧，如果你觉得电脑hold的住那么你可以不加暂停的，它会周期弹网页出来，情况就是这样子的：</p>
+<p><img src="/2022/02/14/Dingtalk/4.png" alt="4"></p>
+<p>我还发现一个问题，就是它有时候这个回放并不是严格的就是正整数递增的，中间我有遇到过那种 <code>10000001.ts</code> 的文件，就是突然这样的，也不知道为啥，所以最后写合并指令的时候也比较难，但是难处千千万，靠自己还是能解决的。选择直接在里面放一个python脚本自动合并，合并的命令是这样的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i &quot;concat:文件1|文件2|文件3|……|文件n&quot; -c copy output.mp4</span><br></pre></td></tr></table></figure>
 
-<p>这种情况下，我们不难发现，$p[i]$ 至少是大于等于 $p[j]$ 的，如果省略号后面马上跟一个 $b$ 的话，那么它的 $p$ 的值可能会涨，但是我们就不用判断它周围两边相不相等了啊。如果多了，那么我比较的次数就更少了。但是呢，其实可以发现，我们管的范围只能到wx，多余wx我们肯定不敢保证数据完全对称可用，所以这里我们限制一下 $p[i]$ 最大可赋值为 $wx-i$ 即可。</p>
-<p>所以我们的核心代码就是这样的。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;len2;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(mx&gt;i)&#123;</span><br><span class="line">    	p[i]=<span class="built_in">min</span>(p[<span class="number">2</span>*idx-i],mx-i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">   		 p[i]=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(new_s[i+p[i]]==new_s[i-p[i]])&#123;<span class="comment">//继续扩展看看有没有可能</span></span><br><span class="line">    	p[i]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(i+p[i]&gt;mx)&#123;	</span><br><span class="line">    	mx=i+p[i];</span><br><span class="line">    	idx=i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>里面主要的就是要扫一下目录获取所有的文件名并让他们按一定顺序排列，这个我也直接放一下吧，也挺简单的，没什么需要解释的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">f=os.listdir(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">num=[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> f:</span><br><span class="line">    <span class="keyword">if</span> i[-<span class="number">2</span>:]!=<span class="string">&#x27;ts&#x27;</span>:<span class="keyword">continue</span></span><br><span class="line">    num.append(<span class="built_in">int</span>(i[:-<span class="number">3</span>]))</span><br><span class="line">num.sort()</span><br><span class="line">fi=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> q <span class="keyword">in</span> num:</span><br><span class="line">    fi+=<span class="built_in">str</span>(q)+<span class="string">&#x27;.ts|&#x27;</span></span><br><span class="line">cmd=<span class="string">&#x27;ffmpeg -i &quot;concat:&#x27;</span>+fi[:-<span class="number">1</span>]+<span class="string">&#x27;&quot; -c copy output.mp4&#x27;</span></span><br><span class="line">os.system(cmd)</span><br></pre></td></tr></table></figure>
 
-<h3 id="标程"><a href="#标程" class="headerlink" title="标程"></a>标程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 22000005</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">char</span> new_s[maxn];</span><br><span class="line"><span class="keyword">char</span> s[maxn&lt;&lt;<span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> p[maxn];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//freopen(&quot;2.in&quot;,&quot;r&quot;,stdin);</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s);</span><br><span class="line">    new_s[<span class="number">0</span>]=<span class="string">&#x27;$&#x27;</span>;</span><br><span class="line">    new_s[<span class="number">1</span>]=<span class="string">&#x27;#&#x27;</span>;</span><br><span class="line">    <span class="keyword">int</span> len1=<span class="built_in">strlen</span>(s),len2;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len1;i++)&#123;</span><br><span class="line">        new_s[<span class="number">2</span>*i+<span class="number">3</span>]=<span class="string">&#x27;#&#x27;</span>;</span><br><span class="line">        new_s[<span class="number">2</span>*i+<span class="number">2</span>]=s[i];</span><br><span class="line">    &#125;</span><br><span class="line">    len2=<span class="built_in">strlen</span>(new_s)+<span class="number">1</span>;</span><br><span class="line">    new_s[len2<span class="number">-1</span>]=<span class="string">&#x27;~&#x27;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> mx=<span class="number">0</span>,idx=<span class="number">0</span>,j=<span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;len2;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(mx&gt;i)&#123;</span><br><span class="line">            p[i]=<span class="built_in">min</span>(p[<span class="number">2</span>*idx-i],mx-i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            p[i]=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(new_s[i+p[i]]==new_s[i-p[i]])&#123;</span><br><span class="line">            p[i]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(i+p[i]&gt;mx)&#123;</span><br><span class="line">            mx=i+p[i];</span><br><span class="line">            idx=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len2;i++)&#123;</span><br><span class="line">        ans=<span class="built_in">max</span>(ans,p[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<p>如果不放心可以先print一下看看得到的cmd是什么样的，下面给出我的目录图和运行图：</p>
+<p><img src="/2022/02/14/Dingtalk/5.png" alt="5"></p>
+<p>最后就是运行一遍那个命令了，看看有没有得到你们心心念念的视频吧。</p>
 
       
     </div>
@@ -275,13 +276,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">manacher的学习</a></p>
+        <p><span>本文标题:</span><a href="/2022/02/14/Dingtalk/">关于钉钉保存回放的方式</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2022-02-18, 11:00:00</p>
-        <p><span>最后更新:</span>2022-02-21, 07:37:58</p>
+        <p><span>发布时间:</span>2022-02-14, 11:00:00</p>
+        <p><span>最后更新:</span>2022-03-20, 23:33:01</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" title="manacher的学习">http://example.com/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/02/14/Dingtalk/" title="关于钉钉保存回放的方式">http://example.com/2022/02/14/Dingtalk/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/14/Dingtalk/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -294,15 +295,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2022/02/21/spfa%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">
-                    spfa算法的学习
+                <a href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/">
+                    树形dp的学习
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2022/02/16/KMP%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">
-                    KMP算法的学习
+                <a href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/">
+                    洛谷P1948题解
                 </a>
             </div>
         
@@ -314,7 +315,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#manacher%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">manacher简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#manacher%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">manacher实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">标程</span></a></li></ol></li></ol>
+            
         
     </div>
     <style>
@@ -350,7 +351,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"manacher的学习　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"关于钉钉保存回放的方式　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -370,7 +371,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2022/02/21/spfa%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" title="上一篇: spfa算法的学习">
+            <a href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/" title="上一篇: 树形dp的学习">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -378,7 +379,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2022/02/16/KMP%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" title="下一篇: KMP算法的学习">
+            <a href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/" title="下一篇: 洛谷P1948题解">
                 <i class="fa fa-angle-right"></i>
             </a>
         
