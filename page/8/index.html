@@ -14,10 +14,13 @@
 <meta name="author" content="xia0ji233" />
 
 
+    
+    
+
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="xia0ji233&#39;s blog">
-<meta property="og:url" content="http://example.com/archives/2022/04/index.html">
+<meta property="og:url" content="http://example.com/page/8/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
 <meta property="og:locale">
 <meta property="article:author" content="xia0ji233">
@@ -51,11 +54,13 @@
 
 
 
+    <style> .article { opacity: 0;} </style>
+
 
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Archives: 2022/4 | xia0ji233&#39;s blog</title>
+<title>xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -64,9 +69,9 @@
     var yiliaConfig = {
         fancybox: true,
         animate: true,
-        isHome: false,
+        isHome: true,
         isPost: false,
-        isArchive: true,
+        isArchive: false,
         isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -200,186 +205,75 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-bomblab" class="article article-type-post" itemscope itemprop="blogPost">
   
+    <div class="article-meta">
+      <a href="/2021/04/19/bomblab/" class="article-date">
+      <time datetime="2021-04-19T14:00:00.000Z" itemprop="datePublished">2021-04-19</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>先观察给的.c文件，发现是要输入六组语句并且判断正误的，并且很容易发现判断函数phase_i(i=1,2…6)要有一个错误，炸弹即爆炸，那我们就要用到gdb调试了,在终端输入<code>gdb bomb</code>进入调试</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2022/04/15/RSA%E5%8A%A0%E5%AF%86%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" class="archive-article-date">
-      <time datetime="2022-04-15T00:00:00.000Z" itemprop="datePublished">04-15</time>
-</a>
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/04/15/RSA%E5%8A%A0%E5%AF%86%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/">RSA加密原理解析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/crypto/">crypto</a>
+    <a class="article-category-link" href="/categories/csapp/">csapp</a><a class="article-category-link" href="/categories/csapp/lab/">lab</a>
     </div>
 
 
-          
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2022/04/02/SA%E6%9D%BF%E5%AD%90/" class="archive-article-date">
-      <time datetime="2022-04-02T14:00:00.000Z" itemprop="datePublished">04-02</time>
-</a>
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/04/02/SA%E6%9D%BF%E5%AD%90/">SA板子</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串</a><a class="article-category-link" href="/categories/icpc/%E5%AD%97%E7%AC%A6%E4%B8%B2/SA/">SA</a>
+      
+      
+        <p class="article-more-link">
+          <a href="/2021/04/19/bomblab/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
     </div>
-
-
-          
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    
   </div>
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2022/04/02/%E4%B8%BB%E5%B8%AD%E6%A0%91/" class="archive-article-date">
-      <time datetime="2022-04-02T06:00:00.000Z" itemprop="datePublished">04-02</time>
-</a>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/04/02/%E4%B8%BB%E5%B8%AD%E6%A0%91/">主席树的学习</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><a class="article-category-link" href="/categories/icpc/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%B8%BB%E5%B8%AD%E6%A0%91/">主席树</a>
-    </div>
 
 
-          
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2022/04/02/AC%E8%87%AA%E5%8A%A8%E6%9C%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-      <time datetime="2022-04-02T05:00:00.000Z" itemprop="datePublished">04-02</time>
-</a>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/04/02/AC%E8%87%AA%E5%8A%A8%E6%9C%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">AC自动机的学习</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E5%AD%97%E7%AC%A6%E4%B8%B2/">字符串</a><a class="article-category-link" href="/categories/icpc/%E5%AD%97%E7%AC%A6%E4%B8%B2/AC%E8%87%AA%E5%8A%A8%E6%9C%BA/">AC自动机</a>
-    </div>
 
 
-          
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2022/04/02/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E5%BA%94%E7%94%A8/" class="archive-article-date">
-      <time datetime="2022-04-02T03:00:00.000Z" itemprop="datePublished">04-02</time>
-</a>
 
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/04/02/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E5%BA%94%E7%94%A8/">最小费用最大流应用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/">图论</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81/">最小费用最大流</a>
-    </div>
-
-
-          
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/7/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
+    </nav>
   
-
-    
-
 </div>
       
 <footer id="footer">
