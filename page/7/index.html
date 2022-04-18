@@ -205,6 +205,134 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-格式化字符串利用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/" class="article-date">
+      <time datetime="2021-06-05T02:00:00.000Z" itemprop="datePublished">2021-06-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>格式化字符串漏洞是printf函数比较常见的漏洞，常见的漏洞形式就是<code>printf(s);</code>如果s字符是我们可控的话，那就会导致任意位置读和写等严重的后果。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/pwn/">pwn</a>
+    </div>
+
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-cachelab" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/05/22/cachelab/" class="article-date">
+      <time datetime="2021-05-22T14:00:00.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p><code>lab</code>从这里开始变得难了起来了，这次要模拟计算机里的一个硬件-<code>cache</code>的工作，关于<code>cache</code>，百度百科介绍的比我好，这边请<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/CACHE%E5%AD%98%E5%82%A8%E5%99%A8/12789048?fr=aladdin">———&gt;</a></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/csapp/">csapp</a><a class="article-category-link" href="/categories/csapp/lab/">lab</a>
+    </div>
+
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2021/05/22/cachelab/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-动态调试学习报告" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -705,138 +833,6 @@
       
         <p class="article-more-link">
           <a href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-buflab" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/04/30/buflab/" class="article-date">
-      <time datetime="2021-04-29T16:10:00.000Z" itemprop="datePublished">2021-04-30</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>在此实验开始之前，弄清楚给你的三个文件分别干嘛的。</p>
-<p><code>bufbomb</code>：实验需要攻击的程序</p>
-<p><code>hex2raw</code>：根据填写的字节生成攻击字符串</p>
-<p><code>makecookie</code>：对每个实验用户生成一个八位十六进制的字节序列，用于识别用户。(可能是用来打分的)</p>
-<p>在<code>gdb</code>要运行的时候，一定要输入<code>r -u &lt;your id&gt;</code>，终端运行要输入<code>./bufbomb -u &lt;your id&gt;</code>，否则你是运行不了的。那咱们先输入<code>./makecookie -q</code>生成你的<code>cookie（id）</code>,最好先找个地儿保存一下。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/csapp/">csapp</a><a class="article-category-link" href="/categories/csapp/lab/">lab</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2021/04/30/buflab/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-attqacklab" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2021/04/25/attqacklab/" class="article-date">
-      <time datetime="2021-04-25T14:00:00.000Z" itemprop="datePublished">2021-04-25</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>今天来康康attack lab啊</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/csapp/">csapp</a><a class="article-category-link" href="/categories/csapp/lab/">lab</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2021/04/25/attqacklab/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

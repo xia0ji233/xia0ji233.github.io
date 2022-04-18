@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="昆明打铁之后，痛定思痛，来重修概率论了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="概率论在icpc的应用">
+<meta property="og:url" content="http://example.com/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="昆明打铁之后，痛定思痛，来重修概率论了。">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/1.png">
+<meta property="article:published_time" content="2022-04-18T03:00:00.000Z">
+<meta property="article:modified_time" content="2022-04-18T05:53:02.699Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>概率论在icpc的应用 | xia0ji233&#39;s blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xia0ji233</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">学习应该像呼吸一样自然</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/friends">友链</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xia0ji233</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xia0ji233 </a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/friends">友链</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-概率论在icpc的应用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/" class="article-date">
+      <time datetime="2022-04-18T03:00:00.000Z" itemprop="datePublished">2022-04-18</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      概率论在icpc的应用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E6%95%B0%E5%AD%A6/">数学</a><a class="article-category-link" href="/categories/icpc/%E6%95%B0%E5%AD%A6/%E6%A6%82%E7%8E%87%E8%AE%BA/">概率论</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>昆明打铁之后，痛定思痛，来重修概率论了。</p>
+<span id="more"></span>
+
+<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="样本空间、事件和概率"><a href="#样本空间、事件和概率" class="headerlink" title="样本空间、事件和概率"></a>样本空间、事件和概率</h2><p><strong>样本空间</strong> S 是一个集合，它的元素称为<strong>基本事件</strong>。样本空间的一个子集被称为事件， 根据定义，所有基本事件<strong>互斥</strong>。</p>
+<p><strong>互斥事件</strong>：若事件 A 发生<strong>一定</strong>能推导出 B 不发生，B 发生<strong>一定</strong>能推导出A不发生，则称 A，B 互斥，不难得出，两个事件同时发生的概率为 0，至少发生其中一个事件的概率为两者概率之和（概率公理3）。这个理论可以推导到 n 个事件，若有 n 个<strong>两两互斥</strong>事件 $a_1,a_2…a_n$，则任意两个事件同时发生的概率为 0，任意发生一个事件的概率就为 $\sum _{i=1}^n a_i$ 。</p>
+<p><strong>概率公理</strong>：</p>
+<ol>
+<li>对于任意事件 A，事件发生的概率满足 $0\le P{A}\le1$</li>
+<li>对于样本空间 S，有$P{S}=1$</li>
+<li>对于两个互斥事件 A，B，有 $P{A∪B}=P{A}+P{B}$</li>
+</ol>
+<h2 id="随机变量"><a href="#随机变量" class="headerlink" title="随机变量"></a>随机变量</h2><p>如果对样本空间 S 中的任意事件 e，都有<strong>唯一</strong>的实数 <strong>X(e)</strong> 与之对应，则称 <strong>X=X(e)</strong> 为样 本空间 S 上的随机变量。这个随机变量怎么理解呢，首先看下面这张图：</p>
+<p><img src="/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/1.png" alt="1"></p>
+<p>还不能理解的话，就举个栗子，如果掷一个骰子，那么它的样本空间为 **{1,2,3,4,5,6}**，把它一次掷骰子出的点数作为一个随机变量的话，那么很容易得到映射 X 就是一个普通的 $X(e)=e$，或者说，随机变量为样本点 e 的函数，以样本点为自变量，确定一个对应关系得到的应变量就是一个随机变量。</p>
+<p>其中<strong>离散型随机变量</strong>和<strong>连续型随机变量</strong>比较常见。</p>
+<h3 id="离散型随机变量及其概率分布"><a href="#离散型随机变量及其概率分布" class="headerlink" title="离散型随机变量及其概率分布"></a>离散型随机变量及其概率分布</h3><p>离散型随机变量取值范围为<strong>有限可数</strong>或者<strong>无限可数</strong>，或者说取值范围不在实数范围内连续。设离散型随机变量 X 的取值为 $\text{x}_i$ 时的概率为 $p_i(i=1,2…)$，则称 X 的所有取值及其概率为随机变量 X 的概率分布。离散型变量常见的分布有两点分布，二项分布，几何分布，超几何分布，泊松分布。</p>
+<h3 id="连续性随机变量及其概率分布"><a href="#连续性随机变量及其概率分布" class="headerlink" title="连续性随机变量及其概率分布"></a>连续性随机变量及其概率分布</h3><p>如果 X 是在实数域或区间上<strong>取连续值</strong>的随机变量，设 X 的概率分布函数为 $F(x)=P{X\le x}$，若存在非负可积函数 $f(x)$，使得对任意的 x，有 $F(x)=\int _{-∞}^{x}f(t)dt$，则称 X 为连续随机变量，称 $f(x)$ 为 X 的<strong>概率密度函数</strong>。常见的连续性随机变量分布有均匀分布，正态分布，指数分布。</p>
+<p>概率密度函数的几何意义：随机变量的取值落在某个区域之内的概率为概率密度函数在这个区域上的积分。当概率密度函数存在的时候，累积分布函数是概率密度函数的积分，对概率密度函数作傅里叶变换可得特征函数。</p>
+<p>在数学中，连续型随机变量的概率密度函数（在不至于混淆时可以简称为密度函数）是一个描述这个随机变量的输出值，在某个确定的取值点附近的可能性的函数。而随机变量的取值落在某个区域之内的概率则为概率密度函数在这个区域上的积分。当概率密度函数存在的时候，累积分布函数是概率密度函数的积分。</p>
+<h4 id="连续型随机向量及其概率分布"><a href="#连续型随机向量及其概率分布" class="headerlink" title="连续型随机向量及其概率分布"></a>连续型随机向量及其概率分布</h4><p>待更新</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/">概率论在icpc的应用</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
+        <p><span>发布时间:</span>2022-04-18, 11:00:00</p>
+        <p><span>最后更新:</span>2022-04-18, 13:53:02</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/" title="概率论在icpc的应用">http://example.com/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2022/04/18/codeforces%20round%20782(div2)/">
+                    codeforces round 782(div2)解析
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B7%E6%9C%AC%E7%A9%BA%E9%97%B4%E3%80%81%E4%BA%8B%E4%BB%B6%E5%92%8C%E6%A6%82%E7%8E%87"><span class="toc-number">1.1.</span> <span class="toc-text">样本空间、事件和概率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.</span> <span class="toc-text">随机变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A6%BB%E6%95%A3%E5%9E%8B%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F%E5%8F%8A%E5%85%B6%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83"><span class="toc-number">1.2.1.</span> <span class="toc-text">离散型随机变量及其概率分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E6%80%A7%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F%E5%8F%8A%E5%85%B6%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83"><span class="toc-number">1.2.2.</span> <span class="toc-text">连续性随机变量及其概率分布</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E5%9E%8B%E9%9A%8F%E6%9C%BA%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">连续型随机向量及其概率分布</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"概率论在icpc的应用　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2022/04/18/codeforces%20round%20782(div2)/" title="下一篇: codeforces round 782(div2)解析">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/">概率论在icpc的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/18/codeforces%20round%20782(div2)/">codeforces round 782(div2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/15/RSA%E5%8A%A0%E5%AF%86%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/">RSA加密原理解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/SA%E6%9D%BF%E5%AD%90/">SA板子</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/%E4%B8%BB%E5%B8%AD%E6%A0%91/">主席树的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/AC%E8%87%AA%E5%8A%A8%E6%9C%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">AC自动机的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E5%BA%94%E7%94%A8/">最小费用最大流应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/20/Dingtalk/">关于钉钉保存回放的方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/CF1626C/">CF1626C</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/08/Kruskal%E9%87%8D%E6%9E%84%E6%A0%91/">Kruskal 重构树的学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/05/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E7%AC%94%E8%AE%B0/">最小费用最大流笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/03/%E7%BD%91%E7%BB%9C%E6%B5%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">网络流学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">线段树的学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/23/2-SAT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">2-SAT学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/22/%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">差分约束的学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/">负环判断</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/spfa%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">spfa算法的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">manacher的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/16/KMP%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">KMP算法的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/">树形dp的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/">洛谷P1948题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/">ZJCPC-D. Shortest Path Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/">C++文件的输入输出问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/">最近公共祖先求解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/11/%E6%B4%9B%E8%B0%B7P6037%E9%A2%98%E8%A7%A3/">洛谷P6037题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/07/%E6%B4%9B%E8%B0%B7P2656%E9%A2%98%E8%A7%A3/">洛谷P2656题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/04/%E4%BA%8C%E5%88%86%E5%9B%BE%E5%85%A5%E9%97%A8/">二分图入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/02/actf_2019_onerepeater%20writeup/">actf_2019_onerepeater writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/27/malloc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">malloc源码分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/23/%E5%88%86%E5%9D%97%E5%85%A5%E9%97%A82/">分块入门2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/22/%E5%88%86%E5%9D%97%E5%85%A5%E9%97%A8/">分块入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/AES%E5%8A%A0%E5%AF%86/">AES加密学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/16/%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E8%BF%9B%E9%98%B6/">启发式搜索算法进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/15/%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/">启发式搜索算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/15/%5BRoarCTF2019%5Dpolyre%20writeup/">RoarCTF2019 polyre writeup writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/08/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/">校园网模拟登录</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/27/RC4%E5%AD%A6%E4%B9%A0/">RC4加密的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/23/pwnable_input/">pwnable input writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/19/Re/">正则表达式的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/10/SWPUCTF_2019_p1KkHeap/">SWPUCTF_2019_p1KkHeap writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/10/npuctf_2020_level2/">npuctf_2020_level2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/07/de1ctf_2019_weapon/">de1ctf_2019_weapon writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/06/zjctf2021%20pwn2/">2021浙江省赛pwn2复盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/04/wdb2018_guess%20writeup/">wdb2018_guess writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/03/%E7%BD%91%E9%BC%8E%E6%9D%AF2020%E9%9D%92%E9%BE%99%E7%BB%84%20singal%20writeup/">网鼎杯2020青龙组singal writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/02/WUSTCTF2020%20level4%20writeup/">WUSTCTF2020 level4 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/ciscn2019_final_3%20writeup/">ciscn2019_final_3 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/">关于C++文件换libc版本的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/zjctf2021%20%E5%86%B3%E8%B5%9B/">2021浙江省决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/lctf2016_pwn200%20writeup/">lctf2016_pwn200 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/2021%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9BRSA/">2021江西省赛RSA writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/">2020浙江省赛 pwn2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/gyctf_2020_document/">gyctf_2020_document write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/">2021浙江省预赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">浙江2020省赛pwn1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      
+<footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021-2022 xia0ji233
+            </div>
+            
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-212718070-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
