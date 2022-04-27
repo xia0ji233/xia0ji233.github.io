@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>费马小定理的应用及证明</title>
+      <link href="/2022/04/28/femal/"/>
+      <url>/2022/04/28/femal/</url>
+      
+        <content type="html"><![CDATA[<p>小学一波数论</p><span id="more"></span><h2 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h2><p>若 $p$ 为素数，$\gcd(a, p) = 1$，则 $a^{p - 1} \equiv 1 \pmod{p}$。</p><p>另一个形式：对于任意整数 $a$，有 $a^p \equiv a \pmod{p}$。</p><h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>设一个质数为 $p$，我们取一个不为 $p$ 倍数的数 $a$。</p><p>构造一个序列：$A={1,2,3\dots,p-1}$，这个序列有着这样一个性质：</p><p>$$<br>\prod_{i=1}^{n}\space A_i\equiv\prod_{i=1}^{n} (A_i\times a) \pmod p<br>$$</p><p>证明：</p><p>$$<br>\because gcd(A_i,p)=1,gcd(A_i\times a,p)=1<br>$$</p><p>又因为每一个 $A_i\times a \pmod p$ 都是独一无二的，且 $A_i\times a \pmod p &lt; p$</p><p>得证（每一个 $A_i\times a$ 都对应了一个 $A_i$)</p><p>设 $f=(p-1)!$, 则 $f\equiv a\times A_1\times a\times A_2\times a \times A_3 \dots \times  A_{p-1} \pmod p$</p><p>$$<br>a^{p-1}\times f \equiv f \pmod p \     a^{p-1} \equiv 1 \pmod p<br>$$</p><p>证毕。</p><h2 id="欧拉定理"><a href="#欧拉定理" class="headerlink" title="欧拉定理"></a>欧拉定理</h2><p>欧拉定理实际上就是费马小定理的推广，欧拉定理的内容如下。</p><p>若 $\gcd(a, m) = 1$，则 $a^{\varphi(m)} \equiv 1 \pmod{m}$。</p><p>至于这个证明么，有点复杂，不细讲了（实则也不会）。可以说，费马小定理撑起了很多东西，比如我们经常算的逆元，或者是经典非对称加密 <code>RSA</code> 都有用到费马小定理。</p><h2 id="逆元"><a href="#逆元" class="headerlink" title="逆元"></a>逆元</h2><p>这个概念是抽象代数里面的，定义代数中的二元运算 <code>*</code> 和有限集 <code>G</code> ，若 $a*b∈G(a∈G,b∈G)$ 则，群 $&lt;G,*&gt;$ 是一个关系代数。</p><p>代数中，有一个很重要的概念就是幺元 ，幺元是指与任意数进行关系运算结果都等于那个数，比如在加法运算中，0就是幺元，因为0加任何数都等于任何数嘛。在乘法中，1就是幺元，同样1乘任何数也等于任何数。而逆元就是说两个数相互进行关系运算之后得到幺元，那么这两个数就互称为对方的逆元。</p><p>而我们平时算法竞赛研究的代数体系通常是乘法取模运算，它其实跟乘法类似，就多个取模，取模也限定了它集合的有限性。在乘法模运算中，我们不难发现1是幺元。所以若 $b$ 是 $a$ 在模 $m$ 意义下的逆元，则有 $a\times b \equiv 1 \pmod p$。而这个1我们稍微用一下费马小定理，把它变成 $a^{p-1}$，那么整个式子就变成了 $b\equiv a^{p-2}\ (mod\ p)$。我们就能已知其中一个数算出另一个数的逆元了，至于幂运算可以使用快速幂解决，那么我们算一个数的逆元的复杂度就是 $O(log_2p)$ 了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> icpc </category>
+          
+          <category> 数论 </category>
+          
+          <category> 费马小定理 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>html语言的学习</title>
       <link href="/2022/04/24/html%E8%AF%AD%E8%A8%80%E7%9A%84%E5%AD%A6%E4%B9%A0/"/>
       <url>/2022/04/24/html%E8%AF%AD%E8%A8%80%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>

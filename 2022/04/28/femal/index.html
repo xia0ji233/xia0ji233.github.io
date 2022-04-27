@@ -15,23 +15,17 @@
 
 
 
-<meta name="description" content="RSA解密简介:RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。当时他们三人都在麻省理工学院工作。RSA就是他们三人姓氏开头字母拼在一起组成的 。(from 百度百科)">
+<meta name="description" content="小学一波数论">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RSA解密">
-<meta property="og:url" content="http://example.com/2021/05/08/RSA/index.html">
+<meta property="og:title" content="费马小定理的应用及证明">
+<meta property="og:url" content="http://example.com/2022/04/28/femal/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="RSA解密简介:RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。当时他们三人都在麻省理工学院工作。RSA就是他们三人姓氏开头字母拼在一起组成的 。(from 百度百科)">
+<meta property="og:description" content="小学一波数论">
 <meta property="og:locale">
-<meta property="og:image" content="https://i.loli.net/2021/05/07/q6bVAWsiu2m3SgT.png">
-<meta property="og:image" content="https://i.loli.net/2021/05/07/gmD4cXz23kZLVft.png">
-<meta property="og:image" content="https://i.loli.net/2021/05/07/nAc9TG5p4hDgrLq.png">
-<meta property="og:image" content="https://i.loli.net/2021/05/07/IzF89jYiTCL6bdp.png">
-<meta property="og:image" content="https://i.loli.net/2021/05/07/OMTJFghtDpBrKan.png">
-<meta property="article:published_time" content="2021-05-08T02:00:00.000Z">
-<meta property="article:modified_time" content="2022-04-18T06:51:22.726Z">
+<meta property="article:published_time" content="2022-04-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-04-27T18:25:03.694Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2021/05/07/q6bVAWsiu2m3SgT.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -65,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>RSA解密 | xia0ji233&#39;s blog</title>
+<title>费马小定理的应用及证明 | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -208,11 +202,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-RSA" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-femal" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2021/05/08/RSA/" class="article-date">
-      <time datetime="2021-05-08T02:00:00.000Z" itemprop="datePublished">2021-05-08</time>
+      <a href="/2022/04/28/femal/" class="article-date">
+      <time datetime="2022-04-27T16:00:00.000Z" itemprop="datePublished">2022-04-28</time>
 </a>
 
 
@@ -227,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      RSA解密
+      费马小定理的应用及证明
     </h1>
   
 
@@ -236,7 +230,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/crypto/">crypto</a>
+    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E6%95%B0%E8%AE%BA/">数论</a><a class="article-category-link" href="/categories/icpc/%E6%95%B0%E8%AE%BA/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86/">费马小定理</a>
     </div>
 
 
@@ -248,51 +242,27 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><code>RSA</code>解密简介:<code>RSA</code>是1977年由罗纳德·李维斯特（<code>Ron Rivest</code>）、阿迪·萨莫尔（<code>Adi Shamir</code>）和伦纳德·阿德曼（<code>Leonard Adleman</code>）一起提出的。当时他们三人都在麻省理工学院工作。<code>RSA</code>就是他们三人姓氏开头字母拼在一起组成的 。(from 百度百科)</p>
+        <p>小学一波数论</p>
 <span id="more"></span>
 
-<h1 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h1><p>我们平时学习的加密多是对称加密，非对称加密相比于对称加密的区别就是:加密和解密用的不是同一个密钥。假如<code>Alice</code>和Bob想在一个不安全的线路上通信，他们在用这个信息交流之前没有任何py的信息(即:他们一开始不存在有且仅有他们两个人知道的信息)，而在这条线路上通信的所有信息都会被第三方窃听者Eve所获得。问:如何不让窃听者Eve监听到<code>Alice</code>和Bob的对话？</p>
-<p>当然我们必须对发送的信息进行加密，而对称加密必须两人提前获取密钥和加密方式，这些信息都是他们一开始所不知道的，因此需要在这条线路上告知密钥和加密方式，如果在这条线路上告知，那么Eve也能对加密的数据解密从而监听他们的通话内容，那么我们采取非对称加密是最保险的。我只告诉你怎么加密，解密的密钥我自己留着，由于Eve不清楚解密方式自然就无法获取信息了。</p>
-<h1 id="RSA加密"><a href="#RSA加密" class="headerlink" title="RSA加密"></a>RSA加密</h1><p>首先选取两个很大的质数<code>p</code>,<code>q</code>。</p>
-<p>令<code>n=p*q</code>，任意选取一个很大的质数做公钥指数，那么<code>(n,e)</code>就形成了公钥，可以用它进行加密，假如明文为m，那么密文</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plain</span><br><span class="line"></span><br><span class="line">c=m^e mod n</span><br></pre></td></tr></table></figure>
-
-<p>我自己生成的p,q做运算<code>φ(n)=(p-1)(q-1)</code></p>
-<p><code>d=inverse(e,φ(n))</code>，<code>inverse</code>函数为求模逆元函数</p>
-<p><code>(n,d)</code>就是私钥，是只有我们自己知道的。</p>
-<p>我拿到密文c后我可以用d还原明文</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plain</span><br><span class="line"></span><br><span class="line">m=c^d mod n</span><br></pre></td></tr></table></figure>
-
-<h1 id="RSA加密的破解"><a href="#RSA加密的破解" class="headerlink" title="RSA加密的破解"></a>RSA加密的破解</h1><p>破解的关键在于分解n的质因数，如果分解得到的p,q那么我们就很容易推得私钥d。</p>
-<p>在应用当中，n一般有2048位，基本是破解不出的，而在比赛的时候n就只有不到百位，用一些在线工具也是很快可以破解得到p和q的。</p>
-<p>但是拿到了一个很大位数的私钥d那也不顶用啊，算还是算不了啊，这个时候可以用第三方解密包RSA，也可以手写算法解决，作为一个ACMer，就得把珍藏已久的快速幂算法拿出来了，由于python支持大数，所以我会用python写。</p>
-<h1 id="例题-SUCTF2019-SignIn"><a href="#例题-SUCTF2019-SignIn" class="headerlink" title="例题:[SUCTF2019]SignIn"></a>例题:[<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#[SUCTF2019]SignIn">SUCTF2019]SignIn</a></h1><p>拿到elf文件先拖进IDA打开字符串窗口<code>(shift+F12)</code>，发现很容易看到字符串<code>[input flag]</code>，那么跟进去找到函数<code>main()</code></p>
-<p><img src="https://i.loli.net/2021/05/07/q6bVAWsiu2m3SgT.png" alt="buuctf SignIn_1.png"></p>
-<p>发现多了很多不认识的函数，但是根据它的参数也可以很容易发现这是个字符串赋值的函数，而且后面加了参数<code>10</code>或者<code>16</code>很像它的进制。后面的<code>GG</code>和<code>TTTTTTql!</code>肯定就是判断你输入的flag的正误了。</p>
-<p>从头开始分析，输入的是v8字符串，v8经过了sub_96A函数的洗礼，跟进去看看逻辑关系。</p>
-<p><img src="https://i.loli.net/2021/05/07/gmD4cXz23kZLVft.png" alt="buuctf SignIn_2.png"></p>
-<p>很容易发现它是把a1字符串拆解成高字节和低字节分别存储到a2[i]和a2[i+1]，至于字符串byte_202010那就是很典型的16进制表<code>0123456789abcdef</code>，那么我输入的它给它拆成16进制数了，那么等会逆向解回去的话这个还是很好逆回去的，那么我们<code>ESC</code>跳回原来的函数。</p>
-<p>v8的值转换给了v9，v7为下面比较字符串的其中一个，然后把v9转换成16进制数赋给v6，v5=65537。其实这个特征都就已经告诉你这是RSA解密。毕竟加密指数65537是十分常见的RSA加密指数。那么下面还有一个不认识的函数，不过看它的后缀powm，pow你就很容易看出来是取次方，然后m不就是模mod了么(手动滑稽)。所以这个函数实现的功能等价于一个表达式</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v6=v6^v5%v4</span><br></pre></td></tr></table></figure>
-
-<p>相当于v6是我们输入的，然后这个结果我们是知道的，模数n和指数e我们也知道，那么就对它结果(v7)进行RSA解密。</p>
-<p>1.破解得到p,q，<a target="_blank" rel="noopener" href="http://www.factordb.com/index.php">在线工具</a></p>
-<p>2.编写脚本解密，这里用第三方包解密我就不演示了，主要看看解密的过程。</p>
-<p>脚本中的数一律为10进制，转换的简单方法:把数复制到python交互窗口加上前缀<code>0x</code>就可以输出它的10进制数值了。</p>
-<p><img src="https://i.loli.net/2021/05/07/nAc9TG5p4hDgrLq.png" alt="buuctf SignIn_3.png"></p>
-<p>快速幂的脚本</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">python</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">while(d):</span><br><span class="line">    if d&amp;1:</span><br><span class="line">        x=x*c%n</span><br><span class="line">    c=c*c%n</span><br><span class="line">    d=d//2</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
-
-<p>得到数值<code>185534734614696481020381637136165435809958101675798337848243069</code>。</p>
-<p>这里还要转回16进制再被逆回去处理，因为它以开始也就是16进制的，我们还用python<code>hex(185534734614696481020381637136165435809958101675798337848243069)</code>得到16进制数。</p>
-<p><img src="https://i.loli.net/2021/05/07/IzF89jYiTCL6bdp.png" alt="buuctf SignIn_4.png"></p>
-<p>最后一步就可以写脚本做最后一步解密了，这一步很简单，就是16进制转字符串，这个我喜欢用C++写，我感觉会比较方便。</p>
-<p><img src="https://i.loli.net/2021/05/07/OMTJFghtDpBrKan.png" alt="buuctf SignIn_5.png"></p>
-<p>得到flag</p>
-<p>本篇所有的exp</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">python</span><br><span class="line"></span><br><span class="line">#RSA解密脚本</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">p=282164587459512124844245113950593348271</span><br><span class="line">q=366669102002966856876605669837014229419</span><br><span class="line">phi=(p-1)*(q-1)</span><br><span class="line">e=65537</span><br><span class="line">d=inverse(e,phi)</span><br><span class="line">c=78510953323073667749065685964447569045476327122134491251061064910992472210485</span><br><span class="line">n=103461035900816914121390101299049044413950405173712170434161686539878160984549</span><br><span class="line">x=1</span><br><span class="line">while(d):</span><br><span class="line">    if d&amp;1:</span><br><span class="line">        x=x*c%n</span><br><span class="line">    c=c*c%n</span><br><span class="line">    d=d//2</span><br><span class="line">print(x)</span><br><span class="line">c++</span><br><span class="line"></span><br><span class="line">//hex2raw脚本</span><br><span class="line">#include&lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">//char s[100];</span><br><span class="line">char s[]=&quot;73756374667b50776e5f405f68756e647265645f79656172737d&quot;;</span><br><span class="line">int b=0;</span><br><span class="line">int main()&#123;</span><br><span class="line">    for(int i=0;i&lt;strlen(s);i+=2)&#123;</span><br><span class="line">        int x=0;</span><br><span class="line">        if(s[i]&lt;=&#x27;9&#x27;)&#123;</span><br><span class="line">            x=(s[i]-&#x27;0&#x27;)&lt;&lt;4;</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            x=(s[i]-&#x27;a&#x27;+10)&lt;&lt;4;</span><br><span class="line">        &#125;</span><br><span class="line">        if(s[i+1]&lt;=&#x27;9&#x27;)&#123;</span><br><span class="line">            x+=(s[i+1]-&#x27;0&#x27;);</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            x+=(s[i+1]-&#x27;a&#x27;+10);</span><br><span class="line">        &#125;</span><br><span class="line">        printf(&quot;%c&quot;,x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>本作者也是没想到啊，学逆向要把加密看那么透的，当时学RSA偷懒了啊，所以导致昨天捡起又花了很多时间，不过也好，加深了我对RSA算法的印象。</p>
+<h2 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h2><p>若 $p$ 为素数，$\gcd(a, p) = 1$，则 $a^{p - 1} \equiv 1 \pmod{p}$。</p>
+<p>另一个形式：对于任意整数 $a$，有 $a^p \equiv a \pmod{p}$。</p>
+<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>设一个质数为 $p$，我们取一个不为 $p$ 倍数的数 $a$。</p>
+<p>构造一个序列：$A={1,2,3\dots,p-1}$，这个序列有着这样一个性质：</p>
+<p>$$<br>\prod_{i=1}^{n}\space A_i\equiv\prod_{i=1}^{n} (A_i\times a) \pmod p<br>$$</p>
+<p>证明：</p>
+<p>$$<br>\because gcd(A_i,p)=1,gcd(A_i\times a,p)=1<br>$$</p>
+<p>又因为每一个 $A_i\times a \pmod p$ 都是独一无二的，且 $A_i\times a \pmod p &lt; p$</p>
+<p>得证（每一个 $A_i\times a$ 都对应了一个 $A_i$)</p>
+<p>设 $f=(p-1)!$, 则 $f\equiv a\times A_1\times a\times A_2\times a \times A_3 \dots \times  A_{p-1} \pmod p$</p>
+<p>$$<br>a^{p-1}\times f \equiv f \pmod p \     a^{p-1} \equiv 1 \pmod p<br>$$</p>
+<p>证毕。</p>
+<h2 id="欧拉定理"><a href="#欧拉定理" class="headerlink" title="欧拉定理"></a>欧拉定理</h2><p>欧拉定理实际上就是费马小定理的推广，欧拉定理的内容如下。</p>
+<p>若 $\gcd(a, m) = 1$，则 $a^{\varphi(m)} \equiv 1 \pmod{m}$。</p>
+<p>至于这个证明么，有点复杂，不细讲了（实则也不会）。可以说，费马小定理撑起了很多东西，比如我们经常算的逆元，或者是经典非对称加密 <code>RSA</code> 都有用到费马小定理。</p>
+<h2 id="逆元"><a href="#逆元" class="headerlink" title="逆元"></a>逆元</h2><p>这个概念是抽象代数里面的，定义代数中的二元运算 <code>*</code> 和有限集 <code>G</code> ，若 $a*b∈G(a∈G,b∈G)$ 则，群 $&lt;G,*&gt;$ 是一个关系代数。</p>
+<p>代数中，有一个很重要的概念就是幺元 ，幺元是指与任意数进行关系运算结果都等于那个数，比如在加法运算中，0就是幺元，因为0加任何数都等于任何数嘛。在乘法中，1就是幺元，同样1乘任何数也等于任何数。而逆元就是说两个数相互进行关系运算之后得到幺元，那么这两个数就互称为对方的逆元。</p>
+<p>而我们平时算法竞赛研究的代数体系通常是乘法取模运算，它其实跟乘法类似，就多个取模，取模也限定了它集合的有限性。在乘法模运算中，我们不难发现1是幺元。所以若 $b$ 是 $a$ 在模 $m$ 意义下的逆元，则有 $a\times b \equiv 1 \pmod p$。而这个1我们稍微用一下费马小定理，把它变成 $a^{p-1}$，那么整个式子就变成了 $b\equiv a^{p-2}\ (mod\ p)$。我们就能已知其中一个数算出另一个数的逆元了，至于幂运算可以使用快速幂解决，那么我们算一个数的逆元的复杂度就是 $O(log_2p)$ 了。</p>
 
       
     </div>
@@ -301,13 +271,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2021/05/08/RSA/">RSA解密</a></p>
+        <p><span>本文标题:</span><a href="/2022/04/28/femal/">费马小定理的应用及证明</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2021-05-08, 10:00:00</p>
-        <p><span>最后更新:</span>2022-04-18, 14:51:22</p>
+        <p><span>发布时间:</span>2022-04-28, 00:00:00</p>
+        <p><span>最后更新:</span>2022-04-28, 02:25:03</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2021/05/08/RSA/" title="RSA解密">http://example.com/2021/05/08/RSA/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/05/08/RSA/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/04/28/femal/" title="费马小定理的应用及证明">http://example.com/2022/04/28/femal/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/04/28/femal/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -319,16 +289,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">
-                    archlab实验报告：y86命令使用
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">
-                    红帽杯2019 easyRe
+                <a href="/2022/04/24/html%E8%AF%AD%E8%A8%80%E7%9A%84%E5%AD%A6%E4%B9%A0/">
+                    html语言的学习
                 </a>
             </div>
         
@@ -340,7 +304,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="toc-number">1.</span> <span class="toc-text">非对称加密</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RSA%E5%8A%A0%E5%AF%86"><span class="toc-number">2.</span> <span class="toc-text">RSA加密</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RSA%E5%8A%A0%E5%AF%86%E7%9A%84%E7%A0%B4%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">RSA加密的破解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98-SUCTF2019-SignIn"><span class="toc-number">4.</span> <span class="toc-text">例题:[SUCTF2019]SignIn</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">费马小定理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%81%E6%98%8E"><span class="toc-number">1.1.</span> <span class="toc-text">证明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">欧拉定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%86%E5%85%83"><span class="toc-number">3.</span> <span class="toc-text">逆元</span></a></li></ol>
         
     </div>
     <style>
@@ -376,7 +340,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"RSA解密　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"费马小定理的应用及证明　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -396,15 +360,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/" title="上一篇: archlab实验报告：y86命令使用">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/" title="下一篇: 红帽杯2019 easyRe">
+            <a href="/2022/04/24/html%E8%AF%AD%E8%A8%80%E7%9A%84%E5%AD%A6%E4%B9%A0/" title="下一篇: html语言的学习">
                 <i class="fa fa-angle-right"></i>
             </a>
         
