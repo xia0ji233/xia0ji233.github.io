@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="和sigma姐姐vp这场icpc。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2020沈阳icpc复盘">
+<meta property="og:url" content="http://example.com/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="和sigma姐姐vp这场icpc。">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/1.png">
+<meta property="og:image" content="http://example.com/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/2.png">
+<meta property="og:image" content="http://example.com/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/3.png">
+<meta property="og:image" content="http://example.com/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/4.png">
+<meta property="og:image" content="http://example.com/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/5.png">
+<meta property="og:image" content="http://example.com/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/6.png">
+<meta property="article:published_time" content="2022-07-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-25T15:21:54.048Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>2020沈阳icpc复盘 | xia0ji233&#39;s blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xia0ji233</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">学习应该像呼吸一样自然</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/friends">友链</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xia0ji233</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xia0ji233 </a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/friends">友链</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-2020沈阳icpc复盘" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/" class="article-date">
+      <time datetime="2022-07-24T16:00:00.000Z" itemprop="datePublished">2022-07-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2020沈阳icpc复盘
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/vp/">vp</a><a class="article-category-link" href="/categories/icpc/vp/2020%E6%B2%88%E9%98%B3/">2020沈阳</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>和sigma姐姐vp这场icpc。</p>
+<span id="more"></span>
+
+<h2 id="D-Journey-to-Un’Goro"><a href="#D-Journey-to-Un’Goro" class="headerlink" title="D. Journey to Un’Goro"></a>D. Journey to Un’Goro</h2><p>这题是构造题，本来有思路了的，但是没敢提交。</p>
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p><img src="/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/1.png" alt="1"></p>
+<h3 id="题目解析"><a href="#题目解析" class="headerlink" title="题目解析"></a>题目解析</h3><p>就是说给定一个长度，你需要构造一个只有 <code>r</code> 和 <code>b</code> 字符的字符串，在字符串的子串中，如果有奇数个<code>r</code>，这就是个好区间。问你一个这样长度的字符串最多有多少个好区间，并构造出最好的情况，按字典序输出，如果超过100个则输出前100个。</p>
+<p>我们思考一下如何去计算最大值，就得先看看怎么去计数，首先暴力计数需要 $n^2$ 就肯定不行。因为是奇数个，所以我们考虑转化成前缀和。那么我们看看，如果只有一个 <code>r</code> 其它全是 <code>b</code> 我们看哪些区间符合条件。这里我们不妨把 <code>r</code> 当成 1，把 <code>b</code> 当成 0。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b b b b r r r b b b</span><br><span class="line">0 0 0 0 1 2 3 3 3 3</span><br></pre></td></tr></table></figure>
+
+<p>可以很容易发现，当前缀和相减之后为奇数时，区间是好区间。那么就是偶数匹配奇数其实，因为偶数减奇数或者奇数减偶数才有可能得到奇数，而前缀和要么是偶数要么是奇数。我们最终得到的结果就是 $num=cnt_{odd}\times cnt_{even}$ 而我们很容易得到 $cnt_{odd}+cnt_{even}=n$ ，根据基本不等式我们不难得到当 $cnt_{odd}$ 与 $cnt_{even}$ 接近的时候 $num$ 得到最大值。</p>
+<p>因为 $n$ 可能是奇数，所以我这里说的是接近。那么奇数就是一个多一个一个少一个，偶数就是都一样就好了。</p>
+<p>那么这个可以直接算出来的。</p>
+<p>$ans=\frac{n}{2}\times \frac{n+1}{2}$  </p>
+<p>那么主要就是怎么构造了，也很简单，既然要字典序，我们就尽量构造 <code>b</code> 实在不行就构造 <code>r</code>。什么叫实在不行呢？那就是前缀和奇数个数超过了 <code>(n+1)/2</code> 这个时候就肯定不行。</p>
+<h3 id="标程"><a href="#标程" class="headerlink" title="标程"></a>标程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">//    clock_t start, end;</span></span><br><span class="line"><span class="comment">//    start = clock();</span></span><br><span class="line"><span class="comment">//    end = clock();</span></span><br><span class="line"><span class="comment">//    cout &lt;&lt; (double) (end - start) / CLOCKS_PER_SEC &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">//ios::sync_with_stdio(false);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  int long long</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, x, y) for(int i=(x);i&lt;=(y);++i)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> dep(i, x, y) for(int i=(x);i&gt;=(y);--i)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> gcd(a, b) __gcd(a,b)</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">long</span> <span class="keyword">long</span> mod = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e6</span> + <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> a[maxn]; </span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">char</span> s[maxn];</span><br><span class="line"><span class="keyword">int</span> cnt=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> flag=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> p[maxn];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> pos,<span class="keyword">int</span> n1,<span class="keyword">int</span> n2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n1&gt;cnt||n2 &gt; cnt)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(flag==<span class="number">100</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(pos==n+<span class="number">1</span>)&#123;</span><br><span class="line">        flag++;</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)cout&lt;&lt;s[i];</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        s[pos]=<span class="string">&#x27;b&#x27;</span>;</span><br><span class="line">        p[pos]=p[pos<span class="number">-1</span>];</span><br><span class="line">        p[pos] == <span class="number">1</span> ? res=<span class="built_in">dfs</span>(pos + <span class="number">1</span>, n1 + <span class="number">1</span>, n2) : res=<span class="built_in">dfs</span>(pos + <span class="number">1</span>, n1, n2 + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span>(res==<span class="number">1</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        s[pos]=<span class="string">&#x27;r&#x27;</span>;</span><br><span class="line">        p[pos<span class="number">-1</span>]==<span class="number">1</span>?p[pos]=<span class="number">2</span>:p[pos]=<span class="number">1</span>;</span><br><span class="line">        p[pos] == <span class="number">1</span> ? res = <span class="built_in">dfs</span>(pos + <span class="number">1</span>, n1 + <span class="number">1</span>, n2) : res = <span class="built_in">dfs</span>(pos + <span class="number">1</span>, n1, n2 + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span>(res)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    p[<span class="number">0</span>]=<span class="number">2</span>;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="keyword">int</span> z=<span class="built_in">ceil</span>((<span class="keyword">double</span>)(n+<span class="number">1</span>)/<span class="number">2</span>);</span><br><span class="line">    cout&lt;&lt;z*((n+<span class="number">1</span>)/<span class="number">2</span>)&lt;&lt;endl;</span><br><span class="line">    cnt= z;</span><br><span class="line">    <span class="built_in">dfs</span>(<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="F-Kobolds-and-Catacombs"><a href="#F-Kobolds-and-Catacombs" class="headerlink" title="F. Kobolds and Catacombs"></a>F. Kobolds and Catacombs</h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><p><img src="/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/2.png" alt="2"></p>
+<h3 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h3><p>就是要把一个序列划分，要尽可能地多划分，被划分的序列在一个内部进行排序，最后要求整个序列不递减。那么我们一开始是很容易想到如果元素 $p_i$ 原本需要在 $j$ 的位置上，那么 $i-j$ 的位置上都应该被划分为一个集合。虽然想到了这点，但是其实还可以用这样一种方式做：前缀和！和排过序的前缀和做比较，当有一个位置前缀和相同则 +1，最后输出答案即可，这个思维一定要想到，是sigma姐姐想出来的，我根本没想到qwq。</p>
+<h3 id="标程-1"><a href="#标程-1" class="headerlink" title="标程"></a>标程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 1000005</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> value;</span><br><span class="line">    <span class="keyword">int</span> index;</span><br><span class="line">    <span class="comment">//int new_index;</span></span><br><span class="line">&#125;a[maxn]; </span><br><span class="line"><span class="keyword">int</span> vis[maxn];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">cmp</span><span class="params">(A a,A b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.value&lt;b.value;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> sum1[maxn],sum2[maxn]; </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;a[i].value);</span><br><span class="line">        a[i].index=i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        sum1[i]=sum1[i<span class="number">-1</span>]+a[i].value;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">sort</span>(a+<span class="number">1</span>,a+<span class="number">1</span>+n,cmp);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        sum2[i]=sum2[i<span class="number">-1</span>]+a[i].value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(sum1[i]==sum2[i])&#123;</span><br><span class="line">            ans++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> t=<span class="number">1</span>;</span><br><span class="line">    <span class="comment">//cin&gt;&gt;t;</span></span><br><span class="line">    <span class="keyword">while</span>(t--)<span class="built_in">solve</span>();</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="G-The-Witchwood"><a href="#G-The-Witchwood" class="headerlink" title="G. The Witchwood"></a>G. The Witchwood</h1><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><p><img src="/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/3.png" alt="3"></p>
+<h3 id="题目分析-1"><a href="#题目分析-1" class="headerlink" title="题目分析"></a>题目分析</h3><p>签到，也没啥好说的，就是加出前k大的数。</p>
+<h3 id="标程-2"><a href="#标程-2" class="headerlink" title="标程"></a>标程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> inf = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, t, res = inf;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1050</span>;</span><br><span class="line"><span class="keyword">int</span> a[N];</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, k;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        cin &gt;&gt; a[i];</span><br><span class="line">    <span class="built_in">sort</span>(a + <span class="number">1</span>, a + n + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n; i &gt;= n - k + <span class="number">1</span>; i--)</span><br><span class="line">        sum += a[i];</span><br><span class="line">    cout &lt;&lt; sum;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="K-Scholomance-Academy"><a href="#K-Scholomance-Academy" class="headerlink" title="K.Scholomance Academy"></a>K.Scholomance Academy</h2><h3 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h3><p><img src="/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/4.png" alt="4"></p>
+<p>题目描述比较长，也不截全了。</p>
+<h3 id="题目分析-2"><a href="#题目分析-2" class="headerlink" title="题目分析"></a>题目分析</h3><p>这题是题是题面巨长，但是答案巨简单的一题，讲的是一个机器学习的问题。我们只需要设置 <code>θ</code> 的值扫过去，然后积分算面积即可，没有用到啥算法。</p>
+<h3 id="标程-3"><a href="#标程-3" class="headerlink" title="标程"></a>标程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> endl <span class="meta-string">&quot;\n&quot;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e6</span> + <span class="number">10</span>;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">V</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> op;</span><br><span class="line">    <span class="keyword">int</span> v;</span><br><span class="line">&#125; a[N];</span><br><span class="line"> </span><br><span class="line"><span class="keyword">int</span> n, tn, fn, tp, fp;</span><br><span class="line"><span class="keyword">double</span> ans, preX;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(V&amp; a, V&amp; b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a.v == b.v)</span><br><span class="line">        <span class="keyword">return</span> a.op &lt; b.op;</span><br><span class="line">    <span class="keyword">return</span> a.v &lt; b.v;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        cin &gt;&gt; a[i].op &gt;&gt; a[i].v;</span><br><span class="line">        <span class="keyword">if</span> (a[i].op == <span class="string">&#x27;+&#x27;</span>)</span><br><span class="line">            fn++;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            tn++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sort</span>(a + <span class="number">1</span>, a + n + <span class="number">1</span>, cmp);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n; i &gt;= <span class="number">1</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">if</span> (a[i].op == <span class="string">&#x27;+&#x27;</span>)</span><br><span class="line">            tp++, fn--;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            fp++, tn--;</span><br><span class="line">        ans += <span class="number">1.0</span> * tp / (tp + fn) * (<span class="number">1.0</span> * fp / (tn + fp) - preX);</span><br><span class="line">        preX = <span class="number">1.0</span> * fp / (tn + fp);</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="built_in">setprecision</span>(<span class="number">10</span>) &lt;&lt; fixed &lt;&lt; ans &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="题意分析"><a href="#题意分析" class="headerlink" title="题意分析"></a>题意分析</h3><p>题意： 一个时钟，时针走一圈就是一天，现在给定时针走一圈要 $H$ 小时，分针走一圈要 $M$ 分钟，设 $α=\frac{2πA}{HM}$，求一天中时针和分针夹角小于等于 $α$ 的时刻有几次。</p>
+<p>这题首先有如下几个注意点：<br>①分针是按照刻度一格一格走的，因此不能将小数的分钟算入，必须是整的（即不能按照角度来求）。<br>②两者成角度会有两种情况，分针在时针左边成角度 or 在时针右边成角度</p>
+<p><img src="/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/5.png" alt="5"></p>
+<p><strong>切入点：</strong> 一般会最先想到用追及问题的角度去做，但是这样就有两个变量（涉及到分针和时针两个对象），所以我们可以选择将<strong>时针作为参照物</strong> （参照物静止不动），运用相对速度只对分针这一个对象做分析。</p>
+<p>两者绝对速度： $v_{h绝对}= \frac{2π}{HM}$ ，$ v_{m绝对}=\frac{2π}{M}$</p>
+<p>分针相对速度： $v_{m相对}=v_{m绝对}-v_{h绝对}=\frac{2π}{HM}*(H-1)=(H-1)v_{h绝对}$</p>
+<p>即分针相对于时针以 $H−1/min$ 的恒定速度运动。</p>
+<p>要使两者之间夹角小于等于α，也就相当于追及问题中的两针“路程差”≤α，而此处因为时针作为参照物了，所以也就转化成了分针的“路程”$≤α=\frac{2πA}{HM}=A*v_{h绝对}$ </p>
+<p>因此我们可以写出一个关于时间 $t∈[0,HM)$ 的不等式：</p>
+<p>$t\times (H-1)v_{h绝对}\ mod\ HM ≤ |α|=|A∗ v h 绝 对 *v_{h绝对}∗v $</p>
+<p>$t\times (H-1)\ mod\ HM\le |A|$</p>
+<p>根据<strong>剩余系定理三：</strong><br>“若a,b,c为任意3个整数，m为正整数，且（m,c)=1，则当ac≡bc(mod m）时，有a≡b(mod m)”</p>
+<p>所以为了满足互质，可将不等式两边同除以 $g =\gcd(H-1,HM)$  ，不等式可等价为：</p>
+<p>$t\times \frac{H-1}{g}\ mod\ \frac{HM}{g} \le |\frac{A}{g}|$</p>
+<p>$\frac{-A}{g}\le t\times \frac{H-1}{g}\ mod\ \frac{HM}{g}\le \frac{A}{g}$</p>
+<p>————注意：此处t的取值范围也同时从 $[ 0 , HM )$ 缩小到 $[ 0,\frac{HM}{g})$ —————</p>
+<p>下面就只需求解出 t 的整数解的个数，即为满足条件的时刻的次数。我画在数轴上会比较直观。只需求出正半轴有几个整数解，然后个数 $\times 2$并且加上零解。</p>
+<p><img src="/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/6.png" alt="6"></p>
+<p>正半轴：因为要mod之后余数$≤\frac{A}{g}$，因此一共有余数为$1，2，3…\frac{A}{g} $ 的共计 $\frac{A}{g}$ 个解，并且这些解中没有重复的，即t的值与余数取值一 一对应，下证：</p>
+<p>令$a=\frac{H-1}{g}$ ，$b=\frac{HM}{g} $</p>
+<p>假设存在$t_1$和$t_2$ 两个不同的值满足：$t_1\times\ mod\ b ≡ t_2\times a\ mod\ b$ 且 $t ∈ [ 0 , b ]$  因此根据同余定义，易证$t_1=t_2$ 与假设矛盾，因此每个t的解所对应的余数一定是各不相同的。</p>
+<p>所以在 $t∈[ 0 , \frac{HM}{g} )$ 的范围内一共有 $2\times (\frac{A}{g})+1$个不同整数解。把范围还原到 $ [ 0 , HM ) $，就共有 $g\times[2\times(\frac{A}g)+1]$ 个不同的整数解，也就是本题答案之一。</p>
+<p>有一种情况需要特判，就是当 $A=\frac{HM}{2}$，这时 $α=π$ ，$t ∈ [ 0 , HM )$ 中的每个整数都满足条件，故答案为 $HM$</p>
+<h3 id="标程-4"><a href="#标程-4" class="headerlink" title="标程"></a>标程</h3><p>然后标程就巨短</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long</span></span><br><span class="line">ll h,m,a;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lld%lld%lld&quot;</span>,&amp;h,&amp;m,&amp;a);</span><br><span class="line">    ll g=__gcd(h<span class="number">-1</span>,h*m);</span><br><span class="line">    <span class="keyword">if</span>(a==h*m/<span class="number">2</span>)  <span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>,h*m);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>,g*(<span class="number">2</span>*(a/g)+<span class="number">1</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>希望能和sigma姐姐一起进步，争取下次能vp到铜首水平</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/">2020沈阳icpc复盘</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
+        <p><span>发布时间:</span>2022-07-25, 00:00:00</p>
+        <p><span>最后更新:</span>2022-07-25, 23:21:54</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/" title="2020沈阳icpc复盘">http://example.com/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2022/07/25/Codeforces%20Round%20810(Div.2)/">
+                    Codeforces Round 810(Div.2)解析
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2022/07/23/Educational%20Codeforces%20Round%20132(Div.2)/">
+                    Educational Codeforces Round 132(Div.2)分析
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#D-Journey-to-Un%E2%80%99Goro"><span class="toc-number">1.</span> <span class="toc-text">D. Journey to Un’Goro</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">题目解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">标程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#F-Kobolds-and-Catacombs"><span class="toc-number">2.</span> <span class="toc-text">F. Kobolds and Catacombs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-1"><span class="toc-number">2.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">2.2.</span> <span class="toc-text">题目分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B-1"><span class="toc-number">2.3.</span> <span class="toc-text">标程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#G-The-Witchwood"><span class="toc-number"></span> <span class="toc-text">G. The Witchwood</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-2"><span class="toc-number">0.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90-1"><span class="toc-number">0.2.</span> <span class="toc-text">题目分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B-2"><span class="toc-number">0.3.</span> <span class="toc-text">标程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#K-Scholomance-Academy"><span class="toc-number">1.</span> <span class="toc-text">K.Scholomance Academy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-3"><span class="toc-number">1.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90-2"><span class="toc-number">1.2.</span> <span class="toc-text">题目分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B-3"><span class="toc-number">1.3.</span> <span class="toc-text">标程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E6%84%8F%E5%88%86%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text">题意分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B-4"><span class="toc-number">1.5.</span> <span class="toc-text">标程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">小结</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"2020沈阳icpc复盘　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2022/07/25/Codeforces%20Round%20810(Div.2)/" title="上一篇: Codeforces Round 810(Div.2)解析">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2022/07/23/Educational%20Codeforces%20Round%20132(Div.2)/" title="下一篇: Educational Codeforces Round 132(Div.2)分析">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/07/25/Codeforces%20Round%20810(Div.2)/">Codeforces Round 810(Div.2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/">2020沈阳icpc复盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/23/Educational%20Codeforces%20Round%20132(Div.2)/">Educational Codeforces Round 132(Div.2)分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/23/%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1(2022-7-23)%E9%A2%98%E8%A7%A3/">牛客多校(2022-7-23)题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/">线段树专题训练</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/09/Educational%20Codeforces%20Round%20131(Div.2)/">Educational Codeforces Round 131(Div.2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/05/Codeforces%20Round%20804(Div.2)/">codeforces round 804(div2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/16/ctfshow%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-web351/">ctfshow刷题记录-web351</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/16/ctfshow%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-web258/">ctfshow刷题记录-web258</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/03/CSAPP_Datalab/">CS:APP第二章复习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/01/ciscn2022%E5%88%9D%E8%B5%9Bwriteup/">CISCN2022 初赛WP</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Educational%20Codeforces%20Round%20129(Div.2)/">Educational Coeforces Round 129(Div.2)题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/23/KCTF2022%E6%98%A5%E5%AD%A3%E8%B5%9B_6/">KCTF2022春季赛 第六题 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/07/Codeforces%20Round%20788(Div.2)/">Codeforces Round 788(Div.2)题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/06/Codeforces%20Round%20787(Div.3)/">Codeforces Round 787(Div.3)题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/04/sql%E6%B3%A8%E5%85%A5/">sql注入总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/03/Codeforces%20Round%20786(Div.3)/">Codeforces Round 786(Div.3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/28/wdb2020AreUSerialz/">网鼎杯 2020 青龙组AreUSerialz writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/28/femal/">费马小定理的应用及证明</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/24/html%E8%AF%AD%E8%A8%80%E7%9A%84%E5%AD%A6%E4%B9%A0/">html语言的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/23/Educational%20Codeforces%20Round%20127(Div.2)/">educational codeforces round 127(Div.2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/22/Codeforces%20Round%20784(Div.4)/">codeforces round 784(Div.4)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/20/Codeforces%20Round%20783(Div.2)/">Codeforces Round 783(Div.2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/">概率论在icpc的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/18/Codeforces%20Round%20782(Div.2)/">Codeforces Round 782(Div.2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/15/RSA%E5%8A%A0%E5%AF%86%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/">RSA加密原理解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/SA%E6%9D%BF%E5%AD%90/">SA板子</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/%E4%B8%BB%E5%B8%AD%E6%A0%91/">主席树的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/AC%E8%87%AA%E5%8A%A8%E6%9C%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">AC自动机的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E5%BA%94%E7%94%A8/">最小费用最大流应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/20/Dingtalk/">关于钉钉保存回放的方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/CF1626C/">CF1626C</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/08/Kruskal%E9%87%8D%E6%9E%84%E6%A0%91/">Kruskal 重构树的学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/05/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E7%AC%94%E8%AE%B0/">最小费用最大流笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/03/%E7%BD%91%E7%BB%9C%E6%B5%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">网络流学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">线段树的学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/23/2-SAT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">2-SAT学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/22/%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">差分约束的学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/">负环判断</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/spfa%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">spfa算法的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">manacher的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/16/KMP%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">KMP算法的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/">树形dp的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/">洛谷P1948题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/">ZJCPC-D. Shortest Path Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/">C++文件的输入输出问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/">最近公共祖先求解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/11/%E6%B4%9B%E8%B0%B7P6037%E9%A2%98%E8%A7%A3/">洛谷P6037题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/07/%E6%B4%9B%E8%B0%B7P2656%E9%A2%98%E8%A7%A3/">洛谷P2656题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/04/%E4%BA%8C%E5%88%86%E5%9B%BE%E5%85%A5%E9%97%A8/">二分图入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/02/actf_2019_onerepeater%20writeup/">actf_2019_onerepeater writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/27/malloc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">malloc源码分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/23/%E5%88%86%E5%9D%97%E5%85%A5%E9%97%A82/">分块入门2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/22/%E5%88%86%E5%9D%97%E5%85%A5%E9%97%A8/">分块入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/AES%E5%8A%A0%E5%AF%86/">AES加密学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/16/%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E8%BF%9B%E9%98%B6/">启发式搜索算法进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/15/%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/">启发式搜索算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/15/%5BRoarCTF2019%5Dpolyre%20writeup/">RoarCTF2019 polyre writeup writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/08/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/">校园网模拟登录</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/27/RC4%E5%AD%A6%E4%B9%A0/">RC4加密的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/23/pwnable_input/">pwnable input writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/19/Re/">正则表达式的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/10/SWPUCTF_2019_p1KkHeap/">SWPUCTF_2019_p1KkHeap writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/10/npuctf_2020_level2/">npuctf_2020_level2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/07/de1ctf_2019_weapon/">de1ctf_2019_weapon writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/06/zjctf2021%20pwn2/">2021浙江省赛pwn2复盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/04/wdb2018_guess%20writeup/">wdb2018_guess writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/03/%E7%BD%91%E9%BC%8E%E6%9D%AF2020%E9%9D%92%E9%BE%99%E7%BB%84%20singal%20writeup/">网鼎杯2020青龙组singal writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/02/WUSTCTF2020%20level4%20writeup/">WUSTCTF2020 level4 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/ciscn2019_final_3%20writeup/">ciscn2019_final_3 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/">关于C++文件换libc版本的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/zjctf2021%20%E5%86%B3%E8%B5%9B/">2021浙江省决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/lctf2016_pwn200%20writeup/">lctf2016_pwn200 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/2021%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9BRSA/">2021江西省赛RSA writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/">2020浙江省赛 pwn2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/gyctf_2020_document/">gyctf_2020_document write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/">2021浙江省预赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">浙江2020省赛pwn1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      
+<footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021-2022 xia0ji233
+            </div>
+            
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-212718070-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
