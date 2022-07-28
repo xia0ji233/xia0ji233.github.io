@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>逆序对板子</title>
+      <link href="/2022/07/29/%E9%80%86%E5%BA%8F%E5%AF%B9/"/>
+      <url>/2022/07/29/%E9%80%86%E5%BA%8F%E5%AF%B9/</url>
+      
+        <content type="html"><![CDATA[<p>来源于CF1676H2题目，遇到一个求逆序对的问题，咱也不敢问为什么能这么求啊。</p><span id="more"></span><h2 id="求逆序对"><a href="#求逆序对" class="headerlink" title="求逆序对"></a>求逆序对</h2><p>用途：给一个序列，求出逆序对，$O(log_2n)$</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t; cin&gt;&gt;t;</span><br><span class="line">    <span class="keyword">while</span>(t--)&#123;</span><br><span class="line">        <span class="keyword">long</span> <span class="keyword">long</span> n,rez=<span class="number">0</span>;</span><br><span class="line">        cin&gt;&gt;n;</span><br><span class="line">        <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">a</span><span class="params">(n)</span>,<span class="title">T</span><span class="params">(n+<span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++) cin&gt;&gt;a[i];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=n<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> x=a[i];x&gt;<span class="number">0</span>;x -= x&amp;-x) rez+=T[x];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> x=a[i];x&lt;=n;x+=x&amp;-x) T[x]+=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;rez&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> icpc </category>
+          
+          <category> 板子 </category>
+          
+          <category> 逆序对 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>树状数组学习笔记</title>
       <link href="/2022/07/29/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
       <url>/2022/07/29/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
@@ -202,29 +225,6 @@
           <category> codeforces </category>
           
           <category> 题解 </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>逆序对板子</title>
-      <link href="/2022/06/30/%E9%80%86%E5%BA%8F%E5%AF%B9/"/>
-      <url>/2022/06/30/%E9%80%86%E5%BA%8F%E5%AF%B9/</url>
-      
-        <content type="html"><![CDATA[<p>来源于CF1676H2题目，遇到一个求逆序对的问题，咱也不敢问为什么能这么求啊。</p><span id="more"></span><h2 id="求逆序对"><a href="#求逆序对" class="headerlink" title="求逆序对"></a>求逆序对</h2><p>用途：给一个序列，求出逆序对，$O(log_2n)$</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t; cin&gt;&gt;t;</span><br><span class="line">    <span class="keyword">while</span>(t--)&#123;</span><br><span class="line">        <span class="keyword">long</span> <span class="keyword">long</span> n,rez=<span class="number">0</span>;</span><br><span class="line">        cin&gt;&gt;n;</span><br><span class="line">        <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">a</span><span class="params">(n)</span>,<span class="title">T</span><span class="params">(n+<span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++) cin&gt;&gt;a[i];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=n<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> x=a[i];x&gt;<span class="number">0</span>;x -= x&amp;-x) rez+=T[x];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> x=a[i];x&lt;=n;x+=x&amp;-x) T[x]+=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;rez&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> icpc </category>
-          
-          <category> 板子 </category>
-          
-          <category> 逆序对 </category>
           
       </categories>
       
