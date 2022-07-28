@@ -15,20 +15,17 @@
 
 
 
-<meta name="description" content="格式化字符串漏洞是printf函数比较常见的漏洞，常见的漏洞形式就是printf(s);如果s字符是我们可控的话，那就会导致任意位置读和写等严重的后果。">
+<meta name="description" content="来源于CF1676H2题目，遇到一个求逆序对的问题，咱也不敢问为什么能这么求啊。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="格式化字符串漏洞利用">
-<meta property="og:url" content="http://example.com/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/index.html">
+<meta property="og:title" content="逆序对板子">
+<meta property="og:url" content="http://example.com/2022/06/30/%E9%80%86%E5%BA%8F%E5%AF%B9/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="格式化字符串漏洞是printf函数比较常见的漏洞，常见的漏洞形式就是printf(s);如果s字符是我们可控的话，那就会导致任意位置读和写等严重的后果。">
+<meta property="og:description" content="来源于CF1676H2题目，遇到一个求逆序对的问题，咱也不敢问为什么能这么求啊。">
 <meta property="og:locale">
-<meta property="og:image" content="https://i.loli.net/2021/06/05/eWljw5DEnZ9b1gm.png">
-<meta property="og:image" content="https://i.loli.net/2021/06/05/ZLVsORBKiYxXA5I.png">
-<meta property="article:published_time" content="2021-06-05T02:00:00.000Z">
-<meta property="article:modified_time" content="2022-04-18T06:51:22.850Z">
+<meta property="article:published_time" content="2022-06-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-28T20:49:44.011Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2021/06/05/eWljw5DEnZ9b1gm.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -62,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>格式化字符串漏洞利用 | xia0ji233&#39;s blog</title>
+<title>逆序对板子 | xia0ji233&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -205,11 +202,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-格式化字符串利用" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-逆序对" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/" class="article-date">
-      <time datetime="2021-06-05T02:00:00.000Z" itemprop="datePublished">2021-06-05</time>
+      <a href="/2022/06/30/%E9%80%86%E5%BA%8F%E5%AF%B9/" class="article-date">
+      <time datetime="2022-06-29T16:00:00.000Z" itemprop="datePublished">2022-06-30</time>
 </a>
 
 
@@ -224,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      格式化字符串漏洞利用
+      逆序对板子
     </h1>
   
 
@@ -233,7 +230,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/pwn/">pwn</a>
+    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E6%9D%BF%E5%AD%90/">板子</a><a class="article-category-link" href="/categories/icpc/%E6%9D%BF%E5%AD%90/%E9%80%86%E5%BA%8F%E5%AF%B9/">逆序对</a>
     </div>
 
 
@@ -245,31 +242,12 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>格式化字符串漏洞是printf函数比较常见的漏洞，常见的漏洞形式就是<code>printf(s);</code>如果s字符是我们可控的话，那就会导致任意位置读和写等严重的后果。</p>
+        <p>来源于CF1676H2题目，遇到一个求逆序对的问题，咱也不敢问为什么能这么求啊。</p>
 <span id="more"></span>
 
-<p>首先如下代码段</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> s[<span class="number">100</span>];</span><br><span class="line">gets(s);</span><br><span class="line"><span class="built_in">printf</span>(s);</span><br></pre></td></tr></table></figure>
+<h2 id="求逆序对"><a href="#求逆序对" class="headerlink" title="求逆序对"></a>求逆序对</h2><p>用途：给一个序列，求出逆序对，$O(log_2n)$</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t; cin&gt;&gt;t;</span><br><span class="line">    <span class="keyword">while</span>(t--)&#123;</span><br><span class="line">        <span class="keyword">long</span> <span class="keyword">long</span> n,rez=<span class="number">0</span>;</span><br><span class="line">        cin&gt;&gt;n;</span><br><span class="line">        <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">a</span><span class="params">(n)</span>,<span class="title">T</span><span class="params">(n+<span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++) cin&gt;&gt;a[i];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=n<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> x=a[i];x&gt;<span class="number">0</span>;x -= x&amp;-x) rez+=T[x];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> x=a[i];x&lt;=n;x+=x&amp;-x) T[x]+=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;rez&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>逻辑看上去十分简单，就是输入什么就输出什么。避免这类漏洞的方式也很简单，固定第一个参数就可以了，但是现在第一个参数我们可控的话就要介绍一些平时用不到的格式化字符串的标识符了。</p>
-<p><code>%d %f %x %s</code>这些烂大街的相信都不用讲也会，讲讲其它的标识符</p>
-<p><code>%p</code>:输出第n个参数的十六进制值，目前测试与<code>%x</code>不一样的地方就是输出会带<code>0x</code>，并且%后面带的整型参数表示第几个参数而非参数长度。</p>
-<p><code>%n</code>:将已打印字符串长度输入到下一个参数所表示的地址去，%后面带的整型参数表示要输出的第几个参数。</p>
-<p>注：以上结论皆是在Ubuntu18.0.4环境下使用gcc编译器得到的</p>
-<p>那么通过以上两个较生僻格式化的标识符就可以达到任意读和任意写了。</p>
-<h2 id="p达到任意读的目的"><a href="#p达到任意读的目的" class="headerlink" title="%p达到任意读的目的"></a>%p达到任意读的目的</h2><p>现在有以下测试程序</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buf[<span class="number">30</span>];</span><br><span class="line">    <span class="keyword">while</span>(buf[<span class="number">0</span>]!=<span class="string">&#x27;\0&#x27;</span>)&#123;</span><br><span class="line">        gets(buf);</span><br><span class="line">        <span class="built_in">printf</span>(buf,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>由于我们在64位的环境下编译，所以刚好给6个参数占满寄存器，那么此时我输入一个<code>%6$p</code>就可以直接输出<code>%6$p</code>这个字符串所对应的<code>long</code>的值(因为64位栈的宽度为8字节，所以被迫输出long型整数)</p>
-<p><img src="https://i.loli.net/2021/06/05/eWljw5DEnZ9b1gm.png" alt="format string_1.png"></p>
-<p>这里可以很清楚看到<code>70243625</code>就是字符串<code>%6$p</code>小端输出的结果，如果量一下缓冲区到rbp的距离我们还可以把栈的地址泄露出来，这就是任意读，地址一旦泄露那么可以做的事情就非常多了，如果加了canary甚至可以无视canary溢出。</p>
-<h2 id="n达到任意写目的"><a href="#n达到任意写目的" class="headerlink" title="%n达到任意写目的"></a>%n达到任意写目的</h2><p>我们的测试程序是这样写的</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buf[<span class="number">30</span>];</span><br><span class="line">    <span class="keyword">int</span> a=<span class="number">0</span>,b=<span class="number">0</span>,c=<span class="number">0</span>,d=<span class="number">0</span>,e=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(buf[<span class="number">0</span>]!=<span class="string">&#x27;\0&#x27;</span>)&#123;</span><br><span class="line">        gets(buf);</span><br><span class="line">        <span class="built_in">printf</span>(buf,&amp;a,&amp;b,&amp;c,&amp;d,&amp;e);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n%d %d %d %d %d\n&quot;</span>,a,b,c,d,e);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在这个测试程序略微化简了一点，要修改的变量地址直接传参进去了，在实际攻击的过程中可不会这么给你提供，你需要算偏移然后将地址给格式化字符串定点修改某个变量的值，这就是所谓的任意写。</p>
-<p><img src="https://i.loli.net/2021/06/05/ZLVsORBKiYxXA5I.png" alt="format string_2.png"></p>
-<p>这里可以看到，通过我的输入成功改变了三个变量的值</p>
-<p>这就是格式化字符串漏洞的利用。。</p>
 
       
     </div>
@@ -278,13 +256,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></p>
+        <p><span>本文标题:</span><a href="/2022/06/30/%E9%80%86%E5%BA%8F%E5%AF%B9/">逆序对板子</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2021-06-05, 10:00:00</p>
-        <p><span>最后更新:</span>2022-04-18, 14:51:22</p>
+        <p><span>发布时间:</span>2022-06-30, 00:00:00</p>
+        <p><span>最后更新:</span>2022-07-29, 04:49:44</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/" title="格式化字符串漏洞利用">http://example.com/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/06/30/%E9%80%86%E5%BA%8F%E5%AF%B9/" title="逆序对板子">http://example.com/2022/06/30/%E9%80%86%E5%BA%8F%E5%AF%B9/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/06/30/%E9%80%86%E5%BA%8F%E5%AF%B9/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -297,15 +275,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2021/06/08/axb_2019_fmt32%20wp/">
-                    axb_2019_fmt32 wp
+                <a href="/2022/07/05/Codeforces%20Round%20804(Div.2)/">
+                    codeforces round 804(div2)解析
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2021/05/22/cachelab/">
-                    cachelab实验报告:模拟cache的功能
+                <a href="/2022/06/16/ctfshow%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-web351/">
+                    ctfshow刷题记录-web351
                 </a>
             </div>
         
@@ -317,7 +295,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#p%E8%BE%BE%E5%88%B0%E4%BB%BB%E6%84%8F%E8%AF%BB%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="toc-number">1.</span> <span class="toc-text">%p达到任意读的目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#n%E8%BE%BE%E5%88%B0%E4%BB%BB%E6%84%8F%E5%86%99%E7%9B%AE%E7%9A%84"><span class="toc-number">2.</span> <span class="toc-text">%n达到任意写目的</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82%E9%80%86%E5%BA%8F%E5%AF%B9"><span class="toc-number">1.</span> <span class="toc-text">求逆序对</span></a></li></ol>
         
     </div>
     <style>
@@ -353,7 +331,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"格式化字符串漏洞利用　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"逆序对板子　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -373,7 +351,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2021/06/08/axb_2019_fmt32%20wp/" title="上一篇: axb_2019_fmt32 wp">
+            <a href="/2022/07/05/Codeforces%20Round%20804(Div.2)/" title="上一篇: codeforces round 804(div2)解析">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -381,7 +359,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2021/05/22/cachelab/" title="下一篇: cachelab实验报告:模拟cache的功能">
+            <a href="/2022/06/16/ctfshow%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-web351/" title="下一篇: ctfshow刷题记录-web351">
                 <i class="fa fa-angle-right"></i>
             </a>
         
