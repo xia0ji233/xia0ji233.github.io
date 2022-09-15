@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="最近好迷茫，所以又斥巨资买了一本充满力量的书，那就是看雪的《加密与解密》，也来彻底地玩一玩逆向吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《加密与解密》的学习">
+<meta property="og:url" content="http://example.com/2022/09/14/KanxueBook/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="最近好迷茫，所以又斥巨资买了一本充满力量的书，那就是看雪的《加密与解密》，也来彻底地玩一玩逆向吧。">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2022/09/14/KanxueBook/1.png">
+<meta property="og:image" content="http://example.com/2022/09/14/KanxueBook/2.png">
+<meta property="og:image" content="http://example.com/2022/09/14/KanxueBook/3.png">
+<meta property="og:image" content="http://example.com/2022/09/14/KanxueBook/4.png">
+<meta property="og:image" content="http://example.com/2022/09/14/KanxueBook/5.png">
+<meta property="og:image" content="http://example.com/2022/09/14/KanxueBook/6.png">
+<meta property="og:image" content="http://example.com/2022/09/14/KanxueBook/7.png">
+<meta property="og:image" content="http://example.com/2022/09/14/KanxueBook/8.png">
+<meta property="og:image" content="http://example.com/2022/09/14/KanxueBook/9.png">
+<meta property="og:image" content="http://example.com/2022/09/14/KanxueBook/10.png">
+<meta property="article:published_time" content="2022-09-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-15T15:57:21.134Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/09/14/KanxueBook/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//lib.baomitu.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//lib.baomitu.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//lib.baomitu.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//lib.baomitu.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>《加密与解密》的学习 | xia0ji233&#39;s blog</title>
+
+<script src="//lib.baomitu.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//lib.baomitu.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//lib.baomitu.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//lib.baomitu.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="https://q2.qlogo.cn/headimg_dl?dst_uin=2636876456&amp;spec=100" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xia0ji233</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">学习应该像呼吸一样自然</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/friends">友链</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xia0ji233</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="https://q2.qlogo.cn/headimg_dl?dst_uin=2636876456&amp;spec=100" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xia0ji233 </a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/friends">友链</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-KanxueBook" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/09/14/KanxueBook/" class="article-date">
+      <time datetime="2022-09-13T16:00:00.000Z" itemprop="datePublished">2022-09-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      《加密与解密》的学习
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/reverse/">reverse</a><a class="article-category-link" href="/categories/ctf/reverse/kxbook/">kxbook</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>最近好迷茫，所以又斥巨资买了一本充满力量的书，那就是看雪的《加密与解密》，也来彻底地玩一玩逆向吧。</p>
+<span id="more"></span>
+
+<h2 id="Windows操作系统"><a href="#Windows操作系统" class="headerlink" title="Windows操作系统"></a>Windows操作系统</h2><p>曾经的我，认为 <code>Linux</code> 天下第一好用，（虽然现在我也那么认为）但是 <code>windows </code>作为受众很广的操作系统，很多 <code>windows</code> 的程序也是有必要去学习一下的。</p>
+<h3 id="win32API"><a href="#win32API" class="headerlink" title="win32API"></a>win32API</h3><p>当今大部分 <code>windows</code> 程序都是 <code>GUI</code>，<code>GUI</code> 是通过一系列 <code>API</code> 来完成的，具体<a href="KanxueBook/win32.chm">帮助手册</a>自行下载。</p>
+<p>我们只需要知道一部分的，并且用到什么就学什么好了，比如常见的从控件中获取输入值，用接口 <code>GetDlgItemTextA</code>，弹窗反馈 <code>MessageBoxA</code>，当然这是比较常见的，具体调试的时候还得具体情况具体分析。</p>
+<p><code>windows</code> 程序运行比较依赖动态链接库(dll)，可以理解为 <code>Linux</code> 下的 <code>.so</code> 文件。<code>windows</code>比较内核的三个动态链接库为</p>
+<ul>
+<li><code>kernel(kernel32.dll)</code>：提供操作系统的核心服务。</li>
+<li><code>user(user32.dll)</code>：提供用户输入和输出的接口。</li>
+<li><code>GDI(GDI32.dll)</code>：提供图形设备接口。</li>
+</ul>
+<p>这里需要注意一点，就是很多接口的后缀 <code>A</code> 或者 <code>W</code> 表示它处理字符的一个字符集， <code>A</code> 表示 <code>ASCII</code> 码，<code>w</code> 表示 <code>unicode</code> 码。</p>
+<h2 id="动态调试器"><a href="#动态调试器" class="headerlink" title="动态调试器"></a>动态调试器</h2><p>这本书介绍了很多的动态调试器，这里我还是比较喜欢 <code>x32dbg</code>，所以其它的我也不一一解读了，但是相同的特性也能拿来讲一讲记一记。</p>
+<h3 id="直接调试"><a href="#直接调试" class="headerlink" title="直接调试"></a>直接调试</h3><p>打开调试器，在<strong>文件</strong> <code>-&gt;</code> <strong>打开</strong> 中选择自己要调试的文件，然后载入。</p>
+<h3 id="附加调试"><a href="#附加调试" class="headerlink" title="附加调试"></a>附加调试</h3><p>打开调试器，在<strong>文件</strong> <code>-&gt;</code> <strong>附加</strong> 中选择自己要附加调试的进程，然后载入。</p>
+<hr>
+<p>感觉附加调试会好一点吧，毕竟能先让程序运行到自己想调试的点然后再去调试，这样省了前面入口点的一些操作，但是我们要调试关键信息，一定是要下<strong>断点</strong>(<strong>break point</strong>)的。</p>
+<p>这里我们直接用 <code>chap02\OllyDbg调试器\2.1.4 基本操作\bin\ASCII版\TraceMe.exe</code> 来试试手。</p>
+<p><img src="/2022/09/14/KanxueBook/1.png" alt="1"></p>
+<p>调试器整体呈这样，最上面一行肯定是标签栏，工具栏，选项卡。剩余窗口大致分为四块。<code>CPU</code> 选项卡中的窗口表现出来就是代码窗口，最右边的窗口时寄存器窗口，左下角的窗口是内存窗口，右下角的窗口是栈窗口，最下面一行的文本框可以用于打命令使用。</p>
+<h3 id="CPU窗口"><a href="#CPU窗口" class="headerlink" title="CPU窗口"></a>CPU窗口</h3><p>大概分了五列，如下图所示。</p>
+<p><img src="/2022/09/14/KanxueBook/2.png" alt="2"></p>
+<ul>
+<li>对于第一列，更多的是标识跳转的作用，以及设置断点。</li>
+<li>第二列标识了当前内存地址的地址，<strong>双击</strong>可以显示改行的相对地址偏移，再次双击恢复。</li>
+<li>第三列标识了该地址的内存字节，<strong>双击</strong>可以下断点。</li>
+<li>第四列标识了该字节码的反汇编代码，选中使用 <strong>空格</strong> 键可以修改汇编代码。</li>
+<li>第五列提供了一些内存地址或者是寄存器的值，也可以用 <code>;</code> 键去添加注释。</li>
+</ul>
+<h3 id="断点"><a href="#断点" class="headerlink" title="断点"></a>断点</h3><p>断点大致分为以下几种类型</p>
+<ul>
+<li><code>INT 3</code> 断点</li>
+<li>硬件断点</li>
+<li>内存断点</li>
+<li>消息断点</li>
+<li>条件断点</li>
+</ul>
+<h4 id="INT-3断点"><a href="#INT-3断点" class="headerlink" title="INT 3断点"></a>INT 3断点</h4><p><code>INT 3</code> 是一条汇编指令，其机器码是 <code>0xCC</code> 所以也叫 <code>CC</code> 指令。执行这个指令的时候，会抛出一个 <code>break point exception</code> 异常，这个异常会被调试器捕获到，因此能达到断点的目的。在打断点的时候，会把这个地址设置为 <code>0xCC</code> ，也就是 <code>INT 3</code>  的机器码。优点是可以设置很多个断点，因为我们只要想，可以在任意地址把值改成 <code>0xCC</code> 以此达到断点的目的。但是带来的缺点就是会修改程序的内存，改变了原机器码，可能会被程序检测到。</p>
+<p>比如这样的一个 <code>MFC</code> 程序，<a href="KanxueBook/TrackMe.exe">附件下载</a></p>
+<p>source:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CTrackMeDlg::OnBnClickedButton1</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// <span class="doctag">TODO:</span> 在此添加控件通知处理程序代码</span></span><br><span class="line">	HWND hWnd = <span class="built_in">AfxGetMainWnd</span>()-&gt;m_hWnd;</span><br><span class="line">	QWORD Uaddr;</span><br><span class="line">	BYTE Mark = <span class="number">0</span>;</span><br><span class="line">	Uaddr = (QWORD)MessageBoxA;</span><br><span class="line">	Mark = *(BYTE*)Uaddr;</span><br><span class="line">	<span class="keyword">if</span> (Mark == <span class="number">0xCC</span>) &#123;</span><br><span class="line">		<span class="built_in">MessageBoxA</span>(hWnd, <span class="string">&quot;be tracked&quot;</span>, <span class="string">&quot;MessageBox&quot;</span>, <span class="number">0</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">MessageBoxA</span>(hWnd,<span class="string">&quot;Very OK&quot;</span>,<span class="string">&quot;MessageBox&quot;</span>,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/09/14/KanxueBook/3.png" alt="3"></p>
+<p>正常运行结果如图所示</p>
+<p><img src="/2022/09/14/KanxueBook/4.png" alt="4"></p>
+<p>如果放到调试器，对 <code>MessageBoxA</code> 这个函数下断点的话，那么就会导致出现另一个不同的运行结果。</p>
+<p><img src="/2022/09/14/KanxueBook/5.png" alt="5"></p>
+<p>因为我们断点设置在 <code>MessageBoxA</code> 上，而程序判断了 <code>MessageBoxA</code> 调用地址是否为 <code>INT 3</code> 指令(<code>0xCC</code>)，有的话就直接输出 <code>be tracked</code> 说明检测到这里下了 <code>INT 3</code> 断点。</p>
+<p>如果我们要绕过检测同时又要求能断下来，那么我们可以在函数调用中间或者是末尾下 <code>INT 3</code> 断点。</p>
+<h4 id="硬件断点"><a href="#硬件断点" class="headerlink" title="硬件断点"></a>硬件断点</h4><p>硬件断点主要是通过 <code>DRx</code> 寄存器实现的，<code>DR0~DR3</code> 分别用于保存硬件断点的地址，那我们也可以看出来它最多能同时存在四个硬件断点。<code>DR4-DR5</code> 未公开具体作用， <code>DR6</code> 用于保存寄存器组状态， <code>DR7</code> 用于保存寄存器组控制。硬件断点不会改变程序字节码，因此它更难被检测，在断点选项中可以设置硬件执行断点，同样，对于一般内存来说，我们可以设置硬件访问断点。</p>
+<p>设置完成之后我们在寄存器窗口拉到最下面，可以看到 <code>DR</code> 寄存器，我们可以从前四个寄存器中找到我们下的硬件断点的位置。硬件断点的优势劣势与前面的 <code>INT 3</code> 断点相对，硬件断点不能同时大量设置，但是它不会更改进程代码段的内存。</p>
+<h4 id="内存断点"><a href="#内存断点" class="headerlink" title="内存断点"></a>内存断点</h4><p>内存（读/写/执行）断点是通过将某一块内存页标记为对应的不可（读/写/执行），当程序尝试对该内存（读/写/执行）的时候就会抛出异常，转而给调试器进行异常处理，若发现访问内存刚好是断点位置时，程序断住，否则正常进行（读/写/执行）操作。由于在执行的时候，会有一个读取命令的操作，因此我们如果在代码断设置了内存访问断点，执行到指定位置时同样会被断住。</p>
+<p>比如这个程序，我们在某一条指令上下内存读取断点</p>
+<p><img src="/2022/09/14/KanxueBook/6.png" alt="6"></p>
+<p>我们再次按 <code>F9</code> 继续执行可以发现程序停在了我们下的断点位置。</p>
+<p><img src="/2022/09/14/KanxueBook/7.png" alt="7"></p>
+<p>不知为何在经过一番激烈的讨论之后，认定  <code>x32dbg</code> 应该是这里的技术细节没有实现，所以导致它只能在一个内存页设置，不能保证在指定位置断住，因此在一个内存页中可能多次被这个点断住，因为它可能没有比较访存位置与内存断点位置。</p>
+<p>内存断点分持久的和一次性断点，一次性断点在断住之后即被删除。</p>
+<h4 id="消息断点"><a href="#消息断点" class="headerlink" title="消息断点"></a>消息断点</h4><p>略</p>
+<h4 id="条件断点"><a href="#条件断点" class="headerlink" title="条件断点"></a>条件断点</h4><p>我们如果希望在一个地方满足一定条件才断下来，这个时候我们可以 <code>shift+F2</code> 设置条件断点，比如我想在一个 <code>10000</code> 次的循环当中，看第 <code>5000</code> 次的执行结果，那么我们正常操作就是给循环体一个断点，然后 <code>F9</code> <code>5000</code> 次，显然这么做会很麻烦，那么我们可以设置一个条件，让它在指定条件才断住，加入循环变量存储在 <code>rcx</code> 当中，那么我们可以设置 <code>rcx==5000</code>。</p>
+<p>source:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">10000</span>;i++)&#123;</span><br><span class="line">		sum+=i;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,sum);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/09/14/KanxueBook/8.png" alt="8"></p>
+<p>我们可以很清晰看到这里的循环结构，然后我们看到循环变量存在 <code>ebx</code> 寄存器中，我们在循环体中下一个条件断点，观察程序的运行。</p>
+<p><img src="/2022/09/14/KanxueBook/9.png" alt="9"></p>
+<p>然后发现程序成功在我们指定的条件下面断住了。</p>
+<p><img src="/2022/09/14/KanxueBook/10.png" alt="10"></p>
+<h3 id="静态调试"><a href="#静态调试" class="headerlink" title="静态调试"></a>静态调试</h3><p>待更</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2022/09/14/KanxueBook/">《加密与解密》的学习</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
+        <p><span>发布时间:</span>2022-09-14, 00:00:00</p>
+        <p><span>最后更新:</span>2022-09-15, 23:57:21</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2022/09/14/KanxueBook/" title="《加密与解密》的学习">http://example.com/2022/09/14/KanxueBook/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/09/14/KanxueBook/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2022/08/31/CVE-2021-3493/">
+                    CVE-2021-3493复现
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">Windows操作系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#win32API"><span class="toc-number">1.1.</span> <span class="toc-text">win32API</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">动态调试器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E8%B0%83%E8%AF%95"><span class="toc-number">2.1.</span> <span class="toc-text">直接调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95"><span class="toc-number">2.2.</span> <span class="toc-text">附加调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU%E7%AA%97%E5%8F%A3"><span class="toc-number">2.3.</span> <span class="toc-text">CPU窗口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%AD%E7%82%B9"><span class="toc-number">2.4.</span> <span class="toc-text">断点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#INT-3%E6%96%AD%E7%82%B9"><span class="toc-number">2.4.1.</span> <span class="toc-text">INT 3断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E6%96%AD%E7%82%B9"><span class="toc-number">2.4.2.</span> <span class="toc-text">硬件断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E6%96%AD%E7%82%B9"><span class="toc-number">2.4.3.</span> <span class="toc-text">内存断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E6%96%AD%E7%82%B9"><span class="toc-number">2.4.4.</span> <span class="toc-text">消息断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%96%AD%E7%82%B9"><span class="toc-number">2.4.5.</span> <span class="toc-text">条件断点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%B0%83%E8%AF%95"><span class="toc-number">2.5.</span> <span class="toc-text">静态调试</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"《加密与解密》的学习　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2022/08/31/CVE-2021-3493/" title="下一篇: CVE-2021-3493复现">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/09/14/KanxueBook/">《加密与解密》的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/08/31/CVE-2021-3493/">CVE-2021-3493复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/08/03/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">icpc数学基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/30/%E2%80%9C%E8%94%9A%E6%9D%A5%E6%9D%AF%E2%80%9D2022%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A54%E9%A2%98%E8%A7%A3/">“蔚来杯”2022牛客暑期多校训练营4题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/29/%E9%80%86%E5%BA%8F%E5%AF%B9/">逆序对板子</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/29/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">树状数组学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/2022%E2%80%9C%E6%9D%AD%E7%94%B5%E6%9D%AF%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E8%B6%85%E7%BA%A7%E8%81%94%E8%B5%9B%EF%BC%884%EF%BC%89%E9%A2%98%E8%A7%A3/">2022“杭电杯”中国大学生算法设计超级联赛（4）题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/">2020沈阳icpc复盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/25/Codeforces%20Round%20810(Div.2)/">Codeforces Round 810(Div.2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/23/Educational%20Codeforces%20Round%20132(Div.2)/">Educational Codeforces Round 132(Div.2)分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/23/%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1(2022-7-23)%E9%A2%98%E8%A7%A3/">牛客多校(2022-7-23)题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/">线段树专题训练</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/09/Educational%20Codeforces%20Round%20131(Div.2)/">Educational Codeforces Round 131(Div.2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/05/Codeforces%20Round%20804(Div.2)/">codeforces round 804(div2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/16/ctfshow%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-web351/">ctfshow刷题记录-web351</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/16/ctfshow%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-web258/">ctfshow刷题记录-web258</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/03/CSAPP_Datalab/">CS:APP第二章复习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/01/ciscn2022%E5%88%9D%E8%B5%9Bwriteup/">CISCN2022 初赛WP</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Educational%20Codeforces%20Round%20129(Div.2)/">Educational Coeforces Round 129(Div.2)题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/23/KCTF2022%E6%98%A5%E5%AD%A3%E8%B5%9B_6/">KCTF2022春季赛 第六题 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/07/Codeforces%20Round%20788(Div.2)/">Codeforces Round 788(Div.2)题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/06/Codeforces%20Round%20787(Div.3)/">Codeforces Round 787(Div.3)题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/04/sql%E6%B3%A8%E5%85%A5/">sql注入总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/03/Codeforces%20Round%20786(Div.3)/">Codeforces Round 786(Div.3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/28/wdb2020AreUSerialz/">网鼎杯 2020 青龙组AreUSerialz writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/28/femal/">费马小定理的应用及证明</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/24/html%E8%AF%AD%E8%A8%80%E7%9A%84%E5%AD%A6%E4%B9%A0/">html语言的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/23/Educational%20Codeforces%20Round%20127(Div.2)/">educational codeforces round 127(Div.2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/22/Codeforces%20Round%20784(Div.4)/">codeforces round 784(Div.4)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/20/Codeforces%20Round%20783(Div.2)/">Codeforces Round 783(Div.2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/">概率论在icpc的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/18/Codeforces%20Round%20782(Div.2)/">Codeforces Round 782(Div.2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/15/RSA%E5%8A%A0%E5%AF%86%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/">RSA加密原理解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/SA%E6%9D%BF%E5%AD%90/">SA板子</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/%E4%B8%BB%E5%B8%AD%E6%A0%91/">主席树的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/AC%E8%87%AA%E5%8A%A8%E6%9C%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">AC自动机的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E5%BA%94%E7%94%A8/">最小费用最大流应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/20/Dingtalk/">关于钉钉保存回放的方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/CF1626C/">CF1626C</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/08/Kruskal%E9%87%8D%E6%9E%84%E6%A0%91/">Kruskal 重构树的学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/05/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E7%AC%94%E8%AE%B0/">最小费用最大流笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/03/%E7%BD%91%E7%BB%9C%E6%B5%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">网络流学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">线段树的学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/23/2-SAT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">2-SAT学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/22/%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">差分约束的学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/">负环判断</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/spfa%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">spfa算法的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">manacher的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/16/KMP%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">KMP算法的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/">树形dp的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/">洛谷P1948题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/">ZJCPC-D. Shortest Path Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/">C++文件的输入输出问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/">最近公共祖先求解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/11/%E6%B4%9B%E8%B0%B7P6037%E9%A2%98%E8%A7%A3/">洛谷P6037题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/07/%E6%B4%9B%E8%B0%B7P2656%E9%A2%98%E8%A7%A3/">洛谷P2656题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/04/%E4%BA%8C%E5%88%86%E5%9B%BE%E5%85%A5%E9%97%A8/">二分图入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/02/actf_2019_onerepeater%20writeup/">actf_2019_onerepeater writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/27/malloc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">malloc源码分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/23/%E5%88%86%E5%9D%97%E5%85%A5%E9%97%A82/">分块入门2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/22/%E5%88%86%E5%9D%97%E5%85%A5%E9%97%A8/">分块入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/AES%E5%8A%A0%E5%AF%86/">AES加密学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/16/%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E8%BF%9B%E9%98%B6/">启发式搜索算法进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/15/%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/">启发式搜索算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/15/%5BRoarCTF2019%5Dpolyre%20writeup/">RoarCTF2019 polyre writeup writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/08/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/">校园网模拟登录</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/27/RC4%E5%AD%A6%E4%B9%A0/">RC4加密的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/23/pwnable_input/">pwnable input writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/19/Re/">正则表达式的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/10/SWPUCTF_2019_p1KkHeap/">SWPUCTF_2019_p1KkHeap writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/10/npuctf_2020_level2/">npuctf_2020_level2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/07/de1ctf_2019_weapon/">de1ctf_2019_weapon writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/06/zjctf2021%20pwn2/">2021浙江省赛pwn2复盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/04/wdb2018_guess%20writeup/">wdb2018_guess writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/03/%E7%BD%91%E9%BC%8E%E6%9D%AF2020%E9%9D%92%E9%BE%99%E7%BB%84%20singal%20writeup/">网鼎杯2020青龙组singal writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/02/WUSTCTF2020%20level4%20writeup/">WUSTCTF2020 level4 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/ciscn2019_final_3%20writeup/">ciscn2019_final_3 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/">关于C++文件换libc版本的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/zjctf2021%20%E5%86%B3%E8%B5%9B/">2021浙江省决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/lctf2016_pwn200%20writeup/">lctf2016_pwn200 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/2021%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9BRSA/">2021江西省赛RSA writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/">2020浙江省赛 pwn2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/gyctf_2020_document/">gyctf_2020_document write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/">2021浙江省预赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">浙江2020省赛pwn1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      
+<footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021-2022 xia0ji233
+            </div>
+            
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script data-main="/js/main.js" src="//lib.baomitu.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-212718070-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//lib.baomitu.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
