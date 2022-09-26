@@ -15,25 +15,17 @@
 
 
 
-<meta name="description" content="今天写这篇博客纯粹就是遇到点问题，不知道有没有人遇到过。">
+<meta name="description" content="最近驹宝给我塞了很多RSA的题，自己也做了很多，学下点 RSA 算法的精髓，写一篇总结，后续持续在这里更新。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++文件的输入输出问题">
-<meta property="og:url" content="http://example.com/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:title" content="RSA题目常见分析">
+<meta property="og:url" content="http://example.com/2022/06/30/RSA_Ex/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="今天写这篇博客纯粹就是遇到点问题，不知道有没有人遇到过。">
+<meta property="og:description" content="最近驹宝给我塞了很多RSA的题，自己也做了很多，学下点 RSA 算法的精髓，写一篇总结，后续持续在这里更新。">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/1.png">
-<meta property="og:image" content="http://example.com/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/2.png">
-<meta property="og:image" content="http://example.com/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/3.png">
-<meta property="og:image" content="http://example.com/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/4.png">
-<meta property="og:image" content="http://example.com/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/5.png">
-<meta property="og:image" content="http://example.com/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/6.png">
-<meta property="og:image" content="http://example.com/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/7.png">
-<meta property="article:published_time" content="2022-02-12T17:00:00.000Z">
-<meta property="article:modified_time" content="2022-04-18T06:51:22.820Z">
+<meta property="article:published_time" content="2022-06-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-26T15:25:21.932Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -67,7 +59,7 @@
 <link href="//lib.baomitu.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>C++文件的输入输出问题 | xia0ji233&#39;s blog</title>
+<title>RSA题目常见分析 | xia0ji233&#39;s blog</title>
 
 <script src="//lib.baomitu.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//lib.baomitu.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -210,11 +202,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-关于C++输入输出的问题" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-RSA_Ex" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
-      <time datetime="2022-02-12T17:00:00.000Z" itemprop="datePublished">2022-02-13</time>
+      <a href="/2022/06/30/RSA_Ex/" class="article-date">
+      <time datetime="2022-06-29T16:00:00.000Z" itemprop="datePublished">2022-06-30</time>
 </a>
 
 
@@ -229,7 +221,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      C++文件的输入输出问题
+      RSA题目常见分析
     </h1>
   
 
@@ -238,7 +230,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/stdin/">stdin</a><a class="article-category-link" href="/categories/icpc/stdin/stdout/">stdout</a>
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/crypto/">crypto</a><a class="article-category-link" href="/categories/ctf/crypto/RSA/">RSA</a>
     </div>
 
 
@@ -250,48 +242,41 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>今天写这篇博客纯粹就是遇到点问题，不知道有没有人遇到过。</p>
+        <p>最近驹宝给我塞了很多RSA的题，自己也做了很多，学下点 RSA 算法的精髓，写一篇总结，后续持续在这里更新。</p>
 <span id="more"></span>
 
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近打CF的时候发现交上去一个答案发生了非预期退出，而且是在样例里面发生的，于是我赶紧把程序扒下来最大限度地确定出现问题的代码段，最终出现了以下代码写的程序。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">freopen</span>(<span class="string">&quot;1.in&quot;</span>,<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> q;</span><br><span class="line">    cin&gt;&gt;q;</span><br><span class="line">    <span class="keyword">while</span>(q--)&#123;</span><br><span class="line">        <span class="keyword">long</span> <span class="keyword">long</span> s,t;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%lld %lld&quot;</span>,&amp;s,&amp;t);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;s=%lld t=%lld\n&quot;</span>,s,t); </span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="RSA的介绍"><a href="#RSA的介绍" class="headerlink" title="RSA的介绍"></a>RSA的介绍</h2><p>RSA的介绍见我<a target="_blank" rel="noopener" href="https://xia0ji233.pro/2022/04/15/RSA%E5%8A%A0%E5%AF%86%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/">这篇博客</a></p>
+<h2 id="RSA常用做法分析"><a href="#RSA常用做法分析" class="headerlink" title="RSA常用做法分析"></a>RSA常用做法分析</h2><h3 id="低指数攻击"><a href="#低指数攻击" class="headerlink" title="低指数攻击"></a>低指数攻击</h3><p>我们知道，RSA的安全在于取模运算的不可逆特性，如果说我的信息本来就是 2，你的加密指数为 2，那么平方下来也就是个 4，取模之后就是取了个寂寞，根据所给公钥和密文，我们直接开个方就得到了明文。</p>
+<h3 id="模不互素"><a href="#模不互素" class="headerlink" title="模不互素"></a>模不互素</h3><p>如果两个公钥模不互素，含有公约数的话，我们用辗转相除法可以很快分解出 p 和 q，而辗转相除法的时间复杂度不会超过 O(log2N)，这优秀的复杂度也让我们能很快地分解得到两个质数。</p>
+<h4 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">n1=<span class="number">28170992834270720831179261369471274598997702487696049830156332106869494605756009553416359364123120058506393684721611134396175255085248520813138288550002318384024725495758952465143175548462425605668727426820108069752293438648949444194603512285742873214792072294105948293367708158997811248728037063455817833123285203002351350137897355454137123787850275750591595704048821577823564124943498574623818380616182913536791603277118981723293551366839681774271977694827633752127448663006058876017157727926930195199823324400467529841773190345386219832514302786638128439120112894598351249563655852372309078552091992786038041766277</span></span><br><span class="line">n2=<span class="number">30426052411541162629650340351029618556957464479756072258366284852617100608440692462790708527260160603801880998062586095228968453145338155923161883183976907495994708490254171467816217449157828401468749415010271748760024562712415222883445840692381712769800218961961965983057269763458953887162943884366520363358693455535663411308843107559177367470269889790117080885165058052596106490369729956697643818346630535515535267060826393590576457246653806670129899406037697985668889417354391424342725773231355312621066562784839302709229489550567684239158552675013440867386238425395428315796266930676815788000373750994287793821091</span></span><br><span class="line">c1=<span class="number">2582291333174688473482837371310695558013344522219801451176882867544382844570171875599043056723912248821021128705894777239584884707037606324176075924881206372661647696306877429822668287235786023020814823874667156587819928274230054865962630859689154098113218782923808109545553391020429182265395418495962822105988502721180599540017512038621869581406476916453238250489026172610106413861344378397008077526294299119321017408325053654182442842084345081920983250459754887618685974033809325906564138957727999316089837005460571267003092757134432108859653429713579692972626913060573924381433177244348871427046105683280661716738</span></span><br><span class="line">c2=<span class="number">9479980959348294048040415043005053472430206540648250182203975873154652511903511233814860462809419869817942169405620776050389695639672610182559325440498062679122369415235835023694654421107733717733775846408272826799042552945154258022884833151833319678933958340634903581390433575987867437793326943284375631246178387198398978881023408777618571874239336944658161598413171690119933787696662425323587221393547627048996325679636765500603814636055989176181848082280852597546562839789752131657822041737796527736673507903567282808259265596977598085942774362863079389090752606097401982926590840320148439167865891839785863650767</span></span><br><span class="line">e = <span class="number">65537</span></span><br></pre></td></tr></table></figure>
 
-<p>首先万能头文件，然后我打开了一个文件把标准输入流重定向到一个文件中，并且关闭了 $cin$ 和 $cout$ 的同步流，大概率问题是出在这里的，然后就一些常规操作没什么好说的。</p>
-<p>我的 $1.in$ 的文件内容如下图所示：</p>
-<p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/1.png" alt="1"></p>
-<p>是正常的输入数据，并且文件编码为 $UTF-8$ 没有任何问题。</p>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>那么我们开 $DEV$ 运行以下先。</p>
-<p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/2.png" alt="2"></p>
-<p>可以看到程序运行出现了非预期结果。</p>
-<p>由于 $DEV$ 不方便调试我们便把 $IDE$ 换成了 $VScode$ 。</p>
-<p>这里我们在 $scanf$ 和 $printf$ 分别打一个断点，然后开启调试模式。</p>
-<p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/3.png" alt="3"></p>
-<p>这里 $s$ 和 $t$ 是随机值正常，因为我们并没有初始化 $s$ 和 $t$ 。</p>
-<p>那么我们 $F10$ 步过看看结果。</p>
-<p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/4.png" alt="4"></p>
-<p>过了 $scanf$ 却没有成功读入数据！！！这是为什么？</p>
-<p>我开始尝试找不同的原因，原因1就是怀疑文件读入的问题，所以我们先注释重定向那一行测试看看。</p>
-<p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/5.png" alt="5"></p>
-<p>运行结果是正常的，这么看来问题似乎解决了。</p>
-<p>但是提交给oj是实实在在地报错了，因此我们尝试注释其它代码看看情况，这里我们接着选择注释这个关闭同步流的代码。</p>
-<p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/6.png" alt="6"></p>
-<p>这回居然正常读入了数据！什么鬼？</p>
-<p>因为刚刚我把 $freopen$ 注释了是确确实实读入没有什么问题了，但是现在似乎把</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+<p>这里我们 GCD 大可不必自己写，直接用 Crypto 库的 GCD 函数即可，安装方法也在上一篇博客。</p>
+<h4 id="解题脚本"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve</span>(<span class="params">c,p,q,e</span>):</span></span><br><span class="line">    n=p*q</span><br><span class="line">    phi=(p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">    d=inverse(e,phi)</span><br><span class="line">    m=<span class="built_in">pow</span>(c,d,n)</span><br><span class="line">    <span class="keyword">return</span> long_to_bytes(m).decode()</span><br><span class="line">n1=<span class="number">28170992834270720831179261369471274598997702487696049830156332106869494605756009553416359364123120058506393684721611134396175255085248520813138288550002318384024725495758952465143175548462425605668727426820108069752293438648949444194603512285742873214792072294105948293367708158997811248728037063455817833123285203002351350137897355454137123787850275750591595704048821577823564124943498574623818380616182913536791603277118981723293551366839681774271977694827633752127448663006058876017157727926930195199823324400467529841773190345386219832514302786638128439120112894598351249563655852372309078552091992786038041766277</span></span><br><span class="line">n2=<span class="number">30426052411541162629650340351029618556957464479756072258366284852617100608440692462790708527260160603801880998062586095228968453145338155923161883183976907495994708490254171467816217449157828401468749415010271748760024562712415222883445840692381712769800218961961965983057269763458953887162943884366520363358693455535663411308843107559177367470269889790117080885165058052596106490369729956697643818346630535515535267060826393590576457246653806670129899406037697985668889417354391424342725773231355312621066562784839302709229489550567684239158552675013440867386238425395428315796266930676815788000373750994287793821091</span></span><br><span class="line">c1=<span class="number">2582291333174688473482837371310695558013344522219801451176882867544382844570171875599043056723912248821021128705894777239584884707037606324176075924881206372661647696306877429822668287235786023020814823874667156587819928274230054865962630859689154098113218782923808109545553391020429182265395418495962822105988502721180599540017512038621869581406476916453238250489026172610106413861344378397008077526294299119321017408325053654182442842084345081920983250459754887618685974033809325906564138957727999316089837005460571267003092757134432108859653429713579692972626913060573924381433177244348871427046105683280661716738</span></span><br><span class="line">c2=<span class="number">9479980959348294048040415043005053472430206540648250182203975873154652511903511233814860462809419869817942169405620776050389695639672610182559325440498062679122369415235835023694654421107733717733775846408272826799042552945154258022884833151833319678933958340634903581390433575987867437793326943284375631246178387198398978881023408777618571874239336944658161598413171690119933787696662425323587221393547627048996325679636765500603814636055989176181848082280852597546562839789752131657822041737796527736673507903567282808259265596977598085942774362863079389090752606097401982926590840320148439167865891839785863650767</span></span><br><span class="line">e=<span class="number">65537</span></span><br><span class="line">p=GCD(n1,n2)</span><br><span class="line">q1=<span class="built_in">int</span>(n1//p)</span><br><span class="line">q2=<span class="built_in">int</span>(n2//p)</span><br><span class="line"><span class="built_in">print</span>(solve(c1,p,q1,e)+solve(c2,p,q2,e))</span><br><span class="line"><span class="comment">#flag&#123;79a0ad16-d357-49af-81e9-d33dc3e541a2&#125;</span></span><br></pre></td></tr></table></figure>
 
-<p>给关闭了程序也是能正常进行的。</p>
-<p>而且这里我还测试了第三种情况：两者都打开，把 $long long$ 换回 $int$ 类型。</p>
-<p><img src="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/7.png" alt="7"></p>
-<p>居然也是正常读入？也就是说，打开文件，在关闭同步流的情况下使用 $scanf$ 读入 $long long$ 数据类型会导致读入不成功，而且注释了打开文件提交给 oj 测评返回了错误结果。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我个人感觉可能涉及到底层的一些问题了。因为自己测试确实三种情况同时满足会导致读入数据失败。这三种情况分别是</p>
-<ol>
-<li>重定向 $stdin$ 到一个文件</li>
-<li>关闭IO同步流</li>
-<li>用 $scanf$ 读入 $long long$ 数据</li>
-</ol>
-<p>一般来说，$scanf$ 不接收到 $EOF$ 信号是会一直等待你输入的。常见的 $EOF$ 基本就是读到文件尾，或者手动给终端了一个 $Ctrl + Z$ 信号给程序，这应该算外部中断了。就基本不会遇到 $scanf$ 读入失败的情况。要真的能有这么好数据那不是可以随便泄露？如果上一个栈帧保存的一些变量的地址刚好在这，我这里故意读入失败那就直接泄露地址，我没见过这样的情况。</p>
-<p>当然我比较浅薄，只能看到表面上的一些东西，如果你有深层次点的合理的解释麻烦你也联系我，我也不想就在这里留一个错误的结论，期待这个问题能早点解决。</p>
-<p>下面我也给出以下本次实验用到的<a href="broken.zip">附件</a>供大家测试，看看能不能是版本的问题。</p>
+<h3 id="共模攻击"><a href="#共模攻击" class="headerlink" title="共模攻击"></a>共模攻击</h3><p>当一个明文信息在两个不同的指数对同一模数进行了加密之后，我们可以在不求出私钥的情况下计算得到明文信息。</p>
+<p>假设有两个密钥</p>
+<p>$key_1=&lt;e_1,n&gt;$</p>
+<p>$key_2=&lt;e_2,n&gt;$</p>
+<p>明文为 m，我们用这两个公钥分别加密出两串密文。</p>
+<p>$c_1=m^{e_1}%n$</p>
+<p>$c_2=m^{e_2}%n$</p>
+<p>这里需要用到点高数知识。对于整数 $k_1,k_2$，使得方程 $k_1x+k_2y=b$ 存在整数解的前提是 b 能整除 $k_1$ 和 $k_2$ 的最小公约数，也就是 $\gcd(k_1,k_2)$。</p>
+<p>特殊地，对于 b=1，存在整数解的充要条件则是 $k_1$ 与 $k_2$ 互质。</p>
+<p>一般情况下，RSA 的加密指数我们会取质数，所以很容易有 $e_1x+e_2y=1$ 存在一对整数解 (x,y)。</p>
+<p>那么</p>
+<p>$c_1^{x}\times c_2^{y}%n=(m^{xe_1}\times m^{ye_2})%n=m^{xe_1+ye_2}%n$</p>
+<p>最后化简即得到明文 m。</p>
+<p>我们的目标就是找到一对整数解，对于这个问题，我们可以使用扩展欧几里得算法去计算，或者是使用 Z3 去求解。</p>
+<p>但是我们也很容易能看出，这个整数解应该会是一正一负的，对于负数我们需要做点特殊处理。</p>
+<p>其实比较简单，负数指数我们并不好处理，因为在乘法模的群当中，数集为整数，负指数表示了分数，显然不满足群的封闭性，其实这里处理的方法与我们之前逆元的处理方法一样。</p>
+<p>举个栗子：假设 x&gt;0,y&lt;0，则 $x^y$ 它的逆元为多少，假设不在模乘法代数而是在普通乘法代数，数集被扩展到了实数集，那我们脱口而出肯定是 $x^{-y}$。那么其实，在模乘法体系中，$x^y$ 的逆元一样是 $x^{-y}$，但是它不好被辨别，于是我们再去找到它逆元的逆元，一个数的逆元的逆元一定是自身。</p>
+<p>我们直接找到 $x$ 在模乘法意义下的逆元 $x^{-1}$ 之后再保持指数不变即是它的逆元，我们可以证明一下：</p>
+<p>$x^{y}\times (x^{-1})^y%n=(x\times x^{-1})^y%n=1$</p>
+<p>因此对于负指数，我们直接符号变正，底数变为逆元即可。</p>
+<h4 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">c1=<span class="number">22322035275663237041646893770451933509324701913484303338076210603542612758956262869640822486470121149424485571361007421293675516338822195280313794991136048140918842471219840263536338886250492682739436410013436651161720725855484866690084788721349555662019879081501113222996123305533009325964377798892703161521852805956811219563883312896330156298621674684353919547558127920925706842808914762199011054955816534977675267395009575347820387073483928425066536361482774892370969520740304287456555508933372782327506569010772537497541764311429052216291198932092617792645253901478910801592878203564861118912045464959832566051361</span></span><br><span class="line">n=<span class="number">22708078815885011462462049064339185898712439277226831073457888403129378547350292420267016551819052430779004755846649044001024141485283286483130702616057274698473611149508798869706347501931583117632710700787228016480127677393649929530416598686027354216422565934459015161927613607902831542857977859612596282353679327773303727004407262197231586324599181983572622404590354084541788062262164510140605868122410388090174420147752408554129789760902300898046273909007852818474030770699647647363015102118956737673941354217692696044969695308506436573142565573487583507037356944848039864382339216266670673567488871508925311154801</span></span><br><span class="line">e1=<span class="number">11187289</span></span><br><span class="line">c2=<span class="number">18702010045187015556548691642394982835669262147230212731309938675226458555210425972429418449273410535387985931036711854265623905066805665751803269106880746769003478900791099590239513925449748814075904017471585572848473556490565450062664706449128415834787961947266259789785962922238701134079720414228414066193071495304612341052987455615930023536823801499269773357186087452747500840640419365011554421183037505653461286732740983702740822671148045619497667184586123657285604061875653909567822328914065337797733444640351518775487649819978262363617265797982843179630888729407238496650987720428708217115257989007867331698397</span></span><br><span class="line">e2=<span class="number">9647291</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="解题脚本-1"><a href="#解题脚本-1" class="headerlink" title="解题脚本"></a>解题脚本</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">egcd</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> a == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> (b, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        g, y, x = egcd(b % a, a)</span><br><span class="line">        <span class="keyword">return</span> (g, x - (b // a) * y, y)</span><br><span class="line">c1=<span class="number">22322035275663237041646893770451933509324701913484303338076210603542612758956262869640822486470121149424485571361007421293675516338822195280313794991136048140918842471219840263536338886250492682739436410013436651161720725855484866690084788721349555662019879081501113222996123305533009325964377798892703161521852805956811219563883312896330156298621674684353919547558127920925706842808914762199011054955816534977675267395009575347820387073483928425066536361482774892370969520740304287456555508933372782327506569010772537497541764311429052216291198932092617792645253901478910801592878203564861118912045464959832566051361</span></span><br><span class="line">n=<span class="number">22708078815885011462462049064339185898712439277226831073457888403129378547350292420267016551819052430779004755846649044001024141485283286483130702616057274698473611149508798869706347501931583117632710700787228016480127677393649929530416598686027354216422565934459015161927613607902831542857977859612596282353679327773303727004407262197231586324599181983572622404590354084541788062262164510140605868122410388090174420147752408554129789760902300898046273909007852818474030770699647647363015102118956737673941354217692696044969695308506436573142565573487583507037356944848039864382339216266670673567488871508925311154801</span></span><br><span class="line">e1=<span class="number">11187289</span></span><br><span class="line">c2=<span class="number">18702010045187015556548691642394982835669262147230212731309938675226458555210425972429418449273410535387985931036711854265623905066805665751803269106880746769003478900791099590239513925449748814075904017471585572848473556490565450062664706449128415834787961947266259789785962922238701134079720414228414066193071495304612341052987455615930023536823801499269773357186087452747500840640419365011554421183037505653461286732740983702740822671148045619497667184586123657285604061875653909567822328914065337797733444640351518775487649819978262363617265797982843179630888729407238496650987720428708217115257989007867331698397</span></span><br><span class="line">e2=<span class="number">9647291</span></span><br><span class="line">s = egcd(e1, e2)</span><br><span class="line">x=s[<span class="number">1</span>]</span><br><span class="line">y=s[<span class="number">2</span>]</span><br><span class="line"><span class="keyword">if</span> x&lt;<span class="number">0</span>:</span><br><span class="line">    x=-x</span><br><span class="line">    c1=inverse(c1,n)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    y=-y</span><br><span class="line">    c2=inverse(c2,n)</span><br><span class="line">m=(<span class="built_in">pow</span>(c1,x,n)*<span class="built_in">pow</span>(c2,y,n))%n</span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(m).decode())</span><br><span class="line"><span class="comment">#flag&#123;49d91077a1abcb14f1a9d546c80be9ef&#125;</span></span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -300,13 +285,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/">C++文件的输入输出问题</a></p>
+        <p><span>本文标题:</span><a href="/2022/06/30/RSA_Ex/">RSA题目常见分析</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2022-02-13, 01:00:00</p>
-        <p><span>最后更新:</span>2022-04-18, 14:51:22</p>
+        <p><span>发布时间:</span>2022-06-30, 00:00:00</p>
+        <p><span>最后更新:</span>2022-09-26, 23:25:21</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/" title="C++文件的输入输出问题">http://example.com/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/06/30/RSA_Ex/" title="RSA题目常见分析">http://example.com/2022/06/30/RSA_Ex/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/06/30/RSA_Ex/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -319,15 +304,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/">
-                    ZJCPC-D. Shortest Path Query
+                <a href="/2022/07/05/Codeforces%20Round%20804(Div.2)/">
+                    codeforces round 804(div2)解析
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/">
-                    最近公共祖先求解
+                <a href="/2022/06/16/ctfshow%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-web351/">
+                    ctfshow刷题记录-web351
                 </a>
             </div>
         
@@ -339,7 +324,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">2.</span> <span class="toc-text">测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">RSA的介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA%E5%B8%B8%E7%94%A8%E5%81%9A%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">RSA常用做法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8E%E6%8C%87%E6%95%B0%E6%94%BB%E5%87%BB"><span class="toc-number">2.1.</span> <span class="toc-text">低指数攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E4%B8%8D%E4%BA%92%E7%B4%A0"><span class="toc-number">2.2.</span> <span class="toc-text">模不互素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">2.2.1.</span> <span class="toc-text">例题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC"><span class="toc-number">2.2.2.</span> <span class="toc-text">解题脚本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E6%A8%A1%E6%94%BB%E5%87%BB"><span class="toc-number">2.3.</span> <span class="toc-text">共模攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98-1"><span class="toc-number">2.3.1.</span> <span class="toc-text">例题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC-1"><span class="toc-number">2.3.2.</span> <span class="toc-text">解题脚本</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -375,7 +360,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"C++文件的输入输出问题　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"RSA题目常见分析　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -395,7 +380,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/" title="上一篇: ZJCPC-D. Shortest Path Query">
+            <a href="/2022/07/05/Codeforces%20Round%20804(Div.2)/" title="上一篇: codeforces round 804(div2)解析">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -403,7 +388,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/" title="下一篇: 最近公共祖先求解">
+            <a href="/2022/06/16/ctfshow%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-web351/" title="下一篇: ctfshow刷题记录-web351">
                 <i class="fa fa-angle-right"></i>
             </a>
         
