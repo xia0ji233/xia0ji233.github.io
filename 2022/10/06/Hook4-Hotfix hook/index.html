@@ -15,23 +15,19 @@
 
 
 
-<meta name="description" content="最近需要下载钉钉的录屏回放，但是管理员禁止了下载，找到了众多的方法都不得行，后面自己开辟了一个方法（我也不敢确定是不是没有人用这个方法，反正这个方法不是通过搜索得到的。。">
+<meta name="description" content="学一学 hook 专题，今天是 hotfix hook。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于钉钉保存回放的方式">
-<meta property="og:url" content="http://example.com/2022/03/20/Dingtalk/index.html">
+<meta property="og:title" content="Hook专题4-hotfix hook">
+<meta property="og:url" content="http://example.com/2022/10/06/Hook4-Hotfix%20hook/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="最近需要下载钉钉的录屏回放，但是管理员禁止了下载，找到了众多的方法都不得行，后面自己开辟了一个方法（我也不敢确定是不是没有人用这个方法，反正这个方法不是通过搜索得到的。。">
+<meta property="og:description" content="学一学 hook 专题，今天是 hotfix hook。">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2022/03/20/Dingtalk/1.png">
-<meta property="og:image" content="http://example.com/2022/03/20/Dingtalk/2.png">
-<meta property="og:image" content="http://example.com/2022/03/20/Dingtalk/3.png">
-<meta property="og:image" content="http://example.com/2022/03/20/Dingtalk/4.png">
-<meta property="og:image" content="http://example.com/2022/03/20/Dingtalk/5.png">
-<meta property="article:published_time" content="2022-03-20T03:00:00.000Z">
-<meta property="article:modified_time" content="2022-04-18T06:51:22.716Z">
+<meta property="og:image" content="http://example.com/2022/10/06/Hook4-Hotfix%20hook/1.png">
+<meta property="article:published_time" content="2022-10-06T10:00:00.000Z">
+<meta property="article:modified_time" content="2022-10-07T05:53:22.570Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/03/20/Dingtalk/1.png">
+<meta name="twitter:image" content="http://example.com/2022/10/06/Hook4-Hotfix%20hook/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -65,7 +61,7 @@
 <link href="//lib.baomitu.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>关于钉钉保存回放的方式 | xia0ji233&#39;s blog</title>
+<title>Hook专题4-hotfix hook | xia0ji233&#39;s blog</title>
 
 <script src="//lib.baomitu.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//lib.baomitu.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -208,11 +204,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Dingtalk" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Hook4-Hotfix hook" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2022/03/20/Dingtalk/" class="article-date">
-      <time datetime="2022-03-20T03:00:00.000Z" itemprop="datePublished">2022-03-20</time>
+      <a href="/2022/10/06/Hook4-Hotfix%20hook/" class="article-date">
+      <time datetime="2022-10-06T10:00:00.000Z" itemprop="datePublished">2022-10-06</time>
 </a>
 
 
@@ -227,7 +223,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      关于钉钉保存回放的方式
+      Hook专题4-hotfix hook
     </h1>
   
 
@@ -235,6 +231,10 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/reverse/">reverse</a><a class="article-category-link" href="/categories/ctf/reverse/hook/">hook</a>
+    </div>
+
 
         
         <div class="clearfix"></div>
@@ -244,30 +244,14 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>最近需要下载钉钉的录屏回放，但是管理员禁止了下载，找到了众多的方法都不得行，后面自己开辟了一个方法（我也不敢确定是不是没有人用这个方法，反正这个方法不是通过搜索得到的。。</p>
+        <p>学一学 hook 专题，今天是 hotfix hook。</p>
 <span id="more"></span>
 
-<p>先说说我通过搜索资源得到了些什么方法吧，其实大多数就指向一种方法——通过fd抓包找到m3u8的下载地址，然而我在用fd抓包的时候并没有找到m3u8的下载地址，也有说用旧版本的钉钉的，但是我发现根本扫不上去，于是我仔细观察fd得到的包，发现播放视频的时候大部分出现了 .TS文件格式的url请求。</p>
-<p><img src="/2022/03/20/Dingtalk/1.png" alt="1"></p>
-<p>可以看到每过一会就会请求一个对应的 <code>ts</code> 文件，我也去搜了一下 <code>ts</code> 文件的含义，差不多就是视频的切片。因此如果我能得到所有的ts的下载地址，那么我就相当于得到了这个视频。</p>
-<p>但是在请求这个 <code>ts</code> 文件的时候必须加上一个 <code>auth_key</code> 参数，然后这个参数貌似也是个随机的散列值，目前信息有限没办法计算出这个散列值的排布规律，但是我能得到一个最朴素的做法：暴力得到所有的 <code>ts</code> 的url，然后一个一个下载，最后用 <code>ffmpeg</code> 去合并就好了。</p>
-<p>然而这里我们并不需要看完所有的视频，我们可以快进，我理解的原理是这样的：假如把你的视频切成 20S一片，在你需要的时候请求，然而假如我不看完，直接跳过这个请求，那么它马上就会请求下一个视频的地址，然后此时被我们捕获到了，之后循环往复我们就能快速地得到所有的请求url，这里的话仅复制url可以快速把url全部复制过来。</p>
-<p>这里我选择按键模拟器去点击这个右键播放，然后间隔频率设置成0.2S，每看1S跳过50S，相当于快进50倍，一个50min的视频我们在1min就能整完，这个效率还是不错的，如果发现ts有丢失那么你可以定位到那个地方重新观察一下请求，然后url复制过来。</p>
-<p><img src="/2022/03/20/Dingtalk/2.png" alt="2"></p>
-<p>我本来想这么多url用爬虫读取url一个个爬然后保存的，结果不知道为啥报错了，于是我选择最蠢的办法：cmd命令。</p>
-<p>在所有url前加上start，然后后缀改一下bat，为了防止电脑卡顿，在每一个start前加上一个暂停的命令，然后我们得到了一个这样的文件：</p>
-<p><img src="/2022/03/20/Dingtalk/3.png" alt="3"></p>
-<p>最后就是枯燥的请求了，这个等着吧，如果你觉得电脑hold的住那么你可以不加暂停的，它会周期弹网页出来，情况就是这样子的：</p>
-<p><img src="/2022/03/20/Dingtalk/4.png" alt="4"></p>
-<p>我还发现一个问题，就是它有时候这个回放并不是严格的就是正整数递增的，中间我有遇到过那种 <code>10000001.ts</code> 的文件，就是突然这样的，也不知道为啥，所以最后写合并指令的时候也比较难，但是难处千千万，靠自己还是能解决的。选择直接在里面放一个python脚本自动合并，合并的命令是这样的：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i &quot;concat:文件1|文件2|文件3|……|文件n&quot; -c copy output.mp4</span><br></pre></td></tr></table></figure>
+<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><p>hotfix hook和 inline hook差不多，但是有利用条件，一是被hook的位置附近有空内存，那么可以直接把被 hook 函数的代码先短跳到附近内存，然后由这个内存跳转到我们自己的函数，这样的话就不需要频繁地装钩卸钩了。</p>
+<p>也直接试试吧</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span></span></span><br><span class="line"><span class="function"><span class="params">(WINAPI</span></span></span><br><span class="line"><span class="params"><span class="function">	* fnMessageBoxA)</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">		_In_opt_ HWND hWnd,</span></span></span><br><span class="line"><span class="params"><span class="function">		_In_opt_ LPCSTR lpText,</span></span></span><br><span class="line"><span class="params"><span class="function">		_In_opt_ LPCSTR lpCaption,</span></span></span><br><span class="line"><span class="params"><span class="function">		_In_ UINT uType)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span></span></span><br><span class="line"><span class="function">WINAPI</span></span><br><span class="line"><span class="function"><span class="title">MyMessageBoxA</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">	_In_opt_ HWND hWnd,</span></span></span><br><span class="line"><span class="params"><span class="function">	_In_opt_ LPCSTR lpText,</span></span></span><br><span class="line"><span class="params"><span class="function">	_In_opt_ LPCSTR lpCaption,</span></span></span><br><span class="line"><span class="params"><span class="function">	_In_ UINT uType)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	fnMessageBoxA NewFunc = (fnMessageBoxA)((DWORD)MessageBoxA + <span class="number">2</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">NewFunc</span>(hWnd, <span class="string">&quot;xia0ji233&quot;</span>, <span class="string">&quot;hooked by xia0ji233&quot;</span>, uType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">BOOL <span class="title">HOOK</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* szModuleName, <span class="keyword">const</span> <span class="keyword">char</span>* szFuncName, PROC pfnFunc)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	BYTE ShortJmp[<span class="number">2</span>] = &#123; <span class="number">0xEB</span>,<span class="number">0xF9</span> &#125;;</span><br><span class="line">	BYTE NewCodes[<span class="number">5</span>] = &#123; <span class="number">0xE9</span>,<span class="number">0</span>, &#125;;</span><br><span class="line">	DWORD dwOldProtect = <span class="number">0</span>;</span><br><span class="line">	FARPROC pOldFuncAddr = (FARPROC)<span class="built_in">GetProcAddress</span>(<span class="built_in">GetModuleHandleA</span>(szModuleName), szFuncName);</span><br><span class="line">	<span class="built_in">VirtualProtect</span>((LPVOID)((DWORD)pOldFuncAddr - <span class="number">5</span>), <span class="number">7</span>, PAGE_EXECUTE_READWRITE, &amp;dwOldProtect);</span><br><span class="line">	DWORD dwAddr = ((DWORD)pfnFunc - (DWORD)pOldFuncAddr);</span><br><span class="line">	*(DWORD*)(NewCodes + <span class="number">1</span>) = dwAddr;</span><br><span class="line">	<span class="built_in">memcpy</span>((LPVOID)((DWORD)pOldFuncAddr - <span class="number">5</span>), NewCodes, <span class="number">5</span>);</span><br><span class="line">	<span class="built_in">memcpy</span>(pOldFuncAddr, ShortJmp, <span class="number">2</span>);</span><br><span class="line">	<span class="built_in">VirtualProtect</span>((LPVOID)((DWORD)pOldFuncAddr - <span class="number">5</span>), <span class="number">7</span>, dwOldProtect, &amp;dwOldProtect);</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">BOOL <span class="title">UnHook</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* szModuleName, <span class="keyword">const</span> <span class="keyword">char</span>* szFuncName)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	BYTE ShortJmp[<span class="number">2</span>] = &#123; <span class="number">0x8B</span>,<span class="number">0xFF</span> &#125;;</span><br><span class="line">	BYTE NewCodes[<span class="number">5</span>] = &#123; <span class="number">0x90</span>,<span class="number">0x90</span>,<span class="number">0x90</span>,<span class="number">0x90</span>,<span class="number">0x90</span> &#125;;</span><br><span class="line">	FARPROC pOldFuncAddr = (FARPROC)<span class="built_in">GetProcAddress</span>(<span class="built_in">GetModuleHandleA</span>(szModuleName), szFuncName);</span><br><span class="line">	DWORD dwOldProtect = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">VirtualProtect</span>((LPVOID)((DWORD)pOldFuncAddr - <span class="number">5</span>), <span class="number">7</span>, PAGE_EXECUTE_READWRITE, &amp;dwOldProtect);</span><br><span class="line">	<span class="built_in">memcpy</span>((LPVOID)((DWORD)pOldFuncAddr - <span class="number">5</span>), NewCodes, <span class="number">5</span>);</span><br><span class="line">	<span class="built_in">memcpy</span>(pOldFuncAddr, ShortJmp, <span class="number">2</span>);</span><br><span class="line">	<span class="built_in">VirtualProtect</span>((LPVOID)((DWORD)pOldFuncAddr - <span class="number">5</span>), <span class="number">7</span>, dwOldProtect, &amp;dwOldProtect);</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">BOOL APIENTRY <span class="title">DllMain</span><span class="params">(HMODULE hModule,</span></span></span><br><span class="line"><span class="params"><span class="function">	DWORD  ul_reason_for_call,</span></span></span><br><span class="line"><span class="params"><span class="function">	LPVOID lpReserved</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in"><span class="keyword">switch</span></span> (ul_reason_for_call)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> DLL_PROCESS_ATTACH:</span><br><span class="line">		<span class="built_in">HOOK</span>(<span class="string">&quot;user32.dll&quot;</span>, <span class="string">&quot;MessageBoxA&quot;</span>, (PROC)MyMessageBoxA);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> DLL_THREAD_ATTACH:</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> DLL_THREAD_DETACH:</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> DLL_PROCESS_DETACH:</span><br><span class="line">		<span class="built_in">UnHook</span>(<span class="string">&quot;user32.dll&quot;</span>, <span class="string">&quot;MessageBoxA&quot;</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>里面主要的就是要扫一下目录获取所有的文件名并让他们按一定顺序排列，这个我也直接放一下吧，也挺简单的，没什么需要解释的。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">f=os.listdir(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">num=[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> f:</span><br><span class="line">    <span class="keyword">if</span> i[-<span class="number">2</span>:]!=<span class="string">&#x27;ts&#x27;</span>:<span class="keyword">continue</span></span><br><span class="line">    num.append(<span class="built_in">int</span>(i[:-<span class="number">3</span>]))</span><br><span class="line">num.sort()</span><br><span class="line">fi=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> q <span class="keyword">in</span> num:</span><br><span class="line">    fi+=<span class="built_in">str</span>(q)+<span class="string">&#x27;.ts|&#x27;</span></span><br><span class="line">cmd=<span class="string">&#x27;ffmpeg -i &quot;concat:&#x27;</span>+fi[:-<span class="number">1</span>]+<span class="string">&#x27;&quot; -c copy output.mp4&#x27;</span></span><br><span class="line">os.system(cmd)</span><br></pre></td></tr></table></figure>
-
-<p>如果不放心可以先print一下看看得到的cmd是什么样的，下面给出我的目录图和运行图：</p>
-<p><img src="/2022/03/20/Dingtalk/5.png" alt="5"></p>
-<p>最后就是运行一遍那个命令了，看看有没有得到你们心心念念的视频吧。</p>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="/2022/10/06/Hook4-Hotfix%20hook/1.png"></p>
 
       
     </div>
@@ -276,13 +260,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2022/03/20/Dingtalk/">关于钉钉保存回放的方式</a></p>
+        <p><span>本文标题:</span><a href="/2022/10/06/Hook4-Hotfix%20hook/">Hook专题4-hotfix hook</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2022-03-20, 11:00:00</p>
-        <p><span>最后更新:</span>2022-04-18, 14:51:22</p>
+        <p><span>发布时间:</span>2022-10-06, 18:00:00</p>
+        <p><span>最后更新:</span>2022-10-07, 13:53:22</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2022/03/20/Dingtalk/" title="关于钉钉保存回放的方式">http://example.com/2022/03/20/Dingtalk/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/03/20/Dingtalk/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/10/06/Hook4-Hotfix%20hook/" title="Hook专题4-hotfix hook">http://example.com/2022/10/06/Hook4-Hotfix%20hook/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/10/06/Hook4-Hotfix%20hook/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -294,16 +278,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2022/04/02/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E5%BA%94%E7%94%A8/">
-                    最小费用最大流应用
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2022/03/19/CF1626C/">
-                    CF1626C
+                <a href="/2022/10/02/Hook3-virtual%20hook/">
+                    Hook专题3-virtual hook
                 </a>
             </div>
         
@@ -315,7 +293,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">1.1.</span> <span class="toc-text">运行结果</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -351,7 +329,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"关于钉钉保存回放的方式　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Hook专题4-hotfix hook　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -371,15 +349,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2022/04/02/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E5%BA%94%E7%94%A8/" title="上一篇: 最小费用最大流应用">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2022/03/19/CF1626C/" title="下一篇: CF1626C">
+            <a href="/2022/10/02/Hook3-virtual%20hook/" title="下一篇: Hook专题3-virtual hook">
                 <i class="fa fa-angle-right"></i>
             </a>
         
