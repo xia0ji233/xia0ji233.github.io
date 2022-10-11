@@ -15,17 +15,28 @@
 
 
 
-<meta name="description" content="最近来复习一遍图论的板子——LCA。">
+<meta name="description" content="最近好迷茫，所以又斥巨资买了一本充满力量的书，那就是看雪的《加密与解密》，也来彻底地玩一玩逆向吧。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="最近公共祖先求解">
-<meta property="og:url" content="http://example.com/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:title" content="xxx">
+<meta property="og:url" content="http://example.com/2022/10/14/KanxueBook1/index.html">
 <meta property="og:site_name" content="xia0ji233&#39;s blog">
-<meta property="og:description" content="最近来复习一遍图论的板子——LCA。">
+<meta property="og:description" content="最近好迷茫，所以又斥巨资买了一本充满力量的书，那就是看雪的《加密与解密》，也来彻底地玩一玩逆向吧。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-02-11T15:00:00.000Z">
-<meta property="article:modified_time" content="2022-04-18T06:51:22.722Z">
+<meta property="og:image" content="http://example.com/2022/10/14/KanxueBook1/1.png">
+<meta property="og:image" content="http://example.com/2022/10/14/KanxueBook1/2.png">
+<meta property="og:image" content="http://example.com/2022/10/14/KanxueBook1/3.png">
+<meta property="og:image" content="http://example.com/2022/10/14/KanxueBook1/4.png">
+<meta property="og:image" content="http://example.com/2022/10/14/KanxueBook1/5.png">
+<meta property="og:image" content="http://example.com/2022/10/14/KanxueBook1/6.png">
+<meta property="og:image" content="http://example.com/2022/10/14/KanxueBook1/7.png">
+<meta property="og:image" content="http://example.com/2022/10/14/KanxueBook1/8.png">
+<meta property="og:image" content="http://example.com/2022/10/14/KanxueBook1/9.png">
+<meta property="og:image" content="http://example.com/2022/10/14/KanxueBook1/10.png">
+<meta property="article:published_time" content="2022-10-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-10-11T06:29:27.567Z">
 <meta property="article:author" content="xia0ji233">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/10/14/KanxueBook1/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +70,7 @@
 <link href="//lib.baomitu.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>最近公共祖先求解 | xia0ji233&#39;s blog</title>
+<title>xxx | xia0ji233&#39;s blog</title>
 
 <script src="//lib.baomitu.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//lib.baomitu.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -202,11 +213,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-LCA详解" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-KanxueBook1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/" class="article-date">
-      <time datetime="2022-02-11T15:00:00.000Z" itemprop="datePublished">2022-02-11</time>
+      <a href="/2022/10/14/KanxueBook1/" class="article-date">
+      <time datetime="2022-10-13T16:00:00.000Z" itemprop="datePublished">2022-10-14</time>
 </a>
 
 
@@ -221,7 +232,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      最近公共祖先求解
+      xxx
     </h1>
   
 
@@ -230,7 +241,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/icpc/">icpc</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/">图论</a><a class="article-category-link" href="/categories/icpc/%E5%9B%BE%E8%AE%BA/LCA/">LCA</a>
+    <a class="article-category-link" href="/categories/ctf/">ctf</a><a class="article-category-link" href="/categories/ctf/reverse/">reverse</a><a class="article-category-link" href="/categories/ctf/reverse/kxbook/">kxbook</a>
     </div>
 
 
@@ -242,24 +253,76 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>最近来复习一遍图论的板子——LCA。</p>
+        <p>最近好迷茫，所以又斥巨资买了一本充满力量的书，那就是看雪的《加密与解密》，也来彻底地玩一玩逆向吧。</p>
 <span id="more"></span>
 
-<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><strong>最近公共祖先</strong>（英语：lowest common ancestor）是指在一个<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%A0%91_(%E5%9B%BE%E8%AE%BA)">树</a>或者<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9C%89%E5%90%91%E6%97%A0%E7%8E%AF%E5%9B%BE">有向无环图</a>中同时拥有<em>v</em>和<em>w</em>作为后代的最深的节点。在这里，我们定义一个节点也是其自己的后代，因此如果<em>v</em>是<em>w</em>的后代，那么<em>w</em>就是<em>v</em>和<em>w</em>的最近公共祖先。(fron wiki)</p>
-<h3 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a>算法设计</h3><p>我们先来看看应该怎么解决此类问题。</p>
-<h4 id="一般思路"><a href="#一般思路" class="headerlink" title="一般思路"></a>一般思路</h4><p>在一个树上，我们定义离根节点最远的与a,b相同的祖先为最近公共祖先(LCA)。我们需要怎么做呢，首先肯定是 dfs 跑一遍，把所有的点的层次遍历出来，时间复杂度为 $O(N)$。一般情况下 $LCA$ 问题会有多次询问，询问次数一般为 $q&lt;10^5$ ，那么就意味着我们不能在线性时间内去计算 $LCA$，如果采取最朴素的方法：选定2个点，若深度不一样则先转为深度一样，深度较深的点不停求它的父亲节点直到深度一样，然后用如下代码去求解。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LCA</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(a!=b)&#123;</span><br><span class="line">        a=pre[a];</span><br><span class="line">        b=pre[b];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Windows操作系统"><a href="#Windows操作系统" class="headerlink" title="Windows操作系统"></a>Windows操作系统</h2><p>曾经的我，认为 <code>Linux</code> 天下第一好用，（虽然现在我也那么认为）但是 <code>windows </code>作为受众很广的操作系统，很多 <code>windows</code> 的程序也是有必要去学习一下的。</p>
+<h3 id="win32API"><a href="#win32API" class="headerlink" title="win32API"></a>win32API</h3><p>当今大部分 <code>windows</code> 程序都是 <code>GUI</code>，<code>GUI</code> 是通过一系列 <code>API</code> 来完成的，具体<a href="KanxueBook/win32.chm">帮助手册</a>自行下载。</p>
+<p>我们只需要知道一部分的，并且用到什么就学什么好了，比如常见的从控件中获取输入值，用接口 <code>GetDlgItemTextA</code>，弹窗反馈 <code>MessageBoxA</code>，当然这是比较常见的，具体调试的时候还得具体情况具体分析。</p>
+<p><code>windows</code> 程序运行比较依赖动态链接库(dll)，可以理解为 <code>Linux</code> 下的 <code>.so</code> 文件。<code>windows</code>比较内核的三个动态链接库为</p>
+<ul>
+<li><code>kernel(kernel32.dll)</code>：提供操作系统的核心服务。</li>
+<li><code>user(user32.dll)</code>：提供用户输入和输出的接口。</li>
+<li><code>GDI(GDI32.dll)</code>：提供图形设备接口。</li>
+</ul>
+<p>这里需要注意一点，就是很多接口的后缀 <code>A</code> 或者 <code>W</code> 表示它处理字符的一个字符集， <code>A</code> 表示 <code>ASCII</code> 码，<code>w</code> 表示 <code>unicode</code> 码。</p>
+<h2 id="动态调试器"><a href="#动态调试器" class="headerlink" title="动态调试器"></a>动态调试器</h2><p>这本书介绍了很多的动态调试器，这里我还是比较喜欢 <code>x32dbg</code>，所以其它的我也不一一解读了，但是相同的特性也能拿来讲一讲记一记。</p>
+<h3 id="直接调试"><a href="#直接调试" class="headerlink" title="直接调试"></a>直接调试</h3><p>打开调试器，在<strong>文件</strong> <code>-&gt;</code> <strong>打开</strong> 中选择自己要调试的文件，然后载入。</p>
+<h3 id="附加调试"><a href="#附加调试" class="headerlink" title="附加调试"></a>附加调试</h3><p>打开调试器，在<strong>文件</strong> <code>-&gt;</code> <strong>附加</strong> 中选择自己要附加调试的进程，然后载入。</p>
+<hr>
+<p>感觉附加调试会好一点吧，毕竟能先让程序运行到自己想调试的点然后再去调试，这样省了前面入口点的一些操作，但是我们要调试关键信息，一定是要下<strong>断点</strong>(<strong>break point</strong>)的。</p>
+<p>这里我们直接用 <code>chap02\OllyDbg调试器\2.1.4 基本操作\bin\ASCII版\TraceMe.exe</code> 来试试手。</p>
+<p><img src="/2022/10/14/KanxueBook1/1.png" alt="1"></p>
+<p>调试器整体呈这样，最上面一行肯定是标签栏，工具栏，选项卡。剩余窗口大致分为四块。<code>CPU</code> 选项卡中的窗口表现出来就是代码窗口，最右边的窗口时寄存器窗口，左下角的窗口是内存窗口，右下角的窗口是栈窗口，最下面一行的文本框可以用于打命令使用。</p>
+<h3 id="CPU窗口"><a href="#CPU窗口" class="headerlink" title="CPU窗口"></a>CPU窗口</h3><p>大概分了五列，如下图所示。</p>
+<p><img src="/2022/10/14/KanxueBook1/2.png" alt="2"></p>
+<ul>
+<li>对于第一列，更多的是标识跳转的作用，以及设置断点。</li>
+<li>第二列标识了当前内存地址的地址，<strong>双击</strong>可以显示改行的相对地址偏移，再次双击恢复。</li>
+<li>第三列标识了该地址的内存字节，<strong>双击</strong>可以下断点。</li>
+<li>第四列标识了该字节码的反汇编代码，选中使用 <strong>空格</strong> 键可以修改汇编代码。</li>
+<li>第五列提供了一些内存地址或者是寄存器的值，也可以用 <code>;</code> 键去添加注释。</li>
+</ul>
+<h3 id="断点"><a href="#断点" class="headerlink" title="断点"></a>断点</h3><p>断点大致分为以下几种类型</p>
+<ul>
+<li><code>INT 3</code> 断点</li>
+<li>硬件断点</li>
+<li>内存断点</li>
+<li>消息断点</li>
+<li>条件断点</li>
+</ul>
+<h4 id="INT-3断点"><a href="#INT-3断点" class="headerlink" title="INT 3断点"></a>INT 3断点</h4><p><code>INT 3</code> 是一条汇编指令，其机器码是 <code>0xCC</code> 所以也叫 <code>CC</code> 指令。执行这个指令的时候，会抛出一个 <code>break point exception</code> 异常，这个异常会被调试器捕获到，因此能达到断点的目的。在打断点的时候，会把这个地址设置为 <code>0xCC</code> ，也就是 <code>INT 3</code>  的机器码。优点是可以设置很多个断点，因为我们只要想，可以在任意地址把值改成 <code>0xCC</code> 以此达到断点的目的。但是带来的缺点就是会修改程序的内存，改变了原机器码，可能会被程序检测到。</p>
+<p>比如这样的一个 <code>MFC</code> 程序，<a href="KanxueBook/TrackMe.exe">附件下载</a></p>
+<p>source:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CTrackMeDlg::OnBnClickedButton1</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// <span class="doctag">TODO:</span> 在此添加控件通知处理程序代码</span></span><br><span class="line">	HWND hWnd = <span class="built_in">AfxGetMainWnd</span>()-&gt;m_hWnd;</span><br><span class="line">	QWORD Uaddr;</span><br><span class="line">	BYTE Mark = <span class="number">0</span>;</span><br><span class="line">	Uaddr = (QWORD)MessageBoxA;</span><br><span class="line">	Mark = *(BYTE*)Uaddr;</span><br><span class="line">	<span class="keyword">if</span> (Mark == <span class="number">0xCC</span>) &#123;</span><br><span class="line">		<span class="built_in">MessageBoxA</span>(hWnd, <span class="string">&quot;be tracked&quot;</span>, <span class="string">&quot;MessageBox&quot;</span>, <span class="number">0</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">MessageBoxA</span>(hWnd,<span class="string">&quot;Very OK&quot;</span>,<span class="string">&quot;MessageBox&quot;</span>,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这样当然可以，而且非常符合最近公共祖先的定义，只是只需要稍微构造一下数据就可以 $T$ 到飞起。</p>
-<h4 id="正确思路"><a href="#正确思路" class="headerlink" title="正确思路"></a>正确思路</h4><p>有一点不难发现：如果我和你有一个公共祖先，则公共祖先的祖先一定也是我们的公共祖先。比如亲兄弟之间，它们的公共祖先就是它们的父母（这里我们假设父母是一个人，爷爷奶奶姥姥姥爷等也是一个人），父母的祖先也就是爷爷奶奶它们同样也是这亲兄弟的公共祖先。再有一个，如果我们两个人的父亲不相同，则我们的公共祖先也等于我们父亲之间的公共祖先，这个都是能直接得到的结论。那么它在一定意义上是有序的，我们就可以采用倍增+二分的思路。</p>
-<p>假设 $fa[a][k]$ 为差 $a$ 点 $2^k$ 辈的祖先，$fa[a][0]$ 就表示 $a$ 的父亲。在搜索的时候我们先观察节点所在的深度然后取得离他们最远的公共祖先。也就是 $fa[a][log_2deep[a]]$ </p>
-<p>但是你可能会发现，如果深度为7，那么它最多只能往上找 $4$ 个祖先，而如果公共祖先刚好是根节点，那么怎么办呢？那么我们不选择缩小区间，而是把 $a,b$ 当成新的对象来算公共祖先。那你有会发现，如果再往上找4个，那么会没有这个值，那怎么办呢？其实我们不需要它有，我们只需要它相等即可。因为根节点一定是所有节点之间的公共祖先，所以我们直接就这么找，找到相等区间往里面缩小一半，就往上找2个祖先，这时候可以发现刚好在根节点之前，如果它们的最近公共祖先是根节点，那么同理，这次寻找又会往上再找两个祖先。又跑到了根节点之外，判断相等，区间缩小为1。区间缩小为1的时候退出循环，此时我们要找的最近公共祖先就在当前点的父亲节点。</p>
-<p>不知道这是否能解决你在运用倍增法求 $LCA$ 的疑惑。</p>
-<p>可以看到每次以树的高度为范围，区间缩小一半地求，效率是非常高的。求一次 $LCA$ 的时间复杂度仅仅为 $log_2n$。</p>
-<h2 id="题目练手"><a href="#题目练手" class="headerlink" title="题目练手"></a>题目练手</h2><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3379">洛谷P3379</a> </p>
-<p>标版，直接打就完事了。这里需要注意一下，如果深度不一样那么先平衡深度这个操作，这个操作我们并不是也要一个一个平衡的，也可以用倍增的思路。我先算出两深度之差，把差拆分为二进制比特位，如果从第往高第 $i$ 位为 $1$，那么我就往前寻找 $2^i$ 个祖先，而从当前点往前寻找 $2^i$ 个祖先我们可以直接用 $fa[now][i]$ 来快速求得。如果它构造特殊数据，那么直接一位一位往前寻找平衡深度可能会导致超时。</p>
-<h3 id="标程"><a href="#标程" class="headerlink" title="标程"></a>标程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 500005</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">eee</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> to;</span><br><span class="line">    <span class="keyword">int</span> next;</span><br><span class="line">&#125;edge[maxn&lt;&lt;<span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> root[maxn],cnt,lg[maxn],n,q,s;</span><br><span class="line"><span class="keyword">int</span> fa[maxn][<span class="number">25</span>],depth[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    edge[++cnt].to=y;</span><br><span class="line">    edge[cnt].next=root[x];</span><br><span class="line">    root[x]=cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> now,<span class="keyword">int</span> p)</span></span>&#123;</span><br><span class="line">    fa[now][<span class="number">0</span>]=p;</span><br><span class="line">    depth[now]=depth[p]+<span class="number">1</span>;</span><br><span class="line">    <span class="comment">//printf(&quot;point=%d deep=%d\n&quot;,now,depth[now]);</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=lg[depth[now]];i++)&#123;</span><br><span class="line">        fa[now][i]=fa[fa[now][i<span class="number">-1</span>]][i<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=root[now];i;i=edge[i].next)&#123;</span><br><span class="line">        <span class="keyword">int</span> to=edge[i].to;</span><br><span class="line">        <span class="keyword">if</span>(to!=p)</span><br><span class="line">            <span class="built_in">dfs</span>(to,now);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LCA</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(depth[a]&gt;depth[b])&#123;</span><br><span class="line">        <span class="built_in">swap</span>(a,b);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> x=depth[b]-depth[a];</span><br><span class="line">    <span class="keyword">int</span> k=<span class="number">0</span>;</span><br><span class="line">    <span class="comment">//printf(&quot;a=%d,b=%d\n&quot;,a,b);</span></span><br><span class="line">    <span class="keyword">while</span>(x)&#123;</span><br><span class="line">        <span class="keyword">if</span>(x&amp;<span class="number">1</span>)&#123;</span><br><span class="line">            b=fa[b][k];</span><br><span class="line">        &#125;</span><br><span class="line">        k++;</span><br><span class="line">        x&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//printf(&quot;deep=%d\n&quot;,depth[b]);</span></span><br><span class="line">    k=lg[depth[a]];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;a=%d,b=%d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="keyword">while</span>(k!=<span class="number">-1</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;k=%d\n&quot;</span>,k);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;a=%d,b=%d\n&quot;</span>,fa[a][k],fa[b][k]);</span><br><span class="line">        <span class="keyword">if</span>(fa[a][k]==fa[b][k])k--;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            a=fa[a][k];</span><br><span class="line">            b=fa[b][k];</span><br><span class="line">            <span class="comment">//k=lg[depth[a]];</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(a==b)<span class="keyword">return</span> a;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> fa[a][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">freopen</span>(<span class="string">&quot;1.in&quot;</span>,<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">    ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;q&gt;&gt;s;</span><br><span class="line">    lg[<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;&gt;(lg[i<span class="number">-1</span>]+<span class="number">1</span>))lg[i]=lg[i<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> lg[i]=lg[i<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> x,y;</span><br><span class="line">        cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        <span class="built_in">add</span>(x,y);</span><br><span class="line">        <span class="built_in">add</span>(y,x);</span><br><span class="line">    &#125;</span><br><span class="line">    depth[s]=<span class="number">0</span>;</span><br><span class="line">    <span class="built_in">dfs</span>(s,s);</span><br><span class="line">    <span class="keyword">while</span>(q--)&#123;</span><br><span class="line">        <span class="keyword">int</span> a,b;</span><br><span class="line">        cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">LCA</span>(a,b));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/10/14/KanxueBook1/3.png" alt="3"></p>
+<p>正常运行结果如图所示</p>
+<p><img src="/2022/10/14/KanxueBook1/4.png" alt="4"></p>
+<p>如果放到调试器，对 <code>MessageBoxA</code> 这个函数下断点的话，那么就会导致出现另一个不同的运行结果。</p>
+<p><img src="/2022/10/14/KanxueBook1/5.png" alt="5"></p>
+<p>因为我们断点设置在 <code>MessageBoxA</code> 上，而程序判断了 <code>MessageBoxA</code> 调用地址是否为 <code>INT 3</code> 指令(<code>0xCC</code>)，有的话就直接输出 <code>be tracked</code> 说明检测到这里下了 <code>INT 3</code> 断点。</p>
+<p>如果我们要绕过检测同时又要求能断下来，那么我们可以在函数调用中间或者是末尾下 <code>INT 3</code> 断点。</p>
+<h4 id="硬件断点"><a href="#硬件断点" class="headerlink" title="硬件断点"></a>硬件断点</h4><p>硬件断点主要是通过 <code>DRx</code> 寄存器实现的，<code>DR0~DR3</code> 分别用于保存硬件断点的地址，那我们也可以看出来它最多能同时存在四个硬件断点。<code>DR4-DR5</code> 未公开具体作用， <code>DR6</code> 用于保存寄存器组状态， <code>DR7</code> 用于保存寄存器组控制。硬件断点不会改变程序字节码，因此它更难被检测，在断点选项中可以设置硬件执行断点，同样，对于一般内存来说，我们可以设置硬件访问断点。</p>
+<p>设置完成之后我们在寄存器窗口拉到最下面，可以看到 <code>DR</code> 寄存器，我们可以从前四个寄存器中找到我们下的硬件断点的位置。硬件断点的优势劣势与前面的 <code>INT 3</code> 断点相对，硬件断点不能同时大量设置，但是它不会更改进程代码段的内存。</p>
+<h4 id="内存断点"><a href="#内存断点" class="headerlink" title="内存断点"></a>内存断点</h4><p>内存（读/写/执行）断点是通过将某一块内存页标记为对应的不可（读/写/执行），当程序尝试对该内存（读/写/执行）的时候就会抛出异常，转而给调试器进行异常处理，若发现访问内存刚好是断点位置时，程序断住，否则正常进行（读/写/执行）操作。由于在执行的时候，会有一个读取命令的操作，因此我们如果在代码断设置了内存访问断点，执行到指定位置时同样会被断住。</p>
+<p>比如这个程序，我们在某一条指令上下内存读取断点</p>
+<p><img src="/2022/10/14/KanxueBook1/6.png" alt="6"></p>
+<p>我们再次按 <code>F9</code> 继续执行可以发现程序停在了我们下的断点位置。</p>
+<p><img src="/2022/10/14/KanxueBook1/7.png" alt="7"></p>
+<p>不知为何在经过一番激烈的讨论之后，认定  <code>x32dbg</code> 应该是这里的技术细节没有实现，所以导致它只能在一个内存页设置，不能保证在指定位置断住，因此在一个内存页中可能多次被这个点断住，因为它可能没有比较访存位置与内存断点位置。</p>
+<p>内存断点分持久的和一次性断点，一次性断点在断住之后即被删除。</p>
+<h4 id="消息断点"><a href="#消息断点" class="headerlink" title="消息断点"></a>消息断点</h4><p>略</p>
+<h4 id="条件断点"><a href="#条件断点" class="headerlink" title="条件断点"></a>条件断点</h4><p>我们如果希望在一个地方满足一定条件才断下来，这个时候我们可以 <code>shift+F2</code> 设置条件断点，比如我想在一个 <code>10000</code> 次的循环当中，看第 <code>5000</code> 次的执行结果，那么我们正常操作就是给循环体一个断点，然后 <code>F9</code> <code>5000</code> 次，显然这么做会很麻烦，那么我们可以设置一个条件，让它在指定条件才断住，加入循环变量存储在 <code>rcx</code> 当中，那么我们可以设置 <code>rcx==5000</code>。</p>
+<p>source:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">10000</span>;i++)&#123;</span><br><span class="line">		sum+=i;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,sum);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p><img src="/2022/10/14/KanxueBook1/8.png" alt="8"></p>
+<p>我们可以很清晰看到这里的循环结构，然后我们看到循环变量存在 <code>ebx</code> 寄存器中，我们在循环体中下一个条件断点，观察程序的运行。</p>
+<p><img src="/2022/10/14/KanxueBook1/9.png" alt="9"></p>
+<p>然后发现程序成功在我们指定的条件下面断住了。</p>
+<p><img src="/2022/10/14/KanxueBook1/10.png" alt="10"></p>
+<h3 id="静态调试"><a href="#静态调试" class="headerlink" title="静态调试"></a>静态调试</h3><p>待更</p>
 
       
     </div>
@@ -268,13 +331,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/">最近公共祖先求解</a></p>
+        <p><span>本文标题:</span><a href="/2022/10/14/KanxueBook1/">xxx</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
-        <p><span>发布时间:</span>2022-02-11, 23:00:00</p>
-        <p><span>最后更新:</span>2022-04-18, 14:51:22</p>
+        <p><span>发布时间:</span>2022-10-14, 00:00:00</p>
+        <p><span>最后更新:</span>2022-10-11, 14:29:27</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/" title="最近公共祖先求解">http://example.com/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2022/10/14/KanxueBook1/" title="xxx">http://example.com/2022/10/14/KanxueBook1/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/10/14/KanxueBook1/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -286,16 +349,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/">
-                    C++文件的输入输出问题
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2022/02/11/%E6%B4%9B%E8%B0%B7P6037%E9%A2%98%E8%A7%A3/">
-                    洛谷P6037题解
+                <a href="/2022/10/08/Linux_Signal/">
+                    Linux Signal机制
                 </a>
             </div>
         
@@ -307,7 +364,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.1.</span> <span class="toc-text">算法设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.1.</span> <span class="toc-text">一般思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E7%A1%AE%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.2.</span> <span class="toc-text">正确思路</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E7%BB%83%E6%89%8B"><span class="toc-number">2.</span> <span class="toc-text">题目练手</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">标程</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">Windows操作系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#win32API"><span class="toc-number">1.1.</span> <span class="toc-text">win32API</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">动态调试器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E8%B0%83%E8%AF%95"><span class="toc-number">2.1.</span> <span class="toc-text">直接调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E5%8A%A0%E8%B0%83%E8%AF%95"><span class="toc-number">2.2.</span> <span class="toc-text">附加调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU%E7%AA%97%E5%8F%A3"><span class="toc-number">2.3.</span> <span class="toc-text">CPU窗口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%AD%E7%82%B9"><span class="toc-number">2.4.</span> <span class="toc-text">断点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#INT-3%E6%96%AD%E7%82%B9"><span class="toc-number">2.4.1.</span> <span class="toc-text">INT 3断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E6%96%AD%E7%82%B9"><span class="toc-number">2.4.2.</span> <span class="toc-text">硬件断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E6%96%AD%E7%82%B9"><span class="toc-number">2.4.3.</span> <span class="toc-text">内存断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E6%96%AD%E7%82%B9"><span class="toc-number">2.4.4.</span> <span class="toc-text">消息断点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%96%AD%E7%82%B9"><span class="toc-number">2.4.5.</span> <span class="toc-text">条件断点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%B0%83%E8%AF%95"><span class="toc-number">2.5.</span> <span class="toc-text">静态调试</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -343,7 +400,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"最近公共祖先求解　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"xxx　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -363,15 +420,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/" title="上一篇: C++文件的输入输出问题">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2022/02/11/%E6%B4%9B%E8%B0%B7P6037%E9%A2%98%E8%A7%A3/" title="下一篇: 洛谷P6037题解">
+            <a href="/2022/10/08/Linux_Signal/" title="下一篇: Linux Signal机制">
                 <i class="fa fa-angle-right"></i>
             </a>
         
