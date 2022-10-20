@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xia0ji233" />
+
+
+
+<meta name="description" content="其实第四章一开始感觉不是我该学的，但是想想自己也要考研，计组也会讲这些，而这本书应该是会比计组讲的好的，所以还是硬着头皮学吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS:APP第四章复习">
+<meta property="og:url" content="http://example.com/2022/10/14/CSAPP_4/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="其实第四章一开始感觉不是我该学的，但是想想自己也要考研，计组也会讲这些，而这本书应该是会比计组讲的好的，所以还是硬着头皮学吧。">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/1.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/2.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/3.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/4.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/5.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/6.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/7.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/8.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/9.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/10.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/11.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/12.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/13.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/14.png">
+<meta property="og:image" content="http://example.com/2022/10/14/CSAPP_4/15.png">
+<meta property="article:published_time" content="2022-10-14T11:00:00.000Z">
+<meta property="article:modified_time" content="2022-10-20T17:05:18.823Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/10/14/CSAPP_4/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="xia0ji233&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//lib.baomitu.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//lib.baomitu.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//lib.baomitu.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//lib.baomitu.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>CS:APP第四章复习 | xia0ji233&#39;s blog</title>
+
+<script src="//lib.baomitu.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//lib.baomitu.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//lib.baomitu.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//lib.baomitu.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="https://q2.qlogo.cn/headimg_dl?dst_uin=2636876456&amp;spec=100" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xia0ji233</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">学习应该像呼吸一样自然</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/friends">友链</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xia0ji233</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="https://q2.qlogo.cn/headimg_dl?dst_uin=2636876456&amp;spec=100" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xia0ji233 </a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/friends">友链</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="tencent://message/?uin=2636876456&Site=xia0ji233&Menu=yes" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-CSAPP_4" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/10/14/CSAPP_4/" class="article-date">
+      <time datetime="2022-10-14T11:00:00.000Z" itemprop="datePublished">2022-10-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CS:APP第四章复习
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/csapp/">csapp</a><a class="article-category-link" href="/categories/csapp/%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/">处理器体系结构</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>其实第四章一开始感觉不是我该学的，但是想想自己也要考研，计组也会讲这些，而这本书应该是会比计组讲的好的，所以还是硬着头皮学吧。</p>
+<span id="more"></span>
+
+<p>每天 % 一遍：CSAPP 永远的神！！！计算机的教科书我愿称他为最好！</p>
+<p>计算机体系结构图</p>
+<p><img src="/2022/10/14/CSAPP_4/1.png"></p>
+<h2 id="Y86-64指令集体系结构"><a href="#Y86-64指令集体系结构" class="headerlink" title="Y86-64指令集体系结构"></a>Y86-64指令集体系结构</h2><p>我们知道，x86-64 指令集体系结构的电脑是很经典的 CISC（complex instruction set computer）。这里方便学习就定义一个精简指令集 Y86-64 结构。</p>
+<h3 id="程序员可见的状态"><a href="#程序员可见的状态" class="headerlink" title="程序员可见的状态"></a>程序员可见的状态</h3><ul>
+<li>Y86-64程序中的每条指令都会读取或修改处理器状态的某些部分，这称为<strong>程序员可见的状态</strong>。</li>
+<li>这里的“程序员”既可以是用汇编代码写程序的人，也可以是产生机器级代码的编译器</li>
+</ul>
+<p>Y86-64 的状态类似 x86-64。有 15 个寄存器：%rax，%rcx，%rdx，%rbx，%rsp，%rbp，%rsi，%rdi 以及 %r8-%r14。为了方便指令编码，少了一个 %r15 寄存器。</p>
+<p>其中，%rsp 被用于入栈出栈，程序计数器（PC，也就是%rip）存放当前指令执行的地址，还包含了 3 位的条件码用于条件跳转，程序状态的最后一个部分是状态码（Stat），表明了程序正常运行或者是出现了某种异常。</p>
+<p>程序员可见的状态：各类通用寄存器，PC，条件码，Stat。</p>
+<p>程序员不可见的状态：指令寄存器（Instrument Register），主存数据寄存器（Memory Data Register），主存地址寄存器（Memory Address Register）。这些都是辅助 CPU 执行的寄存器，对我们来说不知道也没必要知道，我们只需要知道通用寄存器里面有什么就可以了。</p>
+<h3 id="Y86-64指令"><a href="#Y86-64指令" class="headerlink" title="Y86-64指令"></a>Y86-64指令</h3><h4 id="数据传送指令"><a href="#数据传送指令" class="headerlink" title="数据传送指令"></a>数据传送指令</h4><p>x86-64 的 movq 指令被分为了 4 个不同的指令。就是对应了源目的的种类数：立即数-寄存器，寄存器-寄存器，内存-寄存器，寄存器-内存，与 x86-64 相同，不允许直接从内存地址传送到另一个内存地址，必须通过寄存器传送。</p>
+<h4 id="整数操作指令"><a href="#整数操作指令" class="headerlink" title="整数操作指令"></a>整数操作指令</h4><p>有四种类型的整数操作（addq，subq，andq，xorq），它们的代码部分（code）相同，功能不同，功能用于选择是对两个数进行加法，减法，按位与还是按位或运算。</p>
+<h4 id="跳转指令"><a href="#跳转指令" class="headerlink" title="跳转指令"></a>跳转指令</h4><p>有七个跳转指令，与前面介绍的类似，一个无条件跳转和六个条件跳转（jle，jl，je，jne，jge，jg）。</p>
+<h4 id="条件传送指令"><a href="#条件传送指令" class="headerlink" title="条件传送指令"></a>条件传送指令</h4><p>有六个条件传送指令，与条件跳转类似。</p>
+<h4 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h4><p>call指令，与 x86-64 类似</p>
+<h4 id="栈操作指令"><a href="#栈操作指令" class="headerlink" title="栈操作指令"></a>栈操作指令</h4><p>也与 x86-64 类似，有入栈（push）和出栈（pop）的操作。</p>
+<h3 id="指令编码"><a href="#指令编码" class="headerlink" title="指令编码"></a>指令编码</h3><p>参考书上这个图</p>
+<p><img src="/2022/10/14/CSAPP_4/2.png"></p>
+<p>因为我们有 15 个寄存器，所以 0-E 刚好表示 15 个寄存器，剩下一个 F 表示该操作数不为寄存器，可能为一个立即数。例如 irmovq 指令的源操作数是立即数，因此源操作数这一位用 F 替代。</p>
+<p>再比如，pushq 和 popq 指令是单操作数，因此第二个字节后八位默认也是 F。</p>
+<p>分支指令调用的地址是绝对地址而不是 PC 寻址，指令集一个比较重要的是字节编码必须有唯一的解释，不能产生歧义。</p>
+<h3 id="Y86-64异常"><a href="#Y86-64异常" class="headerlink" title="Y86-64异常"></a>Y86-64异常</h3><table>
+<thead>
+<tr>
+<th>值</th>
+<th>名字</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>AOK</td>
+<td>正常操作</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HLT</td>
+<td>遇到halt指令</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ADR</td>
+<td>遇到非法地址</td>
+</tr>
+<tr>
+<td>4</td>
+<td>INS</td>
+<td>遇到非法指令</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>Y86-64在遇到异常的时候只会简单地停止处理器的运行，但是完整的设计应该需要让处理器调用一个异常处理程序（exception handler）。</p>
+<h3 id="Y86-64程序"><a href="#Y86-64程序" class="headerlink" title="Y86-64程序"></a>Y86-64程序</h3><p>这里需要注意，add 指令不能直接加一个常数，Opq指令只能对两个寄存器做运算，因此要对立即数运算需要先把立即数加载到寄存器当中才可以。</p>
+<p>subq 指令可以直接设置条件码，而在 x86-64 架构下，我们需要再多一个 test 命令才能实现设置条件码。</p>
+<h4 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">.pos 0</span><br><span class="line">irmovq stack,%rsp</span><br><span class="line">call main</span><br><span class="line">halt</span><br><span class="line"></span><br><span class="line">array:</span><br><span class="line">	.quad 0x000d000d000d</span><br><span class="line">	.quad 0x00c000c000c0</span><br><span class="line">	.quad 0x0b000b000b00</span><br><span class="line">	.quad 0xa000a000a000</span><br><span class="line">	</span><br><span class="line">main:</span><br><span class="line">	irmovq array,%rdi</span><br><span class="line">	irmovq $4,%rsi</span><br><span class="line">	call sum;sum(array,4)</span><br><span class="line">	ret</span><br><span class="line"></span><br><span class="line">sum:</span><br><span class="line">	irmovq $8,%r8</span><br><span class="line">	irmovq $1,%r9</span><br><span class="line">	xorq %rax,%rax;set %rax=0</span><br><span class="line">	andq %rsi,%rsi;test rsi</span><br><span class="line">	jmp test</span><br><span class="line"></span><br><span class="line">loop:</span><br><span class="line">	mrmovq (%rdi),%r10;get (%rdi) save in %r10</span><br><span class="line">	addq %r10,%rax;%rax+=%r10</span><br><span class="line">	addq %r8,%rdi;%rdi+=8</span><br><span class="line">	subq %r9,%rsi;%rsi-=1</span><br><span class="line"></span><br><span class="line">test:</span><br><span class="line">	jne loop;not equal == not zero simple to while(rsi!=0)</span><br><span class="line">	ret</span><br><span class="line">	</span><br><span class="line">	.pos 0x200</span><br><span class="line">stack:</span><br></pre></td></tr></table></figure>
+
+<p>以 . 开头的词是汇编器伪指令，.pos 他告诉汇编器调整地址，从那里开始产生数据或者汇编代码。</p>
+<p>其实逐行分析逻辑我们不难得到 sum 函数的一个定义：WORD sum(WORD *array,WORD length)，而该函数会求出 array[0]~array[length] 的和返回。</p>
+<p>再上面的程序中，最终 sum 会返回 0xabcdabcdabcd。</p>
+<h3 id="一些-Y86-64-指令的详情"><a href="#一些-Y86-64-指令的详情" class="headerlink" title="一些 Y86-64 指令的详情"></a>一些 Y86-64 指令的详情</h3><p>有些指令会更改指定寄存器的状态，比如 pushq 指令会令 %rsp 减去 8，将值放入该栈空间。当我们执行 pushq %rsp 时，处理器的行为是不确定的，因为入栈的寄存器会在这条指令中被更改状态，这种情况下就会存在两种不同的结果：</p>
+<ul>
+<li>压入 %rsp 的原始值（x86-64采用的约定）</li>
+<li>压入减去 8 的 %rsp 的值</li>
+</ul>
+<p>经过一个测试程序，我们发现，pushq 指令并不按照我们常规的理解，先减后放，而是先放后减。</p>
+<p>其实在我看来，如果以流水线执行指令的方式去理解这个问题会好理解的多，这个在后面具体讲讲自己的看法吧。</p>
+<p>对于 popq %rsp 指令，书中给了一个练习，有如下的测试程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">movq %rsp,%rdi</span><br><span class="line">pushq $0xabcd</span><br><span class="line">popq %rsp</span><br><span class="line">movq %rsp,%rax</span><br><span class="line">movq %rdi,%rsp</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p>发现这个函数的结果总是会返回 0xabcd，说明 pop %rsp 是先减去了 %rsp 再赋的值，这个略微有点复杂，在讲指令流水的时候也会讲这个情况的处理方式。</p>
+<p>不过现在这个阶段，我们照着上面的理解即可，是先移动指针再取出来。</p>
+<p>push 和 pop 两个指令在对 %rsp 寄存器本身操作时，都会尽量保证得到的值是原始值。</p>
+<p>pushq %rsp 一定会压最初的 %rsp。</p>
+<p>popq %rsp 一定是把那个值正确地给到了 %rsp。</p>
+<p>跳转链接：<a href="#1">push 的理解</a></p>
+<p>跳转链接：<a href="#2">pop 的理解</a></p>
+<h2 id="逻辑设计和硬件控制语言HCL"><a href="#逻辑设计和硬件控制语言HCL" class="headerlink" title="逻辑设计和硬件控制语言HCL"></a>逻辑设计和硬件控制语言HCL</h2><h3 id="逻辑门"><a href="#逻辑门" class="headerlink" title="逻辑门"></a>逻辑门</h3><p>这个就是数电的知识复习了，常见的逻辑门就是 and or not，并且 and or 常见为两输入，但是可以扩展到 n 输入的状态，比如三输入的与门用 HCL 表示就为 a&amp;&amp;b&amp;&amp;c，逻辑门总是活动的，一旦一个门的输入发生变化，在很短的时间内输出也会相应变化。</p>
+<h3 id="组合电路和HCL布尔表达式"><a href="#组合电路和HCL布尔表达式" class="headerlink" title="组合电路和HCL布尔表达式"></a>组合电路和HCL布尔表达式</h3><p>用很多逻辑门相互连接形成一张网，就能构建计算块，称为组合逻辑电路，构建这个网有以下限制</p>
+<ul>
+<li>每个逻辑门的输入必须连接到一下三个选项之一：系统输入，某逻辑单元的输出，某逻辑门的输出</li>
+<li>两个或多个逻辑门的输出不能连接在一起</li>
+<li>网必须无环</li>
+</ul>
+<p>多路复用器（MUX）根据输入控制信号的值，从一组不同的数据信号中选择一个作为输出。</p>
+<p>HCL表达式和C表达式会有以下区别：</p>
+<ul>
+<li>C表达式的参数允许是任意整数，非 0 的值均被视为 1，而 HCL 的输入只允许 1 或 0</li>
+<li>C逻辑表达式可能会出现部分求值的特性，如果一个 and 或者 or 运算只对第一个参数求值之后就能确定，那么就不会对第二个参数求值了，而组合逻辑电路没有这种规则。</li>
+</ul>
+<h3 id="字级的组合电路和HCL整数表达式"><a href="#字级的组合电路和HCL整数表达式" class="headerlink" title="字级的组合电路和HCL整数表达式"></a>字级的组合电路和HCL整数表达式</h3><p>处理器中会遇到很多多路复用器，我们用情况表达式来描述，通用格式为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">select1:expr1;</span><br><span class="line">select2:expr2;</span><br><span class="line">select3:expr3;</span><br><span class="line">...</span><br><span class="line">selectk:exprk;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>这个表达式包含了一系列情况，表明了什么时候选择这种情况，后者是指得到的值。</p>
+<p>同 switch 不同，不要求选择表达式之间互吃，从逻辑上来讲，它们会被顺序求值，且第一额为 1 的情况会被选中。</p>
+<p>有一个比较有意思的例子</p>
+<p>如果需要寻找 A，B，C 中的最小值输出，用一般的HCL可以这么描述</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">	A&lt;=B&amp;&amp;A&lt;=C:A;</span><br><span class="line">	B&lt;=A&amp;&amp;B&lt;=C:B;</span><br><span class="line">	<span class="number">1</span>:C</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>这个比较经典，但是下面会让我们用三个比较来实现功能，其实不难得出，如果上述条件不满足，那么A肯定不是最小的，如果A都不是最小的了，我也没必要拿它来比了，所以我们的 HCL就可以简化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">	A&lt;=B&amp;&amp;A&lt;=C:A;</span><br><span class="line">	B&lt;=C:B;</span><br><span class="line">	1:C</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="集合关系"><a href="#集合关系" class="headerlink" title="集合关系"></a>集合关系</h3><p>用于匹配多个值中的其中一个，可以理解为集合中的属于。</p>
+<p>常用格式就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iexpr in &#123;iexpr1,iexpr2...,iexprk&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="存储器和时钟"><a href="#存储器和时钟" class="headerlink" title="存储器和时钟"></a>存储器和时钟</h3><ul>
+<li>时钟寄存器（简称寄存器）：存储单个位或字，时钟信号控制加载输入值。</li>
+<li>随机访问存储器（简称内存，Random Access Memory）：存储多个字，通过地址选择该读或该写哪些字。</li>
+</ul>
+<p>这里注意一个概念就是关于寄存器，在硬件中，寄存器就是一个电子器件，在机器级编程时它是一个寄存器文件，我们把这两类概念分别称为硬件寄存器和程序寄存器。</p>
+<p>在每个时钟信号上升沿时，值才会从寄存器输入给到输出。</p>
+<p><img src="/2022/10/14/CSAPP_4/3.png"></p>
+<p>如上图所示，对于整个寄存器文件，有两个读端口，一个写端口，每个端口都有一个地址输入，这里的地址表明该选哪个寄存器进行读或者是写。</p>
+<p>因为允许同时读写，因此可能会发生冲突，如果发生了冲突，肯定会按照固定的逻辑去执行操作的。</p>
+<p><img src="/2022/10/14/CSAPP_4/4.png"></p>
+<p>这个内存有一个地址输人，一个写的数据输入，以及一个读的数据输出。同寄存器文件 一样，从内存中读的操作方式类似于组合逻辑：如果我们在输入 address 上提供一个地址, 并将 write 控制信号设置为 0, 那么在经过一些延迟之后，存储在那个地址上的值会出现在 输出 data 上。如果地址超出了范围，error 信号会设置为 1，否则就设置为 0。写内存是由 时钟控制的：我们将 address 设置为期望的地址，将 data in 设置为期望的值，而 write 设 置为 1。然后当我们控制时钟时，只要地址是合法的，就会更新内存中指定的位置。对于读 操作来说，如果地址是不合法的，error 信号会被设置为 1。这个信号是由组合逻辑产生的， 因为所需要的边界检查纯粹就是地址输人的函数，不涉及保存任何状态。</p>
+<p>这里其实可以这么看，地址就是主存地址寄存器（Memory Address Register），数据输入就是 主存数据寄存器（Memory Data Register），数据输出应该也是会输出到主存数据寄存器中。</p>
+<h2 id="Y86-64-的顺序实现"><a href="#Y86-64-的顺序实现" class="headerlink" title="Y86-64 的顺序实现"></a>Y86-64 的顺序实现</h2><p>首先，我们描述一个称为 SEQ 的处理器。每个时钟周期上，SEQ 执行处理一条完整指令所需的所有步骤。不过如果是这样一条指令的执行就会显得时间很慢，我们需要降低时钟周期以便于适配所有指令。开发 SEQ 的目标就是提供实现最终目的的第一步：是实现一个<strong>高效的、流水线化的处理器</strong>。</p>
+<h3 id="将处理组织成阶段"><a href="#将处理组织成阶段" class="headerlink" title="将处理组织成阶段"></a>将处理组织成阶段</h3><p>处理一条指令包括很多操作，通常我们分为以下6个步骤。</p>
+<ul>
+<li>取指（fetch）：取指阶段从内存读取指令字节，地址为程序计数器（PC）的值。从指令中抽取出指令指示符字节的两个四位部分，称为icode（指令代码）和ifun（指令功能）。它可能取出一个寄存器指示符字节，指明一个或两个寄存器操作数指示符rA和rB。它还可能取出一个四字节常数字valc。它按顺序方式计算当前指令的下一条指令的地址valP。也就是说，valP等于PC的值加上已取出指令的长度。</li>
+<li>译码（decode）：译码阶段从寄存器文件读入最多两个操作数，得到值va1A和/或valB。通常，它读入指令rA和rB字段指明的寄存器，不过有些指令是读寄存器rsp的。</li>
+<li>执行（execute）：在执行阶段，算术/逻辑单元（ALU）要么执行指令指明的操作（根据ifun的值），计算内存引用的有效地址，要么增加或减少栈指针。得到的值我们称为valE。在此，也可能设置条件码。对一条条件传送指令来说，这个阶段会检验条件码和传送条件（由ifun给出），如果条件成立，则更新目标寄存器。同样，对一条跳转指令来说，这个阶段会决定是不是应该选择分支。</li>
+<li>访存（memory）：访存阶段可以将数据写入内存，或者从内存读出数据。读出的值为valM，这一步理解为读写内存数据。</li>
+<li>写回（write back）：写回阶段最多可以写两个结果到寄存器文件，这一步可以理解为更新寄存器。</li>
+<li>更新PC（PC update）：将PC设置成下一条指令的地址，更新 %rip 寄存器。</li>
+</ul>
+<p>通用指令的指令执行步骤：</p>
+<p><img src="/2022/10/14/CSAPP_4/5.png"></p>
+<p>这里需要注意，OPq 操作会设置条件码，用于条件跳转和条件传送指令。</p>
+<div id="1"></div>因为它是按照这个顺序执行的，所以也可以理解一点前面 pushq %rsp 的问题了，因为在访存阶段会把地址和数据分别放到 MAR 和 MDR 中，因此当我更新 %rsp 寄存器的时候，访存已经完成，此时 %rsp 的原石值在 MDR 当中，因此就会显得是先把数据放入栈中再移动栈指针的感觉，实际上是由这样流水作业的顺序完成的。
+
+<p>比如下面的 demo</p>
+<p><img src="/2022/10/14/CSAPP_4/6.png"></p>
+<p>跟踪第六行代码的执行情况可以得到以下结果</p>
+<p><img src="/2022/10/14/CSAPP_4/7.png"></p>
+<p>不难看出，译码阶段如果 valA 取出 %rsp 寄存器的值，那么得到的一定是 %rsp 的原始值，因为 %rsp 在写回阶段才会更新。</p>
+<p>所以顺序一定是先更新内存，再更新寄存器，popq %rsp 也是同理，首先读内存，然后再增加栈指针。</p>
+<p>最后我们看看 ret 指令的执行并跟踪上面 demo 的第 13 行。</p>
+<p><img src="/2022/10/14/CSAPP_4/8.png"></p>
+<p>访存阶段读取了栈顶内存并将此设为了新的 PC。</p>
+<h3 id="SEQ-硬件结构"><a href="#SEQ-硬件结构" class="headerlink" title="SEQ 硬件结构"></a>SEQ 硬件结构</h3><p>SEQ 的硬件结构如下图所示</p>
+<p><img src="/2022/10/14/CSAPP_4/9.png"></p>
+<p>从下网上看这张图，可以看到指令的一个执行过程以及硬件连接的情况。</p>
+<ul>
+<li>取指（Fetch）阶段：根据 PC 的值从内存中读取指令，计算指令长度并将新的 PC 暂时放入值 valP 当中。</li>
+<li>译码（Decode）阶段：会根据指令中需要的寄存器从寄存器文件中读取对应寄存器的值，得到两个操作数。</li>
+<li>执行（Execute）阶段：将操作数送入 ALU 中计算得到 valE，可能会写回寄存器，从端口 E 中写回，这一步会更新标志寄存器。</li>
+<li>访存（Memory）阶段：根据 MAR 和 MDR 对内存进行访问（读/写），读出的结果若要写寄存器则会从端口 M 写寄存器文件。</li>
+<li>写回（Write Back）阶段：将新的寄存器值更新到寄存器文件中，这里有两个更新端口，一个是 E 用于接收 ALU 计算的结果，一个是 valM 用于接收读取内存的结果。</li>
+<li>更新PC（PC update）阶段：根据预先保存的地址或者是之前计算的指令预计的下一步位置去更新 PC。</li>
+</ul>
+<h3 id="SEQ的时序"><a href="#SEQ的时序" class="headerlink" title="SEQ的时序"></a>SEQ的时序</h3><p>SEQ 的实现包括组合逻辑和两种存储器设备：时钟寄存器（程序计数器和条件码寄存 器），随机访问存储器（寄存器文件、指令内存和数据内存）。组合逻辑不需要任何时序或 控制—只要输人变化了，值就通过逻辑门网络传播。我们也将读随 机访问存储器看成和组合逻辑一样的操作，根据地址输人产生输出字。对于较小的存储器 来说(例如寄存器文件），这是一个合理的假设，而对于较大的电路来说，可以用特殊的时 钟电路来模拟这个效果。由于指令内存只用来读指令，因此我们可以将这个单元看成是组合逻辑。 </p>
+<p>现在还有四个硬件单元需要对他们的时序进行明确的控制——程序计数器、 条件码寄存器、数据内存和寄存器文件，这些单元通过一个时钟信号来控制，它触发将新值装载到寄存器以及将值写到随机访问存储器。每个时钟周期，程序计数器都会装载新的指令地址。因为只有在 OPq 操作时才会改变操作码，在执行数据传送指令（mov），push，call 的时候才会进行写数据内存，所以我们只需要控制内存和寄存器的时钟控制信号即可实现一模一样的效果，即使所有的状态更新实际上同时发生， 且只在时钟上升开始下一个周期时。之所以能保持这样的等价性，是由于 Y86-64 指令集 的本质，因为我们遵循以下原则组织计算 ：</p>
+<ul>
+<li> 原则：从不回读 </li>
+</ul>
+<p>处理器从来不需要为了完成一条指令的执行而去读由该指令更新了的状态。</p>
+<h3 id="SEQ阶段的实现"><a href="#SEQ阶段的实现" class="headerlink" title="SEQ阶段的实现"></a>SEQ阶段的实现</h3><p>首先给出如下常数定义</p>
+<p><img src="/2022/10/14/CSAPP_4/10.png"></p>
+<h4 id="取指阶段"><a href="#取指阶段" class="headerlink" title="取指阶段"></a>取指阶段</h4><p><img src="/2022/10/14/CSAPP_4/11.png"></p>
+<p>就像这个图所示，首先取出 PC 所指示的内存的第一个字节分割得到高四位的 icode 和低四位的 ifun，然后会判断该指令是否合法，由图示信号 Instr valid 得到，同时也可以计算得到该指令是否包含常数（Need valC）以及寄存器（Need regids）。</p>
+<p>这里的 Instr valid 可以用 HCL 描述为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Instr_valid=</span><br><span class="line">icode in&#123;</span><br><span class="line">	<span class="number">0xC</span>,<span class="number">0xD</span>,<span class="number">0xE</span>,<span class="number">0xF</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样 Need_regids 也可以用 HCL 描述为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Need_regids =</span><br><span class="line">icode in &#123; </span><br><span class="line">    IRRMOVQ,IOPQ,IPUSHQ,IPOPQ,</span><br><span class="line">    IIRMOVQ,IRMMOVQ,IMRMOVQ</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>Need_valC 用 HCL 描述为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Need_valC=</span><br><span class="line">icode in&#123;</span><br><span class="line">	IIRMOVQ,IMRMOVQ,IRMMOVQ,</span><br><span class="line">	IJXX,ICALL</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="译码和写回阶段"><a href="#译码和写回阶段" class="headerlink" title="译码和写回阶段"></a>译码和写回阶段</h4><h5 id="译码"><a href="#译码" class="headerlink" title="译码"></a>译码</h5><p>图 4-28 给出了 SEQ 中实现译码和写回阶段的逻辑的详细情况。把这两个阶段联系在 一起是因为它们都要访问寄存器文件。</p>
+<p><img src="/2022/10/14/CSAPP_4/12.png"></p>
+<p>每个端口都有一个地址连接和一个数据连接，地址连接是一个寄存器 ID, 而数据连接是一组 64 根线路，既可以作为寄存器文件的输出字（对读 端口来说），也可以作为它的输人字（对写端口来说）。 两个读端口的地址输人为 srcA 和 srcB，而两个写端 口的地址输人为 dstE 和 dstM。如果某个地址端口上 的值为特殊标识符 OxF( RNONE)，则表明不需要访问 寄存器。</p>
+<p>就是说， srcA 和 srcB 决定我从哪个寄存器读数据，对应从 valA 和 valB 中读出。同理 destE 和 destM 决定我要去写哪个寄存器，对应数据从 valE 和 valM 中写入。</p>
+<p>下面两题比较有意思：</p>
+<p>第一个是取 srcA 的一个信号。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">word srcA = [</span><br><span class="line">    icode in &#123;IRRMOVQ, IRMMOVQ, IOPQ, IPUSHQ &#125; : rA;</span><br><span class="line">    icode in &#123;IPOPQ, IRET &#125; : RRSP;</span><br><span class="line">    1 : RNONE; # Don&#x27;t need register</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里需要注意的是， srcA 是用于读的一个寄存器，因此只有在 rrmovq，rmmovq，OPq，pushq 指令需要读取操作数所包含的寄存器。这里只有两个数据传送指令，其余的指令，比如说 mrmovq，这个可能需要看看之前那个大表了，它的源操作数在 rB，目的操作数在 rA，所以 rA 没必要被读取。再比如说 irmovq，源操作数为立即数 rA 为 0xF，也就是 RNONE。</p>
+<p>然后第二个条件，也就是说在 popq 和 ret 两个指令执行的时候，我们需要额外读取一个 rsp 寄存器，</p>
+<p>第二个是取 srcB 的信号，先给出答案吧</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">word srcB = [</span><br><span class="line">    icode in &#123;IRMMOVQ, IMRMOVQ, IOPQ  &#125; : rB;</span><br><span class="line">    icode in &#123;IPOPQ, IRET, ICALL, IPUSHQ &#125; : RRSP;</span><br><span class="line">    1 : RNONE; # Don&#x27;t need register</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>寄存器→内存 的一个过程，内存我们需要读取寄存器与一个偏移的立即数相加，因此需要读取 rB 寄存器的值算出地址得到目的操作数的具体地址。而 内存→寄存器 的一个过程，前面说过了，因为它的寄存器反了，源操作数那边的寄存器为 rB，所以为了计算内存地址我们依然要读取这个寄存器。</p>
+<p>这里多了的 pushq 指令，除了源操作数 rA 以外，需要额外读取一个 rsp 寄存器以方便我们放入栈中，call 指令其实就是 push rip + jmp 指令，因此同理，只是不太清楚这个 popq 和 ret 怎么来的。</p>
+<h5 id="写回"><a href="#写回" class="headerlink" title="写回"></a>写回</h5><p>其实就是对寄存器文件的写，其实很简单，想想对目的操作数为寄存器的几个指令即可。</p>
+<p>那么很容易写出 dstE 的 HCL 描述</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">word dstE = [</span><br><span class="line">    icode in &#123; IRRMOVQ &#125; : rB;</span><br><span class="line">    icode in &#123; IIRMOVQ, I0PQ&#125; : rB;</span><br><span class="line">    icode in &#123; IPUSHQ, IPOPQ, ICALL, IRET &#125; : RRSP;</span><br><span class="line">    1 : RNONE; # Don&#x27;t write any register</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>首先我们需要清楚，dstE 是从 ALU 中计算得到的结果，rrmovq 相当于是从 rA 中取出值 +0 写回 rB，因此写回的值是从 ALU中出来的，OPq 指令也一样，结果是从 ALU 取得写回目的寄存器，以及 irmovq同理。</p>
+<p>特别的，pushq，popq，call，ret指令会改变 rsp，rsp是会通过 ALU 进行 +8 -8的，这四个指令都会更新 rsp。</p>
+<p>dstM 的 HCL 描述如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">word dstM = [</span><br><span class="line">	icode in &#123;IMRMOVQ,POPQ&#125;:rA;</span><br><span class="line">	1 : RNONE;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>这个可以参考前面的各个指令的执行阶段，mrmovq 很好理解，就是从内存中读出的值写到了目的寄存器， 也就是valM。popq也一样，从栈中取得值放到目的寄存器中。这里再提一下，就是 rmmovq 的目的寄存器是 rA。</p>
+<div id="2"></div>
+
+<blockquote>
+<p>练习4.22  只有popq指令会同时用到寄存器文件的两个写端口。对于指令popq %rsp，E和M两个写端口会用到同一个地址，但是写入的数据不同。为了解决这个冲突，必须对两个写端口设立一个优先级，这样一来，当同一个周期内两个写端口都试图对一个寄存器进行写时，只有较高优先级端口上的写才会发生。那么要实现练习题4.8中确定的行为，哪个端口该具有较高的优先级呢？</p>
+</blockquote>
+<p>那么这里也描述的很清楚了，当读写端口的两个写操作指向了同一个寄存器，那么会设置优先级来确保其唯一，根据之前的一个特性观察我们会发现 pop %rsp 执行完成之后总是会使用栈（内存）中的数据给到 %rsp。那么不难得出 dstM 的优先级会高于 dstE。</p>
+<h4 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h4><p>执行阶段的逻辑图如下图所示</p>
+<p><img src="/2022/10/14/CSAPP_4/13.png"></p>
+<p>执行阶段包括算术/逻辑单元（ALU)。这个单 元根据 alufun 信号的设置，对输人 aluA 和 aluB 执行 ADD、SUBTRACT、 AND 或 EXCLUSIVEOR 运算。如图 4-29 所示，这些数据和控制信号 是由三个控制块产生的。ALU 的输出就是 valE 信号。</p>
+<h5 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h5><p>执行阶段的第一步就 是每条指令的 ALU 计算。列出的操作数 aluB 在 前面，后面是 aluA，这样是为了保证 subq 指令 是 valB 减去 valA。可以看到，根据指令的类型， aluA 的值可以是 valA、valC, 或者是 -8 或+8。 因此可以用如下的 HCL 表达式来描述 aluA 的行为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">word aluA=[</span><br><span class="line">    icode in &#123; IRRMOVQ,IOPQ&#125;:valA; </span><br><span class="line">    icode in &#123; IIRMOVQ,IRMMOVQ,IMRMOVQ&#125;:valC; </span><br><span class="line">    icode in &#123; ICALL,IPUSHQ&#125;:-8; </span><br><span class="line">    icode in &#123; IRET,IPOPQ&#125;:8;</span><br><span class="line">    #Other instructions don&#x27;t need ALU</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>来解释一波：</p>
+<ul>
+<li>OPq 指令就不用说了，本身就会用到 ALU 的，aluA 的输入就是源操作数，也就是 rA 寄存器读出的 valA。</li>
+<li>rrmovq 指令是把源寄存器的值赋值给目的寄存器，虽然只是简单的数据传送，但是写寄存器只有两个端口：要么是内存里来的从 dstM 出，要么是 ALU 来的，从 dstE 中出。这里显然我们还是要经过 ALU，那么目的操作数可以直接给 0 然后作个加法输出，所以它的源操作数也是从 rA 寄存器读出的 valA。</li>
+<li>irmovq 指令是将立即数赋值给目的寄存器，我们需要从指令中取出这个立即数经过算术逻辑单元 +0 之后写寄存器，因此它的输入就是 valC</li>
+<li>rmmovq 和 mrmovq 同理，因为它们都有一个偏移量要和目的寄存器相加，也得从指令中取出立即数经过 ALU 与寄存器的值相加。因此这两个指令的 aluA 输入都是 valC。</li>
+<li>call 和 push 基本一致，只是 call 指令比 push 多了一个 jmp 而已，这个指令需要我们对 %rsp 寄存器操作，而 %rsp 是目的操作数，而源操作数自然是 -8 让栈顶抬高 8 个字节。</li>
+<li>ret 和 popq 同理，就是让栈降低 8 个字节，源操作数为 +8。</li>
+</ul>
+<p>下面有一个练习让我们写出 aluB 的 HCL 描述，其实比较简单，甚至比上面的简单。指令肯定还是那些指令，不同的就是 跟栈操作相关的目的操作数皆为 %rsp 也就是从 valB 中读出来的值，因此这四个指令都是 valB。除此之外，OPq，mrmovq，rmmovq 的目的操作数皆为目的寄存器 rB，因此从中读出来的 valB 也就是 aluB 的输入。</p>
+<p>但是之前还提到了，有两个只是数据传送的指令，相当于是要 +0，那么那两个指令的目的操作数就是 0，那我们很容易写出它的 HCL 描述了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">word aluB=[</span><br><span class="line">    icode in &#123; IRMMOVQ,IMRMOVQ,IOPQ,ICALL,IPUSHQ,IRET,IPOPQ&#125; : valB; </span><br><span class="line">    icode in &#123; IRRMOVQ,IIRMOVQ&#125;:0;</span><br><span class="line">    # Other instructions don&#x27;t need ALU</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h5 id="行为控制"><a href="#行为控制" class="headerlink" title="行为控制"></a>行为控制</h5><p>ALU（Arithmetic logic unit） 叫 《算数逻辑单元》，肯定不能只会简单的加法，还得实现 Y86-64 架构下面的其它运算，减法，异或，按位与。</p>
+<p>因此这里有一个信号 ALUfun 用于控制 ALU 让它对操作数执行什么运算。</p>
+<p>对于这个信号我们也很好写出它的 HCL 描述：只在执行 OPq 指令的时候根据 func 功能位去选择运算种类。其它情况都使用加法即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">word alufun = [</span><br><span class="line">	icode == IOPQ : ifun;</span><br><span class="line">	1 : ALUADD</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>特别地，在 ALU 执行 OPq 指令的时候会设置条件寄存器（CC），那么有一个信号 setCC 就是告诉 ALU 是否对执行结果设置 CC。它的 HCL 可以描述为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bool set_cc = icode in &#123;IOPQ&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>标号为 cond 的硬件单元会根据条件码和功能码来确定是否进行条件分支或者条件 数据传送。它产生信号 Cnd, 用于设置条件传送的 dstE，也用在条件分支的下 个 PC 逻辑中。对于其他指令，取决于指令的功能码和条件码的设置，Cnd 信号可以被设置为 1 或者 0，这里我们不管它如何实现条件判断，只给一个简单的设定：Cnd 信号为 1 表示条件满足，为 0 表示不满足。</p>
+<p>这里还有一个 练习24 让我们修改 dstE 的 HCL 描述让它可以实现条件传送，也很简单：我们只需要在进行 rrmovq 的时候判断一下 Cnd 信号是否有效即可，如果不满足则将 dstE 设置为 RNONE 表示不需要写回任何寄存器。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">word dstE = [</span><br><span class="line">    icode in &#123; IRRMOVQ &#125; : rB;</span><br><span class="line">    icode in &#123; IIRMOVQ, I0PQ&#125; : rB;</span><br><span class="line">    icode in &#123; IPUSHQ, IPOPQ, ICALL, IRET &#125; : RRSP;</span><br><span class="line">    1 : RNONE; # Don&#x27;t write any register</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h4 id="访存"><a href="#访存" class="headerlink" title="访存"></a>访存</h4><p>逻辑如图所示</p>
+<p><img src="/2022/10/14/CSAPP_4/14.png"></p>
+<p>访存阶段的任务就是读或者写程序数据。如图 4-30 所示，两个控制块产生内存地址和内存输入数据（为写操作）的值。另外两个块产生表明应该执行读操作还是写操作的控制信号。当执行读操作时， 数据内存产生值 valM。</p>
+<p>图 4-1 8 图 4-2 1 的访存阶段给出了每个指令 类型所需要的内存操作。可以看到内存读和写的 地址总是 valE 或 valA。 这个块用 HCL 描述 就是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">word mem_addr=[</span><br><span class="line">    icode in&#123;IRMMOVQ,IPUSHQ,ICALL,IMRMOVQ&#125; : valE;</span><br><span class="line">    icode in&#123;IPOPQ,IRET&#125; : valA;</span><br><span class="line">    #Other instructions don&#x27;t need address</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>也来解释一下这个例子吧</p>
+<p>访存不论是读还是写，都需要指明读写的地址，所以我们要观察地址怎么得出的，是 ALU 计算过了（valE），还是直接寄存器取出（valA）。</p>
+<ul>
+<li>对于 rmmovq 指令，我们的内存地址需要经过一个寄存器和一个加法运算，得到的才是最终访问的地址，所以是 valE，mrmovq 同理，只不过前者是写，后者是读。</li>
+<li>pushq 和 call 一样，都是有一个入栈操作。我们来想想入栈是需要写的，写的内存在哪？ %rsp - 8 的位置上，而这个 -8 就不是从寄存器来的，也是 ALU 中来的，因此这两个指令也是 valE 作为地址访问。</li>
+<li>popq 和 ret 指令都包含出栈操作，出栈是读操作，读的其实就是 %rsp 所指示的地址的值，因此它不需要经过 ALU 计算，直接从 valA 中取值即可。</li>
+</ul>
+<p>来看看练习 25：</p>
+<blockquote>
+<p>观察图 4-18 图 4-21 所示的不同指令的访存操作 ，我们可以看到内存 写的数据总是 valA 或 valP。写出 SEQ 中信号 mem_data 的 HCL 代码。 我们希望只为从内存读数据的指令设置控制信号 mem_read，用 HCL 代码表示就是：bool mem_read = icode in { IMRMOVQ, IPOPQ, IRET };</p>
+</blockquote>
+<p>其实这里大部分都是 valA 要被写入内存，valP 就是下一条指令的地址，这个我们只会在 call 指令中遇到，会把这个值保存在栈中，其它要写内存的指令大部分都是直接给源操作数 valA。</p>
+<p>所以 HCL 代码就很好写出来：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">word mem_data = [</span><br><span class="line">	icode in &#123;IPUSHQ,IRMMOVQ&#125; : valA;</span><br><span class="line">	icode in &#123;ICALL&#125; : valP;</span><br><span class="line">	#other instructions don&#x27;t need mem_data</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>再来看看练习 26：</p>
+<blockquote>
+<p>我们希望只为向内存写数据的指令设置控制信号 mem_write。写出 SEQ 中信号 mem_write 的 HCL 代码 。</p>
+</blockquote>
+<p>就上面那三个指令需要写，判断是否在执行那三个指令即可了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bool mem_write = icode in &#123;IPUSHQ,IRMMOVQ,ICALL&#125;</span><br></pre></td></tr></table></figure>
+
+<p>练习27 倒是没啥，用它自带的信号发生器，给 Stat 设置就好了，如果某个异常信号为 1 了就直接设置 Stat。</p>
+<h4 id="更新-PC"><a href="#更新-PC" class="headerlink" title="更新 PC"></a>更新 PC</h4><p><img src="/2022/10/14/CSAPP_4/15.png"></p>
+<p>最后一个阶段，更新PC，比较简单，因为 PC 要么就是用 valP 赋值，要么是 ret 了从 valM 中赋值，要么是 call 或者是 jmp，从 valC 中读取值过来作为新的 PC，但是还有条件跳转，这里就需要用 Cnd 信号了。</p>
+<p>用 HCL 描述：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">word new_pc = [</span><br><span class="line">    # Call. Use instruction constant</span><br><span class="line">    icode == ICALL : valC;</span><br><span class="line">    # Taken branch. Use instruction con</span><br><span class="line">    icode == IJXX &amp;&amp; Cnd : valC;</span><br><span class="line">    # Completion of RET instruction. Use value from stack</span><br><span class="line">    icode == IRET : valM;</span><br><span class="line">    # Default: Use incremented PC</span><br><span class="line">    1 : valP;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h4 id="SEQ小结"><a href="#SEQ小结" class="headerlink" title="SEQ小结"></a>SEQ小结</h4><p>可以看到，通过将执行每条 不同指令所需的步骤组织成一个统一的流程，就可以用很少量的各种硬件单元以及一个时 钟来控制计算的顺序，从而实现整个处理器。不过这样一来，控制逻辑就必须要在这些单 元之间路由信号，并根据指令类型和分支条件产生适当的控制信号。</p>
+<p>SEQ 唯一的问题就是它太慢了。时钟必须非常慢，以使信号能在一个周期内传播所 有的阶段。让我们来看看处理一条 ret 指令的例子。在时钟周期起始时，从更新过的 PC 开始，要从指令内存中读出指令，从寄存器文件中读出栈指针，ALU 将栈指针加 8, 为了 得到程序计数器的下一个值，还要从内存中读出返回地址。所有这一切都必须在这个周期 结束之前完成。</p>
+<p>这种实现方法不能充分利用硬件单元，因为每个单元只在整个时钟周期的一部分时间 内才被使用。我们会看到引入流水线能获得更好的性能。 </p>
+<h2 id="流水线设计的通用原理"><a href="#流水线设计的通用原理" class="headerlink" title="流水线设计的通用原理"></a>流水线设计的通用原理</h2><p>待更，想做别的东西了，先鸽一会。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2022/10/14/CSAPP_4/">CS:APP第四章复习</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xia0ji233</a></p>
+        <p><span>发布时间:</span>2022-10-14, 19:00:00</p>
+        <p><span>最后更新:</span>2022-10-21, 01:05:18</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2022/10/14/CSAPP_4/" title="CS:APP第四章复习">http://example.com/2022/10/14/CSAPP_4/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://example.com/2022/10/14/CSAPP_4/　　作者: xia0ji233" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2022/10/08/Linux_Signal/">
+                    Linux Signal机制
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Y86-64%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">Y86-64指令集体系结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%91%98%E5%8F%AF%E8%A7%81%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-number">1.1.</span> <span class="toc-text">程序员可见的状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Y86-64%E6%8C%87%E4%BB%A4"><span class="toc-number">1.2.</span> <span class="toc-text">Y86-64指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4"><span class="toc-number">1.2.1.</span> <span class="toc-text">数据传送指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B4%E6%95%B0%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4"><span class="toc-number">1.2.2.</span> <span class="toc-text">整数操作指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="toc-number">1.2.3.</span> <span class="toc-text">跳转指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4"><span class="toc-number">1.2.4.</span> <span class="toc-text">条件传送指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.5.</span> <span class="toc-text">调用函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4"><span class="toc-number">1.2.6.</span> <span class="toc-text">栈操作指令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E7%BC%96%E7%A0%81"><span class="toc-number">1.3.</span> <span class="toc-text">指令编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Y86-64%E5%BC%82%E5%B8%B8"><span class="toc-number">1.4.</span> <span class="toc-text">Y86-64异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Y86-64%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.5.</span> <span class="toc-text">Y86-64程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#demo"><span class="toc-number">1.5.1.</span> <span class="toc-text">demo</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B-Y86-64-%E6%8C%87%E4%BB%A4%E7%9A%84%E8%AF%A6%E6%83%85"><span class="toc-number">1.6.</span> <span class="toc-text">一些 Y86-64 指令的详情</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%A1%AC%E4%BB%B6%E6%8E%A7%E5%88%B6%E8%AF%AD%E8%A8%80HCL"><span class="toc-number">2.</span> <span class="toc-text">逻辑设计和硬件控制语言HCL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E9%97%A8"><span class="toc-number">2.1.</span> <span class="toc-text">逻辑门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF%E5%92%8CHCL%E5%B8%83%E5%B0%94%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">组合电路和HCL布尔表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%BA%A7%E7%9A%84%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF%E5%92%8CHCL%E6%95%B4%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">字级的组合电路和HCL整数表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E5%85%B3%E7%B3%BB"><span class="toc-number">2.4.</span> <span class="toc-text">集合关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E5%92%8C%E6%97%B6%E9%92%9F"><span class="toc-number">2.5.</span> <span class="toc-text">存储器和时钟</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Y86-64-%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">Y86-64 的顺序实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86%E5%A4%84%E7%90%86%E7%BB%84%E7%BB%87%E6%88%90%E9%98%B6%E6%AE%B5"><span class="toc-number">3.1.</span> <span class="toc-text">将处理组织成阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SEQ-%E7%A1%AC%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-number">3.2.</span> <span class="toc-text">SEQ 硬件结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SEQ%E7%9A%84%E6%97%B6%E5%BA%8F"><span class="toc-number">3.3.</span> <span class="toc-text">SEQ的时序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SEQ%E9%98%B6%E6%AE%B5%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.4.</span> <span class="toc-text">SEQ阶段的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%96%E6%8C%87%E9%98%B6%E6%AE%B5"><span class="toc-number">3.4.1.</span> <span class="toc-text">取指阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%91%E7%A0%81%E5%92%8C%E5%86%99%E5%9B%9E%E9%98%B6%E6%AE%B5"><span class="toc-number">3.4.2.</span> <span class="toc-text">译码和写回阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AF%91%E7%A0%81"><span class="toc-number">3.4.2.1.</span> <span class="toc-text">译码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%99%E5%9B%9E"><span class="toc-number">3.4.2.2.</span> <span class="toc-text">写回</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C"><span class="toc-number">3.4.3.</span> <span class="toc-text">执行</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%BE%93%E5%85%A5"><span class="toc-number">3.4.3.1.</span> <span class="toc-text">数据输入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A1%8C%E4%B8%BA%E6%8E%A7%E5%88%B6"><span class="toc-number">3.4.3.2.</span> <span class="toc-text">行为控制</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BF%E5%AD%98"><span class="toc-number">3.4.4.</span> <span class="toc-text">访存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0-PC"><span class="toc-number">3.4.5.</span> <span class="toc-text">更新 PC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SEQ%E5%B0%8F%E7%BB%93"><span class="toc-number">3.4.6.</span> <span class="toc-text">SEQ小结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E8%AE%BE%E8%AE%A1%E7%9A%84%E9%80%9A%E7%94%A8%E5%8E%9F%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">流水线设计的通用原理</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"CS:APP第四章复习　| xia0ji233's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2022/10/08/Linux_Signal/" title="下一篇: Linux Signal机制">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/10/14/CSAPP_4/">CS:APP第四章复习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/10/08/Linux_Signal/">Linux Signal机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/10/08/Hook6-HW%20hook/">Hook专题6- hook</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/10/07/Hook5-VEH%20hook/">Hook专题5-VEH hook</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/10/06/Hook4-Hotfix%20hook/">Hook专题4-hotfix hook</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/10/02/Hook3-virtual%20hook/">Hook专题3-virtual hook</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/09/30/Hook2-IAT%20hook/">Hook专题2-IAT hook</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/09/29/Hook1-inline%20hook/">Hook专题1-inline hook</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/09/29/syspro2/">《windows系统编程》——线程基础与相关结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/09/28/syspro1/">《windows系统编程》——进程基础与相关结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/09/28/Win_advanced_AD-1/">《windows高级攻防》——C语言基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/09/27/RSA_Ex/">RSA题目常见分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/09/24/ZJCTF-2022/">浙江省2022省赛write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/09/22/CSAPP_3/">CS:APP第三章复习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/09/14/KanxueBook/">《加密与解密》的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/08/31/CVE-2021-3493/">CVE-2021-3493复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/08/03/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">icpc数学基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/30/%E2%80%9C%E8%94%9A%E6%9D%A5%E6%9D%AF%E2%80%9D2022%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A54%E9%A2%98%E8%A7%A3/">“蔚来杯”2022牛客暑期多校训练营4题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/29/%E9%80%86%E5%BA%8F%E5%AF%B9/">逆序对板子</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/29/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">树状数组学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/28/2022%E2%80%9C%E6%9D%AD%E7%94%B5%E6%9D%AF%E2%80%9D%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E8%B6%85%E7%BA%A7%E8%81%94%E8%B5%9B%EF%BC%884%EF%BC%89%E9%A2%98%E8%A7%A3/">2022“杭电杯”中国大学生算法设计超级联赛（4）题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/25/2020%E6%B2%88%E9%98%B3icpc%E5%A4%8D%E7%9B%98/">2020沈阳icpc复盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/25/Codeforces%20Round%20810(Div.2)/">Codeforces Round 810(Div.2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/23/Educational%20Codeforces%20Round%20132(Div.2)/">Educational Codeforces Round 132(Div.2)分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/23/%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1(2022-7-23)%E9%A2%98%E8%A7%A3/">牛客多校(2022-7-23)题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/">线段树专题训练</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/09/Educational%20Codeforces%20Round%20131(Div.2)/">Educational Codeforces Round 131(Div.2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/07/05/Codeforces%20Round%20804(Div.2)/">codeforces round 804(div2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/16/ctfshow%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-web351/">ctfshow刷题记录-web351</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/16/ctfshow%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95-web258/">ctfshow刷题记录-web258</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/03/CSAPP_Datalab/">CSAPP第二章复习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/06/01/ciscn2022%E5%88%9D%E8%B5%9Bwriteup/">CISCN2022 初赛WP</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/24/Educational%20Codeforces%20Round%20129(Div.2)/">Educational Coeforces Round 129(Div.2)题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/23/KCTF2022%E6%98%A5%E5%AD%A3%E8%B5%9B_6/">KCTF2022春季赛 第六题 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/07/Codeforces%20Round%20788(Div.2)/">Codeforces Round 788(Div.2)题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/06/Codeforces%20Round%20787(Div.3)/">Codeforces Round 787(Div.3)题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/04/sql%E6%B3%A8%E5%85%A5/">sql注入总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/05/03/Codeforces%20Round%20786(Div.3)/">Codeforces Round 786(Div.3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/28/wdb2020AreUSerialz/">网鼎杯 2020 青龙组AreUSerialz writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/28/femal/">费马小定理的应用及证明</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/24/html%E8%AF%AD%E8%A8%80%E7%9A%84%E5%AD%A6%E4%B9%A0/">html语言的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/23/Educational%20Codeforces%20Round%20127(Div.2)/">educational codeforces round 127(Div.2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/22/Codeforces%20Round%20784(Div.4)/">codeforces round 784(Div.4)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/20/Codeforces%20Round%20783(Div.2)/">Codeforces Round 783(Div.2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/18/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A8icpc%E7%9A%84%E5%BA%94%E7%94%A8/">概率论在icpc的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/18/Codeforces%20Round%20782(Div.2)/">Codeforces Round 782(Div.2)解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/15/RSA%E5%8A%A0%E5%AF%86%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/">RSA加密原理解析</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/SA%E6%9D%BF%E5%AD%90/">SA板子</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/%E4%B8%BB%E5%B8%AD%E6%A0%91/">主席树的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/AC%E8%87%AA%E5%8A%A8%E6%9C%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">AC自动机的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E5%BA%94%E7%94%A8/">最小费用最大流应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/20/Dingtalk/">关于钉钉保存回放的方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/CF1626C/">CF1626C</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/08/Kruskal%E9%87%8D%E6%9E%84%E6%A0%91/">Kruskal 重构树的学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/05/%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E7%AC%94%E8%AE%B0/">最小费用最大流笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/03/%E7%BD%91%E7%BB%9C%E6%B5%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">网络流学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/25/%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">线段树的学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/23/2-SAT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">2-SAT学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/22/%E5%B7%AE%E5%88%86%E7%BA%A6%E6%9D%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">差分约束的学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/%E8%B4%9F%E7%8E%AF%E5%88%A4%E6%96%AD/">负环判断</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/21/spfa%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">spfa算法的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/18/manacher%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">manacher的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/16/KMP%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">KMP算法的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/14/%E6%A0%91%E5%BD%A2dp%E5%AD%A6%E4%B9%A0/">树形dp的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/%E6%B4%9B%E8%B0%B7P1948%E9%A2%98%E8%A7%A3/">洛谷P1948题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/ZJCPC-D%E9%A2%98%E9%A2%98%E8%A7%A3/">ZJCPC-D. Shortest Path Query</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/13/%E5%85%B3%E4%BA%8EC++%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9A%84%E9%97%AE%E9%A2%98/">C++文件的输入输出问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/11/LCA%E8%AF%A6%E8%A7%A3/">最近公共祖先求解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/11/%E6%B4%9B%E8%B0%B7P6037%E9%A2%98%E8%A7%A3/">洛谷P6037题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/07/%E6%B4%9B%E8%B0%B7P2656%E9%A2%98%E8%A7%A3/">洛谷P2656题解</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/04/%E4%BA%8C%E5%88%86%E5%9B%BE%E5%85%A5%E9%97%A8/">二分图入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/02/actf_2019_onerepeater%20writeup/">actf_2019_onerepeater writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/01/27/malloc%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">malloc源码分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/23/%E5%88%86%E5%9D%97%E5%85%A5%E9%97%A82/">分块入门2</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/22/%E5%88%86%E5%9D%97%E5%85%A5%E9%97%A8/">分块入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/18/AES%E5%8A%A0%E5%AF%86/">AES加密学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/16/%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E8%BF%9B%E9%98%B6/">启发式搜索算法进阶</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/15/%E5%90%AF%E5%8F%91%E5%BC%8F%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/">启发式搜索算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/15/%5BRoarCTF2019%5Dpolyre%20writeup/">RoarCTF2019 polyre writeup writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/12/08/%E6%A0%A1%E5%9B%AD%E7%BD%91%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/">校园网模拟登录</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/27/RC4%E5%AD%A6%E4%B9%A0/">RC4加密的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/23/pwnable_input/">Pwnable input writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/19/Re/">正则表达式的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/10/SWPUCTF_2019_p1KkHeap/">SWPUCTF_2019_p1KkHeap writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/10/npuctf_2020_level2/">npuctf_2020_level2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/07/de1ctf_2019_weapon/">de1ctf_2019_weapon writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/06/zjctf2021%20pwn2/">2021浙江省赛pwn2复盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/04/wdb2018_guess%20writeup/">wdb2018_guess writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/03/%E7%BD%91%E9%BC%8E%E6%9D%AF2020%E9%9D%92%E9%BE%99%E7%BB%84%20singal%20writeup/">网鼎杯2020青龙组singal writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/02/WUSTCTF2020%20level4%20writeup/">WUSTCTF2020 level4 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/ciscn2019_final_3%20writeup/">ciscn2019_final_3 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/11/01/%E5%85%B3%E4%BA%8EC++%E6%96%87%E4%BB%B6%E6%8D%A2libc%E7%89%88%E6%9C%AC%E7%9A%84%E9%97%AE%E9%A2%98/">关于C++文件换libc版本的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/zjctf2021%20%E5%86%B3%E8%B5%9B/">2021浙江省决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/lctf2016_pwn200%20writeup/">lctf2016_pwn200 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/2021%E6%B1%9F%E8%A5%BF%E7%9C%81%E8%B5%9BRSA/">2021江西省赛RSA writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/2020%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn2/">2020浙江省赛 pwn2 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/26/gyctf_2020_document/">gyctf_2020_document write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/23/zjctf2021%20%E9%A2%84%E8%B5%9B/">2021浙江省预赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/08/15/babyfengshui_33c3_2016%20writeup/">babyfengshui_33c3_2016 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/19/ret2dl_resolve/">ret2dl_resolve</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/15/%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9Bpwn1%20writeup/">浙江2020省赛pwn1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/SROP%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">SROP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/19/%E5%9B%BD%E8%B5%9B%E7%BA%BF%E4%B8%8B%E8%B5%9B/">2021华东南赛区国赛线下赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/axb_2019_fmt32%20wp/">axb_2019_fmt32 wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/05/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A9%E7%94%A8/">格式化字符串漏洞利用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/cachelab/">cachelab实验报告:模拟cache的功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">动态调试工具的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/22/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AD%A6%E4%B9%A0/">系统调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/13/ret2libc%E5%AE%9E%E6%88%98/">ret2libc实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/10/archlab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%EF%BC%9Ay86%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8/">archlab实验报告：y86命令使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/08/RSA/">RSA解密</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/06/%E7%BA%A2%E5%B8%BD%E6%9D%AF2019%20Easyre%20wp/">红帽杯2019 easyRe</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/ret2libc%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/">ret2libc学习报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/05/01/%E7%BB%95%E8%BF%87canary%E4%BF%9D%E6%8A%A4/">canary保护学习报告:通过字符串泄露canary</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/30/buflab/">bufblab实验报告:32位程序缓冲区溢出攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/25/attqacklab/">attacklab实验报告:代码注入以及rop攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/04/19/bomblab/">bomblab实验报告:二进制安全与逆向分析</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      
+<footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2021-2022 xia0ji233
+            </div>
+            
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script data-main="/js/main.js" src="//lib.baomitu.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-212718070-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//lib.baomitu.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
