@@ -1,20 +1,389 @@
-extends includes/layout.pug
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>友情链接 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Nepnep team">
+<meta property="og:type" content="website">
+<meta property="og:title" content="友情链接">
+<meta property="og:url" content="https://xia0ji233.github.io/friends/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="Nepnep team">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2021-10-25T06:00:34.000Z">
+<meta property="article:modified_time" content="2023-10-29T15:18:17.068Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/friends/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '友情链接',
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-10-29 23:18:17'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
 
-block content
-  #page
-    if top_img === false
-      h1.page-title= page.title
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
 
-    case page.type
-      when 'tags'
-        include includes/page/tags.pug
-      when 'link'
-        include includes/page/flink.pug
-      when 'categories'
-        include includes/page/categories.pug
-      default
-        include includes/page/default-page.pug
-
-    if page.comments !== false && theme.comments && theme.comments.use
-      - var commentsJsLoad = true
-      !=partial('includes/third-party/comments/index', {}, {cache: true})
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">285</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">177</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">友情链接</h1></div></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><div class="flink"><h2 id="友情链接">友情链接</h2><div class="flink-desc">那些人，那些事</div> <div class="flink-list">
+  <div class="flink-list-item">
+    <a href="http://fmyy.pro/" title="fmyy" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://fmyy.pro/img/avatar.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="fmyy" />
+      </div>
+      <div class="flink-item-name">fmyy</div> 
+      <div class="flink-item-desc" title="肥猫师傅我永远的神">肥猫师傅我永远的神</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://www.xiinnn.com/" title="Lxxx" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://www.xiinnn.com/favicon.jpg" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Lxxx" />
+      </div>
+      <div class="flink-item-name">Lxxx</div> 
+      <div class="flink-item-desc" title="大头爷爷贴贴">大头爷爷贴贴</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://warm-winter.github.io/" title="winter" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://warm-winter.github.io/images/shuwen.jpg" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="winter" />
+      </div>
+      <div class="flink-item-name">winter</div> 
+      <div class="flink-item-desc" title="pwn奶奶">pwn奶奶</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://err0r.top" title="Err0r" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://err0r.top/images/avatar.jpg" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Err0r" />
+      </div>
+      <div class="flink-item-name">Err0r</div> 
+      <div class="flink-item-desc" title="Err0r哥哥yyds">Err0r哥哥yyds</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://kaizynx.github.io/" title="kaizynx" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://cdn.jsdelivr.net/gh/KaizynX/cdn/img/custom/avatar.gif" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="kaizynx" />
+      </div>
+      <div class="flink-item-name">kaizynx</div> 
+      <div class="flink-item-desc" title="凯爷%%%">凯爷%%%</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://mas0n.cn/" title="Mas0n" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://mas0n.cn/_next/image?url=https%3A%2F%2Fwww.notion.so%2Fimage%2Fhttps%253A%252F%252Fcdn.shi1011.cn%252F2021%252F03%252Fa2646b0339c3e17639d492873a4c0638.jpg%3Ftable%3Dblock%26id%3D6ad1588d-fd2b-4479-a14f-a14356d174c4%26cache%3Dv2&w=2048&q=75" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Mas0n" />
+      </div>
+      <div class="flink-item-name">Mas0n</div> 
+      <div class="flink-item-desc" title="逆向的神仙~">逆向的神仙~</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://blog.csdn.net/CSR6180GLEV3/" title="SPY" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://userpic.codeforces.org/1826627/title/9277a6a6ac9bc8d9.jpg" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="SPY" />
+      </div>
+      <div class="flink-item-name">SPY</div> 
+      <div class="flink-item-desc" title="飘神%%%">飘神%%%</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://fmyyy1.github.io" title="fmyyy" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="http://q1.qlogo.cn/g?b=qq&nk=254005846&s=640" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="fmyyy" />
+      </div>
+      <div class="flink-item-name">fmyyy</div> 
+      <div class="flink-item-desc" title="fmyyy姐姐带带">fmyyy姐姐带带</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://www.cnblogs.com/CTing/" title="tt" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="http://q1.qlogo.cn/g?b=qq&nk=2397161038&s=640" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="tt" />
+      </div>
+      <div class="flink-item-name">tt</div> 
+      <div class="flink-item-desc" title="姐姐%%%">姐姐%%%</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://y4tacker.github.io/" title="y4tacker" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://y4tacker.github.io/images/me.jpeg" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="y4tacker" />
+      </div>
+      <div class="flink-item-name">y4tacker</div> 
+      <div class="flink-item-desc" title="web👴">web👴</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="http://arttnba3.cn/" title="arttnba3" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://arttnba3.cn/img/avatar.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="arttnba3" />
+      </div>
+      <div class="flink-item-name">arttnba3</div> 
+      <div class="flink-item-desc" title="pwn👴">pwn👴</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="http://codex.lemonprefect.cn" title="LemonPrefect" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="http://q1.qlogo.cn/g?b=qq&nk=1476136743&s=640" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="LemonPrefect" />
+      </div>
+      <div class="flink-item-name">LemonPrefect</div> 
+      <div class="flink-item-desc" title="lemon👴">lemon👴</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://tokameine.top/" title="TokameinE" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://tokameine.top/img/faction/6.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="TokameinE" />
+      </div>
+      <div class="flink-item-name">TokameinE</div> 
+      <div class="flink-item-desc" title="大脑正不受控制地拒绝着访问！">大脑正不受控制地拒绝着访问！</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://blog.wjhwjhn.com" title="wjh" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="http://q1.qlogo.cn/g?b=qq&nk=1060091089&s=640" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="wjh" />
+      </div>
+      <div class="flink-item-name">wjh</div> 
+      <div class="flink-item-desc" title="学习pwn中...">学习pwn中...</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="http://gxh191.top" title="gxh191" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="http://q1.qlogo.cn/g?b=qq&nk=249796037&s=640" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="gxh191" />
+      </div>
+      <div class="flink-item-name">gxh191</div> 
+      <div class="flink-item-desc" title="乐色pwn手">乐色pwn手</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://twe1v3.top/" title="TWe1v3" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://twe1v3.top/images/twe1v3.jpg" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="TWe1v3" />
+      </div>
+      <div class="flink-item-name">TWe1v3</div> 
+      <div class="flink-item-desc" title="菜鸡渗透">菜鸡渗透</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://rtbug.com/" title="Tajang" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://rtbug.com/avatar.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Tajang" />
+      </div>
+      <div class="flink-item-name">Tajang</div> 
+      <div class="flink-item-desc" title="临渊羡鱼，不如退而结网">临渊羡鱼，不如退而结网</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://blog.xinshi.fun/link/" title="LilRan" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="http://blog.xinshi.fun/assets/avatar.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="LilRan" />
+      </div>
+      <div class="flink-item-name">LilRan</div> 
+      <div class="flink-item-desc" title="一起有效学习吧">一起有效学习吧</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://monoceros406.github.io/" title="Monoceros406" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://q1.qlogo.cn/g?b=qq&nk=1295625063&s=4" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="Monoceros406" />
+      </div>
+      <div class="flink-item-name">Monoceros406</div> 
+      <div class="flink-item-desc" title="别把所有的希望都寄放在明天，过好每一个今天，明天才会更有价值">别把所有的希望都寄放在明天，过好每一个今天，明天才会更有价值</div>
+    </a>
+  </div></div><h2 id="网站">网站</h2><div class="flink-desc">值得推荐的网站</div> <div class="flink-list">
+  <div class="flink-list-item">
+    <a href="https://www.kanxue.com/" title="看雪" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="http://q1.qlogo.cn/g?b=qq&nk=882704&s=640" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="看雪" />
+      </div>
+      <div class="flink-item-name">看雪</div> 
+      <div class="flink-item-desc" title="看雪学苑（www.kanxue.com）是一个专注于PC、移动、智能设备安全研究及逆向工程的安全综合服务网站">看雪学苑（www.kanxue.com）是一个专注于PC、移动、智能设备安全研究及逆向工程的安全综合服务网站</div>
+    </a>
+  </div>
+  <div class="flink-list-item">
+    <a href="https://www.52pojie.cn/" title="吾爱破解" target="_blank">
+      <div class="flink-item-icon">
+        <img class="no-lightbox" src="https://static.52pojie.cn/static/image/common/logo.png" onerror='this.onerror=null;this.src="/img/friend_404.gif"' alt="吾爱破解" />
+      </div>
+      <div class="flink-item-name">吾爱破解</div> 
+      <div class="flink-item-desc" title="吾爱破解关注PC软件安全和移动安全领域，致力于软件安全与病毒分析的前沿。">吾爱破解关注PC软件安全和移动安全领域，致力于软件安全与病毒分析的前沿。</div>
+    </a>
+  </div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">285</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">177</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/02/KCTF2024/" title="KCTF2024第八题 writeup">KCTF2024第八题 writeup</a><time datetime="2024-09-02T12:00:00.000Z" title="发表于 2024-09-02 20:00:00">2024-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/08/etw/" title="etw机制分析">etw机制分析</a><time datetime="2024-07-08T02:00:00.000Z" title="发表于 2024-07-08 10:00:00">2024-07-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/28/driver13/" title="Windows驱动开发（13）——shellcode查找">Windows驱动开发（13）——shellcode查找</a><time datetime="2024-06-28T10:00:00.000Z" title="发表于 2024-06-28 18:00:00">2024-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/21/LLVM%E6%8E%92%E5%9D%91/" title="LLVM排坑">LLVM排坑</a><time datetime="2024-06-21T14:00:00.000Z" title="发表于 2024-06-21 22:00:00">2024-06-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/18/RemoteThreadInject/" title="关于64位进程注入32位进程的分析">关于64位进程注入32位进程的分析</a><time datetime="2024-06-18T03:00:00.000Z" title="发表于 2024-06-18 11:00:00">2024-06-18</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AdvancedMath/"><span class="card-category-list-name">AdvancedMath</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AdvancedMath/Fourier-Serials/"><span class="card-category-list-name">Fourier-Serials</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/"><span class="card-category-list-name">C++</span><span class="card-category-list-count">16</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/C-%E7%9A%84%E7%89%B9%E6%80%A7/"><span class="card-category-list-name">C++的特性</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/LLVM/"><span class="card-category-list-name">LLVM</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/OOP/"><span class="card-category-list-name">OOP</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/Windows/"><span class="card-category-list-name">Windows</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/%E6%A8%A1%E6%9D%BF/"><span class="card-category-list-name">模板</span><span class="card-category-list-count">2</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/RSA/" style="font-size: 1.15em; color: rgb(41, 188, 42)">RSA</a><a href="/tags/AES/" style="font-size: 1.15em; color: rgb(200, 14, 200)">AES</a><a href="/tags/DNS/" style="font-size: 1.15em; color: rgb(5, 29, 38)">DNS</a><a href="/tags/flask/" style="font-size: 1.15em; color: rgb(54, 166, 137)">flask</a><a href="/tags/HITCTF/" style="font-size: 1.22em; color: rgb(107, 103, 29)">HITCTF</a><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" style="font-size: 1.15em; color: rgb(94, 89, 154)">内网渗透</a><a href="/tags/Web%E6%BC%8F%E6%B4%9E/" style="font-size: 1.15em; color: rgb(82, 188, 101)">Web漏洞</a><a href="/tags/ptrace/" style="font-size: 1.22em; color: rgb(17, 161, 39)">ptrace</a><a href="/tags/LLVM/" style="font-size: 1.15em; color: rgb(75, 100, 56)">-LLVM</a><a href="/tags/LLVM/" style="font-size: 1.38em; color: rgb(157, 41, 4)">LLVM</a><a href="/tags/Substitution/" style="font-size: 1.15em; color: rgb(15, 79, 68)">Substitution</a><a href="/tags/Linux/" style="font-size: 1.3em; color: rgb(20, 153, 4)">Linux</a><a href="/tags/Kernel/" style="font-size: 1.15em; color: rgb(12, 91, 44)">Kernel</a><a href="/tags/base64/" style="font-size: 1.15em; color: rgb(48, 59, 163)">base64</a><a href="/tags/Socket/" style="font-size: 1.15em; color: rgb(23, 82, 70)">Socket</a><a href="/tags/Net-Program/" style="font-size: 1.15em; color: rgb(71, 169, 165)">Net-Program</a><a href="/tags/fastbin-reverse-into-tcache/" style="font-size: 1.15em; color: rgb(150, 58, 64)">fastbin_reverse_into_tcache</a><a href="/tags/XYcup/" style="font-size: 1.15em; color: rgb(21, 4, 100)">XYcup</a><a href="/tags/awd/" style="font-size: 1.15em; color: rgb(148, 70, 122)">awd</a><a href="/tags/hook/" style="font-size: 1.15em; color: rgb(84, 136, 120)">hook</a><a href="/tags/global-max-fast/" style="font-size: 1.15em; color: rgb(165, 58, 184)">global_max_fast</a><a href="/tags/pwnable-kr/" style="font-size: 1.45em; color: rgb(40, 103, 25)">pwnable.kr</a><a href="/tags/Binary-Serach/" style="font-size: 1.15em; color: rgb(195, 9, 59)">Binary-Serach</a><a href="/tags/operator-priority/" style="font-size: 1.15em; color: rgb(151, 149, 109)">operator priority</a><a href="/tags/bash/" style="font-size: 1.15em; color: rgb(198, 52, 31)">bash</a><a href="/tags/shellshock/" style="font-size: 1.15em; color: rgb(174, 108, 83)">shellshock</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">六月 2024</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">4</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">285</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2021-04-25T00:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">638.9k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-09-02T14:23:59.938Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

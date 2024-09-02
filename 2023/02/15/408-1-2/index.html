@@ -1,32 +1,280 @@
-extends includes/layout.pug
-
-block content
-  #post
-    if top_img === false
-      include includes/header/post-info.pug
-
-    article#article-container.post-content!=page.content
-    include includes/post/post-copyright.pug
-    .tag_share
-      if (theme.post_meta.post.tags)
-        .post-meta__tag-list
-          each item, index in page.tags.data
-            a(href=url_for(item.path)).post-meta__tags #[=item.name]
-      include includes/third-party/share/index.pug
-        
-    if theme.reward.enable && theme.reward.QR_code
-      !=partial('includes/post/reward', {}, {cache: true})
-
-    //- ad
-    if theme.ad && theme.ad.post
-      .ads-wrap!=theme.ad.post
-
-    if theme.post_pagination
-      include includes/pagination.pug
-    if theme.related_post && theme.related_post.enable
-      != related_posts(page,site.posts)
-
-    if page.comments !== false && theme.comments && theme.comments.use
-      - var commentsJsLoad = true
-      !=partial('includes/third-party/comments/index', {}, {cache: true})
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>计算机组成原理复习（2） | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="考研复习第 3，4 天  计算机组成原理相关内容的复习  原码，补码，反码，移码 移位，加减法，乘法运算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理复习（2）">
+<meta property="og:url" content="https://xia0ji233.github.io/2023/02/15/408-1-2/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="考研复习第 3，4 天  计算机组成原理相关内容的复习  原码，补码，反码，移码 移位，加减法，乘法运算">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-02-15T06:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-09T05:23:09.802Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2023/02/15/408-1-2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '计算机组成原理复习（2）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-09 13:23:09'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
       
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">285</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">177</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">计算机组成原理复习（2）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-15T06:00:00.000Z" title="发表于 2023-02-15 14:00:00">2023-02-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-09T05:23:09.802Z" title="更新于 2024-04-09 13:23:09">2024-04-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%80%83%E7%A0%94/408/">408</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%80%83%E7%A0%94/408/%E8%AE%A1%E7%BB%84/">计组</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="计算机组成原理复习（2）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>考研复习第 3，4 天</p>
+</blockquote>
+<p>计算机组成原理相关内容的复习</p>
+<ul>
+<li>原码，补码，反码，移码</li>
+<li>移位，加减法，乘法运算</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="数据编码"><a href="#数据编码" class="headerlink" title="数据编码"></a>数据编码</h2><h3 id="原码，补码，反码，移码"><a href="#原码，补码，反码，移码" class="headerlink" title="原码，补码，反码，移码"></a>原码，补码，反码，移码</h3><h4 id="原码"><a href="#原码" class="headerlink" title="原码"></a>原码</h4><p>字面意思，有符号时，最高位<strong>只</strong>表示负号</p>
+<h4 id="补码"><a href="#补码" class="headerlink" title="补码"></a>补码</h4><p>最高位权值为负，其它与原码一致。</p>
+<h4 id="反码"><a href="#反码" class="headerlink" title="反码"></a>反码</h4><p>在原码的基础上，若最高位为1，则对原码除符号位所有位取反</p>
+<h4 id="移码"><a href="#移码" class="headerlink" title="移码"></a>移码</h4><p>看成无符号然后-一个偏置值即可。</p>
+<h3 id="单符号与双符号"><a href="#单符号与双符号" class="headerlink" title="单符号与双符号"></a>单符号与双符号</h3><p>单符号一般写的时候用小数点隔开，但是不表示小数点的含义，比如 0.0001 如果是原码表示正数的1，1.0001 如果是原码表示负数的1。在此基础上，还可以再做一个符号的扩展，用于判断溢出。若出现 01，则表示正溢，若出现 10，则表示负溢。</p>
+<p>比如 00.1111 如果表示原码就是正数的15，11.1111 如果表示原码就是负数的15，而 10.0001 不能表示一个正确的数，因为它溢出了，同样 01.0001 也不行。但是在下面的乘法算法的时候，允许临时溢出。</p>
+<h3 id="移位运算"><a href="#移位运算" class="headerlink" title="移位运算"></a>移位运算</h3><p>主要是循环移位有一个带进位和不带进位的区别。带进位就是说，在挪出去的过程中要算上 CF 一起，如果不带进位，那么原本被丢弃的位进入 CF 和最高位或者最低位。</p>
+<h3 id="乘法和除法"><a href="#乘法和除法" class="headerlink" title="乘法和除法"></a>乘法和除法</h3><p>有这么几种算法，学一下吧~</p>
+<h4 id="原码一位乘法"><a href="#原码一位乘法" class="headerlink" title="原码一位乘法"></a>原码一位乘法</h4><p>总结来说就是：<strong>被乘数和乘数均取绝对值参加运算，符号位不参与运算单独考虑~</strong></p>
+<p>然后自己也豁然开朗了，假设两数为n+1位（带符号）遵循这么个步骤：</p>
+<ol>
+<li>取符号，结果的符号为俩符号的异或。</li>
+<li>z 取 |y| 为当前结果，扩展 n+1 位。</li>
+<li>每次取得 z 的最低位的值，如果为 1，那么高 n 位整体加上 |x|，否则加上0，加完之后，逻辑右移一位。</li>
+<li>重复（步骤3） n次。</li>
+</ol>
+<p>举个例子，拿两个八位有符号整数的原码。</p>
+<p>x&#x3D;0.10010101</p>
+<p>y&#x3D;0.11010110</p>
+<p>首先符号都是正的没问题，然后设定一个 z，值跟|y|一样，然后扩展 8+1 位，这里我扩展到了点之前，这个点不是小数点。</p>
+<ol>
+<li>z&#x3D;00.0000000011010110|</li>
+<li>取出z的最低位 为 0，给z的高八位加上0，然后逻辑右移，z&#x3D;00.0000000001101011|0</li>
+<li>取出z的最低位 为 1，给z的高八位加上|x|，然后逻辑右移，z&#x3D;00.0100101010110101|10</li>
+<li>取出z的最低位 为 1，给z的高八位加上|x|，然后逻辑右移，z&#x3D;00.0110111111011010|110</li>
+<li>取出z的最低位 为 0，给z的高八位加上0，然后逻辑右移，z&#x3D;00.0011011111101101|0110</li>
+<li>取出z的最低位 为 1，给z的高八位加上|x|，然后逻辑右移，z&#x3D;00.0110011001110110|10110</li>
+<li>取出z的最低位 为 0，给z的高八位加上0，然后逻辑右移，z&#x3D;00.0011001100111011|010110</li>
+<li>取出z的最低位 为 1，给z的高八位加上|x|，然后逻辑右移，z&#x3D;00.0110010000011101|1010110</li>
+<li>取出z的最低位 为 1，给z的高八位加上|x|，然后逻辑右移，z&#x3D;00.01111100100011100|11010110</li>
+<li>结束，z 最后就是最后的结果，再加上符号即可。</li>
+</ol>
+<p>这里需要注意，为什么需要扩展 N+1 位，因为临时乘，然后加，最高位可能产生进位，如果不保留那么移位之后，高位必为0，显然是不合理的。</p>
+<p>最后算结果的时候，因为还要加符号，所以直到最后出结果也是需要 2N+1位的。</p>
+<h4 id="补码一位乘法（BOOTH算法）"><a href="#补码一位乘法（BOOTH算法）" class="headerlink" title="补码一位乘法（BOOTH算法）"></a>补码一位乘法（BOOTH算法）</h4><p>总结来说就是：<strong>所有位均参与运算</strong></p>
+<p>假设x,y的位数为n+1（有符号）位。</p>
+<ol>
+<li>取z为y的值，末位加一个辅助位。</li>
+<li>取最低位+辅助位的组合，若组合为00或11，则直接右移一位，若组合为01，则加x的补码，10则加-x的补码，也就是<code>~x+1</code> 加完之后都要算数右移一位。</li>
+<li>重复（步骤2） n+1次。</li>
+</ol>
+<p><strong>比如x &#x3D; -0.1101，y&#x3D;0.1011</strong></p>
+<p>分别写出它们的补码：[x]补&#x3D;11.0011,[y]补&#x3D;00.1011，[-x]补&#x3D;00.1101。</p>
+<p>先取 y 的值作为 z 的值，并进行扩展（这里可能是符号扩展）z&#x3D;00.00001011|0（辅助位）|</p>
+<p>取出最低位和辅助位的组合，结果为 10，那么加上 -x 的补码，再右移一位，z&#x3D;00.01101101|1|0</p>
+<p>取出最低位和辅助位的组合，结果为 11，那么加上 0，再右移一位，z&#x3D;00.00110110|1|10</p>
+<p>取出最低位和辅助位的组合，结果为 01，那么加上 x 的补码，再右移一位，z&#x3D;11.10110011|0|110</p>
+<p>取出最低位和辅助位的组合，结果为 10，那么加上 -x 的补码，再右移一位，z&#x3D;00.01000001|1|0110</p>
+<p>最后一个步骤比较特殊，它要看当前 y 补码的符号位和辅助位的组合：那么得到了 01，就是加上 x 的补码并且不会右移了，最后得到 z&#x3D;11.01110001。</p>
+<p><strong>再比如，最简单的x&#x3D;-0.0001 y&#x3D;-0.0001</strong>。</p>
+<p>不过这里不能和之前一样了，跟之前的有点出入，但是按照上面那个思路是能得到正确结果的，只是不连通，介绍一个连通的思路：</p>
+<ol>
+<li>取z&#x3D;0，y补码末尾添0。</li>
+<li>从低位开始，扫补码的低两位，每次左移一位。</li>
+<li>若组合为00或11，则直接右移一位，若组合为01，则加x的补码，10则加-x的补码，也就是<code>~x+1</code> 加完之后都要算数右移一位。</li>
+<li>重复（步骤2）n+1 次。</li>
+</ol>
+<p>模拟一遍：</p>
+<ol>
+<li>z&#x3D;00.0000,[x]补&#x3D;[y]补&#x3D;11.1111，[-x]补&#x3D;00.0001，然后把 y 变成这种形式：1.111[10]。</li>
+<li>取得10，加上[-x]补，再算数右移一位，得到00.00001，同时y也移动：1.11[11]0。</li>
+<li>取得11，加0，算数右移一位，得到00.000001，同时y也移动：1.1[11]10。</li>
+<li>取得11，加0，算数右移一位，得到00.0000001，同时y也移动：1.[11]110。</li>
+<li>取得11，加0，算数右移一位，得到00.00000001，同时y也移动：[1.1]1110。</li>
+<li>取得11，加0，结束。最后得到00.00000001，显然就是1的补码。</li>
+</ol>
+<p>其实也能理解加小数点的原因，因为它要移位什么的就很麻烦，就像前面说的，我要说成这种形式：与这个数的高8位相加。而且如果长度不一样我还要改高几位，不如我用个小数点，把它定在那边，我默认就是对小数点靠近左边的那几个数相加，往右移走的数我完全不用管，大概就是这样的做法了。</p>
+<h3 id="标志寄存器"><a href="#标志寄存器" class="headerlink" title="标志寄存器"></a>标志寄存器</h3><p>这里有两个标志寄存器需要注意一下：CF，OF分别表示 carry flag和 overflow flag，无符号溢出标志和有符号溢出标志。</p>
+<p>这里稍微注意一下三个概念：</p>
+<ul>
+<li>最高位进位：指的是，数的最高位是否进位。</li>
+<li>符号位进位：指的是，次高位是否进位（进位即改变符号）。</li>
+<li>最低位进位：因为减法是取补，而对于电路来说，取反是很容易实现的，但是取反+1相当于再做了一次运算，于是取补就变成了取反再给最低位的进位设置成1。这样就相当于 + 1了，所以最低进位的值等同于是否进行减法运算，减法运算则最低仅为为1，否则为0。</li>
+</ul>
+<p>进位标志与溢出标志</p>
+<ul>
+<li>CF：加法减法好像是有区别的，如果是减法指令，那么仅仅观察目的操作数是否大于源操作数（无符号大于），是就为 1。如果是加法指令，只需要关心它的最高位进位是否为 1。总结来说——减法标记（sub指令时&#x3D;1）异或 最高位进位标记 就是 CF 的值</li>
+<li>OF：同时要判断两个值，一个是最高位进位，一个是符号位进位，若不相等则 OF&#x3D;1。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2023/02/15/408-1-2/">https://xia0ji233.github.io/2023/02/15/408-1-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/26/math-1-2/" title="高等数学复习（2）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">高等数学复习（2）</div></div></a></div><div class="next-post pull-right"><a href="/2023/02/12/CSAPP_12/" title="CS:APP第十二章学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS:APP第十二章学习</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">285</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">177</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BC%96%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">数据编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%A0%81%EF%BC%8C%E8%A1%A5%E7%A0%81%EF%BC%8C%E5%8F%8D%E7%A0%81%EF%BC%8C%E7%A7%BB%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">原码，补码，反码，移码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%A0%81"><span class="toc-number">1.1.1.</span> <span class="toc-text">原码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E7%A0%81"><span class="toc-number">1.1.2.</span> <span class="toc-text">补码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%A0%81"><span class="toc-number">1.1.3.</span> <span class="toc-text">反码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E7%A0%81"><span class="toc-number">1.1.4.</span> <span class="toc-text">移码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E7%AC%A6%E5%8F%B7%E4%B8%8E%E5%8F%8C%E7%AC%A6%E5%8F%B7"><span class="toc-number">1.2.</span> <span class="toc-text">单符号与双符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="toc-number">1.3.</span> <span class="toc-text">移位运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%98%E6%B3%95%E5%92%8C%E9%99%A4%E6%B3%95"><span class="toc-number">1.4.</span> <span class="toc-text">乘法和除法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%A0%81%E4%B8%80%E4%BD%8D%E4%B9%98%E6%B3%95"><span class="toc-number">1.4.1.</span> <span class="toc-text">原码一位乘法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E7%A0%81%E4%B8%80%E4%BD%8D%E4%B9%98%E6%B3%95%EF%BC%88BOOTH%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">补码一位乘法（BOOTH算法）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E5%BF%97%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">1.5.</span> <span class="toc-text">标志寄存器</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/02/KCTF2024/" title="KCTF2024第八题 writeup">KCTF2024第八题 writeup</a><time datetime="2024-09-02T12:00:00.000Z" title="发表于 2024-09-02 20:00:00">2024-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/08/etw/" title="etw机制分析">etw机制分析</a><time datetime="2024-07-08T02:00:00.000Z" title="发表于 2024-07-08 10:00:00">2024-07-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/28/driver13/" title="Windows驱动开发（13）——shellcode查找">Windows驱动开发（13）——shellcode查找</a><time datetime="2024-06-28T10:00:00.000Z" title="发表于 2024-06-28 18:00:00">2024-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/21/LLVM%E6%8E%92%E5%9D%91/" title="LLVM排坑">LLVM排坑</a><time datetime="2024-06-21T14:00:00.000Z" title="发表于 2024-06-21 22:00:00">2024-06-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/18/RemoteThreadInject/" title="关于64位进程注入32位进程的分析">关于64位进程注入32位进程的分析</a><time datetime="2024-06-18T03:00:00.000Z" title="发表于 2024-06-18 11:00:00">2024-06-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

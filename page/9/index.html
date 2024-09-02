@@ -1,7 +1,329 @@
-extends includes/layout.pug
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>xia0ji233's blog - 学习应该像呼吸一样自然</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Nepnep team">
+<meta property="og:type" content="website">
+<meta property="og:title" content="xia0ji233&#39;s blog">
+<meta property="og:url" content="https://xia0ji233.github.io/page/9/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="Nepnep team">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/page/9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'xia0ji233\'s blog',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-09-02 22:24:04'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
 
-block content
-  include ./includes/mixins/post-ui.pug
-  #recent-posts.recent-posts
-    +postUI
-    include includes/pagination.pug
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">285</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">177</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">xia0ji233's blog</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/04/02/WeeklyReport5/" title="考研周报（5）">考研周报（5）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-04-02T13:00:00.000Z" title="发表于 2023-04-02 21:00:00">2023-04-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E5%91%A8%E6%8A%A5/">周报</a></span></div><div class="content">第5篇周报
+
+
+本周小结快乐的FINALS，但是同时Q师傅和Lemon师傅也给了我很多建议，也逐渐让我认识到考研这个目标了。
+下周目标英语：每天背单词。
+数学：学完积分吧。
+专业课：
+
+计算机网络：看完第四章
+操作系统基础：暂不定目标，随缘看
+windows 内核基础：暂不定目标，随缘看
+
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/19/WeeklyReport3/" title="考研周报（3）">考研周报（3）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-19T14:30:00.000Z" title="发表于 2023-03-19 22:30:00">2023-03-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E5%91%A8%E6%8A%A5/">周报</a></span></div><div class="content">第3篇周报
+
+
+本周小结高数没看过，一直在读计算机网络，目前第三章已经快结束。
+单词坚持了3天好像，一天 40 个，本来想着是一天 40 个应该能坚持每天，没想到还是坚持不下来。
+起床依然是 7 点半而且属于生物钟的那种了，7 点半自然而然就醒了。
+跑步的话，坚持了三天 2.4KM，配速达标，周日跑了个 10KM，感觉略微达成目标了。
+下周目标对科目有个目标吧。
+英语：目标小点——单词能坚持每天去看就行了
+数学：继续上周的目标吧——学到高数第八章
+专业课：
+
+计算机网络：看完第四章
+操作系统基础：暂不定目标，随缘看
+windows 内核基础：暂不定目标，随缘看
+
+分析问题还是大部分时间浪费了，自制力不够强。再看看下周如何把，不过下周有那么几天有事，估计目标也是很难完成，尽自己所能吧。
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/19/ComputerNetwork3/" title="计算机网络——自顶向下的方法第三章的学习">计算机网络——自顶向下的方法第三章的学习</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-19T10:00:00.000Z" title="发表于 2023-03-19 18:00:00">2023-03-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ComputerNetwork/">ComputerNetwork</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ComputerNetwork/Transport-Layer/">Transport-Layer</a></span></div><div class="content">自顶向下，目前是比较重要的一层，在传输层。
+这里有两个比较重要的协议：TCP和UDP协议。
+
+
+梗概TCP 是面向连接的，可靠的运输层传输协议
+UDP 是面向无连接的，不可靠的运输层传输协议。
+概述和运输层服务运输层提供了应用进程之间的逻辑通信，因为对于应用程序来看，依靠 TCP 和 UDP 协议好像可以使互联网上任意两台主机进行直接通信。应用进程使用运输层提供的逻辑通信功能发送报文，无需考虑这些报文的物理基础设施的细节，我们把运输层的分组叫报文段（segment）。
+运输层和网络层关系网络层实际而言提供了两台主机之间的通信，而运输层提供了两台主机所在进程的逻辑通信。
+我自己理解了一遍创建了一个新的类比，就可以类比成快递。
+
+假如我有一个很大的物件，我想通过快递直接送给另一个人（逻辑上）。
+那么我会先把他交给我们市所在的菜鸟驿站，菜鸟驿站可以理解为一个运输层协议了。像上可以直接提供快递收发服务（这直接是两个人之间的发送接收，菜鸟驿站本身提供的功能），向下可以直接将快递无差错运输到其它市的菜鸟驿站（这里的向下可以理解为物流服务，物流服务用于给两个驿站之间提供服务）。
+在这个了例子中：
+端 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/12/WeeklyReport2/" title="考研周报（2）">考研周报（2）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-12T11:30:00.000Z" title="发表于 2023-03-12 19:30:00">2023-03-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E5%91%A8%E6%8A%A5/">周报</a></span></div><div class="content">第2篇周报
+
+
+本周小结高数没看过，一直在读计算机网络，目前第二章已经结束。
+单词坚持了3天好像，慢慢来吧，一天100个。
+起床依然是 7 点半而且属于生物钟的那种了，7 点半自然而然就醒了。
+跑步的话，因为中间出了很多事，也就坚持了三天 2.4KM，配速达标，算是可以了吧，下周肯定得跑起来了，应该不会再有任何接口阻拦我了。
+下周目标对科目有个目标吧。
+英语：单词一周 500 个
+数学：学到高数第八章
+专业课：
+
+计算机网络：看完运输层
+操作系统基础：暂不定目标，随缘看
+windows 内核基础：暂不定目标，随缘看
+
+分析问题还是那个问题，意志力的一个问题，总是喜欢给自己找太多理由不学，下周希望能改变，自己也是非常希望时间利用率高一点的。
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/12/ComputerNetwork2/" title="计算机网络——自顶向下的方法第二章的学习">计算机网络——自顶向下的方法第二章的学习</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-12T11:00:00.000Z" title="发表于 2023-03-12 19:00:00">2023-03-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ComputerNetwork/">ComputerNetwork</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ComputerNetwork/Application-Layer/">Application-Layer</a></span></div><div class="content">自顶向下，那就先开始应用层。
+
+
+梗概网络应用是计算机网络存在的理由，如果我们没有网络应用的话，那计算机网络将毫无意义。
+应用层是最好的学习起点。
+应用层协议原理因为网络的核心设备（路由器、交换机）不在应用层，因此我们编写网络程序不需要考虑网络层和链路层的一些事情，这样就提升了网络应用的开发效率。
+网络应用程序体系结构当今有两大应用程序体系结构：
+
+客户端&#x2F;服务器结构（Client&#x2F;Server）
+对等体系结构（P2P）
+
+常见的，如 Web，Telnet，FTP，Mail 等都是 C&#x2F;S 体系结构，我们把主动发起请求的端系统称为客户端，被动等待请求的端系统称为服务器，在这个体系结构当中，两个客户端是不直接通信的。比如仅仅使用浏览器，你无法直接建立一条连接。如果服务量比较大的话，一台主机显然不足以支撑服务的平稳运行。为此，配备大量主机的数据中心（data center）常被用于创建强大的虚拟服务器，相当于是在做负载均衡，把请求平摊到每一个主机上面。
+而P2P的通信双方是对等方，相当于直接点对点通信，我只要知道你的ip地址我就可以直接对你发你起通信，如果我们 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/08/ComputerNetwork1/" title="计算机网络——自顶向下的方法第一章的学习">计算机网络——自顶向下的方法第一章的学习</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-08T01:00:00.000Z" title="发表于 2023-03-08 09:00:00">2023-03-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ComputerNetwork/">ComputerNetwork</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ComputerNetwork/summary/">summary</a></span></div><div class="content">直接开始看这本书了。
+第一章就是基本介绍
+
+
+梗概今天的因特网无疑是有史以来由人类创造、精心设计的最大系统，该系统具有数以亿计的相连的计算机、通信链路和交换机，有数十亿的用便携计算机、平板电脑和智能手机连接的用户，并且还有一批与因特网连接的“物品”，包括游戏机、监视系统、手表、眼 镜、温度调节装置、体重计和汽车。
+第1章概述了计算机网络和因特网。这一章的目标是从整体上粗线条地勾勒岀计算机网络的概貌，并且描述本书内容的框架。这一章包括大量的背景知识，讨论大量的计算机网络构件，而且将它们放在整个网络的大环境中进行讨论。
+什么是因特网因特网（Internet）是一种特定的计算机网络，也叫“公共因特网”，也是我们俗称的公网。
+什么是因特网？我们会以软硬件（具体构成）和服务两个方面来回答这个问题。
+具体构成描述因特网是一个世界范围的计算机网络，即它是一个互联了遍及全世界数十亿计算设备 的网络。在不久前，这些计算设备多数是传统的桌面PC、Linux 工作站以及所谓的服务器。
+现在连接到互联网的设备种类越来越多，已经不仅仅局限于 PC，服务器和其它专用网络设备（路由器，交换机等等）。计算机网络这个术 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/05/WeeklyReport1/" title="考研周报（1）">考研周报（1）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-05T13:00:00.000Z" title="发表于 2023-03-05 21:00:00">2023-03-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E5%91%A8%E6%8A%A5/">周报</a></span></div><div class="content">每周日的时候写个这个，来记录一下自己这周干了什么。
+
+
+本周小结高数复习到了第五小节了，这个进度略微有点慢，因为前面基本都是学过的内容，花了那么长时间不合理，当然也可能是我复习效率不高的原因，希望下星期能加快进度。
+英语这周比较懈怠，单词没有背特别多。
+跑步这周就坚持了两天，希望下星期再接再厉。
+早起不是很能坚持，除了考试周那会，这周已经是 7 点之后起了，感觉自己的意志力还是不够坚定。
+
+
+下周目标决定想学计网，平时多抽出点时间来看看《计算机网络-自顶向下方法》，这个尽量不要花太长时间了吧，主要ctf打了那么久了，也是比较渴望知道网络的工作原理的，下周一定要起码先看完一章。
+高数希望能加快进度，因为后面难度未知，也不定目标说看到第几章了。
+英语每天坚持背个100个单词吧。
+起床不用太早，希望6点~6点半的时间内起来。
+下周跑步的话希望先可以先坚持个5天 2.4KM 到达配速，后面再慢慢把里程加上去。
+分析问题虽然原神已经没有再花时间玩了，但是洛克王国还是会占相当一部分的时间的，原先总是想着洛克王国应该就做个任务就好了，结果确实每天打满 10 场天梯，花的时间确实比较多，这个需要克制一 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/03/04/math-1-5/" title="高等数学复习（5）">高等数学复习（5）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-03-04T12:00:00.000Z" title="发表于 2023-03-04 20:00:00">2023-03-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/">数一</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/">高等数学</a></span></div><div class="content">高等数学复习（5）——一元函数微分学的几何应用
+
+
+回顾先来讲讲上一章的一些例题吧。
+碰到这种题目：
+
+$\lim\limits _{x\to 0} \frac{f(x)}{x}$ 如果存在，那么说明 $f(x)&#x3D;0$ 一定成立（如果 $f(x)$ 在 $x&#x3D;0$ 处连续的话）
+这么看，因为 $x$ 已经是无穷小量了，一个数除一个无穷小量存在且是不为0的常数说明两个数互为同阶无穷小。如果存在且为 0 那么 $f(x)$ 应该是 $x$ 的高阶无穷小，不管怎么说 $\lim\limits _{x\to 0}f(x)&#x3D;0$ 是一定成立的，再加上这一点连续，那么这一点的极限值就是函数值。
+
+充分条件和必要条件一个命题P的充分条件是指如果P成立，那么某个其他命题Q也必须成立。换句话说，如果P发生，那么Q就必须是真的。这种关系通常表示为P ⇒ Q，其中“⇒”表示蕴含符号。
+一个命题P的必要条件是指如果Q是真的，那么P也必须是真的。换句话说，P是Q的一个必要条件，当且仅当只要Q成立，P就必须成立。这种关系通常表示为Q ⇒ P，其中“⇒”表示蕴含符号。
+一个条件既可以是 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/02/28/math-1-4/" title="高等数学复习（4）">高等数学复习（4）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-28T13:00:00.000Z" title="发表于 2023-02-28 21:00:00">2023-02-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/">数一</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/">高等数学</a></span></div><div class="content">高等数学复习（4）——微分学的概念
+
+
+导数导数反应了函数在某一时刻的瞬间变化率，几何意义上就是该点切线的斜率。
+在某一处导数存在，也可以说在该点可导，如果直接给出导数值，也证明这一点可导。
+概念计算$\frac{函数的增量}{自变量的增量}$的极限，当自变量增量趋于 0 的时候，趋于 0 可以在 0 的左边，也可以在右边，不同的位置分别叫它左导数和右导数。
+在某点处导数存在 $\Leftrightarrow$ 该函数的左右导数都存在并且相等。 
+
+连续不一定可导。（$y&#x3D;|x|$ 在 $x&#x3D;0$ 处连续但是不可导）
+可导一定连续。
+
+定义
+增量形式：$f’(x_0)&#x3D;\lim\limits _{\triangle x\to 0} \frac{\triangle y}{\triangle x}&#x3D;\lim\limits _{\triangle x\to 0} \frac{f(x_0+\triangle x)-f(x_0)}{\triangle x}$
+定义形式：$f’(x_0)&#x3D;\lim\limits _{\triangle x\to x ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/02/27/math-1-3/" title="高等数学复习（3）">高等数学复习（3）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-27T12:00:00.000Z" title="发表于 2023-02-27 20:00:00">2023-02-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/">数一</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/">高等数学</a></span></div><div class="content">高等数学复习（3）——数函极限与连续性。
+
+
+函数的极限邻域以点 $x_0$ 为中心的任何开区间称为点 $x_0$ 的邻域，记作 $U(x_0)$
+函数极限的定义同数列极限：
+$f(x)-A$ 可以足够小，当 $x\to x_0$ 时。
+函数极限性质
+唯一性：如果极限存在，那么极限只有一个
+局部有界性
+局部保号性
+
+洛必达法则超级好用的一个定理。
+对于极限 $\lim\limits _{x\to a} \frac{f(x)}{g(x)}$ 如果，$f(a)\to 0$ 且 $g(a)\to 0$ 或者 $f(a)\to \infty$ 且 $g(a)\to \infty$。
+那么$\lim\limits _{x\to a} \frac{f(x)}{g(x)}&#x3D;\lim\limits _{x\to a} \frac{f’(x)}{g’(x)}$。
+就是直接上面求导比下面求导，如果求导还是这样，那么还可以继续用洛必达。
+泰勒公式就是把函数展开为多项式的形式。
+这样能快速记住一些等价无穷小的替换。
+比如当 $x\to 0$ 的时候，可以用以下的多项式替换：
+
+$\sin x &#x ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/8/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#content-inner">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/#content-inner">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/#content-inner">29</a><a class="extend next" rel="next" href="/page/10/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">285</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">177</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/02/KCTF2024/" title="KCTF2024第八题 writeup">KCTF2024第八题 writeup</a><time datetime="2024-09-02T12:00:00.000Z" title="发表于 2024-09-02 20:00:00">2024-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/08/etw/" title="etw机制分析">etw机制分析</a><time datetime="2024-07-08T02:00:00.000Z" title="发表于 2024-07-08 10:00:00">2024-07-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/28/driver13/" title="Windows驱动开发（13）——shellcode查找">Windows驱动开发（13）——shellcode查找</a><time datetime="2024-06-28T10:00:00.000Z" title="发表于 2024-06-28 18:00:00">2024-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/21/LLVM%E6%8E%92%E5%9D%91/" title="LLVM排坑">LLVM排坑</a><time datetime="2024-06-21T14:00:00.000Z" title="发表于 2024-06-21 22:00:00">2024-06-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/18/RemoteThreadInject/" title="关于64位进程注入32位进程的分析">关于64位进程注入32位进程的分析</a><time datetime="2024-06-18T03:00:00.000Z" title="发表于 2024-06-18 11:00:00">2024-06-18</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AdvancedMath/"><span class="card-category-list-name">AdvancedMath</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AdvancedMath/Fourier-Serials/"><span class="card-category-list-name">Fourier-Serials</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/"><span class="card-category-list-name">C++</span><span class="card-category-list-count">16</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/C-%E7%9A%84%E7%89%B9%E6%80%A7/"><span class="card-category-list-name">C++的特性</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/LLVM/"><span class="card-category-list-name">LLVM</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/OOP/"><span class="card-category-list-name">OOP</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/Windows/"><span class="card-category-list-name">Windows</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/%E6%A8%A1%E6%9D%BF/"><span class="card-category-list-name">模板</span><span class="card-category-list-count">2</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/RSA/" style="font-size: 1.15em; color: rgb(41, 188, 42)">RSA</a><a href="/tags/AES/" style="font-size: 1.15em; color: rgb(200, 14, 200)">AES</a><a href="/tags/DNS/" style="font-size: 1.15em; color: rgb(5, 29, 38)">DNS</a><a href="/tags/flask/" style="font-size: 1.15em; color: rgb(54, 166, 137)">flask</a><a href="/tags/HITCTF/" style="font-size: 1.22em; color: rgb(107, 103, 29)">HITCTF</a><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" style="font-size: 1.15em; color: rgb(94, 89, 154)">内网渗透</a><a href="/tags/Web%E6%BC%8F%E6%B4%9E/" style="font-size: 1.15em; color: rgb(82, 188, 101)">Web漏洞</a><a href="/tags/ptrace/" style="font-size: 1.22em; color: rgb(17, 161, 39)">ptrace</a><a href="/tags/LLVM/" style="font-size: 1.15em; color: rgb(75, 100, 56)">-LLVM</a><a href="/tags/LLVM/" style="font-size: 1.38em; color: rgb(157, 41, 4)">LLVM</a><a href="/tags/Substitution/" style="font-size: 1.15em; color: rgb(15, 79, 68)">Substitution</a><a href="/tags/Linux/" style="font-size: 1.3em; color: rgb(20, 153, 4)">Linux</a><a href="/tags/Kernel/" style="font-size: 1.15em; color: rgb(12, 91, 44)">Kernel</a><a href="/tags/base64/" style="font-size: 1.15em; color: rgb(48, 59, 163)">base64</a><a href="/tags/Socket/" style="font-size: 1.15em; color: rgb(23, 82, 70)">Socket</a><a href="/tags/Net-Program/" style="font-size: 1.15em; color: rgb(71, 169, 165)">Net-Program</a><a href="/tags/fastbin-reverse-into-tcache/" style="font-size: 1.15em; color: rgb(150, 58, 64)">fastbin_reverse_into_tcache</a><a href="/tags/XYcup/" style="font-size: 1.15em; color: rgb(21, 4, 100)">XYcup</a><a href="/tags/awd/" style="font-size: 1.15em; color: rgb(148, 70, 122)">awd</a><a href="/tags/hook/" style="font-size: 1.15em; color: rgb(84, 136, 120)">hook</a><a href="/tags/global-max-fast/" style="font-size: 1.15em; color: rgb(165, 58, 184)">global_max_fast</a><a href="/tags/pwnable-kr/" style="font-size: 1.45em; color: rgb(40, 103, 25)">pwnable.kr</a><a href="/tags/Binary-Serach/" style="font-size: 1.15em; color: rgb(195, 9, 59)">Binary-Serach</a><a href="/tags/operator-priority/" style="font-size: 1.15em; color: rgb(151, 149, 109)">operator priority</a><a href="/tags/bash/" style="font-size: 1.15em; color: rgb(198, 52, 31)">bash</a><a href="/tags/shellshock/" style="font-size: 1.15em; color: rgb(174, 108, 83)">shellshock</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">六月 2024</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">4</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">285</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2021-04-25T00:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">638.9k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-09-02T14:23:59.938Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: (str) => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, false))
+  },
+  run: (subtitleType) => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        getScript('https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+</script><script>function subtitleType () {
+  if (true) {
+    typedJSFn.init(["学习应该像呼吸一样自然"])
+  } else {
+    document.getElementById("subtitle").textContent = "学习应该像呼吸一样自然"
+  }
+}
+typedJSFn.run(subtitleType)</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

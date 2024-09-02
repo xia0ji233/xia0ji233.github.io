@@ -1,7 +1,311 @@
-extends includes/layout.pug
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>xia0ji233's blog - 学习应该像呼吸一样自然</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Nepnep team">
+<meta property="og:type" content="website">
+<meta property="og:title" content="xia0ji233&#39;s blog">
+<meta property="og:url" content="https://xia0ji233.github.io/page/16/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="Nepnep team">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/page/16/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'xia0ji233\'s blog',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-09-02 22:24:04'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
 
-block content
-  include ./includes/mixins/post-ui.pug
-  #recent-posts.recent-posts
-    +postUI
-    include includes/pagination.pug
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">285</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">177</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">xia0ji233's blog</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/12/06/OOP4/" title="C++面向对象基础——虚函数分析">C++面向对象基础——虚函数分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-12-06T10:00:00.000Z" title="发表于 2022-12-06 18:00:00">2022-12-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C/">C++</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C/OOP/">OOP</a></span></div><div class="content">C++面向对象基础——虚函数分析
+
+
+虚函数调用调用方式指针创建式调用函数（ClassName obj&#x3D;new ClassName()）调用的是虚表当中的函数地址，每个对象是不一样的，而如果是直接创建对象（ClassName obj）调用的函数地址就是同一个，都是类里面的函数。
+写一个代码
+1234567891011121314151617181920212223242526272829303132333435#include&quot;main.h&quot;class A&#123;public:    A() &#123;&#125;;    ~A() &#123;&#125;;    virtual void testA() &#123;        cout &lt;&lt; &quot;A::TestA&quot; &lt;&lt; endl;    &#125;    virtual void testB() &#123;        cout &lt;&lt; &quot;A::TestB&quot; &lt;&lt; endl;    &#125;    ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/12/05/OOP3/" title="C++面向对象基础——构造与拷贝构造函数">C++面向对象基础——构造与拷贝构造函数</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-12-05T13:00:00.000Z" title="发表于 2022-12-05 21:00:00">2022-12-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C/">C++</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C/OOP/">OOP</a></span></div><div class="content">C++面向对象基础——对象&amp;构造函数&amp;拷贝构造函数
+
+
+对象模型的探索占用内存对象所占用的空间至少1个字节，空类也会占用一个字节，这里根结构体是几乎一样的。类也和结构体一样，异构的数据类型就是会存在数据对齐，即当前位置所在的地址不在该类大小的整数倍则需要向后寻找合适的地址。
+如果对象有静态变量，则静态变量不计入对象的空间，因为静态变量不属于对象，属于全体类共有，成员方法同理，也属于类，不会占用对象的空间。
+如果有虚函数存在，那么对象会额外存一个虚表指针，又多 4 个字节或者是 8 个字节。
+内存分布我们先来看一个例子。
+123456789101112131415161718192021222324252627282930313233343536373839#pragma once#include&lt;iostream&gt;class A&#123;public:    A() &#123;&#125;;    ~A() &#123;&#125;;    int a;    void TestA() &#123; printf(&quot;A:%p\r\n&quot; ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/12/05/UbuntuUpdate/" title="一些关于Ubuntu的东西">一些关于Ubuntu的东西</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-12-05T09:00:00.000Z" title="发表于 2022-12-05 17:00:00">2022-12-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux/">Linux</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux/Ubuntu/">Ubuntu</a></span></div><div class="content">写这个完全是因为最近在 Ubuntu 上面踩的坑有点多了。
+
+
+Ubuntu
+Ubuntu 是基于Debian，以桌面应用为主的Linux发行版。Ubuntu有三个正式版本，包括桌面版、服务器版及用于物联网设备和机器人的Core版。前述三个版本既能安装于实体电脑，也能安装于虚拟电脑。从17.10版本开始，Ubuntu以GNOME为默认桌面环境。Ubuntu是著名的Linux发行版之一，也是目前最多用户的Linux版本。Ubuntu每六个月（即每年的四月与十月）发布一个新版本，长期支持（LTS）版本每两年发布一次。普通版本一般只支持9个月，但LTS版本一般能提供5年的支持。
+
+这个一直存在于 wiki 的介绍我现在才仔细地去看了看。
+Ubuntu 应该算是我最喜欢用的系统了，连 Windows 都无法撼动它的地位。这里 wiki 也讲了，它主要分三个发行版：桌面版（desktop），服务器版（server），和 Core 版。我们用的最多的应该是前两个，然后就是它版本号的一些说明了，它每半年发布一个小版本（只提供9个月的支持），两年发布一个长期版本（LTS），提供五年支持。
+然后每个版本 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/11/27/HITCTF2022/" title="HITCTF2022题解">HITCTF2022题解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-11-27T14:00:00.000Z" title="发表于 2022-11-27 22:00:00">2022-11-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ctf/">ctf</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/HITCTF/">HITCTF</a></span></div><div class="content">打到第三，最后把RSA想到解法了，还行，已知高位攻击分解 p 的方法还可以学学。
+附件下载
+
+
+CryptoCrypto1拿出来是一个16进制，看着像 tar 的文件头，拿到解压，得到 1 文件，文件结构比较乱。看着像base家族，然后拿到 base85转hex之后发现又是熟悉的文件头。
+所以可能应该是严重套娃，写个脚本统计字符数，如果发现是 tar 文件头那就直接解压拿文件内容，如果类似 base 家族的信息就 base 解码。
+12345678910111213141516171819202122232425262728293031323334import gzipimport base64import base91import base58import base62from collections import Counterwith open(&#x27;1&#x27;,&#x27;rb&#x27;)as f:    text=f.read()def get_count(str1):    c=dict(Counter(str1))    return len(c)baseX= ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/11/25/OOP2/" title="C++面向对象基础——继承">C++面向对象基础——继承</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-11-25T03:00:00.000Z" title="发表于 2022-11-25 11:00:00">2022-11-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C/">C++</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C/OOP/">OOP</a></span></div><div class="content">C++面向对象基础——继承
+
+
+继承面向对象程序设计中最重要的一个概念是继承。继承允许我们依据另一个类来定义一个类，这使得创建和维护一个应用程序变得更容易。这样做，也达到了重用代码功能和提高执行效率的效果。
+当创建一个类时，您不需要重新编写新的数据成员和成员函数，只需指定新建的类继承了一个已有的类的成员即可。这个已有的类称为基类，新建的类称为派生类。
+继承的权限和作用域C++中的类也是可以继承的，用冒号标识继承的类，并且还可以表时是以什么权限（public,private,protected）去继承的。
+
+公有继承：继承父类的 public 和 protected 的所有方法和成员，保持权限不变。
+保护继承：继承父类的 public 和 protected 的所有方法和成员，权限全部改为 protected
+私有继承：继承父类的 public 和 protected 的所有方法和成员，权限全部改为 private
+
+继承之后，子类可以使用父类的所有方法和成员。在不指定命名空间的时候，优先访问本类命名空间的方法和成员，否则逐级向父类寻找，第一个找到的会被调用。
+我们也可以在成员名或者方法 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/11/21/KCTF2022-2-2/" title="KCTF2022秋季赛第二题——盗贼作乱题解">KCTF2022秋季赛第二题——盗贼作乱题解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-11-20T21:00:00.000Z" title="发表于 2022-11-21 05:00:00">2022-11-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ctf/">ctf</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ctf/reverse/">reverse</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ctf/reverse/KCTF2022/">KCTF2022</a></span></div><div class="content">KCTF2022秋季赛第二题——盗贼作乱题解
+
+
+外层分析序列号形式，先拿 ida 上手
+
+
+输入部分应该就是，会先找到一个 -，所以序列号的形式是
+1xxxxxxx-xxxxxx
+
+然后下面进行一大波判断，逐一下断点动调分析。
+遇到的第一个函数，经过反复动调，确定是找表得到下标值，有点像 base62 感觉，并且传的第三个参数也很像 base62 的表
+
+
+最后确定应该是 62 进制的一个转换，结果保存在第一个参数，并且保存的地址类似一个结构体，第一个 int 为长度，往后都是 int 型存储，这边把结构体定义一下，改改。
+12345struct number&#123;  int len;  int num[8];&#125;;
+
+里面有一个常数，是由 IRtzloZ6iuB 字符串转换而来，把它转 10 进制发现它的值刚好是：
+110000000000000000000 
+
+下面那个函数经过动调之后，发现只是把结构体设置了一下，所以我叫它 set_number。
+最下面还有一个函数，它对我们之前转换的三个数字做了比较，并且需要返回结果都小于 0。
+
+
+其实不难想到，先判断长度，大 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/11/14/OOP1/" title="C++面向对象基础——运算符重载">C++面向对象基础——运算符重载</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-11-14T10:00:00.000Z" title="发表于 2022-11-14 18:00:00">2022-11-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C/">C++</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C/OOP/">OOP</a></span></div><div class="content">C++面向对象基础——C++基本用法&amp;运算符重载
+
+
+C++基础知识命名空间namespace，C++ 为我们提供了一个允许我们定义在不同作用域的同名函数。我们可以用如下定义：
+12345namespace name&#123;    void f1();    void f2();    ...&#125;
+
+通过以上的申明我们可以在 namespace 外调用函数，通过如下方式调用
+12name::f1();name::f2();
+
+C++还有 using 关键字，使用 using 之后，我们不必通过以上方式调用，而是可以直接使用它的函数名调用。比如我如果在调用 f1() 之前用了 using namespace name;
+那么我就不需要再用 name::f1() 了，而是可以直接使用 f1() 调用指定函数。
+namespace 可以嵌套定义。
+函数重载C++开始已经支持了同名函数的存在，在相同 namespace 下也可以定义同名的函数，只要参数类型不一样即可，它会根据你调用的方式选择合适的重载函数，主要是因为 C++ 有一个名称粉碎机制，它会根据你的参数名和参数个数 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/11/14/HW/" title="护网红队面经">护网红队面经</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-11-13T16:00:00.000Z" title="发表于 2022-11-14 00:00:00">2022-11-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/web/">web</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/web/%E6%8A%A4%E7%BD%91/">护网</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Web%E6%BC%8F%E6%B4%9E/">Web漏洞</a></span></div><div class="content">就随便上传一篇护网面经
+
+
+红队反弹shellhttps://zhuanlan.zhihu.com/p/138393396
+https://www.anquanke.com/post/id/87017
+OWASP TOP 10https://blog.csdn.net/fly910905/article/details/120541498
+https://www.cnblogs.com/zhijiya/p/15142003.html
+shiro反序列化https://www.cnblogs.com/xiaozi/p/13239046.html
+shiro在路径控制的时候，未能对传入的url编码进行decode解码，导致攻击者可以绕过过滤器，访问被过滤的路径
+反序列化
+aes key泄露 版本&lt;1.2.4 key都为默认key rememberMe字段，使用密钥构造一个payload最后在不断地解密后到达readobject()
+访问http://127.0.0.1/admin 的时候，页面返回403。因此可以确定admin路径是属于被过滤路径。此时使用burp截断，然后在访问路径 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/11/11/LinuxIO/" title="关于Linux一些IO的细节">关于Linux一些IO的细节</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-11-11T03:00:00.000Z" title="发表于 2022-11-11 11:00:00">2022-11-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux/">Linux</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux/IO/">IO</a></span></div><div class="content">写这篇博客的原因是在考试中遇到一个很 细 的题目。
+
+
+题目题目长这样
+
+
+问最后的运行结果，当然有 fork 存在肯定是多种情况的，当时乍一看这一题，就很自信地写了
+xbay ,xaby,xayb 
+结果却是一个大红叉子，我细数也就四次输出，为什么答案长度为 5？？
+我运行一遍之后，发现结果：
+
+
+纳尼，真的是 5 个，哪来的五个呢。
+细细品味一下，原来有个天坑。
+分析首先 Linux 的 C，它的缓冲区默认不初始化的，如果不初始化缓冲区，就会造成每隔一行才打印一次，或者是等到程序 exit 之后才打印。
+如果在 Linux 下面有这样的语句
+12printf(&quot;input&quot;);scanf(&quot;%s&quot;);
+
+那么你大概率是看不到开头这个 input 的，只有程序结束了才能看到，原因就是调用的 IO 函数它会先把数据存到对应的 FILE 结构体上。
+调试我们启动 gdb 调试一下，断在第一个 putchar 下面，在进去之前我们可以看到，stdout 没有初始化。
+
+
+然后 putchar 内部调用一个 __overflow 函数
+
+
+最后进入到  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/11/11/NetProgram1/" title="windows网络编程——tcp套接字">windows网络编程——tcp套接字</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-11-11T02:00:00.000Z" title="发表于 2022-11-11 10:00:00">2022-11-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Windows/">Windows</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Windows/NetWork/">NetWork</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Windows/NetWork/TCP-Socket/">TCP-Socket</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Socket/">Socket</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Net-Program/">Net-Program</a></span></div><div class="content">TCP 是面向有连接的可靠传输协议，来讲讲它的一个 Windows 的基本实现。
+
+
+学习笔记首先在 Windows 下 socket 编程要添加这样的预处理：
+12# include&lt;WinSock2.h&gt;# pragma comment(lib,&quot;ws2_32.lib&quot;)
+
+然后我们需要启动一下，一般加入以下代码即可：
+123WORD wVersionRequested = MAKEWORD(2, 2);WSADATA lpWSAData;int nRet = WSAStartup(wVersionRequested, &amp;lpWSAData);
+
+为了程序健壮可以添加一些判断代码。
+12345678910if (nRet != 0) &#123;    printf(&quot;WSAStartup Error!\n&quot;);    system(&quot;pause&quot;);    return 0;&#125;if (LOBYTE(lpWSAData.wVersion) != 2 || HIBYTE(lpWSAData.wV ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/15/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/#content-inner">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/#content-inner">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/#content-inner">29</a><a class="extend next" rel="next" href="/page/17/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">285</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">177</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/02/KCTF2024/" title="KCTF2024第八题 writeup">KCTF2024第八题 writeup</a><time datetime="2024-09-02T12:00:00.000Z" title="发表于 2024-09-02 20:00:00">2024-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/08/etw/" title="etw机制分析">etw机制分析</a><time datetime="2024-07-08T02:00:00.000Z" title="发表于 2024-07-08 10:00:00">2024-07-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/28/driver13/" title="Windows驱动开发（13）——shellcode查找">Windows驱动开发（13）——shellcode查找</a><time datetime="2024-06-28T10:00:00.000Z" title="发表于 2024-06-28 18:00:00">2024-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/21/LLVM%E6%8E%92%E5%9D%91/" title="LLVM排坑">LLVM排坑</a><time datetime="2024-06-21T14:00:00.000Z" title="发表于 2024-06-21 22:00:00">2024-06-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/18/RemoteThreadInject/" title="关于64位进程注入32位进程的分析">关于64位进程注入32位进程的分析</a><time datetime="2024-06-18T03:00:00.000Z" title="发表于 2024-06-18 11:00:00">2024-06-18</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AdvancedMath/"><span class="card-category-list-name">AdvancedMath</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AdvancedMath/Fourier-Serials/"><span class="card-category-list-name">Fourier-Serials</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/"><span class="card-category-list-name">C++</span><span class="card-category-list-count">16</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/C-%E7%9A%84%E7%89%B9%E6%80%A7/"><span class="card-category-list-name">C++的特性</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/LLVM/"><span class="card-category-list-name">LLVM</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/OOP/"><span class="card-category-list-name">OOP</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/Windows/"><span class="card-category-list-name">Windows</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/%E6%A8%A1%E6%9D%BF/"><span class="card-category-list-name">模板</span><span class="card-category-list-count">2</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/RSA/" style="font-size: 1.15em; color: rgb(41, 188, 42)">RSA</a><a href="/tags/AES/" style="font-size: 1.15em; color: rgb(200, 14, 200)">AES</a><a href="/tags/DNS/" style="font-size: 1.15em; color: rgb(5, 29, 38)">DNS</a><a href="/tags/flask/" style="font-size: 1.15em; color: rgb(54, 166, 137)">flask</a><a href="/tags/HITCTF/" style="font-size: 1.22em; color: rgb(107, 103, 29)">HITCTF</a><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" style="font-size: 1.15em; color: rgb(94, 89, 154)">内网渗透</a><a href="/tags/Web%E6%BC%8F%E6%B4%9E/" style="font-size: 1.15em; color: rgb(82, 188, 101)">Web漏洞</a><a href="/tags/ptrace/" style="font-size: 1.22em; color: rgb(17, 161, 39)">ptrace</a><a href="/tags/LLVM/" style="font-size: 1.15em; color: rgb(75, 100, 56)">-LLVM</a><a href="/tags/LLVM/" style="font-size: 1.38em; color: rgb(157, 41, 4)">LLVM</a><a href="/tags/Substitution/" style="font-size: 1.15em; color: rgb(15, 79, 68)">Substitution</a><a href="/tags/Linux/" style="font-size: 1.3em; color: rgb(20, 153, 4)">Linux</a><a href="/tags/Kernel/" style="font-size: 1.15em; color: rgb(12, 91, 44)">Kernel</a><a href="/tags/base64/" style="font-size: 1.15em; color: rgb(48, 59, 163)">base64</a><a href="/tags/Socket/" style="font-size: 1.15em; color: rgb(23, 82, 70)">Socket</a><a href="/tags/Net-Program/" style="font-size: 1.15em; color: rgb(71, 169, 165)">Net-Program</a><a href="/tags/fastbin-reverse-into-tcache/" style="font-size: 1.15em; color: rgb(150, 58, 64)">fastbin_reverse_into_tcache</a><a href="/tags/XYcup/" style="font-size: 1.15em; color: rgb(21, 4, 100)">XYcup</a><a href="/tags/awd/" style="font-size: 1.15em; color: rgb(148, 70, 122)">awd</a><a href="/tags/hook/" style="font-size: 1.15em; color: rgb(84, 136, 120)">hook</a><a href="/tags/global-max-fast/" style="font-size: 1.15em; color: rgb(165, 58, 184)">global_max_fast</a><a href="/tags/pwnable-kr/" style="font-size: 1.45em; color: rgb(40, 103, 25)">pwnable.kr</a><a href="/tags/Binary-Serach/" style="font-size: 1.15em; color: rgb(195, 9, 59)">Binary-Serach</a><a href="/tags/operator-priority/" style="font-size: 1.15em; color: rgb(151, 149, 109)">operator priority</a><a href="/tags/bash/" style="font-size: 1.15em; color: rgb(198, 52, 31)">bash</a><a href="/tags/shellshock/" style="font-size: 1.15em; color: rgb(174, 108, 83)">shellshock</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">六月 2024</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">4</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">285</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2021-04-25T00:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">638.9k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-09-02T14:23:59.938Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: (str) => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, false))
+  },
+  run: (subtitleType) => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        getScript('https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+</script><script>function subtitleType () {
+  if (true) {
+    typedJSFn.init(["学习应该像呼吸一样自然"])
+  } else {
+    document.getElementById("subtitle").textContent = "学习应该像呼吸一样自然"
+  }
+}
+typedJSFn.run(subtitleType)</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

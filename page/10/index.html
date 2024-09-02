@@ -1,7 +1,350 @@
-extends includes/layout.pug
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>xia0ji233's blog - 学习应该像呼吸一样自然</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Nepnep team">
+<meta property="og:type" content="website">
+<meta property="og:title" content="xia0ji233&#39;s blog">
+<meta property="og:url" content="https://xia0ji233.github.io/page/10/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="Nepnep team">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/page/10/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'xia0ji233\'s blog',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-09-02 22:24:04'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
 
-block content
-  include ./includes/mixins/post-ui.pug
-  #recent-posts.recent-posts
-    +postUI
-    include includes/pagination.pug
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">285</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">177</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">xia0ji233's blog</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/02/26/math-1-2/" title="高等数学复习（2）">高等数学复习（2）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-26T12:00:00.000Z" title="发表于 2023-02-26 20:00:00">2023-02-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/">数一</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/">高等数学</a></span></div><div class="content">
+写在前面：中间闭关了一星期没有学习，主要是因为期末考试，再加上有师傅结合我当前的情况给我提了一些建议，我觉得很棒，把考研的目标院校转为了，希望最后能成功上岸吧，今天接着更新高数的笔记。
+
+高等数学复习（2）——数列极限。
+
+
+数列极限定义需要记住一种语言的说明：
+$\lim\limits_{n\to\infty} {x_n}&#x3D;a\Leftrightarrow \forall \epsilon &gt;0,\exists N \in N_+,当n&gt;N时,恒有|x_n-a|&lt;\epsilon$
+直白点就是讲，如果给定任意一个够小的数 $\epsilon$，我只要确定有一个整数 $N$ 使得它之后的值全部趋近于 a 即可，即 $&lt;\epsilon$。
+性质
+唯一性：极限存在即唯一。
+有界：极限存在则有界
+保号：极限存在则可以确定极限值的符号，只能保部分的数列，不能保所有的。（important）
+
+夹逼准则简单来讲，就是数列放缩，如果能放大到其中一个数列，算出极限值，再缩小到一个数列算出极限值。如果极限值一样，那么这样也能间接算出数列的极限值。
+单调有界准则单调 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/02/15/408-1-2/" title="计算机组成原理复习（2）">计算机组成原理复习（2）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-15T06:00:00.000Z" title="发表于 2023-02-15 14:00:00">2023-02-15</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/408/">408</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/408/%E8%AE%A1%E7%BB%84/">计组</a></span></div><div class="content">
+考研复习第 3，4 天
+
+计算机组成原理相关内容的复习
+
+原码，补码，反码，移码
+移位，加减法，乘法运算
+
+
+
+数据编码原码，补码，反码，移码原码字面意思，有符号时，最高位只表示负号
+补码最高位权值为负，其它与原码一致。
+反码在原码的基础上，若最高位为1，则对原码除符号位所有位取反
+移码看成无符号然后-一个偏置值即可。
+单符号与双符号单符号一般写的时候用小数点隔开，但是不表示小数点的含义，比如 0.0001 如果是原码表示正数的1，1.0001 如果是原码表示负数的1。在此基础上，还可以再做一个符号的扩展，用于判断溢出。若出现 01，则表示正溢，若出现 10，则表示负溢。
+比如 00.1111 如果表示原码就是正数的15，11.1111 如果表示原码就是负数的15，而 10.0001 不能表示一个正确的数，因为它溢出了，同样 01.0001 也不行。但是在下面的乘法算法的时候，允许临时溢出。
+移位运算主要是循环移位有一个带进位和不带进位的区别。带进位就是说，在挪出去的过程中要算上 CF 一起，如果不带进位，那么原本被丢弃的位进入 CF 和最高位或者最低位。
+乘法和除法有这么几种算法， ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/02/12/CSAPP_12/" title="CS:APP第十二章学习">CS:APP第十二章学习</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-12T10:00:00.000Z" title="发表于 2023-02-12 18:00:00">2023-02-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/csapp/">csapp</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/csapp/MultiThread/">MultiThread</a></span></div><div class="content">开始学 CSAPP的第十二章
+最后一章了，不知不觉这本书已经看完了！！
+
+
+梗概并发有很多用处，比如在进行 IO 访问，服务访问的时候，如果不能合理利用并发，那么有很多时钟周期会被浪费掉。
+最简单的并发方式是使用多进程，让内核进行调度的方法来并发。
+基于进程的并发编程父进程接受客户端连接请求，然后 fork 一个子进程，让子进程处理主要服务逻辑。
+
+
+而在父进程中，需要及时的关闭连接描述的副本，否则会因为内存泄漏导致系统崩溃。
+
+
+
+
+基于进程的并发服务器因为服务器通常会运行很长的时间，这意味着操作系统不会帮助进程回收内存，我们需要做到以下几点：
+
+包括一个 SIGCHLD 处理程序来回收僵死进程，因为 Linux 的信号是不排队的，所以说一次要处理完所有的子进程。
+对于父进程，需要在 fork 之后马上 close 建立连接的描述符，对于子进程来说，也要关闭所有的文件描述符。
+
+进程的优劣进程共享文件表，但是不共享用户地址空间（这既是优点也是缺点），不会发生内存覆盖的情况，但是也造成了通信困难。
+为了通信，需要使用 IPC（进程间通信）机制。
+基于 I&#x2F;O 多路复用的并发编 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/02/12/math-1-1/" title="高等数学复习（1）">高等数学复习（1）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-12T01:00:00.000Z" title="发表于 2023-02-12 09:00:00">2023-02-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/">数一</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/">高等数学</a></span></div><div class="content">谨以此笔记，记录考研的学习
+
+
+函数基本定义函数具有一对一，多对一的性质，但是不能是一对多，即：一个确定的 x 不能有多个 y 值与之对应。
+反函数从图像上来看，把所有点交换 $x$ 与 $y$ 的坐标值即得到对应反函数曲线，并且反函数和原函数关于 $y&#x3D;x$ 对称。
+
+严格单调的函数一定有反函数。
+$y&#x3D;f(x)$ 与 $x&#x3D;f^{-1}(y)$ 完全一致，只有在后面表达式中交换 $x$ 和 $y$ 才得到反函数，即 $y&#x3D;f^{-1}(x)$。
+有反函数的不一定是单调函数，也可以是分段函数。
+
+复合函数就是把外面函数的自变量用一个函数去替代。
+如：
+
+$f(x)&#x3D;x^2+x$，那么 $f(g(x))&#x3D;(g(x))^2+g(x)$
+
+复合函数求导需要先把 $g(x)$ 当成自变量先求一次导，再乘上 $g(x)$ 的导数。
+有界性有界一定要指明区间。
+若能找到一个数使得 $|f(x)|\le M$ 则有界。
+或者说，若在区间内，某点的极限算出来是无穷大，那么无界，否则有界。
+单调性通俗的讲，沿着 $x$ 增加的方向，$y$ 也 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/02/10/CSAPP_11/" title="CS:APP第十一章学习">CS:APP第十一章学习</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-10T06:00:00.000Z" title="发表于 2023-02-10 14:00:00">2023-02-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/csapp/">csapp</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/csapp/Network/">Network</a></span></div><div class="content">开始学 CSAPP的第十一章
+逐步更新：
+
+2023-02-06：开始写
+
+
+
+梗概这一章就是讲了网络编程的实用性，我们身边要用到的所有跟网络有关的服务都需要用到网络编程，包括了浏览 Web、发送 email 信息或是玩在线游戏，你就正在使用网络应用程序。
+这一节综合了前面一些理论知识，最后会做出一个成品来，期待ing。
+客户端&#x2F;服务器编程模型客户端&#x2F;服务器编程模型（Client&#x2F;Server）是网络编程的基本模型，模型中的基本操作是事务（transaction）
+
+
+一个客户端—服务器事务由以下四步组成：
+
+当一个客户端需要服务时，它向服务器发送一个请求，发起一个事务。例如，当 Web 浏览器需要一个文件时，它就发送一个请求给 Web 服务器。
+服务器收到请求后，解释它，并以适当的方式操作它的资源。例如，当 Web 服务器收到浏览器发出的请求后，它就读一个磁盘文件。
+服务器给客户端发送一个响应，并等待下一个请求。例如，Web 服务器将文件发送回客户端。
+客户端收到响应并处理它。例如，当 Web 浏览器收到来自服务器的一页后，就在屏幕上显示此页。
+
+这里需 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/02/06/CSAPP_10/" title="CS:APP第十章学习">CS:APP第十章学习</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-06T11:00:00.000Z" title="发表于 2023-02-06 19:00:00">2023-02-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/csapp/">csapp</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/csapp/IO/">IO</a></span></div><div class="content">开始学 CSAPP的第十章
+逐步更新：
+
+2023-02-01：开始写
+
+
+
+梗概这里介绍了我们学习 Unix IO 的一个原因。第一点就是帮助我们理解更深层次的系统概念，第二点就是在某些编程环境下，除了最底层的 IO 我们别无选择。
+Unix IO在 Linux 当中，一切皆文件，所有的 IO 设备都以文件的形式挂载在文件系统当中，我们需要输入输出只需要简单的读写文件即可，这使得我们访问任何设别都可以以简单一致的方式去访问：
+
+打开文件：通过 open 函数打开一个文件，内核会记录这个文件的所有信息，用户层会返回一个文件描述符，用户层要操作文件只需要对文件描述符操作即可。
+Linux在创建进程的时候有默认的三个打开的问及那：标准输入（stdin），标准输出（stdout），标准错误（stderr）。
+改变当前文件的位置：对于每个打开的文件，内核会记录文件所在的位置 k，初始为 0，通过 seek 操作我们可以改变这个值。
+读写文件：读文件就是把文件中从 k 开始到 k+size 的文件内容复制到内存，写文件就是把文件中从 k 开始到 k + size 的文件内容用内存中的某些值替换。 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/02/06/52pj-2023/" title="吾爱破解2023红包题">吾爱破解2023红包题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-05T16:00:00.000Z" title="发表于 2023-02-06 00:00:00">2023-02-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ctf/">ctf</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ctf/reverse/">reverse</a></span></div><div class="content">吾爱破解2023红包题，由于太菜了，Android 难题都不太会写。
+本篇文章主要精力在于分析第五天的题。
+
+
+第二天直接拿 ida 动调，输入对应长度的字符串观察变化，发现主要和一个 data 段上等待数据比较。
+就直接照着它的式子去写就ok了。
+1234567891011121314151617181920212223242526272829#include&lt;iostream&gt;#include&lt;stdio.h&gt;using namespace std;unsigned char s[] =&#123;  0x98, 0x01, 0x00, 0x00, 0xB0, 0x01, 0x00, 0x00, 0x84, 0x01,  0x00, 0x00, 0x9C, 0x01, 0x00, 0x00, 0xEC, 0x01, 0x00, 0x00,  0xD4, 0x00, 0x00, 0x00, 0xC8, 0x00, 0x00, 0x00, 0x40, 0x01,  0x00, 0x00, 0xBC, 0x01, 0x00, 0x00, 0x28, 0x01, 0 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/02/03/xhlj-2023/" title="西湖论剑 2023 预赛 writeup">西湖论剑 2023 预赛 writeup</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-03T14:30:00.000Z" title="发表于 2023-02-03 22:30:00">2023-02-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ctf/">ctf</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ctf/xhlj-2023/">xhlj-2023</a></span></div><div class="content">西湖论剑 2023 预赛 writeup
+
+
+
+
+
+
+
+
+WEBWeb1[nodejs|原型链污染|ejs|拆分攻击]
+前言主要是node 8.12.0的一个http.get解析洞，通过拆分攻击实现的SSRF攻击
+和ejs RCE+safeobj原型链污染(CVE-2021-25928)
+查了下这种属于拆分攻击(HTTP Splitting)，和请求走私(HTTP Smuggling)有点区别。
+RCE这里一开始挺简单，有个safeobj包，一看safeobj.expand()，游戏结束。
+拿着POC测试了下环境，通过。
+12345var safeObj = require(&quot;safe-obj&quot;);var obj = &#123;&#125;;console.log(&quot;Before : &quot; + &#123;&#125;.polluted);safeObj.expand(obj, &#x27;__proto__.polluted&#x27;, &#x27;Yes! Its Polluted&#x27;);console.log(&quot;Afte ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/02/01/CSAPP_9/" title="CS:APP第九章学习">CS:APP第九章学习</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-02-01T09:00:00.000Z" title="发表于 2023-02-01 17:00:00">2023-02-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/csapp/">csapp</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/csapp/Virtal-Memory/">Virtal Memory</a></span></div><div class="content">开始学 CSAPP的第九章
+逐步更新：
+
+2023-1-30：开始写
+2023-2-01：完成
+
+
+
+梗概虚拟内存是当今操作系统最重要的概念之一，它提供了三个重要的能力：
+
+它将主存视为硬盘的缓存，主存只保留活动区域（局部性原理）
+它为每个进程提供一致的地址空间
+它保护了进程的内存，防止被随意覆盖
+
+物理和虚拟寻址计算机的内存被组织为一个由 M 个连续的字节大小的单元组成的数组，每个字节都有唯一的物理地址。CPU 访问内存最自然的方式就是使用物理地址，我们称为物理寻址 。早期的 CPU 是使用物理寻址的，而现代的处理器是使用虚拟寻址。
+虚拟寻址与物理寻址相比，多了一步将虚拟地址翻译成物理地址的过程，翻译是通过一个内存管理单元（MMU）的专用硬件，通过查表得知的物理地址，这张表由操作系统管理。
+地址空间地址空间是一个非负整数地址的有序集合：
+如果地址空间中的整数是连续的，那么我们说它是线性地址空间。
+为了简化讨论，我们假设地址空间是线性地址空间。
+在带虚拟存储器的系统中，CPU从一个有 $N&#x3D;2^n$ 个地址的地址空间中生成虚拟地址，这个地址空间称为虚拟地址空间。
+一个地址空间 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/30/Windows2/" title="Windows基础知识（2）">Windows基础知识（2）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-30T12:00:00.000Z" title="发表于 2023-01-30 20:00:00">2023-01-30</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C/">C++</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C/Windows/">Windows</a></span></div><div class="content">Windows基础知识（2）——鼠标键盘消息处理
+
+
+前置芝士焦点一般来说，我们选中一个窗口就叫获取了一个焦点，键盘输入事件只会发送给具有焦点的窗口或者是控件。我们按下一个按键，会将我们的按键格式化成一个消息给内核，内核通过打包这个消息发送给具有焦点的窗体应用程序。
+键盘事件我们可以处理的键盘按键大致分为两类：
+
+系统按键：WM_KEYDOWN，WM_KEYUP。
+非系统按键：WM_SYSKEYDOWN，WM_SYSKEYUP。
+
+WM_KEYDOWN 事件表示一个键按下，如果一直按住会持续地发送此类消息。
+123456789case WM_KEYDOWN: &#123;    switch (wParam) &#123;        case &#x27;B&#x27;: &#123;            MessageBox(NULL, L&quot;123&quot;, L&quot;123&quot;, MB_OK);            break;        &#125;    &#125;    break;&#125;
+
+WM_KEYUP 就是键盘弹起事件。
+ ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/9/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/#content-inner">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/#content-inner">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/#content-inner">29</a><a class="extend next" rel="next" href="/page/11/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">285</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">177</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/02/KCTF2024/" title="KCTF2024第八题 writeup">KCTF2024第八题 writeup</a><time datetime="2024-09-02T12:00:00.000Z" title="发表于 2024-09-02 20:00:00">2024-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/08/etw/" title="etw机制分析">etw机制分析</a><time datetime="2024-07-08T02:00:00.000Z" title="发表于 2024-07-08 10:00:00">2024-07-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/28/driver13/" title="Windows驱动开发（13）——shellcode查找">Windows驱动开发（13）——shellcode查找</a><time datetime="2024-06-28T10:00:00.000Z" title="发表于 2024-06-28 18:00:00">2024-06-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/21/LLVM%E6%8E%92%E5%9D%91/" title="LLVM排坑">LLVM排坑</a><time datetime="2024-06-21T14:00:00.000Z" title="发表于 2024-06-21 22:00:00">2024-06-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/18/RemoteThreadInject/" title="关于64位进程注入32位进程的分析">关于64位进程注入32位进程的分析</a><time datetime="2024-06-18T03:00:00.000Z" title="发表于 2024-06-18 11:00:00">2024-06-18</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AdvancedMath/"><span class="card-category-list-name">AdvancedMath</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AdvancedMath/Fourier-Serials/"><span class="card-category-list-name">Fourier-Serials</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/"><span class="card-category-list-name">C++</span><span class="card-category-list-count">16</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/C-%E7%9A%84%E7%89%B9%E6%80%A7/"><span class="card-category-list-name">C++的特性</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/LLVM/"><span class="card-category-list-name">LLVM</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/OOP/"><span class="card-category-list-name">OOP</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/Windows/"><span class="card-category-list-name">Windows</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/%E6%A8%A1%E6%9D%BF/"><span class="card-category-list-name">模板</span><span class="card-category-list-count">2</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/RSA/" style="font-size: 1.15em; color: rgb(41, 188, 42)">RSA</a><a href="/tags/AES/" style="font-size: 1.15em; color: rgb(200, 14, 200)">AES</a><a href="/tags/DNS/" style="font-size: 1.15em; color: rgb(5, 29, 38)">DNS</a><a href="/tags/flask/" style="font-size: 1.15em; color: rgb(54, 166, 137)">flask</a><a href="/tags/HITCTF/" style="font-size: 1.22em; color: rgb(107, 103, 29)">HITCTF</a><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" style="font-size: 1.15em; color: rgb(94, 89, 154)">内网渗透</a><a href="/tags/Web%E6%BC%8F%E6%B4%9E/" style="font-size: 1.15em; color: rgb(82, 188, 101)">Web漏洞</a><a href="/tags/ptrace/" style="font-size: 1.22em; color: rgb(17, 161, 39)">ptrace</a><a href="/tags/LLVM/" style="font-size: 1.15em; color: rgb(75, 100, 56)">-LLVM</a><a href="/tags/LLVM/" style="font-size: 1.38em; color: rgb(157, 41, 4)">LLVM</a><a href="/tags/Substitution/" style="font-size: 1.15em; color: rgb(15, 79, 68)">Substitution</a><a href="/tags/Linux/" style="font-size: 1.3em; color: rgb(20, 153, 4)">Linux</a><a href="/tags/Kernel/" style="font-size: 1.15em; color: rgb(12, 91, 44)">Kernel</a><a href="/tags/base64/" style="font-size: 1.15em; color: rgb(48, 59, 163)">base64</a><a href="/tags/Socket/" style="font-size: 1.15em; color: rgb(23, 82, 70)">Socket</a><a href="/tags/Net-Program/" style="font-size: 1.15em; color: rgb(71, 169, 165)">Net-Program</a><a href="/tags/fastbin-reverse-into-tcache/" style="font-size: 1.15em; color: rgb(150, 58, 64)">fastbin_reverse_into_tcache</a><a href="/tags/XYcup/" style="font-size: 1.15em; color: rgb(21, 4, 100)">XYcup</a><a href="/tags/awd/" style="font-size: 1.15em; color: rgb(148, 70, 122)">awd</a><a href="/tags/hook/" style="font-size: 1.15em; color: rgb(84, 136, 120)">hook</a><a href="/tags/global-max-fast/" style="font-size: 1.15em; color: rgb(165, 58, 184)">global_max_fast</a><a href="/tags/pwnable-kr/" style="font-size: 1.45em; color: rgb(40, 103, 25)">pwnable.kr</a><a href="/tags/Binary-Serach/" style="font-size: 1.15em; color: rgb(195, 9, 59)">Binary-Serach</a><a href="/tags/operator-priority/" style="font-size: 1.15em; color: rgb(151, 149, 109)">operator priority</a><a href="/tags/bash/" style="font-size: 1.15em; color: rgb(198, 52, 31)">bash</a><a href="/tags/shellshock/" style="font-size: 1.15em; color: rgb(174, 108, 83)">shellshock</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">六月 2024</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">4</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">285</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2021-04-25T00:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">638.9k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-09-02T14:23:59.938Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: (str) => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, false))
+  },
+  run: (subtitleType) => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        getScript('https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+</script><script>function subtitleType () {
+  if (true) {
+    typedJSFn.init(["学习应该像呼吸一样自然"])
+  } else {
+    document.getElementById("subtitle").textContent = "学习应该像呼吸一样自然"
+  }
+}
+typedJSFn.run(subtitleType)</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
