@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
 <meta property="article:published_time" content="2024-09-17T09:00:00.000Z">
-<meta property="article:modified_time" content="2024-09-17T09:37:12.136Z">
+<meta property="article:modified_time" content="2024-09-17T12:30:59.296Z">
 <meta property="article:author" content="xia0ji233">
 <meta property="article:tag" content="Windows">
 <meta name="twitter:card" content="summary">
@@ -56,7 +56,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2024-09-17 17:37:12'
+  postUpdate: '2024-09-17 20:30:59'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -154,13 +154,15 @@
       }
       detectApple()
     })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
-</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">286</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">180</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">x86的保护模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-17T09:00:00.000Z" title="发表于 2024-09-17 17:00:00">2024-09-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-17T09:37:12.136Z" title="更新于 2024-09-17 17:37:12">2024-09-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Windows/">Windows</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/X86/">X86</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/X86/Protected-Mode/">Protected_Mode</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Windows/Kernel/">Kernel</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="x86的保护模式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>重新把内核基础学一遍，方便后续学习的展开。</p>
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">286</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">180</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">x86的保护模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-17T09:00:00.000Z" title="发表于 2024-09-17 17:00:00">2024-09-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-17T12:30:59.296Z" title="更新于 2024-09-17 20:30:59">2024-09-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Windows/">Windows</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/X86/">X86</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/X86/Protected-Mode/">Protected_Mode</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Windows/Kernel/">Kernel</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="x86的保护模式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>重新把内核基础学一遍，方便后续学习的展开。</p>
 <span id="more"></span>
 
 <p>x86 是一个非常经典的复杂指令集架构（CISC），它的特点是指令不定长，解析指令时会根据头个字节甚至是第二个字节决定指令解析的长度，作为本篇学习的研究例子。</p>
 <p>x86 的 CPU 在早期都是以<strong>实模式</strong>运行的，在 80386 及以后，x86 CPU 新增了分页的虚拟内存机制，同时在 80286 CPU 中就新增了其它运行模式，比如<strong>保护模式</strong>，本篇将重点学习<strong>保护模式</strong>。</p>
 <h2 id="保护模式"><a href="#保护模式" class="headerlink" title="保护模式"></a>保护模式</h2><h3 id="CPU分级"><a href="#CPU分级" class="headerlink" title="CPU分级"></a>CPU分级</h3><p>只需要知道，数值上越小，权限越大。就像你的Linux root的 uid 就是0。CPU设计的时候是分了四级 ring 环，如图所示：</p>
+<img src="/2024/09/17/x86_1/1.png" class="">
 
+<img src="/2024/09/17/x86_1/1.png" class="">
 
 <p>最外层是 ring3，是我们平时程序运行的等级，只能执行少数的非特权指令。ring0 是操作系统或者是驱动运行的等级，分级的目的就是防止应用程序随意篡改内核数据。内核数据的不正确修改往往会导致操作系统无法继续运行，Linux上会直接 crash 并强制关机，Windows 会蓝屏。</p>
 <p>在CPU设计的时候，将 ring2 和 ring1给了驱动程序去运行，然而实际情况是，大部分操作系统没有使用 ring1 和 ring2，只使用了 ring0 和 ring3。所以在编写驱动的时候，驱动程序通常是直接运行在和操作系统同一等级 ring0 的。</p>
@@ -177,14 +179,14 @@
 <p>使用 LGDT 指令可以对 GDTR 寄存器做修改，当然，这也是特权指令，用户态无法直接调用。</p>
 <p>除了 GDT，还允许程序员自行构建局部描述符表（LDT，Local Descriptor Table），它可以为每个进程构建一张段描述符表，另外，每一个LDT自身<strong>作为一个段</strong>存在，它们的段描述符被放在GDT中。LDT只是一个可选的数据结构，完全可以不用它，完全取决与操作系统的开发者意愿。实际上目前主流的 OS（Windows、Linux）中，很少出现 LDT 的身影，因为它们自身实现了很完整的分页管理机制，LDT 的实现可能的确对于内存管理有所方便，但还是和目前主流的 OS 设计观念不太相符（本人主观猜测）。</p>
 <h3 id="段选择子-段描述符"><a href="#段选择子-段描述符" class="headerlink" title="段选择子&amp;段描述符"></a>段选择子&amp;段描述符</h3><p>前面提到了，段寄存器对于用户来说仅保存<strong>段选择子</strong>，通过<strong>段选择子</strong>所指示的信息可以找到对应的<strong>段描述符</strong>。先来看看段选择子的一个<strong>结构图</strong>：</p>
-
+<img src="/2024/09/17/x86_1/2.png" class="">
 
 <p>最低的两位指示了CPU的请求特权等级（RPL，Request Privilege Level），猜测这里刚好对应 CPU 的四个环。</p>
 <p>最低的第三位指示了该段的<strong>段描述符</strong>是查找 LDT 还是查找 GDT，如果为 0 表示查找 GDT。</p>
 <p>其余指示了<strong>段描述符</strong>在 GDT 或者 LDT 的索引。</p>
 <hr>
 <p>段描述符的结构如图所示（以32位为例）：</p>
-
+<img src="/2024/09/17/x86_1/3.png" class="">
 
 <p>它的成员有很多，一个一个来介绍：</p>
 <ul>
@@ -202,7 +204,7 @@
 </li>
 </ul>
 <p>当 <code>S=1</code> 时，为<strong>代码或者数据段描述符</strong>，具体如下图所示：</p>
-
+<img src="/2024/09/17/x86_1/4.png" class="">
 
 <p>最高位显然是区分是否为代码段的，若为 1 则是<strong>代码段</strong>，其余还有五个位需要介绍。</p>
 <ol>
@@ -213,10 +215,10 @@
 <li>C：一致位，后面将介绍一致位。</li>
 </ol>
 <p>如下图展示了向下扩展位和向上扩展位的区别，绿色块表示可访问，红色块表示不可访问。</p>
-
+<img src="/2024/09/17/x86_1/5.png" class="">
 
 <p>当 <code>S=0</code> 时，为<strong>系统段描述符</strong>，TYPE域的具体如下所示：</p>
-
+<img src="/2024/09/17/x86_1/6.png" class="">
 
 <p>下面接着讲段描述符相关的成员。。</p>
 <ul>
@@ -225,7 +227,7 @@
 <li>AVL位：AVL指示是否可供系统软件使用，由操作系统来使用。</li>
 </ul>
 <p>也来看看 D 位的区别：</p>
-
+<img src="/2024/09/17/x86_1/7.png" class="">
 
 <p>红色表示向下拓展能寻址的范围。可以看出，如果<code>D = 0</code>，就算原来能寻址<code>4GB</code>，因为DB位的限制导致最大范围是<code>64KB</code>。</p>
 <h3 id="段权限"><a href="#段权限" class="headerlink" title="段权限"></a>段权限</h3><p>其实前面介绍的已经比较完整了，段权限被存储在两个位置，一个是<strong>段选择子</strong>，一个是<strong>段描述符</strong>，但是这里要介绍三种权限等级。</p>
