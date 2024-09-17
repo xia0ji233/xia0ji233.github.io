@@ -1,3 +1,4 @@
+https://xia0ji233.github.io/2024/09/17/x86_1/
 https://xia0ji233.github.io/2024/09/02/KCTF2024/
 https://xia0ji233.github.io/2023/01/01/408-1-1/
 https://xia0ji233.github.io/2023/01/01/408-2-2/
@@ -314,6 +315,7 @@ https://xia0ji233.github.io/tags/Binary-Serach/
 https://xia0ji233.github.io/tags/operator-priority/
 https://xia0ji233.github.io/tags/bash/
 https://xia0ji233.github.io/tags/shellshock/
+https://xia0ji233.github.io/tags/Windows/
 https://xia0ji233.github.io/categories/icpc/
 https://xia0ji233.github.io/categories/ctf/
 https://xia0ji233.github.io/categories/CTF/
@@ -491,3 +493,6 @@ https://xia0ji233.github.io/categories/icpc/%E5%9B%BE%E8%AE%BA/%E8%B4%9F%E7%8E%A
 https://xia0ji233.github.io/categories/icpc/%E6%9D%BF%E5%AD%90/
 https://xia0ji233.github.io/categories/icpc/%E5%9B%BE%E8%AE%BA/spfa/
 https://xia0ji233.github.io/categories/icpc/%E6%9D%BF%E5%AD%90/%E9%80%86%E5%BA%8F%E5%AF%B9/
+https://xia0ji233.github.io/categories/X86/
+https://xia0ji233.github.io/categories/X86/Protected-Mode/
+https://xia0ji233.github.io/categories/Windows/Kernel/
