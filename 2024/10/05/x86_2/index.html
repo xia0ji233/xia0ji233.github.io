@@ -1,0 +1,307 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>x86的保护模式（2）——调用门，中断门，陷阱门与门描述符 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天开始学习各种门与门描述符">
+<meta property="og:type" content="article">
+<meta property="og:title" content="x86的保护模式（2）——调用门，中断门，陷阱门与门描述符">
+<meta property="og:url" content="https://xia0ji233.github.io/2024/10/05/x86_2/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="今天开始学习各种门与门描述符">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2024-10-05T06:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-05T06:46:27.783Z">
+<meta property="article:author" content="xia0ji233">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2024/10/05/x86_2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'x86的保护模式（2）——调用门，中断门，陷阱门与门描述符',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-05 14:46:27'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">287</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">180</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">x86的保护模式（2）——调用门，中断门，陷阱门与门描述符</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-05T06:00:00.000Z" title="发表于 2024-10-05 14:00:00">2024-10-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-10-05T06:46:27.783Z" title="更新于 2024-10-05 14:46:27">2024-10-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Windows/">Windows</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/X86/">X86</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/X86/Protected-Mode/">Protected_Mode</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Windows/Kernel/">Kernel</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="x86的保护模式（2）——调用门，中断门，陷阱门与门描述符"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>今天开始学习各种门与门描述符</p>
+<span id="more"></span>
+
+<p>先解决一下上节课的存疑。</p>
+<h2 id="段选择子的检验"><a href="#段选择子的检验" class="headerlink" title="段选择子的检验"></a>段选择子的检验</h2><p>尝试将段选择子装入 CS 或 SS 时，会进行检查，通常会产生一个保护异常。而装入其它的段寄存器不会立即检查，会在尝试访问的时候检查权限。</p>
+<hr>
+<p>前面提到，段描述符当 <code>s=0</code> 时，是一个系统段，而系统段根据 TYPE 域的变化有如下的区别</p>
+
+
+<p>其中就有各种各样的门描述符，包括调用门、中断门、陷阱门，门描述符的结构如下所示</p>
+
+
+<h2 id="长调用和短调用，长跳转与短跳转"><a href="#长调用和短调用，长跳转与短跳转" class="headerlink" title="长调用和短调用，长跳转与短跳转"></a>长调用和短调用，长跳转与短跳转</h2><p>在学习调用门之前，先来了解一下长跳（jmp far），短跳（jmp）与长调用（call far），短调用（call）的区别。我们平时使用的比较多的指令其实都是短调用和短跳转，几乎很少用到长跳和长调用。长调用和长跳事实上会修改段寄存器 CS，CS不能通过一般的赋值指令修改，只能通过长调用或长跳修改。</p>
+<p><strong>长跳不会改变进程 CPL，长调用会</strong>。</p>
+<p>短跳：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jmp 立即数/寄存器/内存</span><br><span class="line">//仅修改 EIP</span><br></pre></td></tr></table></figure>
+
+<p>长跳：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jmp far cs:eip</span><br><span class="line">//修改 EIP 和 CS</span><br></pre></td></tr></table></figure>
+
+<p>事实上，长调用在现实情况中也很少见。</p>
+<p>短调用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">call cs:eip</span><br><span class="line">//修改 esp，eip和内存</span><br></pre></td></tr></table></figure>
+
+<p>长调用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">call far cs:eip （eip参数在这里不发挥作用）</span><br><span class="line">//修改 esp eip cs和内存，返回使用 retf</span><br></pre></td></tr></table></figure>
+
+<h3 id="跨段不提权"><a href="#跨段不提权" class="headerlink" title="跨段不提权"></a>跨段不提权</h3><p>这里编写代码测试一下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="type">int</span> __declspec(naked)<span class="built_in">func</span>() &#123;</span><br><span class="line">    __asm &#123;</span><br><span class="line">        retf;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>, func);</span><br><span class="line">    <span class="type">char</span> bufcode[] = &#123; <span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x23</span>,<span class="number">0x00</span> &#125;;</span><br><span class="line">    *(<span class="type">int32_t</span>*)&amp;bufcode[<span class="number">0</span>] = (<span class="type">int32_t</span>)func;</span><br><span class="line">    __asm &#123;</span><br><span class="line">        nop;</span><br><span class="line">        call fword ptr bufcode;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下断点调试，进入之后可以发现在执行 call 的时候不但压入了 EIP，同时将段寄存器 CS 也压入栈中。</p>
+
+
+<p>在 retf 之后，同样会将 EIP 和 CS 一块弹出来，恢复栈。</p>
+<h3 id="跨段提权"><a href="#跨段提权" class="headerlink" title="跨段提权"></a>跨段提权</h3><p>通常是改变了进程自身的权限，至于前面提到了跨段之后提权，自然是会有一些校验的。对于用户层来说，我们跨段提权仅仅是修改 CS 和 EIP。如果我们修改了 CS 提权，同时能够任意指定 EIP，那将会产生很严重的安全漏洞。</p>
+<p>因此，跨段调用提权需要通过调用门来进行，我们看到调用门描述符结构</p>
+
+
+<ul>
+<li>ParamCount 有五位，可以指定该调用门最多拥有31个参数。</li>
+<li>TYPE&#x3D;C 表明是调用门。</li>
+<li>P&#x3D;1表示有效。</li>
+<li>S&#x3D;0表示为系统段。</li>
+<li>DPL指示了该调用门需要请求的权限。</li>
+<li>调用门还存储了新的段选择子指示该调用门调用之后 CS 新的值。</li>
+<li>其余 32 位数据指示了新的 EIP 的位置。</li>
+</ul>
+<p>因此我们说跨段提权的情况中，EIP 被废弃，我们只需要指示 CS 为目标调用门即可，而目的地址则在对应的门描述符中，因此我们通过调用门来进行跨段提权无法指示目标代码的执行位置（至少在用户层）。</p>
+<h2 id="调用门"><a href="#调用门" class="headerlink" title="调用门"></a>调用门</h2><h3 id="跨段提权具体过程"><a href="#跨段提权具体过程" class="headerlink" title="跨段提权具体过程"></a>跨段提权具体过程</h3><p>对于一致代码段而言，低级别的程序可以在不通过提升 CPL 的情况下访问。对于非一致代码段而言，禁止不同级别进行访问，要想访问则必须通过调用门先提升 CPL 再调用。</p>
+<p>从上面分析我们可以总结调用门的执行过程（个人理解，难免有误，敬请指正），在调用 call far 的时候会进行如下操作：</p>
+<ol>
+<li>根据 CALL 给出的 CS 在 GDT 中找到对应的对描述符，CPU验证该段描述符是一个调用门描述符。</li>
+<li>检查 CPL 与调用门 DPL 是否满足调用条件</li>
+<li>将 SS 和 ESP 压栈。</li>
+<li>取出调用门当中指定的新段选择子，给CS，当前 CS，EIP 压栈。</li>
+<li>SS 会变为当前 CS+8 的值，此时栈会被切换。</li>
+<li>栈切换之前，会根据 ParamCount 字段获取原栈中参数个数，并将它压入新的栈中。</li>
+<li>将调用前的 CS，EIP也压入新的栈中。</li>
+<li>根据 CS 新的段选择子的 Base + 调用门指定的 Offset 将 EIP 设置到指定的位置。</li>
+</ol>
+<p>这样就完成了跨段提权的过程。</p>
+<h3 id="调用门权限检查"><a href="#调用门权限检查" class="headerlink" title="调用门权限检查"></a>调用门权限检查</h3><p>它会检查这几个字段</p>
+<ul>
+<li>CPL</li>
+<li>门选择子 RPL（也就是你尝试 CALL 的所指定的门选择子的低2位）</li>
+<li>调用门描述符 DPL</li>
+<li>目标代码段 DPL</li>
+</ul>
+<p>同时还要检查目标代码段的一致性位。</p>
+<p>与前面访问数据差不多，CALL 调用门权限要满足以下条件：</p>
+<ul>
+<li>CPL&lt;&#x3D;调用门DPL</li>
+<li>RPL&lt;&#x3D;调用门DPL</li>
+<li>目标代码段DPL&lt;&#x3D;CPL。</li>
+</ul>
+<p>这里会发现有点奇怪，为什么 CPL &gt;&#x3D; 目标代码段 DPL，这是为了防止通过调用门以高特权级去执行用户代码。也就是说，使用 <code>call far</code> 尝试调用调用门时，只允许向高特权级的代码去转移而不能向低特权级的代码转移。相对应的，<code>call far</code> 有对应的 <code>retf</code> 指令与之对应，但是 <code>retf</code> 只能向同权限或者低权限去转移。</p>
+<p>对于 JMP 来说，除了满足前两个条件外，如果目标是非一致代码段，则不允许低权限的 CPL 进来访问，只允许同级访问，因为 <code>jmp far</code> 不会改变当前进程的 CPL。对于一致代码段，访问并不会受限，此时也不会改变当前进程的特权级。</p>
+<p><code>retf</code> 指令它能确保跨段提权之后，恢复所有栈的情况，包括提权之后可能压入的 CS，EIP，SS，ESP以及参数的清理等。</p>
+<h2 id="中断门与陷阱门"><a href="#中断门与陷阱门" class="headerlink" title="中断门与陷阱门"></a>中断门与陷阱门</h2><h3 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h3><p>中断（Interrupt）指的是当出现需要的时候，CPU放弃处理当前运行的程序转而去处理的过程。比如常见的除零（0号中断），断点（3号中断），系统调用（0x2e中断，Linux使用0x80中断）以及异常处理都会引发中断，调用相应的处理例程去处理中断事件。而操作系统需要维护这样的一个例程表，于是就有了 IDT。</p>
+<p>中断门与调用门类似，也会指定新的段选择子和一个中断处理程序，所以中断门也可以用于提权，提权的规则与检测与调用门几乎相同，在某些细节有略微的差异。</p>
+<h3 id="中断描述符表"><a href="#中断描述符表" class="headerlink" title="中断描述符表"></a>中断描述符表</h3><p>与gdt一样，同样有一个寄存器 IDTR 维护了一张中断描述符表（IDT），同样，该寄存器是 48 位的寄存器，存储了 IDT 表的位置（4字节）和大小（2字节），IDT的长度字段默认是 0x7FF，也就是IDT总长为 2048 字节，能够存入 256 个中断描述符。</p>
+<p>IDT 主要存储三种门描述符</p>
+<ul>
+<li>任务门描述符</li>
+<li>中断门描述符</li>
+<li>陷阱门描述符</li>
+</ul>
+<p>中断描述符结构如下图所示</p>
+
+
+<p>其中，TYPE 域的 D 位决定了它是 16 位（0）还是 32 位（1）的中断门。除了 ParamCount 字段，其余字段跟调用门几乎是一致的。</p>
+<p>IDT可以存入以下三种描述符：</p>
+<ol>
+<li><strong>任务门描述符</strong>：用于任务切换，里面包含用于选择任务状态段（TSS）的段选择子。可以使用JMP或CALL指令通过任务门来切换到任务门所指向的任务，当CPU因为中断或异常转移到任务门时，也会切换到指定任务。</li>
+<li><strong>中断门描述符</strong>：用于描述中断例程的入口。</li>
+<li><strong>陷阱门描述符</strong>：用于描述异常处理例程的入口。</li>
+</ol>
+<h3 id="中断门调用过程"><a href="#中断门调用过程" class="headerlink" title="中断门调用过程"></a>中断门调用过程</h3><p>通过中断门进入处理程序有很多种方法，通过 <code>int xx</code> 指令进入应该属于熟知的方式，除此之外，以下行为均会通过中断门进入中断处理过程：</p>
+<ul>
+<li>int 指令</li>
+<li>外部设备中断</li>
+<li>软件异常</li>
+</ul>
+<p>同样，如果是跨段提权，那么需要进行栈切换，保存原 CS 等等操作，除此之外，需要额外保留原来的 EFLAGS，栈的情况如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">|   SS   |   &lt;- 用户模式的栈段选择子</span><br><span class="line">|  ESP   |   &lt;- 用户模式的栈指针</span><br><span class="line">| EFLAGS |   &lt;- 标志寄存器</span><br><span class="line">|   CS   |   &lt;- 代码段选择子</span><br><span class="line">|   EIP  |   &lt;- 被中断的指令地址</span><br></pre></td></tr></table></figure>
+
+<p>对应的，从中断处理程序返回使用 <code>iret</code> 指令返回到被中断的位置。<code>iret</code> 指令和 <code>retf</code> 一样，</p>
+<p>可以完美地还原压栈的参数。</p>
+<p>这里需要注意的是，<code>iret</code> 指令并不单单还原栈的参数，还会做一件事情，就是开中断。因为通过中断门调用进去之后，会屏蔽其它中断（ <code>eflags.TF=0</code>）。如果仅仅使用 <code>retf 4</code> 进行长返回的话，会导致应用层程序的 <code>eflags.TF=0</code>，如果此时它出现其它异常，会导致无法中断这个程序从而出现蓝屏。并且，<code>eflags.TF</code> 标志位无法在用户层修改，只能通过特权指令 <code>cli</code>（关中断）和 <code>sti</code>（开中断）去修改。</p>
+<p>关中断指令只能屏蔽可屏蔽中断，电源掉电等不可屏蔽中断（NMI）CPU无法屏蔽,其它硬件也可以向CPU报告紧急事件，通过CPU的NMI引脚去触发，CPU一旦收到必须立刻处理。</p>
+<h3 id="陷入"><a href="#陷入" class="headerlink" title="陷入"></a>陷入</h3><p>与中断几乎一样，唯一的区别是陷阱门调用之后不会关中断，也就是说它可以被其它中断打断。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>[1].<a target="_blank" rel="noopener" href="http://www.qfrost.com/posts/windowskernel/windows%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_2">http://www.qfrost.com/posts/windowskernel/windows保护模式学习笔记_2</a></li>
+<li>[2].<a target="_blank" rel="noopener" href="https://www.cnblogs.com/onetrainee/p/12436327.html">https://www.cnblogs.com/onetrainee/p/12436327.html</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2024/10/05/x86_2/">https://xia0ji233.github.io/2024/10/05/x86_2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Windows/">Windows</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/09/17/x86_1/" title="x86的保护模式（1）——段描述符与段寄存器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">x86的保护模式（1）——段描述符与段寄存器</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/17/x86_1/" title="x86的保护模式（1）——段描述符与段寄存器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-17</div><div class="title">x86的保护模式（1）——段描述符与段寄存器</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">287</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">180</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AE%B5%E9%80%89%E6%8B%A9%E5%AD%90%E7%9A%84%E6%A3%80%E9%AA%8C"><span class="toc-number">1.</span> <span class="toc-text">段选择子的检验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%BF%E8%B0%83%E7%94%A8%E5%92%8C%E7%9F%AD%E8%B0%83%E7%94%A8%EF%BC%8C%E9%95%BF%E8%B7%B3%E8%BD%AC%E4%B8%8E%E7%9F%AD%E8%B7%B3%E8%BD%AC"><span class="toc-number">2.</span> <span class="toc-text">长调用和短调用，长跳转与短跳转</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%A8%E6%AE%B5%E4%B8%8D%E6%8F%90%E6%9D%83"><span class="toc-number">2.1.</span> <span class="toc-text">跨段不提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%A8%E6%AE%B5%E6%8F%90%E6%9D%83"><span class="toc-number">2.2.</span> <span class="toc-text">跨段提权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E9%97%A8"><span class="toc-number">3.</span> <span class="toc-text">调用门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%A8%E6%AE%B5%E6%8F%90%E6%9D%83%E5%85%B7%E4%BD%93%E8%BF%87%E7%A8%8B"><span class="toc-number">3.1.</span> <span class="toc-text">跨段提权具体过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E9%97%A8%E6%9D%83%E9%99%90%E6%A3%80%E6%9F%A5"><span class="toc-number">3.2.</span> <span class="toc-text">调用门权限检查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD%E9%97%A8%E4%B8%8E%E9%99%B7%E9%98%B1%E9%97%A8"><span class="toc-number">4.</span> <span class="toc-text">中断门与陷阱门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD"><span class="toc-number">4.1.</span> <span class="toc-text">中断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8"><span class="toc-number">4.2.</span> <span class="toc-text">中断描述符表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD%E9%97%A8%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="toc-number">4.3.</span> <span class="toc-text">中断门调用过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%B7%E5%85%A5"><span class="toc-number">4.4.</span> <span class="toc-text">陷入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">5.</span> <span class="toc-text">参考文献</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/05/x86_2/" title="x86的保护模式（2）——调用门，中断门，陷阱门与门描述符">x86的保护模式（2）——调用门，中断门，陷阱门与门描述符</a><time datetime="2024-10-05T06:00:00.000Z" title="发表于 2024-10-05 14:00:00">2024-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/17/x86_1/" title="x86的保护模式（1）——段描述符与段寄存器">x86的保护模式（1）——段描述符与段寄存器</a><time datetime="2024-09-17T09:00:00.000Z" title="发表于 2024-09-17 17:00:00">2024-09-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/02/KCTF2024/" title="KCTF2024第八题 writeup">KCTF2024第八题 writeup</a><time datetime="2024-09-02T12:00:00.000Z" title="发表于 2024-09-02 20:00:00">2024-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/08/etw/" title="etw机制分析">etw机制分析</a><time datetime="2024-07-08T02:00:00.000Z" title="发表于 2024-07-08 10:00:00">2024-07-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/28/driver13/" title="Windows驱动开发（13）——shellcode查找">Windows驱动开发（13）——shellcode查找</a><time datetime="2024-06-28T10:00:00.000Z" title="发表于 2024-06-28 18:00:00">2024-06-28</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
