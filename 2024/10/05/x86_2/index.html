@@ -161,10 +161,10 @@
 <h2 id="段选择子的检验"><a href="#段选择子的检验" class="headerlink" title="段选择子的检验"></a>段选择子的检验</h2><p>尝试将段选择子装入 CS 或 SS 时，会进行检查，通常会产生一个保护异常。而装入其它的段寄存器不会立即检查，会在尝试访问的时候检查权限。</p>
 <hr>
 <p>前面提到，段描述符当 <code>s=0</code> 时，是一个系统段，而系统段根据 TYPE 域的变化有如下的区别</p>
-
+<img src="/2024/10/05/x86_2/1.png" class="">
 
 <p>其中就有各种各样的门描述符，包括调用门、中断门、陷阱门，门描述符的结构如下所示</p>
-
+<img src="/2024/10/05/x86_2/2.png" class="">
 
 <h2 id="长调用和短调用，长跳转与短跳转"><a href="#长调用和短调用，长跳转与短跳转" class="headerlink" title="长调用和短调用，长跳转与短跳转"></a>长调用和短调用，长跳转与短跳转</h2><p>在学习调用门之前，先来了解一下长跳（jmp far），短跳（jmp）与长调用（call far），短调用（call）的区别。我们平时使用的比较多的指令其实都是短调用和短跳转，几乎很少用到长跳和长调用。长调用和长跳事实上会修改段寄存器 CS，CS不能通过一般的赋值指令修改，只能通过长调用或长跳修改。</p>
 <p><strong>长跳不会改变进程 CPL，长调用会</strong>。</p>
@@ -185,12 +185,12 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="type">int</span> __declspec(naked)<span class="built_in">func</span>() &#123;</span><br><span class="line">    __asm &#123;</span><br><span class="line">        retf;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%p\n&quot;</span>, func);</span><br><span class="line">    <span class="type">char</span> bufcode[] = &#123; <span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x23</span>,<span class="number">0x00</span> &#125;;</span><br><span class="line">    *(<span class="type">int32_t</span>*)&amp;bufcode[<span class="number">0</span>] = (<span class="type">int32_t</span>)func;</span><br><span class="line">    __asm &#123;</span><br><span class="line">        nop;</span><br><span class="line">        call fword ptr bufcode;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>下断点调试，进入之后可以发现在执行 call 的时候不但压入了 EIP，同时将段寄存器 CS 也压入栈中。</p>
-
+<img src="/2024/10/05/x86_2/3.png" class="">
 
 <p>在 retf 之后，同样会将 EIP 和 CS 一块弹出来，恢复栈。</p>
 <h3 id="跨段提权"><a href="#跨段提权" class="headerlink" title="跨段提权"></a>跨段提权</h3><p>通常是改变了进程自身的权限，至于前面提到了跨段之后提权，自然是会有一些校验的。对于用户层来说，我们跨段提权仅仅是修改 CS 和 EIP。如果我们修改了 CS 提权，同时能够任意指定 EIP，那将会产生很严重的安全漏洞。</p>
 <p>因此，跨段调用提权需要通过调用门来进行，我们看到调用门描述符结构</p>
-
+<img src="/2024/10/05/x86_2/2.png" class="">
 
 <ul>
 <li>ParamCount 有五位，可以指定该调用门最多拥有31个参数。</li>
@@ -242,7 +242,7 @@
 <li>陷阱门描述符</li>
 </ul>
 <p>中断描述符结构如下图所示</p>
-
+<img src="/2024/10/05/x86_2/4.png" class="">
 
 <p>其中，TYPE 域的 D 位决定了它是 16 位（0）还是 32 位（1）的中断门。除了 ParamCount 字段，其余字段跟调用门几乎是一致的。</p>
 <p>IDT可以存入以下三种描述符：</p>
