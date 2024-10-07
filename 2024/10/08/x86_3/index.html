@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>x86的保护模式（2）——门描述符实验 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="通过做实验来加深一下印象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="x86的保护模式（2）——门描述符实验">
+<meta property="og:url" content="https://xia0ji233.github.io/2024/10/08/x86_3/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="通过做实验来加深一下印象">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2024-10-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-07T16:31:33.807Z">
+<meta property="article:author" content="xia0ji233">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2024/10/08/x86_3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'x86的保护模式（2）——门描述符实验',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-08 00:31:33'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">288</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">180</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">x86的保护模式（2）——门描述符实验</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-07T16:00:00.000Z" title="发表于 2024-10-08 00:00:00">2024-10-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-10-07T16:31:33.807Z" title="更新于 2024-10-08 00:31:33">2024-10-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Windows/">Windows</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/X86/">X86</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/X86/Protected-Mode/">Protected_Mode</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Windows/Kernel/">Kernel</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="x86的保护模式（2）——门描述符实验"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>通过做实验来加深一下印象</p>
+<span id="more"></span>
+
+<p>首先是环境搭建，寻找32位虚拟机花了很长时间，最后在<a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1644554-1-1.html"><strong>52破解</strong></a>上找到了合适的系统。如果你尝试自己搭建你会发现，win7 32镜像很难寻找，而且大部分不支持 <code>Vmware Tools</code>，帧率很低很卡，调试起来很不舒服。</p>
+<p>而笔者给出的链接中的 32 位虚拟机还是很不错的，能调试，能装 <code>Vmware Tools</code>。还需要提醒一点的是，解压好之后把 CPU 个数和核心数全部改成 1，不然实验容易炸。</p>
+<h2 id="段描述符实验"><a href="#段描述符实验" class="headerlink" title="段描述符实验"></a>段描述符实验</h2><h3 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h3><p>首先根据 gdt 表，找到 32 位程序的 CS 中段选择子 <code>0x1b</code> 去找到对应的 32 位段描述符。</p>
+
+
+<p>也就是图中 +0x18 偏移处的 00cffb00&#96;0000ffff。</p>
+<p>Base 分别在高四字节的首位各一个字节+低四字节的高 2 字节，刚好全是 0。</p>
+<p>Limit 就是最低的 2 字节配上高字的低半个字节，组合起来也就是 0xFFFFF。</p>
+<p>TYPE 值就是 0xb，查表得知，是代码段，可读可执行。</p>
+<p>P DPL S 的结果是 0xf，表明数据是全1。</p>
+<p>P 为 1，表明段有效。</p>
+<p>DPL 为 3，表明该代码段的权限是 3 环的。</p>
+<p>S 为 1，表明是代码&#x2F;数据段</p>
+<p>剩下还有一个 G 位为 1，表明段限长以页为单位。D&#x2F;B 位为 1，表明是 32 位程序。</p>
+<hr>
+<p>此时我做个小实验，我创建一个新的代码段描述符，我将 D&#x2F;B 位改成 0，使之变为一个 16 位的代码段，直接抄 +0x18 处的段描述符，将 D&#x2F;B 位修改一下得到 008ffb00&#96;0000ffff。</p>
+<p>从图中可以看到 +0x48 的位置是一个空的段描述符，直接将值写入。</p>
+
+
+<p>用一个长调用去改段选择子为 0x4b。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdafx.h&quot;</span></span></span><br><span class="line"><span class="type">void</span> __declspec(naked)<span class="built_in">test</span>()&#123;</span><br><span class="line">	__asm&#123;</span><br><span class="line">		mov eax,<span class="number">0x12345678</span>;</span><br><span class="line">		retf;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> _tmain(<span class="type">int</span> argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;test=%p\n&quot;</span>,test);</span><br><span class="line">	<span class="type">char</span> bufcode[<span class="number">6</span>]=&#123;<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x4b</span>,<span class="number">0x00</span>&#125;;</span><br><span class="line">	*(<span class="type">int</span> *)&amp;bufcode[<span class="number">0</span>]=(<span class="type">int</span>)test;</span><br><span class="line">	__asm&#123;</span><br><span class="line">		nop;</span><br><span class="line">		call fword ptr bufcode;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>可以发现，写的 <code>mov eax,0x12345678</code> 的字节码被解析成了 16 位的，也就是说，原本 <code>mov eax,0x12345678</code>字节码 <code>B8 78 56 34 12</code> 因为代码段位数的变化导致只能将 <code>B8 78 56</code> 视为 <code>mov ax,0x5678</code> 而只执行了这个，往后跳转到 <code>34</code> 字节开头的代码，从寄存器中也可以看到 eax 的值变为了 0x5678，表明执行了 16 位的代码而非 32 位的代码。</p>
+<h3 id="数据段"><a href="#数据段" class="headerlink" title="数据段"></a>数据段</h3><p>32 位的程序 ds 通常是 0x23，也就是 +0x20 的位置，gdt 表项为 00cff300&#96;0000ffff。其实和代码段的差别就是 TYPE 域，其余基本一样，TYPE 为 3 是数据段，可读可写。</p>
+<p>这里稍微改一改其它参数，例如改段基址为 1，同样是 0x4b 处的段描述符，改成 00cff300&#96;0001ffff。</p>
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdafx.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a=<span class="number">0x12345678</span>;</span><br><span class="line"><span class="type">int</span> _tmain(<span class="type">int</span> argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	__asm&#123;</span><br><span class="line">		mov ax,<span class="number">0x4b</span>;</span><br><span class="line">		mov ds,ax;</span><br><span class="line">		mov ebx, <span class="number">0x12345678</span>;</span><br><span class="line">		mov eax,[ebx];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+
+
+<p>发现我们修改了 ds 之后再次尝试读取内存已经是读取基址（1）+ 偏移的形式了，其实平时我们给的读取地址都是偏移，只不过段描述符中的基址通常是 0。</p>
+<p>读取全局变量 a 的值也可以发现，也是对应的读取了 + 1 上的偏移。</p>
+
+
+<p>再尝试看看段长限制，因为代码段和普通数据段几乎都是 <code>0-0xffffffff</code> 的范围，所以这里换一个段描述符，尝试使用 fs 段寄存器，32 位通常的值是 0x3b，FS 段寄存器指向了存储了<strong>线程环境块</strong>（TEB）的地址。</p>
+<p>尝试访问 <code>fs dword ptr [0x1000]</code>，直接报访问错误，并且访问的真实地址我们看不到，这是被段长限制住了。</p>
+
+
+<p>这里需要注意的是，线程会发生切换，线程切换的时候会修改 gdt 表，所以我们中断 windbg 看到的 gdt 表对应的 0x3b表项是不准确的[1]。通常情况下，fs 的段基址是 0x7FFDF000，同样为了找到真实的段基址，后续使用调用门提权的时候可以中断下来看看 gdt 表。</p>
+<p>这里根据基址构建一个段描述符 7f40f3fd&#96;f0000fff，windbg里面 dg 命令可以查看段选择子对应的信息。</p>
+
+
+<p>这里将 TYPE 修改为向下扩展的类型，也就是将 3 变为 7，修改为 7f40f7fd&#96;f0000fff。</p>
+<p>可以发现，原来可以访问的地址变为不可访问</p>
+
+
+<p>原来不可访问的地址变得可访问</p>
+
+
+<p>向下扩展可以认为是原段长限制取反的结果。其余位就不做过多演示了，第一章讲的还是比较清楚哒。</p>
+<h2 id="门描述符实验"><a href="#门描述符实验" class="headerlink" title="门描述符实验"></a>门描述符实验</h2><h3 id="调用门"><a href="#调用门" class="headerlink" title="调用门"></a>调用门</h3><p>调用门是存在 gdt 当中的，属于系统段，这里直接构建一个可以跨段提权的调用门，先设好参数。</p>
+<ul>
+<li>调用门跳转地址为 0x401000（关闭随机地址的第一个函数的地址）。</li>
+<li>TYPE设为0xC，表明是调用门。</li>
+<li>目标段选择子设为，0x8，这是一个 0 环的段选择子。</li>
+<li>P DPL S&#x3D;1110&#x3D;0xE，P&#x3D;1表示段有效，DPL&#x3D;3表示请求的最低权限为 3 环，S&#x3D;0表明是系统段。</li>
+<li>ParamCount 设为 0。</li>
+</ul>
+<p>据此构造的段描述符为 0040EC00&#96;00081000，写到 gdtr+0x48 的位置，直接去调用，因为我们提了零环权限，所以可以直接读取 gdt 表项。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdafx.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line">__int64 gdt_item;</span><br><span class="line"><span class="type">void</span> __declspec(naked)<span class="built_in">test</span>()&#123;</span><br><span class="line">	__asm&#123;</span><br><span class="line">		mov ebx,<span class="number">0x80B93800</span>;<span class="comment">//gdtr的值</span></span><br><span class="line">		lea eax,[ebx<span class="number">+0x38</span>];</span><br><span class="line">		mov eax,[eax];</span><br><span class="line">		mov dword ptr[gdt_item],eax;</span><br><span class="line">		lea eax,[ebx<span class="number">+0x38</span><span class="number">+4</span>];</span><br><span class="line">		mov eax,[eax]</span><br><span class="line">		mov dword ptr[gdt_item<span class="number">+4</span>],eax;</span><br><span class="line">		retf;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> _tmain(<span class="type">int</span> argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;test=%p\n&quot;</span>,test);</span><br><span class="line">	<span class="type">char</span> bufcode[<span class="number">6</span>]=&#123;<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x4b</span>,<span class="number">0x00</span>&#125;;</span><br><span class="line">	__asm&#123;</span><br><span class="line">		nop;</span><br><span class="line">		call fword ptr bufcode;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;gdt_item=%llx\n&quot;</span>,gdt_item);</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 运行之后我们拿到当前线程的 fs 段描述符的值。</p>
+
+
+<p>运行之后拿到了值 7f40f3fd&#96;f0000fff，通过拆解，我们可以得到当前线程的 FS 段基址为 0x7ffdf000，段限长为 0xFFF。</p>
+<p>由于该虚拟机在调用门函数内中断会直接死机，就不这么玩了，接下来我们看看传参。</p>
+<hr>
+<p>构造两个参数的调用门，对应描述符为 0040EC02&#96;00081000。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdafx.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> arg1,arg2;</span><br><span class="line"><span class="type">void</span> __declspec(naked)<span class="built_in">test</span>(<span class="type">int</span> a1,<span class="type">int</span> a2)&#123;</span><br><span class="line">	__asm&#123;</span><br><span class="line">		<span class="type">int</span> <span class="number">3</span>;</span><br><span class="line">		mov eax,[a1];</span><br><span class="line">		mov [arg1],eax;</span><br><span class="line">		mov eax,[a2];</span><br><span class="line">		mov [arg2],eax;</span><br><span class="line">		retf <span class="number">8</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> _tmain(<span class="type">int</span> argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;test=%p\n&quot;</span>,test);</span><br><span class="line">	<span class="type">char</span> bufcode[<span class="number">6</span>]=&#123;<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x4b</span>,<span class="number">0x00</span>&#125;;</span><br><span class="line">	__asm&#123;</span><br><span class="line">		nop;</span><br><span class="line">		push <span class="number">0x12345678</span>;</span><br><span class="line">		push <span class="number">0x61626364</span>;</span><br><span class="line">		call fword ptr bufcode;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>,arg1,arg2);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改，运行之后可以在内核调试器中中断下来。</p>
+
+
+<p>同时我们可以观察到内核中栈的情况，从栈顶到栈底依次是。</p>
+<ul>
+<li>EIP</li>
+<li>CS</li>
+<li>第一个参数（最后被压入的才是第一个参数）</li>
+<li>第二个参数</li>
+<li>ESP</li>
+<li>SS</li>
+</ul>
+<h3 id="中断门"><a href="#中断门" class="headerlink" title="中断门"></a>中断门</h3><p>这里需要换一个表了，去寻找 IDT 表。</p>
+
+
+<p>可以发现 +0x100 的位置是空的中断描述符，于是也新建一个中断门描述符，几乎与调用门描述符是一致的。填充一个 3 环可以请求，请求之后 CS 为 08 的中断描述符，0040EE00&#96;00081000。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdafx.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> __declspec(naked)<span class="built_in">test</span>()&#123;</span><br><span class="line">	__asm&#123;</span><br><span class="line">		<span class="type">int</span> <span class="number">3</span>;</span><br><span class="line">		iret;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> _tmain(<span class="type">int</span> argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;test=%p\n&quot;</span>,test);</span><br><span class="line">	__asm&#123;</span><br><span class="line">		nop;</span><br><span class="line">		<span class="type">int</span> <span class="number">0x20</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样中断下来看看栈。</p>
+
+
+<p>不难发现栈的情况从栈顶到栈底依次是</p>
+<ul>
+<li>EIP</li>
+<li>CS</li>
+<li>EFLAGS</li>
+<li>ESP</li>
+<li>SS</li>
+</ul>
+<p>同时值得注意的是，IF 位被置为 0，在调用门中，IF 是没有被置零的，中断返回使用的是 iret 指令，它会把中断重新打开。倘若在此使用 retf 4 将 EFLAGS 视为参数平衡栈，看似没有问题也能正确长返回。</p>
+
+
+<p>此时返回可以发现，EFLAGS 的 IF 位没有被恢复，如果此时执行一个之前未执行过的函数，会因为缺页产生异常，将该函数代码的页面调入页内，如果此时 EFLAGS 的 IF 位是置 0 的，那么就会直接蓝屏。</p>
+<p>复现一遍蓝屏</p>
+
+
+<p>可以发现中断在了 kitrap0e 函数中，这是 0e 中断的处理函数，0e 就是页错误的中断号</p>
+<hr>
+<p>Okay，前两章的理论+实验完美完成，也学到了不少东西。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>[1].<a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1795079-1-1.html">https://www.52pojie.cn/thread-1795079-1-1.html</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2024/10/08/x86_3/">https://xia0ji233.github.io/2024/10/08/x86_3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Windows/">Windows</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/10/05/x86_2/" title="x86的保护模式（2）——调用门，中断门，陷阱门与门描述符"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">x86的保护模式（2）——调用门，中断门，陷阱门与门描述符</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/17/x86_1/" title="x86的保护模式（1）——段描述符与段寄存器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-17</div><div class="title">x86的保护模式（1）——段描述符与段寄存器</div></div></a></div><div><a href="/2024/10/05/x86_2/" title="x86的保护模式（2）——调用门，中断门，陷阱门与门描述符"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-05</div><div class="title">x86的保护模式（2）——调用门，中断门，陷阱门与门描述符</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">288</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">180</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AE%B5%E6%8F%8F%E8%BF%B0%E7%AC%A6%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.</span> <span class="toc-text">段描述符实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%AE%B5"><span class="toc-number">1.1.</span> <span class="toc-text">代码段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%AE%B5"><span class="toc-number">1.2.</span> <span class="toc-text">数据段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%A8%E6%8F%8F%E8%BF%B0%E7%AC%A6%E5%AE%9E%E9%AA%8C"><span class="toc-number">2.</span> <span class="toc-text">门描述符实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E9%97%A8"><span class="toc-number">2.1.</span> <span class="toc-text">调用门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD%E9%97%A8"><span class="toc-number">2.2.</span> <span class="toc-text">中断门</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">3.</span> <span class="toc-text">参考文献</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/08/x86_3/" title="x86的保护模式（2）——门描述符实验">x86的保护模式（2）——门描述符实验</a><time datetime="2024-10-07T16:00:00.000Z" title="发表于 2024-10-08 00:00:00">2024-10-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/10/05/x86_2/" title="x86的保护模式（2）——调用门，中断门，陷阱门与门描述符">x86的保护模式（2）——调用门，中断门，陷阱门与门描述符</a><time datetime="2024-10-05T06:00:00.000Z" title="发表于 2024-10-05 14:00:00">2024-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/17/x86_1/" title="x86的保护模式（1）——段描述符与段寄存器">x86的保护模式（1）——段描述符与段寄存器</a><time datetime="2024-09-17T09:00:00.000Z" title="发表于 2024-09-17 17:00:00">2024-09-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/02/KCTF2024/" title="KCTF2024第八题 writeup">KCTF2024第八题 writeup</a><time datetime="2024-09-02T12:00:00.000Z" title="发表于 2024-09-02 20:00:00">2024-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/08/etw/" title="etw机制分析">etw机制分析</a><time datetime="2024-07-08T02:00:00.000Z" title="发表于 2024-07-08 10:00:00">2024-07-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
