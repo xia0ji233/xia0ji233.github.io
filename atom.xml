@@ -6,7 +6,7 @@
   <link href="https://xia0ji233.github.io/atom.xml" rel="self"/>
   
   <link href="https://xia0ji233.github.io/"/>
-  <updated>2024-11-03T18:35:51.586Z</updated>
+  <updated>2024-11-07T05:41:25.551Z</updated>
   <id>https://xia0ji233.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>windows内核（1）——分页</title>
+    <link href="https://xia0ji233.github.io/2024/11/07/WindowsKernel1/"/>
+    <id>https://xia0ji233.github.io/2024/11/07/WindowsKernel1/</id>
+    <published>2024-11-07T05:00:00.000Z</published>
+    <updated>2024-11-07T05:41:25.551Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天开始正式学习分页的相关知识</p><span id="more"></span><h2 id="分页与物理地址"><a href="#分页与物理地址" class="headerlink" title="分页与物理地址"></a>分页与物理地址</h2><h3 id="什么是物理地址"><a href="#什么是物理地址" class="headerlink" title="什么是物理地址"></a>什么是物理地址</h3><p>在学习二进制的时候就有区分过物理地址和虚拟地址这两个概念，其实就是内存条真正的地址，这里不再赘述。而学习保护模式我们知道，实际的线性地址 &#x3D; 逻辑地址+段寄存器.base，在汇编和C指针层面所使用的地址都是逻辑地址。但是似乎它等同于虚拟地址（线性地址），这是因为通常情况下段寄存器的 base 都为 0。</p><h3 id="10-10-12分页详解"><a href="#10-10-12分页详解" class="headerlink" title="10-10-12分页详解"></a>10-10-12分页详解</h3><h4 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h4><p>拿到一个32位的地址，将其结构进行拆分</p><img src="/2024/11/07/WindowsKernel1/1.png" class=""><p>这就是 10-10-12 分页的命名由来，而去寻找对应的物理页也是根据每个进程的 Cr3 寄存器的值去找到，整体分页结构如下图所示</p><img src="/2024/11/07/WindowsKernel1/2.png" class=""><p>同时我们也可以看到，不同的虚拟页是可以映射同一个物理页的，下面来介绍一下 PDE 和 PTE 的基本结构。</p><h4 id="物理页的属性"><a href="#物理页的属性" class="headerlink" title="物理页的属性"></a>物理页的属性</h4><img src="/2024/11/07/WindowsKernel1/3.png" class=""><p>下面描述一下各个位的作用：</p><ul><li>P 位：表示<code>PDE</code>或者<code>PTE</code>是否有效，如果有效为<code>1</code>，反之为<code>0</code>。</li><li>R&#x2F;W 位：如果<code>R/W = 0</code>，表示是只读的，反之为可读可写。</li><li>U&#x2F;S 位：如果<code>U/S = 0</code>，则为特权用户（super user），即非3环权限。反之，则为普通用户，即为3环权限。</li><li>PS位：这个位只对<code>PDE</code>有意义。如果<code>PS == 1</code>，则<code>PDE</code>直接指向物理页，不再指向<code>PTE</code>，低22位是页内偏移。它的大小为<code>4MB</code>，俗称“大页”。</li><li>A 位：是否被访问，即是否被读或者写过，如果被访问过则置<code>1</code>。</li><li>D 位：脏位，指示是否被写过。若没有被写过为<code>0</code>，被写过为<code>1</code>。</li><li>G 位：表示是否为全局页。它的作用是什么呢？举个例子，操作系统的进程的高<code>2G</code>映射基本不变，如果<code>Cr3</code>改了，<code>TLB</code>刷新重建高<code>2G</code>以上很浪费。所以<code>PDE</code>和<code>PTE</code>中有个<code>G</code>位，如果为1，刷新<code>TLB</code>时将不会刷新它指向的页。</li><li>PWT 位：当<code>PWT = 1</code>，写缓存的时候也要将数据写入内存中。</li><li>PCD 位：当<code>PCD = 1</code>时，禁止某个页写入缓存，直接写内存。比如，做页表用的页，已经存储在TLB中了，可能不需要再缓存了。</li></ul><p>需要注意的是</p><ul><li><code>PTE</code> 可以没有物理页，且只能对应一个物理页。</li><li>多个<code>PTE</code>也可以指向同一个物理页。</li><li><code>PDE</code>和<code>PTE</code>重合的属性共同决定着最终物理页的属性。比如 P 位，如果有一个是 0，那么最终的物理页就是无效的。但是<code>PDE</code>和<code>PTE</code>它们的属性的影响范围是不一样的。数值上：物理页的属性 &#x3D; PDE属性 &amp; PTE属性。</li></ul><h2 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h2><p>对于一个给定的线性地址，比如我们执行<code>mov eax,ds:[0x12345678]</code>这句汇编指令的时候，<code>0x12345678</code>这个线性地址会传递给<code>CPU</code>，先查询<strong>TLB</strong>（页表缓存）和<strong>缓存</strong>有没有，有的话直接取出来返回；如果没有，经过 MMU（Memory Management Unit，内存管理单元）处理得到物理地址，通过固定的分页模式直接找到，取出数据返回。</p><p>TLB大概就是一张表，根据线性地址和 CR3 的值去找物理页地址，如果命中，MMU将可以快速完成翻译。如果 TLB 没有对应的项，则往后会查页表的缓存，查到了也会快速返回，否则只能够去一次一次访存查询页表（这里具体的过程还没有特别弄懂，mark一下，写了新的回来补）。</p><img src="/2024/11/07/WindowsKernel1/4.png" class=""><p>上面我们经历了一遍翻译的过程，具体我们需要给入几个参数：页表基址（物理地址），线性地址，数据，寄存器，读写信号，这也就解释了为什么 CPU 不允许直接交换两个位置的内存，如果允许则这方面处理将比较麻烦，何况并不是说不提供交换内存的指令就无法实现一些功能。</p><h3 id="页表学习准备"><a href="#页表学习准备" class="headerlink" title="页表学习准备"></a>页表学习准备</h3><p>笔者用的系统是 Win7 32 位的，虽然现在 32 位的系统几乎用的很少了，但是为了系统的学习还是从简单的开始。Win7 32 默认是 2-9-9-12 分页，先用几个指令配置为更简单的 10-10-12 分页。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bcdedit /set pae ForceDisable  </span><br><span class="line">bcdedit /set nx AlwaysOff </span><br></pre></td></tr></table></figure><p>如果要关闭那么用下面两个指令</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bcdedit /set pae forceEnable</span><br><span class="line">bcdedit /set nx OptIn</span><br></pre></td></tr></table></figure><p>这样就回到了 2-9-9-12 分页。</p><ul><li>如果是2-9-9-12分页运行的内核 ntkrnlpa.exe</li><li>如果是10-10-12分页运行的内核 ntoskrnl.exe</li></ul><h3 id="地址翻译练习"><a href="#地址翻译练习" class="headerlink" title="地址翻译练习"></a>地址翻译练习</h3><p>但是物理地址与之完全不一样，先可以尝试通过 windbg 练习寻找物理地址，这里使用记事本配合CE。</p><img src="/2024/11/07/WindowsKernel1/5.png" class=""><p>那么得到线性地址是 <code>0029DFB0</code>，根据 10-10-12 分页规则，将页表拆开</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0000000000 1010011101 111110110000</span><br></pre></td></tr></table></figure><p>这三部分分别是，页目录项（PDE），页表项（PTE），页内偏移（offset）。</p><img src="/2024/11/07/WindowsKernel1/6.png" class=""><p>找到页表基址，获得页目录项的地址，即 <code>DirBase+4*PDE</code>。在这里页表项地址就是 <code>DirBase</code>，随后跟过去，这里需要注意，这个地址并不是真的地址，而是因为每个页表项它有一定的大小。可能装下一个页目录项就要完整的一个页，如果是这样就决定了页目录项的地址一定是页对齐的（最低三位十六进制地址为0），所以我们找到的地址再把最低三位十六进制置为0就是真实的页目录项了，而通过前面的学习也可以看到，最低的十二个位被赋予了特殊的含义。</p><p>我们找到的该内存页目录项地址实际上就是 <code>ad688000</code>，然后再页目录项中找到页表项 <code>1010011101</code> 转为十六进制得到 <code>29d</code>，同样的，页目录项地址+4*PTE 得到页的物理地址，也就是 <code>ad688a74</code>。</p><img src="/2024/11/07/WindowsKernel1/7.png" class=""><p>同样的，这里低三位十六进制也不是真实的地址，需要清零得到该页的页表基址，最后再加上页内偏移，也就是 FB0。</p><img src="/2024/11/07/WindowsKernel1/8.png" class=""><p>成功找到对应的物理内存。</p><p>而我们的 CR3 寄存器存储的就是页目录表的物理地址，即 Page Director Table，那么所说的 PDE 当然就是 Page Director Entry了。PTE 就是 Page Table Entry，对应的每个目录项指向的是一个 PTT，Page Table Table。</p><h2 id="页目录表基址与页表基址"><a href="#页目录表基址与页表基址" class="headerlink" title="页目录表基址与页表基址"></a>页目录表基址与页表基址</h2><p>由于物理地址对操作系统是不可见的，所以操作系统必须有线性访问页表的能力，唯一的办法就是将自身的页表挂在一个特殊的地址上，这个地址是 0xC0300000。</p><img src="/2024/11/07/WindowsKernel1/9.png" class=""><p>也可以发现，CR3 对应的物理地址与线性地址 0xC0300000 是一致的。</p><p>相同与页目录表基址，为了在程序内快速访问页表，也有一个页表基址，页表基址对应的线性地址是 0xC0000000。</p><p>这里记一下通过线性地址寻找PTE和PDE的公式。</p><ul><li>访问页目录表的公式：<code>0xC0300000 + PDI * 4</code></li><li>访问页表的公式：<code>0xC0000000 + PDI * 4096 + PTI * 4</code></li></ul><p>很有趣的是，你会发现如果你要寻找 0xC0300000 对应的页表，用第二个公式代入就是它本身。即</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0xC0300000</span><br><span class="line"></span><br><span class="line">高10位：  1100 0000 00   =   0x300</span><br><span class="line">中间10位：1100 0000 00   =   0x300</span><br><span class="line">低12位：  0000 0000 0000 =   0x000</span><br></pre></td></tr></table></figure><p>代入第二个公式可得 <code>0xC0000000 + 0x300 * 4096 + 0x300 * 4 = 0xC0300000</code></p><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul><li>[1]：<a href="https://www.cnblogs.com/wingsummer/p/15363603.html">https://www.cnblogs.com/wingsummer/p/15363603.html</a></li><li>[2]：<a href="http://www.qfrost.com/posts/windowskernel/windows%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_4/">http://www.qfrost.com/posts/windowskernel/windows保护模式学习笔记_4&#x2F;</a></li></ul>]]></content>
+    
+    
+    <summary type="html">今天开始正式学习分页的相关知识</summary>
+    
+    
+    
+    <category term="Windows" scheme="https://xia0ji233.github.io/categories/Windows/"/>
+    
+    <category term="Kernel" scheme="https://xia0ji233.github.io/categories/Windows/Kernel/"/>
+    
+    
+    <category term="Windows" scheme="https://xia0ji233.github.io/tags/Windows/"/>
+    
+  </entry>
   
   <entry>
     <title>x86的保护模式（4）——任务门</title>
@@ -32,11 +55,11 @@
     
     <category term="Windows" scheme="https://xia0ji233.github.io/categories/Windows/"/>
     
+    <category term="Kernel" scheme="https://xia0ji233.github.io/categories/Windows/Kernel/"/>
+    
     <category term="X86" scheme="https://xia0ji233.github.io/categories/X86/"/>
     
     <category term="Protected_Mode" scheme="https://xia0ji233.github.io/categories/X86/Protected-Mode/"/>
-    
-    <category term="Kernel" scheme="https://xia0ji233.github.io/categories/Windows/Kernel/"/>
     
     
     <category term="Windows" scheme="https://xia0ji233.github.io/tags/Windows/"/>
@@ -59,11 +82,11 @@
     
     <category term="Windows" scheme="https://xia0ji233.github.io/categories/Windows/"/>
     
+    <category term="Kernel" scheme="https://xia0ji233.github.io/categories/Windows/Kernel/"/>
+    
     <category term="X86" scheme="https://xia0ji233.github.io/categories/X86/"/>
     
     <category term="Protected_Mode" scheme="https://xia0ji233.github.io/categories/X86/Protected-Mode/"/>
-    
-    <category term="Kernel" scheme="https://xia0ji233.github.io/categories/Windows/Kernel/"/>
     
     
     <category term="Windows" scheme="https://xia0ji233.github.io/tags/Windows/"/>
@@ -86,11 +109,11 @@
     
     <category term="Windows" scheme="https://xia0ji233.github.io/categories/Windows/"/>
     
+    <category term="Kernel" scheme="https://xia0ji233.github.io/categories/Windows/Kernel/"/>
+    
     <category term="X86" scheme="https://xia0ji233.github.io/categories/X86/"/>
     
     <category term="Protected_Mode" scheme="https://xia0ji233.github.io/categories/X86/Protected-Mode/"/>
-    
-    <category term="Kernel" scheme="https://xia0ji233.github.io/categories/Windows/Kernel/"/>
     
     
     <category term="Windows" scheme="https://xia0ji233.github.io/tags/Windows/"/>
@@ -113,11 +136,11 @@
     
     <category term="Windows" scheme="https://xia0ji233.github.io/categories/Windows/"/>
     
+    <category term="Kernel" scheme="https://xia0ji233.github.io/categories/Windows/Kernel/"/>
+    
     <category term="X86" scheme="https://xia0ji233.github.io/categories/X86/"/>
     
     <category term="Protected_Mode" scheme="https://xia0ji233.github.io/categories/X86/Protected-Mode/"/>
-    
-    <category term="Kernel" scheme="https://xia0ji233.github.io/categories/Windows/Kernel/"/>
     
     
     <category term="Windows" scheme="https://xia0ji233.github.io/tags/Windows/"/>
@@ -468,31 +491,6 @@
     
     <category term="2021-4145" scheme="https://xia0ji233.github.io/categories/Linux/CVE/2021-4145/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>LLVM——交叉编译的配置</title>
-    <link href="https://xia0ji233.github.io/2024/03/04/LLVM5/"/>
-    <id>https://xia0ji233.github.io/2024/03/04/LLVM5/</id>
-    <published>2024-03-04T12:00:00.000Z</published>
-    <updated>2024-04-09T05:23:09.875Z</updated>
-    
-    <content type="html"><![CDATA[<p>记录一下LLVM交叉编译踩的坑</p><span id="more"></span><h2 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a>交叉编译</h2><p>关于这个概念其实很简单，生成其它平台上的可执行文件的编译过程就叫交叉编译。</p><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>第一步先实现最简单的跨平台交叉编译，我使用Windows版本的LLVM，尝试编译 Linux 平台的 ELF 文件。首先交叉编译要进行一定的环境配置，配置 include path 和库的目录。因为交叉编译需要用到一些 gcc 的库，所以自己编译 glibc 然后复制 include path 和 lib path 到自己的机器是没用的。</p><p>这里我选择直接使用一台自己装过 gcc 开发环境的机器，将 <code>/usr/include</code> 目录的文件拷贝过来，这里我拷贝到 <code>D:\Linux\include</code> 下，再将 gcc 的库拷贝到 <code>D:\Linux\lib\</code> 目录下。这里还有一个坑就是启动文件也需要指定，启动文件在 gcc 里面都有。</p><p>最后编译的命令行为： <code>clang -fuse-ld=lld -g main.cpp -target x86_64-linux-gnu -ID:\Linux\include -L-BD:\Linux\lib\gcc\x86_64-linux-gnu\11 -o main -BD:\Linux\lib\gcc\x86_64-linux-gnu\11</code> 即可。</p><p>但是注意，因为好像这个目录下的 lib 是软链接 <code>/usr/lib/x86_64-linux-gnu</code> 下的库，所以需要用下面的库进行覆盖才可以完成编译。</p><img src="/2024/03/04/LLVM5/1.png" class=""><p>目前看上去效果还不错，特此记录一下，后面做 ARM 平台的交叉编译可以 refer 这次的经历。</p>]]></content>
-    
-    
-    <summary type="html">记录一下LLVM交叉编译踩的坑</summary>
-    
-    
-    
-    <category term="Compiler" scheme="https://xia0ji233.github.io/categories/Compiler/"/>
-    
-    <category term="LLVM" scheme="https://xia0ji233.github.io/categories/Compiler/LLVM/"/>
-    
-    
-    <category term="LLVM" scheme="https://xia0ji233.github.io/tags/LLVM/"/>
-    
-    <category term="Linux" scheme="https://xia0ji233.github.io/tags/Linux/"/>
     
   </entry>
   
