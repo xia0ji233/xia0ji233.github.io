@@ -1,0 +1,8 @@
+User-agent: *
+
+Allow: /
+
+Disallow: /*.jpg$
+Disallow: /*.png$
+
+Sitemap: 
