@@ -4,5 +4,3 @@ Allow: /
 
 Disallow: /*.jpg$
 Disallow: /*.png$
-
-Sitemap: 
