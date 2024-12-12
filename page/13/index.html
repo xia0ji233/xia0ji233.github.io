@@ -53,7 +53,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2024-12-12 10:48:46'
+  postUpdate: '2024-12-12 16:56:54'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -151,133 +151,207 @@
       }
       detectApple()
     })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
-</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">301</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">180</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">xia0ji233's blog</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/17/Game2/" title="游戏安全的学习（2）">游戏安全的学习（2）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-17T06:00:00.000Z" title="发表于 2023-01-17 14:00:00">2023-01-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Windows/">Windows</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Windows/GameSec/">GameSec</a></span></div><div class="content">游戏安全的学习（2）—— 利用Windows API 操作游戏窗口，和扫雷游戏分析。
-先定个小目标，实现以下功能：
-
-透视，炸弹不炸，时间暂停，一键扫雷等等
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">291</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">179</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">xia0ji233's blog</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/09/Go16/" title="Golang入门学习（16）">Golang入门学习（16）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-09T00:30:00.000Z" title="发表于 2023-01-09 08:30:00">2023-01-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Golang/">Golang</a></span></div><div class="content">Go的第16课——timer，ticker
 
 
-
-句柄句柄（handle）是Windows操作系统用来标识被应用程序所建立或使用的对象的整数，可以理解为内核有一张句柄表，我们打开获得的句柄得到的是句柄表的偏移值。
-特定的，窗口句柄叫 HWND。我们可以通过 VS 的工具选项中的 SPY++ 
- 
-
-去找到窗口的标题，句柄和类等等信息。
-获取窗口句柄使用 API FindWindow 即可，我们需要给定两个参数，第一个参数为 Class Name，第二个参数为 Window name，应该是标题。我们可以给第一个参数传 NULL 一样能成功获取窗口句柄。
-设置窗口标题使用 SetWindowText 就可以了，第一个参数为窗口句柄，第二个参数为要修改的标题。
-然后我们来搞搞扫雷。
-12345678#include&lt;windows.h&gt;#include&lt;iostream&gt;int main() &#123;    HWND hwnd=FindWindow( ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/16/Game1/" title="游戏安全的学习（1）">游戏安全的学习（1）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-16T08:00:00.000Z" title="发表于 2023-01-16 16:00:00">2023-01-16</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Windows/">Windows</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Windows/GameSec/">GameSec</a></span></div><div class="content">游戏安全的学习（1）—— CE 的基本用法
-开始学习游戏安全了，后续跟着队爹搞 O 去。
+Timer开启定时任务Timer顾名思义，就是定时器的意思，可以实现一些定时操作，内部也是通过channel来实现的。
+虽然可以使用 sleep 实现，但是这个对象可以让我们细化到某个操作到某个操作之间间隔确定的时间，比如我的顺序是要求 A B C，要求 A 和 C 至少间隔两秒的时间。如果使用 sleep 的话就不太方便操作，因为 B 也会消耗一定时间，如果直接 sleep 2 可能会导致等待多余的时间，那么我们就可以在A事件开始后设定 timer，在 C 开始前读出 timer 的 channel，这样就可以保证了，而且写法非常简便。
+1234567891011121314151617package mainimport (    &quot;fmt&quot;    &quot;time&quot;)func main() &#123;    timer := time.NewTimer(time.Second * 2)//创建定时器    fmt.Printf(&quot;time:%v\n&quot;, time.Now())  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/08/OS1/" title="开发操作系统（1）">开发操作系统（1）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-08T06:00:00.000Z" title="发表于 2023-01-08 14:00:00">2023-01-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/OS/">OS</a></span></div><div class="content">今天准备开始学习开发操作系统了。
+就叫它 XIAOJIOS 吧~
 
 
-Cheat Engine简介说到游戏安全就不得不提这个软件了，这个软件本质是一款内存调试器，但是它对内存搜索的便捷特性使得它很容易修改游戏的某些数值，成为入门游戏安全必备的一个软件。
-CE练习关卡CE 它内置了很多小游戏帮助我们快速入门 CE 这款软件，基础练习就不说了，我们直接来到游戏修改的这几关。可以在安装目录下找到 gtutorial-i386.exe 这个程序，这就是我们的练习关卡了，有三个经典的小游戏让我们修改。
-第一关一个射击游戏，那边有一个靶标，我们需要摧毁目标，提示说了，每射击五次目标会回血并且立刻处于无敌状态，并且是在第五发子弹射出去的瞬间生效，正常过关我们是很难的，那就考虑修改靶标的血量，找到这一块内存。
-因为不知道伤害和血量，所以首次搜索使用未知的初始值去搜索，搜索类型为 4 字节。
-每射出一发子弹打到目标，就搜一次减少的数值，如果四次打完还没有找到合适的值，那就打出第五发子弹然后去搜 增加的数值，随后再这样循环操作直到看到合适的值。
+学习开发操作系统的原因呢，第一点还是因为咱们国家的一个情况，我还是希望掌握开发 OS 的一个技术的，第二点是因为很多操作系统的机制希望去学习一下，并且尝试自己编写一份。
+这里参照一本书《30天自制操作系统》，主要也是跟着它学习的。
+环境准备今天主要用到两个工具：
+
+NASM——基于英特尔 x86 架构的汇编与反汇编工具
+qemu——开源免费的虚拟机程序
+
+nas汇编文件的编译方式为：
+1nasm xxx.nas -o xxx.img
+
+qemu启动加载 img 文件的方式为：
+1qemu-system-x86_64 -drive file=os.img,if=floppy
+
+编写nas汇编文件这里就用它给的吧，毕竟这个格式要说是自己写的我自己都不信。
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647; hello.nas; TAB=4; 标准FAT12格式软盘专用的代码 Stand FAT12 f ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/08/Go15/" title="Golang入门学习（15）">Golang入门学习（15）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-08T00:30:00.000Z" title="发表于 2023-01-08 08:30:00">2023-01-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Golang/">Golang</a></span></div><div class="content">Go的第15课——锁、channel遍历、select 语句
 
 
-我们找到了一个初始值为 100  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/15/Go19/" title="Golang入门学习（19）">Golang入门学习（19）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-15T07:30:00.000Z" title="发表于 2023-01-15 15:30:00">2023-01-15</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Golang/">Golang</a></span></div><div class="content">Go的第19课——Go对mysql的操作
+sync.Mutex基本这个协程可以理解为多线程里面的线程。线程在操作临界资源的时候会产生竞争，锁可以避免发生竞争。
+使用以下语法定义一个锁变量
+1var lock sync.Mutex
+
+lock.Lock() 可以为一个锁进行上锁操作，若锁已被其它协程上锁，则阻塞当前协程直到锁被释放。
+lock.Unlock() 可以释放一个锁。
+实例看下面这个例子
+123456789101112131415161718192021222324252627282930313233343536373839package mainimport (    &quot;fmt&quot;    &quot;sync&quot;)var wg sync.WaitGroupvar lock sync.Mutexvar k intvar locktest bool = false//change herefunc add() &#123;    defer wg.Done()    if locktest &#123;        lock.L ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/07/Go14/" title="Golang入门学习（14）">Golang入门学习（14）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-07T15:00:00.000Z" title="发表于 2023-01-07 23:00:00">2023-01-07</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Golang/">Golang</a></span></div><div class="content">Go的第14课——runtime包
 
 
-对于包的理解终于是对包这个东西有点概念了。首先我们直接导包，只会去 GOROOT 当中寻找，GOROOT 就是你安装 go 的一个地方，当然我们如果写的项目太大了肯定是要分很多包的，直接写在 GOROOT 里面又感觉很难受。
-那么此时是这样的，我们要新建一个项目，这个项目作为文件夹，然后里面再建包，新建一个 go.mod 文件，内容就是 
-123module [projectname]go [go version]
-
-比如我的项目名称为 xia0ji233，那么我的 go.mod 就是这样的内容：
-123module xia0ji233go 1.19
-
-里面新建的文件夹就会被作为包啦，要引用的时候就是 import &quot;xia0ji233/pkgname&quot;。
-环境准备mysql就不说了官网上直接下，主要说说驱动下载，这里建议直接去 github 官网搞下来，这里贴一个 link。
-然后像刚刚那样，新建一个项目，把源码目录改名为 mysql 放入项目文件夹即可，只要能引用就可以了。
+go并发编程之runtime包runtime包里面定义了一些协程管理相关的api
+runtime.Gosched()让出CPU时间片，重新等待安排任务。
+比如说下面这段代码
+123456789101112131415161718192021222324252627package mainimport (    &quot;fmt&quot;    &quot;time&quot;)func show(s string) &#123;    for i := 0; i &lt; 2; i++ &#123;        fmt.Println(s)    &#125;&#125;func main() &#123;    go show(&quot;java&quot;)    //主协程    for i := 0; i &lt; 2; i++ &#123;        runtime.Gosched() //注释掉查看结果        fmt.Println(&quot;golang&quot;)    &#125;    time.Sle ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/06/Talk1/" title="一个普通的CTFer的感想">一个普通的CTFer的感想</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-05T19:00:00.000Z" title="发表于 2023-01-06 03:00:00">2023-01-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Talk/">Talk</a></span></div><div class="content">作为练习时长两年半的 CTFer，发表下感言吧。
 
 
-连接数据库然后再要一个 databas ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/14/Go18/" title="Golang入门学习（18）">Golang入门学习（18）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-14T12:30:00.000Z" title="发表于 2023-01-14 20:30:00">2023-01-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Golang/">Golang</a></span></div><div class="content">Go的第18课——OS模块对进程的操作。
-
-中间歇了一天主要是为ICPC做准备，看ranklist本来感觉能铜，结果打铁，麻了。。
-
-
-
-OS模块对进程的操作获取当前进程pid和父进程pid。
-12os.Getpid();os.Getppid();
-
-创建一个进程并为进程设置一个属性。
-12345678910111213141516171819package mainimport (    &quot;fmt&quot;    &quot;os&quot;)func main() &#123;    fmt.Println(os.Getpid())    fmt.Println(os.Getppid())    attr := &amp;os.ProcAttr&#123;        Dir:   &quot;&quot;,        Env:   os.Environ(),        Files: []*os.File&#123;os.Stdin, os.Stdout, os.Stderr&#125;,        Sys:   nil,    &#125;    pid ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/12/Go17/" title="Golang入门学习（17）">Golang入门学习（17）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-12T15:30:00.000Z" title="发表于 2023-01-12 23:30:00">2023-01-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Golang/">Golang</a></span></div><div class="content">Go的第17课——OS模块介绍，OS模块读文件
+CTFer的那些事比赛我还是非常喜欢的，那种和队友一起激情淦题的过程那真的是非常的棒，甚至一些比赛能让我做到不吃不喝一天在电脑前打，唯 CTF 能做到了，特别是到了每次 Nepnep 战队要参加的各种什么 XCTF，或者是强网杯之类的，总是要扛起大旗去打比赛的，虽然自知能力不足以扛大旗，但是能做点微不足道的小贡献也能让我开心很久。最开心的自然是每次比赛交 flag 的时候，那是巴不得让所有人知道，虽然这有装 x 的嫌疑，但是我只是想分享一个普通的 CTFer 做出题目的喜悦。
+因为学校队伍的原因，我一开始也是义无反顾地选择了二进制的路线并在上面越走越远，回想当初对计算机很多特性一窍不通的我，到现在能熟练地使用一些自己学到的知识并加以利用，CTF 还是帮了我很大的忙。
+我学CTF的历史说到 CTF，那可不得不提到我的学姐了，当初她带我进了 CTF，选择了这个方向，加入了网络安全的大家庭，我最幸运的是我刚好赶上了 Nepnep 战队在寒假的一次培训（当然也是学姐告诉我的，我太感谢学姐了！！），我也加入了 Nepnep 这个小家庭。
+在  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/06/Codeforces%20Round%20842(Div.2)/" title="Codeforces Round 842(Div.2)解析">Codeforces Round 842(Div.2)解析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-05T17:00:00.000Z" title="发表于 2023-01-06 01:00:00">2023-01-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/icpc/">icpc</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/icpc/codeforces/">codeforces</a></span></div><div class="content">这场是真的输麻了，D嗑错了 + C FST
 
 
-今天goland又报了错误，按照第一篇文章说的网址激活已经失效，因此换了一个方式，这里贴个链接
-OS库OS标准库实现了平台无关的编程接口。
-创建文件：
-1os.Create(&quot;test.txt&quot;)
+A. Greatest Convex题目描述：
+题目分析在 1~k 中找出一个尽可能大的数 x 使得 $x!\times (x-1)!\ mod\ k&#x3D;0$ 也就是说能被 k 整除。那么化简一下式子得到 $(x+1)\times (x-1)!\ mod\ k&#x3D;0$ 然后要在 k 以内找到尽可能大的数 x 成立，很显然，x=k-1 的时候是最优的。所以我们的标程就是输入一个值我们输出 k-1 就行。    
+标程1234567891011121314151617181920#include&lt;bits/stdc++.h&gt;#define maxn 200005using namespace std;int a[maxn],b[maxn];char s[maxn];int n,m;int dp[maxn],sum1[maxn],sum2[maxn];void solve()&#123;    scanf(&quot;%d&quot;,&amp;n);    printf(&quot;%d\n&quot;,n-1); ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/05/redirect/" title="Linux Shell重定向">Linux Shell重定向</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-04T16:00:00.000Z" title="发表于 2023-01-05 00:00:00">2023-01-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux/">Linux</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux/redirect/">redirect</a></span></div><div class="content">补补Linux的基础吧
 
-创建目录：
-12os.Mkdir(&quot;test&quot;, os.ModePerm)os.MkdirAll(&quot;a/b/c/d&quot;, os.ModePerm)
 
-两个区别就是 MkdirAll 支持多级目录创建，如果尝试用 Mkdir 去创建多级目录那么不会被执行。
-删除文件：
-12os.Remove(&quot;test&quot;)os.RemoveAll(&quot;a&quot;)
-
-RemoveAll 也是一样，如果 remove 尝试删除一个非空目录，那么不会被运行。
-获取工作目录：
-1os.Getwd()
-
-修改工作目录：
-1os.Chdir(&quot;../../&quot;)
-
-重命名文件：
-1os.Rename(&quot;src&quot;,&quot;dest&quo ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/12/CSAPP_5/" title="CS:APP第五章学习">CS:APP第五章学习</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-12T04:30:00.000Z" title="发表于 2023-01-12 12:30:00">2023-01-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/csapp/">csapp</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/csapp/optimize-program/">optimize program</a></span></div><div class="content">开始学 CSAPP的第五章
-逐步更新吧~
-
-2023-01-08 19:00:00 第一次写
-2023-01-11 23:00:00 更新新内容
-2023-01-12 12:30:00 写完第五章
+重定向简介大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
+在打开一个文件之后，我们会获得一个文件描述符 fd，而我们默认打开的三个文件的文件描述符分别是 0（stdin），1（stdout），2（stderr）。
+重定向标识在 Linux 命令中 三个默认文件描述符的
 
 
 
-优化编译器的能力和局限性也懒得去复制书上的东西了，就是告诉了我们编译器在编译代码的时候会对代码做出优化等等之类的，但是我们的优化需要足够安全，我们必须保证在任何情况下，优化和不优化的代码只会带来效率上的差异而不会对任何形式输出的任何结果产生差异。
-这一章主要介绍了一个例子
-问：
-1234int test(int *x,int *y)&#123;	*x+=*y;	*x+=*y;&#125;
-
-能否用以下程序作为优化
-123int test(int *x,int *y)&#123;	*x+=2*(*y);&#125;
-
-乍一看好像可以，因为就是 x 所指向的 int 内存加了两次 y，完全可以用，并且对比上下的代码，上面需要进行 6 次访存（读 y，读x，写x，读y，读x，写x），而下面的代码只需要 3 次访存（读y，读x，写x）
-感觉很完美，但是实际上是不行的，因为如果 x 和 y 指向 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/11/Git3/" title="Git学习之路（3）">Git学习之路（3）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-11T04:30:00.000Z" title="发表于 2023-01-11 12:30:00">2023-01-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Git/">Git</a></span></div><div class="content">Git学习之路（3）——分支
+名称
+代码
+操作符
+Linux 下文件描述符（Debian 为例)
 
 
 
-
-分支（branch）为什么使用分支
-如果你希望为项目增加新特性，但很可能会影响当前可正常工作的代码。对于该项目的活跃用户而言，这是很糟糕的事情。与其将特性加入到其它人正在使用的master分支，更好的方法是在仓库的其它分支中变更代码。
-更重要的是，Git其设计用于协作。如果所有人都在你代码仓库的master分支上操作，会引发很多混乱。对编程语言或项目的知识和阅历因人而异；有些人可能会编写有错误或缺陷的代码，也可能会编写你觉得不适合该项目的代码。使用分支可以让你核验他人的贡献并选择适合的加入到项目中。（这里假设你是代码库唯一的所有者，希望对增加到项目中的代码有完全的控制。在真实的项目中，代码库有多个具有合并代码权限的所有者）
-
-使用分支的好处
-同时并行推进多个功能开发，提高开发效率
-各个分支在开发过程中，如果某一个分支开发失败，不会对其他分支有任何影响。失败的分支删除重新开始即可。
-
-分支常用命令查看当前分支1git branch -v
-
-创建分支1git branch branch_name
-
-删除分支1git branch -d branch_n ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/10/Git2/" title="Git学习之路（2）">Git学习之路（2）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-10T12:30:00.000Z" title="发表于 2023-01-10 20:30:00">2023-01-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Git/">Git</a></span></div><div class="content">Git学习之路（2）——Git的常见命令以及配置
+标准输入(stdin)
+0
+&lt; 或 &lt;&lt;
+&#x2F;dev&#x2F;stdin -&gt; &#x2F;proc&#x2F;self&#x2F;fd&#x2F;0 -&gt; &#x2F;dev&#x2F;pts&#x2F;0
 
 
-Git常用命令这里记一下常见的 Git 命令以及它的作用：
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364git branch 查看本地所有分支git status 查看当前状态git commit 提交git branch -a 查看所有的分支git branch -r 查看远程所有分支git commit -am &quot;init&quot; 提交并且加注释git remote add origin git@192.168.1.119:ndshow git push origin master 将文件给推到服务器上git remote show origin 显示远程库origin里的资源git push origin master:develop git push origin master:hb-dev 将本地库与服务器上的库进行关 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/09/OS2/" title="开发操作系统（2）">开发操作系统（2）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-09T11:00:00.000Z" title="发表于 2023-01-09 19:00:00">2023-01-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/OS/">OS</a></span></div><div class="content">开发OS的第二天
-&amp;学习Makefile
+标准输出(stdout)
+1
+&gt;, &gt;&gt;, 1&gt; 或 1&gt;&gt;
+&#x2F;dev&#x2F;stdout -&gt; &#x2F;proc&#x2F;sel ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/04/Go13/" title="Golang入门学习（13）">Golang入门学习（13）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-04T15:00:00.000Z" title="发表于 2023-01-04 23:00:00">2023-01-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Golang/">Golang</a></span></div><div class="content">Go的第13课——Go 并发
 
 
-编写NAS汇编文件这里附件给的源文件已经是纯粹的汇编代码+数据组成了。
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061; hello-os; TAB=4		ORG		0x7c00			; 指明程序装载地址; 标准FAT12格式软盘专用的代码 Stand FAT12 format floppy code		JMP		entry		DB		0x90		DB		&quot;HELLOIPL&quot;		; 启动扇区名称（8字节）		DW		512				; 每个扇区（sector）大小（必须512字节）		DB		1				; 簇（cluster）大小（必须为1个扇区）		DW		1				; FAT起始位置（一般为第一个扇区）		DB		2				; FAT个数（必须为2）		DW		224				; 根目录大小（一般为224项）		DW		2880			; ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/09/Git1/" title="Git学习之路（1）">Git学习之路（1）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-09T10:30:00.000Z" title="发表于 2023-01-09 18:30:00">2023-01-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Git/">Git</a></span></div><div class="content">Git学习之路（1）——Git的基本用法
-就是多学学对自己有用的东西吧
+这几天元旦在外面浪呢，也是很长一段时间没有学习，今天来补补。
+go并发编程协程Golang中的并发是 函数 相互独立运行的能力。Goroutines是并发运行的函数。Golang提供了Goroutines作为并发处理操作的一种方式。创建一个协程非常简单，就是在一个任务函数前面添加一个go关键字：
+1go function(1,2,3)
+
+相当于是让 function 异步执行，后续语句不等待 function(1,2,3) 执行完毕。
+就相当于是开一个线程去执行函数内容，等同于 python 中的 threading.Thread(target=funciton,args=[1,2,3]).start()
+实例为了起到效果，是用了 time 包里的 sleep 函数。
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647package mainimport (	&quot;fmt&quot;	&quot;time&quot;)func  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/01/Nepnep-CatCTF2022/" title="攻防世界 x Nepnep x CATCTF 2022 Nepnep战队官方WP">攻防世界 x Nepnep x CATCTF 2022 Nepnep战队官方WP</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-01-01T10:00:00.000Z" title="发表于 2023-01-01 18:00:00">2023-01-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ctf/">ctf</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ctf/writeup/">writeup</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/ctf/writeup/CatCTF2022/">CatCTF2022</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Nepnep/">Nepnep</a></span></div><div class="content">CatCTF2022 官方WP
 
 
-水一章为敬！
-什么是GitWIKI：
+目录
+感谢
+招新
+PWN
+bitcoin🪙
+EXP
+非预期
+源码
 
-在程序设计中，分布式版本控制（英语：distributed revision control 或 distributed version control，又译为分布式版本控制），又称去中心化版本控制（decentralized version control），是一种版本控制的方式，它允许软件开发者可以共同参与一个软件开发项目，但是不必在相同的网络系统下工作。其作法是在每个开发者电脑中复制一份完整的代码库以及完整历史[1]。因此在无法连接网络时，仍可以进行软件的分支及合并，可以加速大部分的作业，增加此情形可以进行的工作，而且系统的代码库可以在多家电脑上备份，不需靠单一位置的备份。而多个位置的代码库再透过其他机制来达到同步。
-以分布式版本控制方法，作出的软件版本控制系统，称为分布式版本控制系统（distributed revision control system，缩写为DRCS，或是distributed version control system，缩写为DVCS）。著 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/12/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/#content-inner">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/#content-inner">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/#content-inner">31</a><a class="extend next" rel="next" href="/page/14/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">301</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">180</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/22/WindowsKernel6/" title="windows内核（6）——中断与异常和控制寄存器">windows内核（6）——中断与异常和控制寄存器</a><time datetime="2024-11-22T07:00:00.000Z" title="发表于 2024-11-22 15:00:00">2024-11-22</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+
+HRPVM🖥️
+漏洞
+EXP
+源码
+
+
+injection2.0💉
+exp
+上传脚本
+
+
+kernel-test 本次资源合集，包括源码，EXP，docker🧬
+Ret2usr
+简易讲解
+源码
+重点
+攻击思路
+EXP
+上传脚本
+tips
+
+
+zip💼
+非预期
+源码
+
+
+welcome_cat_ctf🎉
+chao 🌿
+前言
+逆向分析
+漏洞利用
+exp
+源码
+
+
+Cat of magic🧙‍♀️
+exp
+地图
+
+
+
+
+WEB
+ez_js🐦
+Cat cat😼
+信息收集与尝试
+题目首页
+尝试读取系统文件
+读取源码
+app.py
+代码审计
+审计app.py
+flag部分
+文件读取部分
+审计cat.py
+文件读取功能
+使用方法
+解题
+获取secret key
+读取堆栈分布
+读取对应位置内存数据
+伪造session
+一键获取flag
+写在最后
+
+
+ez_bypass🍥
+ez_curl🔗
+wife💃
+web_challenge💪
+
+
+CRYPTO
+DDH_Game
+解法 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/01/01/408-1-1/" title="计算机组成原理复习（1）">计算机组成原理复习（1）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-12-31T16:00:00.000Z" title="发表于 2023-01-01 00:00:00">2023-01-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/408/">408</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%80%83%E7%A0%94/408/%E8%AE%A1%E7%BB%84/">计组</a></span></div><div class="content">
+考研复习第二天
+
+计算机组成原理相关内容的复习
+
+计算机基础
+原码，补码，反码，移码
+
+
+
+计算机基础计算机层次结构扔点错题上去：
+
+完整的计算机系统应该包括 配套的硬件设备和软件系统。
+存放当前执行指令的寄存器是 IR（Instruction Register）
+运算器中不包含地址寄存器，地址寄存器集成在CPU中。
+系列机的基本特性是：指令系统向后兼容。
+计算机上层和下层的关系是：上层对下层扩展，下层是上层实现的基础。
+计算机硬件能够直接执行的只有机器语言，硬件描述语言也需要经过一定的翻译才可以运行。
+冯诺依曼计算机区分数据和指令主要是根据指令操作码的译码结果。
+软件和硬件逻辑上等效，硬件执行速度比软件快。
+
+计算机的性能指标
+字长：计算机进行一次整数运算所能处理的数据位数，和寄存器位数，加法器有关，他们通常也相等。
+数据通路带宽：外部数据的总线宽度，和内部寄存器数据总线宽度有区别。
+主存容量：可以用字节表示，也可以用某数乘上字长表示，通俗点讲就是内存大小， MAR 的位数反映了存储单元的个数和可寻址的最大范围。
+运算速度：
+吞吐量：单位时间内处理请求的数量。
+响应时间：发出请求后 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/12/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/#content-inner">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/#content-inner">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/#content-inner">30</a><a class="extend next" rel="next" href="/page/14/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">291</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">179</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/22/WindowsKernel6/" title="windows内核（6）——中断与异常和控制寄存器">windows内核（6）——中断与异常和控制寄存器</a><time datetime="2024-11-22T07:00:00.000Z" title="发表于 2024-11-22 15:00:00">2024-11-22</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             <a class="card-more-btn" href="/categories/" title="查看更多">
@@ -285,8 +359,8 @@ Git常用命令这里记一下常见的 Git 命令以及它的作用：
             </div>
             <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AdvancedMath/"><span class="card-category-list-name">AdvancedMath</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AdvancedMath/Fourier-Serials/"><span class="card-category-list-name">Fourier-Serials</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/"><span class="card-category-list-name">C++</span><span class="card-category-list-count">16</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/C-%E7%9A%84%E7%89%B9%E6%80%A7/"><span class="card-category-list-name">C++的特性</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/LLVM/"><span class="card-category-list-name">LLVM</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/OOP/"><span class="card-category-list-name">OOP</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/Windows/"><span class="card-category-list-name">Windows</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C/%E6%A8%A1%E6%9D%BF/"><span class="card-category-list-name">模板</span><span class="card-category-list-count">2</span></a></li></ul></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/RSA/" style="font-size: 1.15em; color: rgb(86, 85, 63)">RSA</a><a href="/tags/AES/" style="font-size: 1.15em; color: rgb(95, 49, 38)">AES</a><a href="/tags/DNS/" style="font-size: 1.15em; color: rgb(63, 39, 17)">DNS</a><a href="/tags/flask/" style="font-size: 1.15em; color: rgb(110, 72, 81)">flask</a><a href="/tags/HITCTF/" style="font-size: 1.21em; color: rgb(164, 142, 107)">HITCTF</a><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" style="font-size: 1.15em; color: rgb(177, 55, 95)">内网渗透</a><a href="/tags/Web%E6%BC%8F%E6%B4%9E/" style="font-size: 1.15em; color: rgb(76, 9, 55)">Web漏洞</a><a href="/tags/ptrace/" style="font-size: 1.21em; color: rgb(114, 104, 149)">ptrace</a><a href="/tags/LLVM/" style="font-size: 1.15em; color: rgb(17, 180, 67)">-LLVM</a><a href="/tags/LLVM/" style="font-size: 1.33em; color: rgb(111, 66, 159)">LLVM</a><a href="/tags/Substitution/" style="font-size: 1.15em; color: rgb(81, 172, 24)">Substitution</a><a href="/tags/Linux/" style="font-size: 1.27em; color: rgb(110, 94, 166)">Linux</a><a href="/tags/Kernel/" style="font-size: 1.15em; color: rgb(135, 146, 58)">Kernel</a><a href="/tags/Socket/" style="font-size: 1.15em; color: rgb(30, 63, 162)">Socket</a><a href="/tags/Net-Program/" style="font-size: 1.15em; color: rgb(34, 43, 192)">Net-Program</a><a href="/tags/base64/" style="font-size: 1.15em; color: rgb(173, 170, 26)">base64</a><a href="/tags/Windows/" style="font-size: 1.45em; color: rgb(192, 83, 25)">Windows</a><a href="/tags/fastbin-reverse-into-tcache/" style="font-size: 1.15em; color: rgb(179, 82, 47)">fastbin_reverse_into_tcache</a><a href="/tags/XYcup/" style="font-size: 1.15em; color: rgb(57, 0, 131)">XYcup</a><a href="/tags/awd/" style="font-size: 1.15em; color: rgb(57, 41, 142)">awd</a><a href="/tags/hook/" style="font-size: 1.15em; color: rgb(124, 58, 55)">hook</a><a href="/tags/global-max-fast/" style="font-size: 1.15em; color: rgb(2, 152, 52)">global_max_fast</a><a href="/tags/pwnable-kr/" style="font-size: 1.39em; color: rgb(68, 9, 28)">pwnable.kr</a><a href="/tags/Binary-Serach/" style="font-size: 1.15em; color: rgb(141, 42, 194)">Binary-Serach</a><a href="/tags/operator-priority/" style="font-size: 1.15em; color: rgb(115, 108, 83)">operator priority</a><a href="/tags/bash/" style="font-size: 1.15em; color: rgb(29, 66, 60)">bash</a><a href="/tags/shellshock/" style="font-size: 1.15em; color: rgb(72, 174, 94)">shellshock</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
-    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/12/"><span class="card-archive-list-date">十二月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/11/"><span class="card-archive-list-date">十一月 2024</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">十月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">六月 2024</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">3</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">301</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2021-04-25T00:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">690.8k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-12-12T02:48:41.619Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/RSA/" style="font-size: 1.15em; color: rgb(131, 115, 195)">RSA</a><a href="/tags/AES/" style="font-size: 1.15em; color: rgb(165, 97, 84)">AES</a><a href="/tags/DNS/" style="font-size: 1.15em; color: rgb(127, 81, 48)">DNS</a><a href="/tags/flask/" style="font-size: 1.15em; color: rgb(76, 116, 101)">flask</a><a href="/tags/HITCTF/" style="font-size: 1.21em; color: rgb(9, 173, 56)">HITCTF</a><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" style="font-size: 1.15em; color: rgb(65, 200, 98)">内网渗透</a><a href="/tags/Web%E6%BC%8F%E6%B4%9E/" style="font-size: 1.15em; color: rgb(181, 145, 92)">Web漏洞</a><a href="/tags/ptrace/" style="font-size: 1.21em; color: rgb(35, 3, 110)">ptrace</a><a href="/tags/LLVM/" style="font-size: 1.15em; color: rgb(152, 179, 173)">-LLVM</a><a href="/tags/LLVM/" style="font-size: 1.33em; color: rgb(10, 188, 95)">LLVM</a><a href="/tags/Substitution/" style="font-size: 1.15em; color: rgb(50, 170, 84)">Substitution</a><a href="/tags/Linux/" style="font-size: 1.27em; color: rgb(115, 71, 33)">Linux</a><a href="/tags/Socket/" style="font-size: 1.15em; color: rgb(135, 194, 119)">Socket</a><a href="/tags/Net-Program/" style="font-size: 1.15em; color: rgb(180, 132, 70)">Net-Program</a><a href="/tags/base64/" style="font-size: 1.15em; color: rgb(83, 158, 52)">base64</a><a href="/tags/Kernel/" style="font-size: 1.15em; color: rgb(101, 45, 152)">Kernel</a><a href="/tags/Windows/" style="font-size: 1.45em; color: rgb(35, 37, 80)">Windows</a><a href="/tags/fastbin-reverse-into-tcache/" style="font-size: 1.15em; color: rgb(75, 131, 170)">fastbin_reverse_into_tcache</a><a href="/tags/XYcup/" style="font-size: 1.15em; color: rgb(29, 42, 180)">XYcup</a><a href="/tags/awd/" style="font-size: 1.15em; color: rgb(152, 43, 151)">awd</a><a href="/tags/hook/" style="font-size: 1.15em; color: rgb(126, 71, 90)">hook</a><a href="/tags/global-max-fast/" style="font-size: 1.15em; color: rgb(56, 3, 157)">global_max_fast</a><a href="/tags/pwnable-kr/" style="font-size: 1.39em; color: rgb(32, 26, 79)">pwnable.kr</a><a href="/tags/Binary-Serach/" style="font-size: 1.15em; color: rgb(46, 94, 189)">Binary-Serach</a><a href="/tags/operator-priority/" style="font-size: 1.15em; color: rgb(80, 196, 179)">operator priority</a><a href="/tags/bash/" style="font-size: 1.15em; color: rgb(145, 57, 29)">bash</a><a href="/tags/shellshock/" style="font-size: 1.15em; color: rgb(3, 198, 83)">shellshock</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/12/"><span class="card-archive-list-date">十二月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/11/"><span class="card-archive-list-date">十一月 2024</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">十月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">六月 2024</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">3</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">291</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2021-04-25T00:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">688.7k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-12-12T08:56:50.351Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
   init: (str) => {
     window.typed = new Typed('#subtitle', Object.assign({
       strings: str,
