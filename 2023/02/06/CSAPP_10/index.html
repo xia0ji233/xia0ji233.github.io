@@ -1,0 +1,439 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CS:APP第十章学习 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="开始学 CSAPP的第十章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS:APP第十章学习">
+<meta property="og:url" content="https://xia0ji233.github.io/2023/02/06/CSAPP_10/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="开始学 CSAPP的第十章">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-02-06T11:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-16T13:21:17.712Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2023/02/06/CSAPP_10/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS:APP第十章学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-16 21:21:17'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">153</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS:APP第十章学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-06T11:00:00.000Z" title="发表于 2023-02-06 19:00:00">2023-02-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-16T13:21:17.712Z" title="更新于 2025-01-16 21:21:17">2025-01-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/">书籍阅读</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/CSAPP/">CSAPP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>19分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS:APP第十章学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>开始学 CSAPP的第十章</p>
+<p>逐步更新：</p>
+<ul>
+<li>2023-02-01：开始写</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="梗概"><a href="#梗概" class="headerlink" title="梗概"></a>梗概</h2><p>这里介绍了我们学习 Unix IO 的一个原因。第一点就是帮助我们理解更深层次的系统概念，第二点就是在某些编程环境下，除了最底层的 IO 我们别无选择。</p>
+<h2 id="Unix-IO"><a href="#Unix-IO" class="headerlink" title="Unix IO"></a>Unix IO</h2><p>在 Linux 当中，一切皆文件，所有的 IO 设备都以文件的形式<strong>挂载</strong>在文件系统当中，我们需要输入输出只需要简单的读写文件即可，这使得我们访问任何设别都可以以简单一致的方式去访问：</p>
+<ul>
+<li>打开文件：通过 open 函数打开一个文件，内核会记录这个文件的所有信息，用户层会返回一个<strong>文件描述符</strong>，用户层要操作文件只需要对文件描述符操作即可。</li>
+<li>Linux在创建进程的时候有默认的三个打开的问及那：标准输入（stdin），标准输出（stdout），标准错误（stderr）。</li>
+<li>改变当前文件的位置：对于每个打开的文件，内核会记录文件所在的位置 k，初始为 0，通过 seek 操作我们可以改变这个值。</li>
+<li>读写文件：读文件就是把文件中从 k 开始到 k+size 的文件内容复制到内存，写文件就是把文件中从 k 开始到 k + size 的文件内容用内存中的某些值替换。</li>
+<li>关闭文件：完成了访问之后，我们应当使用 close 函数去通知内核关闭这个文件，释放系统资源。</li>
+</ul>
+<h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><p>每个 Linux 文件都有一个类型来表示它的角色，通常情况下我们把 Linux 的文件类型分为以下几个类型：</p>
+<ul>
+<li>普通文件（regular file）：应用程序要细分下面两个类型，内核不会区分。<ul>
+<li>文本文件（text file）：只包含 ASCII 或者是 UNICODE 字符的普通文件</li>
+<li>二进制文件（binary file）：包含任意字节的普通文件。</li>
+</ul>
+</li>
+<li>目录（directory）：是包含一组链接的文件，每个链接都将一个文件名映射到一个文件，这个文件可能是另一个目录。目录中至少包含两个链接：<code>.</code> 和 <code>..</code> 分别表示指向自己的链接和自己的父目录的链接。</li>
+<li>套接字（socket）：用来与另一个进程进行跨网络通信的文件。</li>
+</ul>
+<p>Linux 的文件系统：</p>
+<img src="/2023/02/06/CSAPP_10/1.png" class="">
+
+<p>每个进程都会有一个<strong>当前工作目录</strong>（current working directory）来确定其在目录层次结构中的当前位置。可以用 cd 命令来修改 shell 中的当前工作目录。</p>
+<p>目录层次结构中的位置用<strong>路径名</strong>（pathname）来指定。路径名是一个字符串，包括一个可选斜杠，其后紧跟一系列的文件名，文件名之间用斜杠分隔。路径名有两种形式：</p>
+<ul>
+<li><strong>绝对路径名</strong>（absolute pathname）以一个斜杠开始，表示从根节点开始的路径。例如，在图 10-1 中，hello.c 的绝对路径名为 <strong>&#x2F;home&#x2F;droh&#x2F;hello.c</strong>。</li>
+<li><strong>相对路径名</strong>（relative pathname）以文件名开始，表示从当前工作目录开始的路径。例如，在图 10-1 中，如果 <strong>&#x2F;home&#x2F;droh</strong> 是当前工作目录，那么 <strong>hello.c</strong> 的相对路径名就是 <strong>.&#x2F;hello.c</strong>。反之，如果 <strong>&#x2F;home&#x2F;bryant</strong> 是当前工作目录，那么相对路径名就是 <strong>..&#x2F;home&#x2F;droh&#x2F;hello.c</strong>。</li>
+</ul>
+<h2 id="打开和关闭文件"><a href="#打开和关闭文件" class="headerlink" title="打开和关闭文件"></a>打开和关闭文件</h2><p>使用 open 函数打开一个文件，返回一个文件描述符。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">open</span><span class="params">(<span class="type">char</span> *filename, <span class="type">int</span> flags, <span class="type">mode_t</span> mode)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回：若成功则为新文件描述符，若出错为 -1。</span></span><br></pre></td></tr></table></figure>
+
+<p>open 函数将 filename 转换为一个文件描述符，并且返回描述符数字。返回的描述符总是在进程中<strong>当前没有打开的最小描述符</strong>。flags 参数指明了进程打算如何访问这个文件：</p>
+<ul>
+<li>O_RDONLY：只读。</li>
+<li>O_WRONLY：只写。</li>
+<li>O_RDWR：可读可写。</li>
+</ul>
+<p>（以上宏存在于头文件 <code>fcntl.h</code>）</p>
+<p>flags 参数也可以按位或更多位掩码，为写提供给一些额外的指示：</p>
+<ul>
+<li>O_CREAT：如果文件不存在，就创建它的一个<strong>截断的</strong>（truncated）（空）文件。</li>
+<li>O_TRUNC：如果文件已经存在，就清空里面的内容。</li>
+<li>O_APPEND：在每次写操作前，设置文件位置到文件的结尾处。</li>
+</ul>
+<p>第三个参数是我们创建文件时的权限，我们都知道 Linux 的文件权限有 9 位二进制数字组成，因此它也有定义九个宏分别表示这些权限。</p>
+<table>
+<thead>
+<tr>
+<th>掩码</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S_IRUSR</td>
+<td>使用者（拥有者）能够读这个文件</td>
+</tr>
+<tr>
+<td>S_IWUSR</td>
+<td>使用者（拥有者）能够写这个文件</td>
+</tr>
+<tr>
+<td>S_IXUSR</td>
+<td>使用者（拥有者）能够执行这个文件</td>
+</tr>
+<tr>
+<td>S_IRGRP</td>
+<td>拥有者所在组的成员能够读这个文件</td>
+</tr>
+<tr>
+<td>S_IWGRP</td>
+<td>拥有者所在组的成员能够写这个文件</td>
+</tr>
+<tr>
+<td>S_IXGRP</td>
+<td>拥有者所在组的成员能够执行这个文件</td>
+</tr>
+<tr>
+<td>S_IROTH</td>
+<td>其他人（任何人）能够读这个文件</td>
+</tr>
+<tr>
+<td>S_IWOTH</td>
+<td>其他人（任何人）能够写这个文件</td>
+</tr>
+<tr>
+<td>S_IXOTH</td>
+<td>其他人（任何人）能够执行这个文件</td>
+</tr>
+</tbody></table>
+<p>以上宏在 <code>sys/stat.h</code> 定义。 </p>
+<p>当然，属性 Linux 的大可不用，如果我们想设置 777 权限直接给参数 <code>0777</code> 即可，前缀 0 表明是一个八进制的数字。</p>
+<p>umask可以让防止创建文件权限带上某些权限，拥有最高的统治地位，一般来说 umask 为 0，我们在设置文件权限的时候，会让文件权限按位与上一个 <code>~umask</code>，<code>~0</code> 其实就是全 <code>1</code>。</p>
+<p>比如我不想文件带有执行权限，那么我设置 <code>umask(0111)</code>，屏蔽每一组的执行权限。</p>
+<p>例如我们写了下面这个程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> *argv[])</span>&#123;</span><br><span class="line">	<span class="type">char</span> *filename=<span class="string">&quot;./flag&quot;</span>;</span><br><span class="line">	umask(<span class="number">0111</span>);</span><br><span class="line">	<span class="type">int</span> fd=open(filename,O_RDWR|O_TRUNC|O_CREAT,<span class="number">0777</span>);</span><br><span class="line">	write(fd,<span class="string">&quot;flag&#123;test_flag&#125;&quot;</span>,<span class="number">15</span>);</span><br><span class="line">	close(fd);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么我们得到的 flag 文件最终权限是  <code>0666</code>。</p>
+<blockquote>
+<p>练习1：下面程序的输出是什么？</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;csapp.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">       <span class="type">int</span> fd1, fd2;</span><br><span class="line"></span><br><span class="line">       fd1 = Open(<span class="string">&quot;foo.txt&quot;</span>, O_RDONLY, <span class="number">0</span>);</span><br><span class="line">       Close(fd1);</span><br><span class="line">       fd2 = Open(<span class="string">&quot;baz.txt&quot;</span>, O_RDONLY, <span class="number">0</span>);</span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">&quot;fd2 = %d\n&quot;</span>, fd2);</span><br><span class="line">       <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>因为文件描述符的分配是最小没有被使用的一个非负数，因为默认有 0 1 2，fd1&#x3D;3，但是fd3被关闭了，因此fd2&#x3D;3。</p>
+<p>所以最终输出 <code>fd2 = 3</code>。</p>
+<h2 id="读文件和写文件"><a href="#读文件和写文件" class="headerlink" title="读文件和写文件"></a>读文件和写文件</h2><p>使用 read 函数和 write 函数来读写文件。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">ssize_t</span> <span class="title function_">read</span><span class="params">(<span class="type">int</span> fd, <span class="type">void</span> *buf, <span class="type">size_t</span> n)</span>;</span><br><span class="line"><span class="comment">// 返回：若成功则为读的字节数，若 EOF 则为0，若出错为 -1。</span></span><br><span class="line"></span><br><span class="line"><span class="type">ssize_t</span> <span class="title function_">write</span><span class="params">(<span class="type">int</span> fd, <span class="type">const</span> <span class="type">void</span> *buf, <span class="type">size_t</span> n)</span>;</span><br><span class="line"><span class="comment">// 返回：若成功则为写的字节数，若出错则为 -1。</span></span><br></pre></td></tr></table></figure>
+
+<p><code>size_t</code> 和 <code>ssize_t</code> 类型的最大区别就是 <code>ssize_t</code> 有符号。</p>
+<p>在某些情况下，read 和 write 传送的字节比应用程序要求的要少。这些<strong>不足值</strong>（short count）不表示有错误。出现这样情况的原因有：</p>
+<ul>
+<li><strong>读时遇到 EOF。</strong>假设我们准备读一个文件，该文件从当前文件位置开始只含有 20 多个字节，而我们以 50 个字节的片进行读取。这样一来，下一个 read 返回的不足值为 20，此后的 read 将通过返回不足值 0 来发出 EOF 信号。</li>
+<li><strong>从终端读文本行。</strong>如果打开文件是与终端相关联的（如键盘和显示器），那么每个 read 函数将一次传送一个文本行，返回的不足值等于文本行的大小。</li>
+</ul>
+<p>实际上，除了 EOF，当你在读磁盘文件时，将不会遇到不足值，而且在写磁盘文件时，也不会遇到不足值。然而，如果你想创建健壮的（可靠的）诸如 Web 服务器这样的网络应用，就必须通过反复调用 read 和 write 处理不足值，直到所有需要的字节都传送完毕。</p>
+<p>比如常见的的一定能读完 50 字节的模板：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> n=<span class="number">50</span>;</span><br><span class="line"><span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">50</span>;i++)&#123;</span><br><span class="line">    read(<span class="number">0</span>,buffer+i,<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用健壮的包"><a href="#使用健壮的包" class="headerlink" title="使用健壮的包"></a>使用健壮的包</h2><p>这个在打 PWN 的时候也真是见得多了，所以这章略了。</p>
+<h2 id="读取文件元数据"><a href="#读取文件元数据" class="headerlink" title="读取文件元数据"></a>读取文件元数据</h2><p>应用程序能够通过调用 stat 和 fstat 函数，检索到关于文件的信息（有时也称为文件的<strong>元数据</strong>（metadata））。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">stat</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *filename, <span class="keyword">struct</span> stat *buf)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fstat</span><span class="params">(<span class="type">int</span> fd, <span class="keyword">struct</span> stat *buf)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回：若成功则为 0，若出错则为 -1。</span></span><br></pre></td></tr></table></figure>
+
+<p>在 Linux shell 中，使用 <code>man 2 stat</code> 可以查看文件元数据的结构体。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Metadata returned by the stat and fstat functions */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span> &#123;</span></span><br><span class="line">    <span class="type">dev_t</span>         st_dev;      <span class="comment">/* Device */</span></span><br><span class="line">    <span class="type">ino_t</span>         st_ino;      <span class="comment">/* inode */</span></span><br><span class="line">    <span class="type">mode_t</span>        st_mode;     <span class="comment">/* Protection and file type */</span></span><br><span class="line">    <span class="type">nlink_t</span>       st_nlink;    <span class="comment">/* Number of hard links */</span></span><br><span class="line">    <span class="type">uid_t</span>         st_uid;      <span class="comment">/* User ID of owner */</span></span><br><span class="line">    <span class="type">gid_t</span>         st_gid;      <span class="comment">/* Group ID of owner */</span></span><br><span class="line">    <span class="type">dev_t</span>         st_rdev;     <span class="comment">/* Device type (if inode device) */</span></span><br><span class="line">    <span class="type">off_t</span>         st_size;     <span class="comment">/* Total size, in bytes */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> st_blksize;  <span class="comment">/* Block size for filesystem I/O */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> st_blocks;   <span class="comment">/* Number of blocks allocated */</span></span><br><span class="line">    <span class="type">time_t</span>        st_atime;    <span class="comment">/* Time of last access */</span></span><br><span class="line">    <span class="type">time_t</span>        st_mtime;    <span class="comment">/* Time of last modification */</span></span><br><span class="line">    <span class="type">time_t</span>        st_ctime;    <span class="comment">/* Time of last change */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>它也定义在 <code>sys/stat.h</code> 头文件中。</p>
+<p>st_size 成员包含了文件的字节数大小。st_mode 成员则编码了文件访问许可位和文件类型。</p>
+<p>Linux 在 sys&#x2F;stat.h 中定义了宏谓词来确定 st_mode 成员的文件类型：</p>
+<ul>
+<li>**S_ISREG(m)**。这是一个普通文件吗？</li>
+<li>**S_ISDIR(m)**。这是一个目录文件吗？</li>
+<li>**S_ISSOCK(m)**。这是一个网络套接字吗？</li>
+</ul>
+<p>通过读取 st_mode 成员来判断文件类型。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">s</span>;</span></span><br><span class="line">    <span class="type">char</span> *type, *readok;</span><br><span class="line">    stat(argv[<span class="number">1</span>], &amp;s);</span><br><span class="line">    <span class="keyword">if</span> (S_ISREG(s.st_mode))     <span class="comment">/* Determine file type */</span></span><br><span class="line">        type = <span class="string">&quot;regular&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (S_ISDIR(s.st_mode))</span><br><span class="line">        type = <span class="string">&quot;directory&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        type = <span class="string">&quot;other&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span> ((s.st_mode &amp; S_IRUSR))  <span class="comment">/* Check read access */</span></span><br><span class="line">        readok = <span class="string">&quot;yes&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        readok = <span class="string">&quot;no&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;type: %s, read: %s\n&quot;</span>, type, readok);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="读取目录内容"><a href="#读取目录内容" class="headerlink" title="读取目录内容"></a>读取目录内容</h2><p>同样的套路：打开，读，关闭，而且因为目录的特殊性，目录的写其实就是在里面创建文件或者是文件夹。</p>
+<p>打开：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dirent.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">DIR *<span class="title function_">opendir</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回：若成功，则为处理的指针；若出错，则为 NULL。</span></span><br></pre></td></tr></table></figure>
+
+<p>读：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dirent.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> dirent *<span class="title function_">readdir</span><span class="params">(DIR *dirp)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回：若成功，则为指向下一个目录项的指针；</span></span><br><span class="line"><span class="comment">//      若没有更多的目录项或出错，则为 NULL。</span></span><br></pre></td></tr></table></figure>
+
+<p>对于这里返回的 dirent 结构体，它的定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dirent</span> &#123;</span></span><br><span class="line">    <span class="type">ino_t</span> d_ino;      <span class="comment">/* inode number */</span></span><br><span class="line">    <span class="type">char</span> d_name[<span class="number">256</span>]; <span class="comment">/* Filename */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>inode 其实就是底层逻辑的文件命名。</p>
+<p>第一个字段表示节点编号，第二个字段表示文件名。</p>
+<p>关闭：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dirent.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">closedir</span><span class="params">(DIR *dirp)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回：成功为 0；错误为 -1。</span></span><br></pre></td></tr></table></figure>
+
+<p>那么根据这些函数，我们可以写一个类似 <code>ls</code> 命令的功能。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;dirent.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">DIR</span> *<span class="title">d</span>=</span>opendir(<span class="string">&quot;/etc/&quot;</span>);</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dirent</span> *<span class="title">dnode</span>;</span></span><br><span class="line">    <span class="keyword">while</span>((dnode=readdir(d))!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,dnode-&gt;d_name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="共享文件"><a href="#共享文件" class="headerlink" title="共享文件"></a>共享文件</h2><p>这里介绍了三个表：</p>
+<ul>
+<li>描述符表：进程之间独立，每个打开的<strong>文件描述符表项</strong>指向<strong>文件表</strong>中的一个表项。</li>
+<li>文件表：进程之间共享，它有所有进程打开的文件表项，每个表项包括了文件位置、引用计数、以及指向 <strong>v-node 表项</strong>对应的指针。当引用计数为 0 也就是所有进程都关闭了这个文件时，内核会删除这个表项。</li>
+<li>v-node 表：也是所有进程共享，里面的一个表项包含了 stat 结构信息以及其它一些额外的字段。</li>
+</ul>
+<p>下面有张图很好的描述了这几张表之间的关系：</p>
+<img src="/2023/02/06/CSAPP_10/2.png" class="">
+
+<p>这里需要说明的一点就是：打开文件表中的引用计数仅仅在 fork 的时候会增加，其余情况（如同一进程重复打开同一文件，或者不同进程打开同一文件）不会增加。</p>
+<p>下面演示同一进程重复打开同一文件的情况：</p>
+<img src="/2023/02/06/CSAPP_10/3.png" class="">
+
+<p>它会产生两个打开文件表的表项，而不是单纯地就指向过去就完事了。</p>
+<p>最后就是 fork 的情况了：</p>
+<img src="/2023/02/06/CSAPP_10/4.png" class="">
+
+<p>来看看例题：</p>
+<blockquote>
+<p>练习10.2：假设磁盘文件 foobar.txt 由 6 个 ASCII 码字符 “foobar” 组成。那么，下列程序的输出是什么？</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;csapp.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">       <span class="type">int</span> fd1, fd2;</span><br><span class="line">       <span class="type">char</span> c;</span><br><span class="line"></span><br><span class="line">       fd1 = Open(<span class="string">&quot;foobar.txt&quot;</span>, O_RDONLY, <span class="number">0</span>);</span><br><span class="line">       fd2 = Open(<span class="string">&quot;foobar.txt&quot;</span>, O_RDONLY, <span class="number">0</span>);</span><br><span class="line">       Read(fd1, &amp;c, <span class="number">1</span>);</span><br><span class="line">       Read(fd2, &amp;c, <span class="number">1</span>);</span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">&quot;c = %c\n&quot;</span>, c);</span><br><span class="line">       <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>这题很明显是属于同一进程打开同一文件的情况，因为它们不共享同一表项，因此是独立的，输出就是 <code>c = f</code>。</p>
+<blockquote>
+<p>练习10.3：就像前面那样，假设磁盘文件 foobar.txt 由 6 个 ASCII 码字符 “foobar” 那么下列程序的输出是什么？</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;csapp.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">       <span class="type">int</span> fd;</span><br><span class="line">       <span class="type">char</span> c;</span><br><span class="line"></span><br><span class="line">       fd = Open(<span class="string">&quot;foobar.txt&quot;</span>, O_RDONLY, <span class="number">0</span>);</span><br><span class="line">       <span class="keyword">if</span> (Fork() == <span class="number">0</span>) &#123;</span><br><span class="line">           Read(fd, &amp;c, <span class="number">1</span>);</span><br><span class="line">           <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">       &#125;</span><br><span class="line">       Wait(<span class="literal">NULL</span>);</span><br><span class="line">       Read(fd, &amp;c, <span class="number">1</span>);</span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">&quot;c = %c\n&quot;</span>, c);</span><br><span class="line">       <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>这一题很明显就是 fork 的情况，fork 只会拷贝文件描述符不会新增打开文件表项，因此子进程先读取一个，父进程再读取一个就读取到了第二个字符，最后输出 <code>c = o</code>。</p>
+<h2 id="I-O-重定向"><a href="#I-O-重定向" class="headerlink" title="I&#x2F;O 重定向"></a>I&#x2F;O 重定向</h2><p>Linuxshell 提供了 I&#x2F;O 重定向操作符，允许用户将磁盘文件和标准输入输出联系起来。例如，键入：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">linux&gt; <span class="built_in">ls</span> &gt; foo.txt</span><br></pre></td></tr></table></figure>
+
+<p>可以把 ls 命令的输出定向到当前目录下 foo.txt 的文件中。</p>
+<p>那么它是怎么重定向的呢，第一种方式就是使用 dup2 函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">dup2</span><span class="params">(<span class="type">int</span> oldfd, <span class="type">int</span> newfd)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回：若成功则为非负的描述符，若出错则为 -1。</span></span><br></pre></td></tr></table></figure>
+
+<p>dup2 函数复制描述符表表项 oldfd 到描述符表表项 newfd，覆盖描述符表表项 newfd 以前的内容。如果 newfd 已经打开了，dup2 会在复制 oldfd 之前关闭 newfd。</p>
+<p>比如上面，这样的一个描述符表的结构：</p>
+<img src="/2023/02/06/CSAPP_10/2.png" class="">
+
+<p>再调用 <code>dup2(4,1)</code> 之后执行下面的操作：</p>
+<p>发现 <code>fd=1</code> 的描述符已经打开了一个文件，那么关闭这个文件，这个文件打开表的那一项会被删除，再让描述符 <code>1</code> 指向描述符 <code>4</code> 所指向的打开文件表项。</p>
+<p>最后结果变成了这样：</p>
+<img src="/2023/02/06/CSAPP_10/5.png" class="">
+
+<p><code>dup2</code> 函数本意是：为已有的文件描述符创建一个新的文件描述符，如果说是要把某个描述符定向到某个文件则需要反向思考一下。</p>
+<p><code>dup2(4,1)</code> 可以被描述成：为文件描述符 4 的文件创建了一个新的文件描述符 1，因为 1 已经有一个文件了（通常是标准输出），所以把原文件关闭，这个描述符指向了被拷贝的文件描述符所指向的文件指针。</p>
+<p>它也可以被描述成：把标准输出定向到 fd&#x3D;4 的文件中去。</p>
+<p>来看看练习题：</p>
+<blockquote>
+<p>练习10.4：如何用 dup2 将标准输入重定向到描述符 5？</p>
+</blockquote>
+<p>跟那个差不多，就是 dup2(5,0) 了。</p>
+<blockquote>
+<p>练习10.5：假设磁盘文件 foobar.txt 由 6 个 ASCII 码字符 “foobar” 组成，那么下列程序的输出是什么？</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="meta">#<span class="keyword">include</span> <span class="string">&quot;csapp.h&quot;</span></span></span><br><span class="line"></span><br><span class="line">&gt;<span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&gt;&#123;</span><br><span class="line">       <span class="type">int</span> fd1, fd2;</span><br><span class="line">       <span class="type">char</span> c;</span><br><span class="line"></span><br><span class="line">       fd1 = Open(<span class="string">&quot;foobar.txt&quot;</span>, O_RDONLY, <span class="number">0</span>);</span><br><span class="line">       fd2 = Open(<span class="string">&quot;foobar.txt&quot;</span>, O_RDONLY, <span class="number">0</span>);</span><br><span class="line">       Read(fd2, &amp;c, <span class="number">1</span>);</span><br><span class="line">       Dup2(fd2, fd1);</span><br><span class="line">       Read(fd1, &amp;c, <span class="number">1</span>);</span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">&quot;c = %c\n&quot;</span>, c);</span><br><span class="line">       <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&gt;&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>这里读了 fd2 的一个字节，把 fd2 复制到了 fd1 描述符，因此再次使用 fd1 去读取就是得到了 o。</p>
+<p>所以输出 <code>c = o</code>。</p>
+<p>重定向这一节之前专门写过一篇的：<a href="/2023/01/05/redirect/">传送门</a></p>
+<h2 id="标准-I-O"><a href="#标准-I-O" class="headerlink" title="标准 I&#x2F;O"></a>标准 I&#x2F;O</h2><p>其实就是库对接口进行的封装，操作系统给我们提供的 IO 接口很简单，如果都使用 read 输入，write 输出的话效率会非常低。glibc提供了打开和关闭文件的函数（fopen 和 fclose）、读和写字节的函数（fread 和 fwrite）、读和写字符串的函数（fgets 和 fputs），以及复杂的格式化的 I&#x2F;O 函数（scanf 和 printf）。</p>
+<p>标准 I&#x2F;O 库将一个打开的文件模型化为一个流。对于程序员而言，一个流就是一个指向 FILE 类型的结构的指针。每个 ANSI C 程序开始时都有三个打开的流 stdin、stdout 和 stderr，分别对应于标准输入、标准输出和标准错误</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">extern</span> FILE *<span class="built_in">stdin</span>;    <span class="comment">/* Standard input (descriptor 0) */</span></span><br><span class="line"><span class="keyword">extern</span> FILE *<span class="built_in">stdout</span>;   <span class="comment">/* Standard output (descriptor 1) */</span></span><br><span class="line"><span class="keyword">extern</span> FILE *<span class="built_in">stderr</span>;   <span class="comment">/* Standard error (descriptor 2) */</span></span><br></pre></td></tr></table></figure>
+
+<p>类型为 FILE 的流是对文件描述符和流缓冲区的抽象。流缓冲区的目的和 RIO 读缓冲区的一样：就是使开销较高的 Linux I&#x2F;O 系统调用的数量尽可能得小。例如，假设我们有一个程序，它反复调用标准 I&#x2F;O 的 getc 函数，每次调用返回文件的下一个字符。当第一次调用 getc 时，库通过调用一次 read 函数来填充流缓冲区，然后将缓冲区中的第一个字节返回给应用程序。只要缓冲区中还有未读的字节，接下来对 getc 的调用就能直接从流缓冲区得到服务。</p>
+<h2 id="我该使用哪些-I-O-函数？"><a href="#我该使用哪些-I-O-函数？" class="headerlink" title="我该使用哪些 I&#x2F;O 函数？"></a>我该使用哪些 I&#x2F;O 函数？</h2><p>Unix I&#x2F;O、标准 I&#x2F;O 和 RIO 之间的关系如下图所示：</p>
+<img src="/2023/02/06/CSAPP_10/6.png" class="">
+
+<p>stdio 和 RIO 都是对 UNIX IO 的封装和抽象，不同的情况下各有各的好处，下面提供本书的一些基本原则：</p>
+<ul>
+<li><strong>G1：只要有可能就使用标准 I&#x2F;O。</strong>除了stat读取文件基本信息以外，都推荐使用stdio封装的函数。</li>
+<li><strong>G2：不要使用 scanf 或 rio_readlineb 来读二进制文件。</strong>像 scanf 或 rio_read-lineb 这样的函数是专门设普来读取文本文件的。二进制文件可能会散布很多的 0xa 字节，一旦出现，scanf 便会终止，因此会出现奇奇怪怪的错误。</li>
+<li><strong>G3：对网络套接字的 I&#x2F;O 使用 RIO 函数。</strong>不幸的是，当我们试着将标准 I&#x2F;O 用于网络的输入输出时，出现了一些令人讨厌的问题。如同我们将在 11.4 节所见，Linux 对网络的抽象是一种称为套接字的文件类型。就像所有的 Linux 文件一样，套接字由文件描述符来引用，在这种情况下称为套接字描述符。应用程序进程通过读写套接字描述符来与运行在其他计算机的进程实现通信。</li>
+</ul>
+<p>标准 I&#x2F;O 流，从某种意义上而言是全双工的，因为程序能够在同一个流上执行输入和输出。然而，对流的限制和对套接字的限制，有时候会互相冲突，而又极少有文档描述这些现象：</p>
+<ul>
+<li><strong>限制 1：跟在输出函数之后的输入函数。</strong>如果中间没有插入对 fflush、fseek、fsetpos 或者 rewind 的调用，一个输入函数不能跟随在一个输出函数之后。fflush 函数清空与流相关的缓冲区。后三个函数使用 Unix I&#x2F;O lseek 函数来重置当前的文件位置。</li>
+<li><strong>限制 2：跟在输入函数之后的输出函数。</strong>如果中间没有插入对 fseek、fsetpos 或者 rewind 的调用，一个输出函数不能跟随在一个输入函数之后，除非该输入函数遇到了一个文件结束。</li>
+</ul>
+<p>这些限制给网络应用带来了一个问题，因为对套接字使用 lseek 函数是非法的。对流 I&#x2F;O 的第一个限制能够通过采用在每个输入操作前刷新缓冲区这样的规则来满足。然而，要满足第二个限制的唯一办法是，对同一个打开的套接字描述符打开两个流，一个用来读，一个用来写：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FILE *fpin, *fpout;</span><br><span class="line"></span><br><span class="line">fpin = fdopen(sockfd, <span class="string">&quot;r&quot;</span>);</span><br><span class="line">fpout = fdopen(sockfd, <span class="string">&quot;w&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>但是这种方法也有问题，因为它要求应用程序在两个流上都要调用 fclose，这样才能释放与每个流相关联的内存资源，避免内存泄漏：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fclose(fpin);</span><br><span class="line">fclose(fpout);</span><br></pre></td></tr></table></figure>
+
+<p>这一节暂时copy书上的把，后面有自己的理解了再来改改。</p>
+<p>大体按照自己的意思总结就是：普通编程操作文件建议使用 stdio，对网络套接字尽量使用基本的 UNIX IO 函数。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>操作系统给我们提供了基本的操作文件的接口，stdio 和 RIO 包为我们封装了这些接口，让我们能更加顺畅地输入和输出。</p>
+<p>Linux 内核使用三个相关的数据结构来表示打开的文件。描述符表中的表项指向打开文件表中的表项，而打开文件表中的表项又指向 v-node 表中的表项。每个进程都有它自己单独的描述符表，而所有的进程共享同一个打开文件表和 v-node 表。理解这些结构的一般组成就能使我们清楚地理解文件共享和 I&#x2F;O 重定向。</p>
+<p>标准 I&#x2F;O 库是基于 Unix I&#x2F;O 实现的，并提供了一组强大的高级 I&#x2F;O 例程。对于大多数应用程序而言，标准 I&#x2F;O 更简单，是优于 Unix I&#x2F;O 的选择。然而，因为对标准 I&#x2F;O 和网络文件的一些相互不兼容的限制，Unix I&#x2F;O 比之标准 I&#x2F;O 更该适用于网络应用程序。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2023/02/06/CSAPP_10/">https://xia0ji233.github.io/2023/02/06/CSAPP_10/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/10/CSAPP_11/" title="CS:APP第十一章学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS:APP第十一章学习</div></div></a></div><div class="next-post pull-right"><a href="/2023/02/06/52pj-2023/" title="吾爱破解2023红包题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">吾爱破解2023红包题</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">153</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A2%97%E6%A6%82"><span class="toc-number">1.</span> <span class="toc-text">梗概</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unix-IO"><span class="toc-number">2.</span> <span class="toc-text">Unix IO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">打开和关闭文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E6%96%87%E4%BB%B6%E5%92%8C%E5%86%99%E6%96%87%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">读文件和写文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%81%A5%E5%A3%AE%E7%9A%84%E5%8C%85"><span class="toc-number">6.</span> <span class="toc-text">使用健壮的包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-number">7.</span> <span class="toc-text">读取文件元数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96%E7%9B%AE%E5%BD%95%E5%86%85%E5%AE%B9"><span class="toc-number">8.</span> <span class="toc-text">读取目录内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6"><span class="toc-number">9.</span> <span class="toc-text">共享文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#I-O-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">10.</span> <span class="toc-text">I&#x2F;O 重定向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%87%86-I-O"><span class="toc-number">11.</span> <span class="toc-text">标准 I&#x2F;O</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E8%AF%A5%E4%BD%BF%E7%94%A8%E5%93%AA%E4%BA%9B-I-O-%E5%87%BD%E6%95%B0%EF%BC%9F"><span class="toc-number">12.</span> <span class="toc-text">我该使用哪些 I&#x2F;O 函数？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">13.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CS:APP第九章学习 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="开始学 CSAPP的第九章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS:APP第九章学习">
+<meta property="og:url" content="https://xia0ji233.github.io/2023/02/01/CSAPP_9/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="开始学 CSAPP的第九章">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-02-01T09:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-16T13:21:17.719Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2023/02/01/CSAPP_9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS:APP第九章学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-16 21:21:17'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">153</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS:APP第九章学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-01T09:00:00.000Z" title="发表于 2023-02-01 17:00:00">2023-02-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-16T13:21:17.719Z" title="更新于 2025-01-16 21:21:17">2025-01-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/">书籍阅读</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/CSAPP/">CSAPP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">7.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>24分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS:APP第九章学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>开始学 CSAPP的第九章</p>
+<p>逐步更新：</p>
+<ul>
+<li>2023-1-30：开始写</li>
+<li>2023-2-01：完成</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="梗概"><a href="#梗概" class="headerlink" title="梗概"></a>梗概</h2><p>虚拟内存是当今操作系统最重要的概念之一，它提供了三个重要的能力：</p>
+<ul>
+<li>它将主存视为硬盘的缓存，主存只保留活动区域（局部性原理）</li>
+<li>它为每个进程提供一致的地址空间</li>
+<li>它保护了进程的内存，防止被随意覆盖</li>
+</ul>
+<h2 id="物理和虚拟寻址"><a href="#物理和虚拟寻址" class="headerlink" title="物理和虚拟寻址"></a>物理和虚拟寻址</h2><p>计算机的内存被组织为一个由 M 个连续的字节大小的单元组成的数组，每个字节都有唯一的物理地址。CPU 访问内存最自然的方式就是使用物理地址，我们称为<strong>物理寻址</strong> 。早期的 CPU 是使用物理寻址的，而现代的处理器是使用虚拟寻址。</p>
+<p>虚拟寻址与物理寻址相比，多了一步将虚拟地址翻译成物理地址的过程，翻译是通过一个内存管理单元（MMU）的专用硬件，通过查表得知的物理地址，这张表由操作系统管理。</p>
+<h2 id="地址空间"><a href="#地址空间" class="headerlink" title="地址空间"></a>地址空间</h2><p><strong>地址空间</strong>是一个非负整数地址的有序集合：</p>
+<p>如果地址空间中的整数是连续的，那么我们说它是<strong>线性地址空间</strong>。</p>
+<p>为了简化讨论，我们假设地址空间是线性地址空间。</p>
+<p>在带虚拟存储器的系统中，CPU从一个有 $N&#x3D;2^n$ 个地址的地址空间中生成虚拟地址，这个地址空间称为<strong>虚拟地址空间</strong>。</p>
+<p>一个地址空间的大小是由表示最大地址所需要的位数来描述的。</p>
+<p>例如，一个包含 $N&#x3D;2^n$ 个地址的虚拟地址空间叫做一个n位地址空间。</p>
+<p>现代系统典型地支持32位或者64位<strong>虚拟地址空间</strong>。</p>
+<p>一个系统还有<strong>物理地址空间</strong>，它与系统中物理存储器的M个字节相对应：</p>
+<p>M不要求是2的幂，但为了简化讨论，一般假设 $M&#x3D;2^m$。物理地址空间对应于系统中实际拥有DRAM容量。地址空间的概念非常重要。它清楚地区分了数据对象（字节）和它们的属性（地址）。</p>
+<p>主存中的每个字节都有一个选自虚拟地址空间的虚拟地址和一个选自物理地址空间的物理地址。</p>
+<p>允许每个数据对象有多个独立的地址，其中每一个地址都选自一个不同的地址空间。这就是虚拟存储器的基本思想</p>
+<h2 id="虚拟内存作为缓存的工具"><a href="#虚拟内存作为缓存的工具" class="headerlink" title="虚拟内存作为缓存的工具"></a>虚拟内存作为缓存的工具</h2><p>这里提出将物理内存分页，设 $2^p$ 字节的内存为一页，称为物理页，也叫页帧。</p>
+<p>在任何时刻，虚拟页的集合都分为三部分：</p>
+<ul>
+<li>未分配的：它们名存实亡，没有实际数据相关联</li>
+<li>缓存的：当前已缓存在内存中的已分配页</li>
+<li>未缓存的：为缓存在物理内存中的已分配页</li>
+</ul>
+<p>下图的示例展示了一个有 8 个虚拟页的小虚拟内存。</p>
+<img src="/2023/02/01/CSAPP_9/1.png" class="">
+
+<p>虚拟页 0 和 3 还没有被分配，因此在磁盘上还不存在。虚拟页 1、4 和 6 被缓存在物理内存中。页 2、5 和 7 已经被分配了，但是当前并未缓存在主存中。</p>
+<h3 id="DRAM缓存的组织结构"><a href="#DRAM缓存的组织结构" class="headerlink" title="DRAM缓存的组织结构"></a>DRAM缓存的组织结构</h3><p>DRAM 比 SRAM 慢 10 倍，而磁盘读取速度比 DRAM 慢了 100 000 倍，因此主存不命中带来的惩罚是非常高的。</p>
+<p>因此 DRAM 作为磁盘的高速缓存，采用全相联高速缓存，即任何虚拟页可以放在任意的物理页中。我们的替换策略也很重要，因为替换错了的成本也非常高。最后因为访问时间的关系，往往采用写回而不是直写。</p>
+<h3 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h3><p>页表是由页表条目（PTE）组成的数组。PTE 由一个有效位和 n 位地址字段组成，如果设置了有效位，那么 n 位的字段表示 DRAM 中相应的物理页的起始位置（已缓存）。如果没设置有效位，那要么这个页表条目未被占据条目为 NULL（未分配），要么指向了一个虚拟内存（未缓存）。</p>
+<p>如下图所示：</p>
+<img src="/2023/02/01/CSAPP_9/2.png" class="">
+
+<p>图中展示了一个有 8 个虚拟页和 4 个物理页的系统的页表。四个虚拟页（VP 1、VP 2、VP 4 和 VP 7）当前被缓存在 DRAM 中。两个页（VP 0 和 VP 5 ）还未被分配，而剩下的页（VP 3 和 VP 6）已经被分配了，但是当前还未被缓存。图 9-4 中有一个要点要注意，因为 DRAM 缓存是全相联的，所以任意物理页都可以包含任意虚拟页。</p>
+<h3 id="页命中"><a href="#页命中" class="headerlink" title="页命中"></a>页命中</h3><p>当尝试读取一个已存在于物理内存中的页时，会发生页命中，此时会把物理内存中的值直接传送到寄存器当中</p>
+<img src="/2023/02/01/CSAPP_9/3.png" class="">
+
+<p>如图是读取 VP2 页时候的情况，此时发生页命中，它会直接使用 PTE2 条目中的物理地址读取内存。</p>
+<h3 id="缺页"><a href="#缺页" class="headerlink" title="缺页"></a>缺页</h3><p>DRAM 缓存不命中被称为缺页，当 CPU 尝试访问一个已分配但未缓存的页面时会引发缺页异常，缺页异常调用内核中的缺页异常处理程序，该程序会选择一个牺牲页，如果牺牲页被修改过，那么写回磁盘，且内核会修改页表把牺牲页替换掉，把当前要用的页在页表中替换上物理地址，有效位置 1，牺牲页有效位置 0。</p>
+<p>在虚拟内存的习惯说法中，块被称为页。在磁盘和内存之间传送页的活动叫做<strong>交换</strong>（swapping）或者<strong>页面调度</strong>（paging）。页从磁盘换入（或者页面调入）DRAM 和从 DRAM 换出（或者页面调出）磁盘。一直等待，直到最后时刻，也就是当有不命中发生时，才换入页面的这种策略称为<strong>按需页面调度</strong>（demand paging）。也可以采用其他的方法，例如尝试着预测不命中，在页面实际被引用之前就换入页面。然而，所有现代系统都使用的是按需页面调度的方式。</p>
+<h3 id="分配页面"><a href="#分配页面" class="headerlink" title="分配页面"></a>分配页面</h3><p>那么这里讲的就是未分配页的处理方式了，我们的做法就是分配一个页，分配过程是在<strong>磁盘</strong>上创建空间并更新页表，使它指向磁盘上这个新创建的页面。</p>
+<h3 id="又是局部性救了我们"><a href="#又是局部性救了我们" class="headerlink" title="又是局部性救了我们"></a>又是局部性救了我们</h3><p>虽然看上去上面的工作过程效率很低，但是实际上由于程序的局部性，我们程序趋向于只在很小一部分范围的页面中使用。在初始开销，也就是将工作集页面调度到内存中之后，接下来对这个工作集的引用将导致命中，而不会产生额外的磁盘流量。只要我们的程序有好的时间局部性，虚拟内存系统就能工作得相当好。但是，当然不是所有的程序都能展现良好的时间局部性。如果工作集的大小超出了物理内存的大小，那么程序将产生一种不幸的状态，叫做<strong>抖动</strong>（thrashing），这时页面将不断地换进换出。虽然虚拟内存通常是有效的，但是如果一个程序性能慢得像爬一样，那么聪明的程序员会考虑是不是发生了抖动。</p>
+<h2 id="虚拟内存作为内存管理的工具"><a href="#虚拟内存作为内存管理的工具" class="headerlink" title="虚拟内存作为内存管理的工具"></a>虚拟内存作为内存管理的工具</h2><p>虚拟内存提供了一种保护机制，之前我们假设只有一个页表，现在是每个进程会有一个页表，不同进程可以映射到同一物理内存用于进程通信，如果要起到隔绝的作用，我们不把两个进程映射到同一物理内存那么就一定不会发生进程之间的安全问题，因为他们所操作的所有地址空间都无法映射到其它进程所占用的物理内存。</p>
+<img src="/2023/02/01/CSAPP_9/4.png" class="">
+
+<p>它简化了链接，简化了加载，简化了共享，简化了内存分配。</p>
+<ul>
+<li>简化链接：我们可以看到，在 Linux x86-64 下面链接得到的可执行文件，它的地址几乎是一样的，都是从 <code>0x400000</code> 开始的代码段，正是由于虚拟内存导致我们可以不需要考虑当时电脑的运行状态，因为不同进程的 <code>0x400000</code> 地址所映射到的物理内存地址都是不一样的。如果直接使用物理地址的话，那么不同进程必须划分地址出来，占用相同地址空间的程序将不能同时运行。</li>
+<li>简化加载：加载运行一个文件时，我只需要将页表标记到磁盘的指定位置，并标记为无效的（未缓存的），CPU 尝试访问这个虚拟内存的时候，发现没有被缓存，自动从磁盘调入数据到内存中，虚拟内存机制帮我们简化了从磁盘复制数据到内存的过程。</li>
+<li>简化共享：如果我们想加载一个动态链接库到另外一个内存，我们只需要先看看有没有已加载的内存，如果有直接让希望加载动态链接库的进程直接映射一块虚拟内存过去即可。</li>
+<li>简化内存分配：由于虚拟内存机制的存在，我们想要分配一个很大的连续的虚拟地址空间可以允许我们用不同的物理内存页，更高效地利用了碎片化的内存。</li>
+</ul>
+<h2 id="虚拟内存作为内存保护工具"><a href="#虚拟内存作为内存保护工具" class="headerlink" title="虚拟内存作为内存保护工具"></a>虚拟内存作为内存保护工具</h2><p>在页表当中，除了那些位以外，还有三个位（READ，WRITE，SUP），读写和是否需要使用内核模式运行。并且每个进程也只允许访问它页表当中已经分配的内存，未分配的内存是无法访问的。</p>
+<p>如果有指令违反了这些条件，那么 CPU 就会触发一个一般保护故障，把控制权转给内核中的异常处理程序，Linux 会把这个错误报告为段错误（segment fault）</p>
+<h2 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h2><p>先介绍一些参数</p>
+<p>基本参数：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$N&#x3D;2^n$</td>
+<td>虚拟地址空间中的地址数量</td>
+</tr>
+<tr>
+<td>$M&#x3D;2^m$</td>
+<td>物理地址空间中的地址数量</td>
+</tr>
+<tr>
+<td>$P&#x3D;2^p$</td>
+<td>页的大小（字节）</td>
+</tr>
+</tbody></table>
+<p>虚拟地址的组成部分：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VPO</td>
+<td>虚拟页面偏移量（字节）</td>
+</tr>
+<tr>
+<td>VPN</td>
+<td>虚拟页号</td>
+</tr>
+<tr>
+<td>TLBI</td>
+<td>TLB 索引</td>
+</tr>
+<tr>
+<td>TLBT</td>
+<td>TLB 标记</td>
+</tr>
+</tbody></table>
+<p>物理地址的组成部分：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PPO</td>
+<td>物理页面偏移量（字节）</td>
+</tr>
+<tr>
+<td>PPN</td>
+<td>物理页号</td>
+</tr>
+<tr>
+<td>CO</td>
+<td>缓冲块内的字节偏移量</td>
+</tr>
+<tr>
+<td>CI</td>
+<td>高速缓存索引</td>
+</tr>
+<tr>
+<td>CT</td>
+<td>高速缓存标记</td>
+</tr>
+</tbody></table>
+<p>形式上来说，地址翻译是一个 N 元素的虚拟地址空间（VAS）中的元素和一个 M 元素的物理地址空间（PAS）中元素之间的映射。</p>
+<p>下面一张图也很好地反映了这关系：</p>
+<img src="/2023/02/01/CSAPP_9/6.png" class="">
+
+<p>通常情况下，访问是这样进行的：</p>
+<ul>
+<li><strong>第 1 步：</strong>处理器生成一个虚拟地址，并把它传送给 MMU。</li>
+<li><strong>第 2 步：</strong>MMU 生成 PTE 地址，并从高速缓存&#x2F;主存请求得到它。</li>
+<li><strong>第 3 步：</strong>高速缓存&#x2F;主存向 MMU 返回 PTE。</li>
+<li><strong>第 4 步：</strong>MMU 构造物理地址，并把它传送给高速缓存&#x2F;主存。</li>
+<li><strong>第 5 步：</strong>高速缓存&#x2F;主存返回所请求的数据字给处理器。</li>
+</ul>
+<p>而缺页情况下，从第四步开始：</p>
+<ul>
+<li><strong>第 4 步：</strong>PTE 中的有效位是零，所以 MMU 触发了一次异常，传递 CPU 中的控制到操作系统内核中的缺页异常处理程序。</li>
+<li><strong>第 5 步：</strong>缺页处理程序确定出物理内存中的牺牲页，如果这个页面已经被修改了，则把它换出到磁盘。</li>
+<li><strong>第 6 步：</strong>缺页处理程序页面调入新的页面，并更新内存中的 PTE。</li>
+<li><strong>第 7 步：</strong>缺页处理程序返回到原来的进程，再次执行导致缺页的指令。CPU 将引起缺页的虚拟地址重新发送给 MMU。因为虚拟页面现在缓存在物理内存中，所以就会命中，之后就跟正常一样，主存会将所请求字返回给处理器。</li>
+</ul>
+<h3 id="结合高速缓存和虚拟内存"><a href="#结合高速缓存和虚拟内存" class="headerlink" title="结合高速缓存和虚拟内存"></a>结合高速缓存和虚拟内存</h3><p>这里可能会有一个疑问，既然到了主存和磁盘这一阶段才有的地址翻译，那么 SRAM 这边是不是就都使用虚拟内存来访问呢？其实不是，关于到底使用物理地址还是虚拟地址高速缓存，记住一点：因为地址翻译它间接做了<strong>权限检查</strong>的问题，所以为了方便我们做好权限检查我们选择使用<strong>物理地址</strong>，也就是说 CPU 发出访存指令的时候，第一步一定是<strong>先翻译成物理地址</strong>，然后再查高速缓存，一直往下到主存。</p>
+<img src="/2023/02/01/CSAPP_9/7.png" class="">
+
+<h3 id="利用-TLB-加速地址翻译"><a href="#利用-TLB-加速地址翻译" class="headerlink" title="利用 TLB 加速地址翻译"></a>利用 TLB 加速地址翻译</h3><p>TLB 可以理解为一个 MMU 的高速缓存，采用<strong>组相联映射</strong>的方式进行。</p>
+<p>在这里</p>
+<img src="/2023/02/01/CSAPP_9/8.png" class="">
+
+<p><code>VPN</code> 的低 t 位是索引，剩余高 <code>n-p-t</code> 位为标记。</p>
+<p>命中时，可以快速找到地址。不命中时，需要重新来查表然后更新 TLB 条目。</p>
+<p>这里应该就是防止在页表中寻址，因为页表它也是在内存当中的，如果可以直接在TLB中查询得到那么便不需要经过页表了。</p>
+<h3 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h3><p>直到看到这里，对之前的一些疑问才算解开了，我先罗列一下之前产生的疑问：</p>
+<ul>
+<li>假设 32 位的系统下，有 4GB 的虚拟地址空间，那么就有 $2^{20}$ 张页，如果单级页表需要有 $2^{20}$ 个PTE，假设每个 PTE 就占四个字节那么总共就是 $4MB$，每个进程都占用 $4MB$ 感觉开销有点太大了。</li>
+<li>第二个考量就是——难道说页表不是连续的？</li>
+</ul>
+<p>对于这两个疑问，先回答第二个，那肯定是连续的，第 0 个页表项表示的就是虚拟地址从 0 开始的页表项，这样才能做到快速查找，如果每次查找要遍历内存那就适得其反了。</p>
+<p>那么第一个问题其实在这一节就会解答了，在虚拟地址过长的时候会采用多级页表，因为在实际应用的时候，大部分的虚拟地址无法使用，这里就可以压缩。</p>
+<img src="/2023/02/01/CSAPP_9/9.png" class="">
+
+<p>如图所示，一个页表具有 1024个 PTE，这就只占了 4KB，但是能映射出 1K 个二级页表。它们再映射出 1M 个页，这能表示出足足 4GB 的内存。</p>
+<p>那么对于一个 32 位的内存地址，我们可以这么看：前 10 位表示一级页表偏移，中间 10 位表示二级页表偏移，那么剩下 12 位就是页内偏移了。</p>
+<img src="/2023/02/01/CSAPP_9/10.png" class="">
+
+<p>对于更多位的地址，同样可以使用 k 级页表的思路。</p>
+<p>访问 k 个 PTE，第一眼看上去昂贵而不切实际。然而，这里 TLB 能够起作用，正是通过将不同层次上页表的 PTE 缓存起来。实际上，带多级页表的地址翻译并不比单级页表慢很多。</p>
+<h3 id="案例：端到端的地址翻译"><a href="#案例：端到端的地址翻译" class="headerlink" title="案例：端到端的地址翻译"></a>案例：端到端的地址翻译</h3><p>这里给我们讲解了一个例子，我觉得还是挺好的，跟着思路就能理解这个地址翻译的原理了。</p>
+<p>首先系统参数如下：</p>
+<ul>
+<li>内存是按字节寻址的。</li>
+<li>内存访问是针对 1 字节的字的（不是 4 字节的字）。</li>
+<li>虚拟地址是 14 位长的（$n&#x3D;14$）。</li>
+<li>物理地址是 12 位长的（$m&#x3D;12$）。</li>
+<li>页面大小是 64 字节（$P&#x3D;64$）。</li>
+<li>TLB 是四路组相联的，总共有 16 个条目。</li>
+<li>L1 d-cache 是物理寻址、直接映射的，行大小为 4 字节，而总共有 16 个组。</li>
+</ul>
+<p>那么对于物理地址和虚拟地址，我们这样子去划分：</p>
+<img src="/2023/02/01/CSAPP_9/11.png" class="">
+
+<ul>
+<li>TLB。TLB 是利用 VPN 的位进行虚拟寻址的。因为 TLB 有 4 个组，所以 VPN 的低 2 位就作为组索引（TLBI）。VPN 中剩下的高 6 位作为标记（TLBT），用来区别可能映射到同一个 TLB 组的不同的 VPN。</li>
+<li>页表。这个页表是一个单级设计，一共有 $2^8&#x3D;256$ 个页表条目（PTE）。然而，我们只对这些条目中的开头 16 个感兴趣。为了方便，我们用索引它的 VPN 来标识每个 PTE；但是要记住这些 VPN 并不是页表的一部分，也不储存在内存中。另外，注意每个无效 PTE 的 PPN 都用一个破折号来表示，以加强一个概念：无论刚好这里存储的是什么位值，都是没有任何意义的。</li>
+<li>高速缓存。直接映射的缓存是通过物理地址中的字段来寻址的。因为每个块都是 4 字节，所以物理地址的低 2 位作为块偏移（CO）。因为有 16 组，所以接下来的 4 位就用来表示组索引（CI）。剩下的 6 位作为标记（CT）。</li>
+</ul>
+<p>下面是 TLB 的条目和虚拟地址划分</p>
+<img src="/2023/02/01/CSAPP_9/12.png" class="">
+
+<p>下图是页表的条目</p>
+<img src="/2023/02/01/CSAPP_9/13.png" class="">
+
+<p>下图是 Cache 的参数和物理地址的划分。</p>
+<img src="/2023/02/01/CSAPP_9/14.png" class="">
+
+<p>让我们来看看当 CPU 执行一条读地址 0x03d4 处字节的加载指令时会发生什么。</p>
+<p>首先按照虚拟地址的形式划分一下字段</p>
+<img src="/2023/02/01/CSAPP_9/15.png" class="">
+
+<p>首先我们要去找找 TLB，在第四组找到标记为 0x3 的记录，显然我们能找到一个 PPN 为 0xD 的记录，那么拿到这个 PPN 之后就可以拼接页内偏移算出物理地址（0x354）了。</p>
+<p>然后再去 cache 中寻找，这个 0x354 物理地址拆分出来是：</p>
+<img src="/2023/02/01/CSAPP_9/16.png" class="">
+
+<p>先组选择，得到组下标为 5，然后再行匹配，看看是否有 0xD 的记录，显然有，那么高速缓存命中，再根据块偏移找到第 0 块的值，传送给 CPU。</p>
+<h2 id="案例研究：Intel-Core-i7-Linux-内存系统"><a href="#案例研究：Intel-Core-i7-Linux-内存系统" class="headerlink" title="案例研究：Intel Core i7 &#x2F; Linux 内存系统"></a>案例研究：Intel Core i7 &#x2F; Linux 内存系统</h2><p>略</p>
+<h2 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h2><p>Linux 通过将一个虚拟内存区域与一个磁盘上的<strong>对象</strong>（object）关联起来，以初始化这个虚拟内存区域的内容，这个过程称为<strong>内存映射</strong>（memory mapping）</p>
+<p>内存映射可以映射到两种类型的对象：</p>
+<ul>
+<li>Linux 的普通文件：简单来说，我们尝试去打开一个文件或者是执行一个文件时，都会创建数个虚拟内存页，并把它标记到这个文件所在磁盘的位置，那么尝试读这块内存的时候由<strong>缺页处理程序</strong>负责把磁盘中的文件加载到内存中。</li>
+<li>匿名文件：匿名文件是由内核创建的，包含的全是二进制零，匿名文件存在的意义是用于父子进程之间通信而不被其它进程获取。</li>
+</ul>
+<p>一旦一个虚拟页面被初始化了，它就在一个由内核维护的专门的<strong>交换文件</strong>（swap file）之间换来换去。交换文件也叫做<strong>交换空间</strong>（swap space）或者<strong>交换区域</strong>（swap area）。需要意识到的很重要的一点是，在任何时刻，交换空间都限制着当前运行着的进程能够分配的虚拟页面的总数。</p>
+<h3 id="再看共享对象"><a href="#再看共享对象" class="headerlink" title="再看共享对象"></a>再看共享对象</h3><p>一个对象可以被映射到虚拟内存的一个区域，要么作为共享对象，要么作为私有对象，如果一个进程将一个共享对象映射到他的虚拟地址的一个区域，那么它对这个区域的操作对其他进程可见，同时可以反映到磁盘上，但是如果映射到了私有区域，那么其他进程不可见，而且不会在磁盘上发生变化。</p>
+<p>共享对象在虚拟区域：</p>
+<img src="/2023/02/01/CSAPP_9/17.png" class="">
+
+<p>这就好比 <code>glibc</code> 作为共享对象时，另一个进程也需要加载，那么发现这个共享对象在内存中便直接映射到自己的虚拟内存区域。</p>
+<p>私有区域的写时复制：</p>
+<img src="/2023/02/01/CSAPP_9/18.png" class="">
+
+<p>私有区域的写时复制感觉可以看成 <code>glibc</code> 中的 <code>data</code> 段，上面的值肯定不可能所有进程共享，因此那一段被标记为写时复制。即第一次写内存区域时，重新分配新的物理内存，并把此段内存拷贝到上面去，然后重新改变那个进程的页表，把对应的虚拟内存区域映射改到我们新复制的物理内存区域。</p>
+<h3 id="再看fork函数"><a href="#再看fork函数" class="headerlink" title="再看fork函数"></a>再看fork函数</h3><p>在复制一个进程的时候会进行浅拷贝，即不开辟新的物理内存区域，两个进程共享同一物理内存的代码段，但是 <code>fork</code> 之后，所有的段都会变成只读和写拷贝，一旦要写，就会复制出一份区域再在那段区域上操作。</p>
+<p>当 fork 在新进程中返回时，新进程现在的虚拟内存刚好和调用 fork 时存在的虚拟内存相同。当这两个进程中的任一个后来进行写操作时，写时复制机制就会创建新页面，因此，也就为每个进程保持了私有地址空间的抽象概念。</p>
+<h3 id="再看-execve-函数"><a href="#再看-execve-函数" class="headerlink" title="再看 execve 函数"></a>再看 execve 函数</h3><p>execve 函数一次调用，除非调用错误否则不会返回。</p>
+<p>加载运行的时候会进行如下几个步骤：</p>
+<ol>
+<li><strong>删除已存在的用户区域。</strong>删除当前进程虚拟地址的用户部分中的已存在的区域结构。</li>
+<li><strong>映射私有区域。</strong>为新程序的代码、数据、bss 和栈区域创建新的区域结构。所有这些新的区域都是私有的、写时复制的。代码和数据区域被映射为 a.out 文件中的. text 和. data 区。bss 区域是请求二进制零的，映射到匿名文件，其大小包含在 a.out 中。栈和堆区域也是请求二进制零的，初始长度为零。图中概括了私有区域的不同映射。</li>
+<li><strong>映射共享区域。</strong>如果 a.out 程序与共享对象（或目标）链接，比如标准 C 库 libc.so，那么这些对象都是动态链接到这个程序的，然后再映射到用户虚拟地址空间中的共享区域内。</li>
+<li><strong>设置程序计数器（PC）。</strong>execve 做的最后一件事情就是设置当前进程上下文中的程序计数器，使之指向代码区域的入口点。</li>
+</ol>
+<img src="/2023/02/01/CSAPP_9/19.png" class="">
+
+<h3 id="使用-mmap-函数的用户及内存映射"><a href="#使用-mmap-函数的用户及内存映射" class="headerlink" title="使用 mmap 函数的用户及内存映射"></a>使用 mmap 函数的用户及内存映射</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">mmap</span><span class="params">(<span class="type">void</span> *start, <span class="type">size_t</span> length, <span class="type">int</span> prot, <span class="type">int</span> flags,</span></span><br><span class="line"><span class="params">           <span class="type">int</span> fd, <span class="type">off_t</span> offset)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回：若成功时则为指向映射区域的指针，若出错则为 MAP_FAILED(-1)。</span></span><br></pre></td></tr></table></figure>
+
+<p>mmap 函数要求内核创建一个新的虚拟内存区域，最好是从地址 start 开始的一个区域，并将文件描述符 fd 指定的对象的一个连续的片（chunk）映射到这个新的区域。连续的对象片大小为 length 字节，从距文件开始处偏移量为 offset 字节的地方开始。start 地址仅仅是一个暗示，通常被定义为 NULL。为了我们的目的，我们总是假设起始地址为 NULL。</p>
+<p>下图讲述了大部分参数的描述。</p>
+<img src="/2023/02/01/CSAPP_9/20.png" class="">
+
+<p>其中参数 prot 包含描述新映射的虚拟内存区域的访问权限位（即在相应区域结构中的 vm_prot 位）。</p>
+<ul>
+<li>PROT_EXEC：这个区域内的页面由可以被 CPU 执行的指令组成。</li>
+<li>PROT_READ：这个区域内的页面可读。</li>
+<li>PROT_WRITE：这个区域内的页面可写。</li>
+<li>PROT_NONE：这个区域内的页面不能被访问</li>
+</ul>
+<p>参数 flags 由描述被映射对象类型的位组成。如果设置了 MAP_ANON 标记位，那么被映射的对象就是一个匿名对象，而相应的虚拟页面是请求二进制零的。MAP_PRI-VATE 表示被映射的对象是一个私有的、写时复制的对象，而 MAP_SHARED 表示是一个共享对象。</p>
+<p>比如</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bufp = Mmap(<span class="literal">NULL</span>, size, PROT_READ, MAP_PRIVATE|MAP_ANON, <span class="number">0</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>让内核创建一个新的包含 size 字节的只读、私有、请求二进制零的虚拟内存区域。如果调用成功，那么 bufp 包含新区域的地址。</p>
+<p>使用 ummap 对我们隐射的内存区域进行取消。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">munmap</span><span class="params">(<span class="type">void</span> *start, <span class="type">size_t</span> length)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回：若成功则为 0，若出错则为 -1。</span></span><br></pre></td></tr></table></figure>
+
+<p>取消之后再引用会引发段错误。</p>
+<p>之后有个练习题：</p>
+<blockquote>
+<p>编写一个 C 程序 mmapcopy.c，使用 mmap 将一个任意大小的磁盘文件复制到 stdouto 输入文件的名字必须作为一个命令行参数来传递。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> *argv[])</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(argc!=<span class="number">2</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;usage: mmapcopy &lt;fileanme&gt;&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="type">int</span> fd=open(argv[<span class="number">1</span>],O_RDONLY);</span><br><span class="line">	<span class="keyword">if</span>(fd&lt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="type">int</span> len1=<span class="built_in">strlen</span>(argv[<span class="number">0</span>]);</span><br><span class="line">		<span class="type">int</span> len2=<span class="built_in">strlen</span>(argv[<span class="number">1</span>]);</span><br><span class="line">		</span><br><span class="line">		<span class="type">char</span> *s=(<span class="type">char</span> *)<span class="built_in">malloc</span>(len1+len2+<span class="number">5</span>);</span><br><span class="line">		<span class="built_in">sprintf</span>(s,<span class="string">&quot;%s: %s&quot;</span>,argv[<span class="number">0</span>],argv[<span class="number">1</span>]);</span><br><span class="line">		perror(s);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> len;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">st</span>;</span></span><br><span class="line">	fstat(fd,&amp;st);</span><br><span class="line">	<span class="type">char</span> *buffer=mmap(<span class="literal">NULL</span>,st.st_size,PROT_READ,MAP_PRIVATE,fd,<span class="number">0</span>);</span><br><span class="line">	write(<span class="number">1</span>,buffer,st.st_size);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="动态内存分配"><a href="#动态内存分配" class="headerlink" title="动态内存分配"></a>动态内存分配</h2><p>这个我之前写过 malloc 源码分析，应该对这个还是比较了解的，至于 malloc lab mark一下有时间再来做吧。</p>
+<h2 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h2><p>使用 <code>malloc</code> 分配内存，要负责在不用的时候进行释放，否则会造成内存资源泄露。</p>
+<p><strong>垃圾收集器</strong>（garbage collector）是一种动态内存分配器，它自动释放程序不再需要的已分配块。这些块被称为<strong>垃圾</strong>（garbage）（因此术语就称之为垃圾收集器）。自动回收堆存储的过程叫做<strong>垃圾收集</strong>（garbagecollection）。在一个支持垃圾收集的系统中，应用显式分配堆块，但是从不显示地释放它们。在 C 程序的上下文中，应用调用 malloc，但是从不调用 free。反之，垃圾收集器定期识别垃圾块，并相应地调用 free，将这些块放回到空闲链表中。</p>
+<p>本书主要研究 Mark&amp;Sweep（标记 &amp; 清除）算法。</p>
+<h3 id="垃圾收集器的基本知识"><a href="#垃圾收集器的基本知识" class="headerlink" title="垃圾收集器的基本知识"></a>垃圾收集器的基本知识</h3><p>其实就跟 C++ 的智能指针差不多，我们要识别什么是垃圾，当我们在外部的内存中，没有指针能够访问的时候，它就是一个“垃圾”了。</p>
+<img src="/2023/02/01/CSAPP_9/21.png" class="">
+
+<p>后面也想咕咕了，这个后面有时间再了解吧。</p>
+<h2 id="C-程序中常见的与内存有关的错误"><a href="#C-程序中常见的与内存有关的错误" class="headerlink" title="C 程序中常见的与内存有关的错误"></a>C 程序中常见的与内存有关的错误</h2><h3 id="间接引用坏指针"><a href="#间接引用坏指针" class="headerlink" title="间接引用坏指针"></a>间接引用坏指针</h3><p>比如新手写 scanf 经常写成：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,val);</span><br></pre></td></tr></table></figure>
+
+<p>错把 val 的值当指针传进去了，如果恰好 val 没有初始化指向了一个正确的内存区域，那么会造成很奇怪的错误。</p>
+<h3 id="读未初始化的内存"><a href="#读未初始化的内存" class="headerlink" title="读未初始化的内存"></a>读未初始化的内存</h3><p>malloc 申请过来的内存不一定是干净的，我们需要 memset 手动清空，或者是拿到内存就直接写而不进行任何读的操作。</p>
+<h3 id="允许栈缓冲区溢出"><a href="#允许栈缓冲区溢出" class="headerlink" title="允许栈缓冲区溢出"></a>允许栈缓冲区溢出</h3><p>错误的使用了类似 <code>gets</code> 函数，造成缓冲区溢出。</p>
+<h3 id="假设指针和它们指向的对象是相同大小的"><a href="#假设指针和它们指向的对象是相同大小的" class="headerlink" title="假设指针和它们指向的对象是相同大小的"></a>假设指针和它们指向的对象是相同大小的</h3><p>比如下面这个程序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Create an nxm array */</span></span><br><span class="line"><span class="type">int</span> **<span class="title function_">makeArray1</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> m)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="type">int</span> **A = (<span class="type">int</span> **)Malloc(n * <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        A[i] = (<span class="type">int</span> *)Malloc(m * <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    <span class="keyword">return</span> A;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个程序只会在 32 位环境下运行良好，如果在 64 位的环境下会出现不可预测的错误。</p>
+<h3 id="造成错位错误"><a href="#造成错位错误" class="headerlink" title="造成错位错误"></a>造成错位错误</h3><p>错位（off-by-one）错误是另一种很常见的造成覆盖错误的来源。</p>
+<p>最常见的就是 <code>int a[n];for(int i=1;i&lt;=n;i++)</code> 这种类型的代码，很显然，<code>int a[n]</code> 的定义中不包括下标 <code>n</code>，后面内存是什么咱也不知道，反正造成的错误也是不可预估的。</p>
+<h3 id="引用指针，而不是它所指向的对象"><a href="#引用指针，而不是它所指向的对象" class="headerlink" title="引用指针，而不是它所指向的对象"></a>引用指针，而不是它所指向的对象</h3><p>比如常见的 <code>*p++</code>，虽然说 <code>++</code> 和取值运算符优先级一样，但是它是从右往左结合的，所以实际上我们并没有给 p 所指向的值 +1 而是让指针后移了一位再取值。</p>
+<h3 id="误解指针运算"><a href="#误解指针运算" class="headerlink" title="误解指针运算"></a>误解指针运算</h3><p>比如下面这个</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *<span class="title function_">search</span><span class="params">(<span class="type">int</span> *p, <span class="type">int</span> val)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span> (*p &amp;&amp; *p != val)</span><br><span class="line">        p += <span class="keyword">sizeof</span>(<span class="type">int</span>); <span class="comment">/* Should be p++ */</span></span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为指针与 int 运算已经重载了 <code>+ - += -=</code> 等运算符，所以我们没必要多此一举乘上一个 sizeof。</p>
+<h3 id="引用不存在的变量"><a href="#引用不存在的变量" class="headerlink" title="引用不存在的变量"></a>引用不存在的变量</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *<span class="title function_">stackref</span> <span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> &amp;val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个如果了解过局部变量的就很能发现这个问题所在了，它虽然地址还有效，但是在此基础上只要在此调用其它函数便有可能会覆盖这个变量。</p>
+<h3 id="引用空闲堆块中的数据"><a href="#引用空闲堆块中的数据" class="headerlink" title="引用空闲堆块中的数据"></a>引用空闲堆块中的数据</h3><p>其实就是我们熟知的 UAF 漏洞了。</p>
+<p>free 之后没有清空指针，并且有继续使用的可能性。</p>
+<h3 id="引起内存泄漏"><a href="#引起内存泄漏" class="headerlink" title="引起内存泄漏"></a>引起内存泄漏</h3><p>内存泄漏理解为内存资源泄露，就是没有释放不使用的空间，导致程序所占用的空间非常大，但是大部分空间又不使用，那这一部分的空间就会被浪费了。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>虚拟内存是一个抽象的概念，可以把主存理解为对磁盘的缓存。</p>
+<p>主要思想是我们假设每个进程的内存都是独占的（虚拟空间），实际上只有被用到的内存会被页表分配实际的物理地址，当CPU要访问某个虚拟地址时会查找页表得到物理地址并取值返还给CPU。</p>
+<p>虚拟内存可以分为三类：已分配，未分配，已分配中又可以细分已缓存和未缓存。</p>
+<ul>
+<li>已缓存是指已存在于物理内存中的页，我们通过地址翻译可以直接找到这个页。</li>
+<li>未缓存是指存在但没有实际分配的页，访问这个页会导致一个缺页异常，异常处理程序会把正确的页调入其中。</li>
+<li>访问未分配的虚拟内存会直接导致一个段错误。</li>
+</ul>
+<p>它保证了不同进程之间私有地址互相看不到，也能很轻松地共享一些内存。</p>
+<p>页表也有缓存，页表的缓存是 TLB，和 cache 的思路类似。</p>
+<p>内存映射是指把磁盘内容和内存内容关联起来，读的时候通过虚拟内存机制把磁盘内容调入物理内存。</p>
+<p>再就是指针造成的常见的错误，都遇见过，原理差不多都懂。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2023/02/01/CSAPP_9/">https://xia0ji233.github.io/2023/02/01/CSAPP_9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/03/xhlj-2023/" title="西湖论剑 2023 预赛 writeup"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">西湖论剑 2023 预赛 writeup</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/30/Windows2/" title="Windows基础知识（2）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Windows基础知识（2）</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">153</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A2%97%E6%A6%82"><span class="toc-number">1.</span> <span class="toc-text">梗概</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%92%8C%E8%99%9A%E6%8B%9F%E5%AF%BB%E5%9D%80"><span class="toc-number">2.</span> <span class="toc-text">物理和虚拟寻址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="toc-number">3.</span> <span class="toc-text">地址空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%BD%9C%E4%B8%BA%E7%BC%93%E5%AD%98%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-number">4.</span> <span class="toc-text">虚拟内存作为缓存的工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DRAM%E7%BC%93%E5%AD%98%E7%9A%84%E7%BB%84%E7%BB%87%E7%BB%93%E6%9E%84"><span class="toc-number">4.1.</span> <span class="toc-text">DRAM缓存的组织结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E8%A1%A8"><span class="toc-number">4.2.</span> <span class="toc-text">页表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E5%91%BD%E4%B8%AD"><span class="toc-number">4.3.</span> <span class="toc-text">页命中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E9%A1%B5"><span class="toc-number">4.4.</span> <span class="toc-text">缺页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E9%A1%B5%E9%9D%A2"><span class="toc-number">4.5.</span> <span class="toc-text">分配页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%88%E6%98%AF%E5%B1%80%E9%83%A8%E6%80%A7%E6%95%91%E4%BA%86%E6%88%91%E4%BB%AC"><span class="toc-number">4.6.</span> <span class="toc-text">又是局部性救了我们</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%BD%9C%E4%B8%BA%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-number">5.</span> <span class="toc-text">虚拟内存作为内存管理的工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%BD%9C%E4%B8%BA%E5%86%85%E5%AD%98%E4%BF%9D%E6%8A%A4%E5%B7%A5%E5%85%B7"><span class="toc-number">6.</span> <span class="toc-text">虚拟内存作为内存保护工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E7%BF%BB%E8%AF%91"><span class="toc-number">7.</span> <span class="toc-text">地址翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E5%90%88%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%92%8C%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">7.1.</span> <span class="toc-text">结合高速缓存和虚拟内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-TLB-%E5%8A%A0%E9%80%9F%E5%9C%B0%E5%9D%80%E7%BF%BB%E8%AF%91"><span class="toc-number">7.2.</span> <span class="toc-text">利用 TLB 加速地址翻译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-number">7.3.</span> <span class="toc-text">多级页表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%EF%BC%9A%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E5%9C%B0%E5%9D%80%E7%BF%BB%E8%AF%91"><span class="toc-number">7.4.</span> <span class="toc-text">案例：端到端的地址翻译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6%EF%BC%9AIntel-Core-i7-Linux-%E5%86%85%E5%AD%98%E7%B3%BB%E7%BB%9F"><span class="toc-number">8.</span> <span class="toc-text">案例研究：Intel Core i7 &#x2F; Linux 内存系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84"><span class="toc-number">9.</span> <span class="toc-text">内存映射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%8D%E7%9C%8B%E5%85%B1%E4%BA%AB%E5%AF%B9%E8%B1%A1"><span class="toc-number">9.1.</span> <span class="toc-text">再看共享对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%8D%E7%9C%8Bfork%E5%87%BD%E6%95%B0"><span class="toc-number">9.2.</span> <span class="toc-text">再看fork函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%8D%E7%9C%8B-execve-%E5%87%BD%E6%95%B0"><span class="toc-number">9.3.</span> <span class="toc-text">再看 execve 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-mmap-%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%A8%E6%88%B7%E5%8F%8A%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84"><span class="toc-number">9.4.</span> <span class="toc-text">使用 mmap 函数的用户及内存映射</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">10.</span> <span class="toc-text">动态内存分配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86"><span class="toc-number">11.</span> <span class="toc-text">垃圾收集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="toc-number">11.1.</span> <span class="toc-text">垃圾收集器的基本知识</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E4%B8%8E%E5%86%85%E5%AD%98%E6%9C%89%E5%85%B3%E7%9A%84%E9%94%99%E8%AF%AF"><span class="toc-number">12.</span> <span class="toc-text">C 程序中常见的与内存有关的错误</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%B4%E6%8E%A5%E5%BC%95%E7%94%A8%E5%9D%8F%E6%8C%87%E9%92%88"><span class="toc-number">12.1.</span> <span class="toc-text">间接引用坏指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E6%9C%AA%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E5%86%85%E5%AD%98"><span class="toc-number">12.2.</span> <span class="toc-text">读未初始化的内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%81%E8%AE%B8%E6%A0%88%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA"><span class="toc-number">12.3.</span> <span class="toc-text">允许栈缓冲区溢出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%87%E8%AE%BE%E6%8C%87%E9%92%88%E5%92%8C%E5%AE%83%E4%BB%AC%E6%8C%87%E5%90%91%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%98%AF%E7%9B%B8%E5%90%8C%E5%A4%A7%E5%B0%8F%E7%9A%84"><span class="toc-number">12.4.</span> <span class="toc-text">假设指针和它们指向的对象是相同大小的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%A0%E6%88%90%E9%94%99%E4%BD%8D%E9%94%99%E8%AF%AF"><span class="toc-number">12.5.</span> <span class="toc-text">造成错位错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E6%8C%87%E9%92%88%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%AE%83%E6%89%80%E6%8C%87%E5%90%91%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="toc-number">12.6.</span> <span class="toc-text">引用指针，而不是它所指向的对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E8%A7%A3%E6%8C%87%E9%92%88%E8%BF%90%E7%AE%97"><span class="toc-number">12.7.</span> <span class="toc-text">误解指针运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E5%8F%98%E9%87%8F"><span class="toc-number">12.8.</span> <span class="toc-text">引用不存在的变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E7%A9%BA%E9%97%B2%E5%A0%86%E5%9D%97%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-number">12.9.</span> <span class="toc-text">引用空闲堆块中的数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="toc-number">12.10.</span> <span class="toc-text">引起内存泄漏</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">13.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

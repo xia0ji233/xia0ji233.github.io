@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>计算机网络——自顶向下的方法第四章的学习 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这一层将主要学习网络层实际是怎样实现主机到主机的通信服务的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络——自顶向下的方法第四章的学习">
+<meta property="og:url" content="https://xia0ji233.github.io/2023/04/05/ComputerNetwork4/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="这一层将主要学习网络层实际是怎样实现主机到主机的通信服务的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-04-05T09:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-16T13:54:06.646Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2023/04/05/ComputerNetwork4/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '计算机网络——自顶向下的方法第四章的学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-16 21:54:06'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">153</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">计算机网络——自顶向下的方法第四章的学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-05T09:00:00.000Z" title="发表于 2023-04-05 17:00:00">2023-04-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-16T13:54:06.646Z" title="更新于 2025-01-16 21:54:06">2025-01-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/">书籍阅读</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">自顶向下计算机网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="计算机网络——自顶向下的方法第四章的学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这一层将主要学习网络层实际是怎样实现主机到主机的通信服务的。</p>
+<span id="more"></span>
+
+<h2 id="梗概"><a href="#梗概" class="headerlink" title="梗概"></a>梗概</h2><p>网络层能够被 分解为两个相互作用的部分，即数据平面和控制平面。首先学习网络层 的数据平面功能，即网络层中每台路由器的功能，该数据平面功能决定到达路由器输入链 路之一的数据报（即网络层的分组）如何转发到该路由器的输出链路之一。</p>
+<h2 id="网络层概述"><a href="#网络层概述" class="headerlink" title="网络层概述"></a>网络层概述</h2><p>路由器是不运行应用层和传输层协议的。</p>
+<h3 id="转发和路由选择：数据平面和控制平面"><a href="#转发和路由选择：数据平面和控制平面" class="headerlink" title="转发和路由选择：数据平面和控制平面"></a>转发和路由选择：数据平面和控制平面</h3><p>即将分组从一台发送主机移动到一台接收主机，需要使用两种重要的网络层功能：</p>
+<ul>
+<li>转发，收到一个分组的时候，要将它转移到合适的输出链路。</li>
+<li>路由选择，当分组从发送方流向接收方时，网络层必须决定这些分组所采用的路由或路径。计算这些路径的算法被称为路由选择算法（routing algorithm），<strong>路由选择</strong>在网络层的控制平面中实现。</li>
+</ul>
+<p>每台网络路由器中有一个关键元素是它的<strong>转发表</strong>（forwarding table）。路由器检査到达分组首部的一个或多个字段值，进而使用这些首部值在其转发表中索引，通过这种方法来转发分组。</p>
+<img src="/2023/04/05/ComputerNetwork4/1.png" class="">
+
+<p>如图，通过获取分组首部的值，选择本地的路由端口输出。</p>
+<h4 id="控制平面：传统的方法"><a href="#控制平面：传统的方法" class="headerlink" title="控制平面：传统的方法"></a>控制平面：传统的方法</h4><p>传统的方法当然就是对每一种可能，人为地配置输出端口，这样一定可行。但是人为配置容易出错且无法应对复杂的网络环境。</p>
+<h4 id="控制平面：SDN方法"><a href="#控制平面：SDN方法" class="headerlink" title="控制平面：SDN方法"></a>控制平面：SDN方法</h4><p>通过使用软件的方式去控制网络，这个在后面细说。</p>
+<h3 id="网络服务模型"><a href="#网络服务模型" class="headerlink" title="网络服务模型"></a>网络服务模型</h3><p>网络服务模型可能包含以下类型的服务：</p>
+<ul>
+<li>确保交付</li>
+<li>具有时延上界的确保交付</li>
+<li>有序分组交付</li>
+<li>确保最小带宽</li>
+<li>安全</li>
+</ul>
+<p>有一种服务叫<strong>尽力而为服务</strong>，说起来好听，实际就是不可靠服务。但是实际上证明了，它的工作效果还是很好的，有适当的带宽供给和带宽自适应应用级协议。</p>
+<h4 id="第四章概述"><a href="#第四章概述" class="headerlink" title="第四章概述"></a>第四章概述</h4><p>分组交换机是一个笼统的概念，路由器也是一种分组交换机，不过它是网络层的分组交换机，一般我们说的交换机是链路层交换机。</p>
+<h2 id="路由器工作原理"><a href="#路由器工作原理" class="headerlink" title="路由器工作原理"></a>路由器工作原理</h2><p>先来看看路由器的体系结构：</p>
+<img src="/2023/04/05/ComputerNetwork4/2.png" class="">
+
+<p>我们专注于数据平面的转发功能，就是实际将分组从一台路由器的入链路传送到适当的出链路。</p>
+<p>这里包含四个结构：</p>
+<ul>
+<li>输入端口</li>
+<li>交换结构</li>
+<li>输出端口</li>
+<li>路由选择处理器，这个应该是交换结构的上层实现</li>
+</ul>
+<p>考虑一下我们在使用路由器的时候，需要存储什么样的信息，举个例子：</p>
+<p>我走到了十字路口，我到底是往哪里走（哪个端口）呢？</p>
+<ul>
+<li>第一种是基于目的地的转发，即我到哪我都预判一遍，然后选路，这是个显然合理的方案，但是我要去的地方可以有很多，如果都存储显然不合理。</li>
+<li>第二种是泛化转发，即把我要去的地方划分为区域，因为路口只有三个选择：直行，左转，右转。这样的话我可以使用很少的存储来解决所有的目的地址。</li>
+</ul>
+<p>同样，类比到网络层，我的目的地址是一个32位的ip地址，算下来有42亿种的可能性，这显然不合理，因此我们会采取第二种的方式。</p>
+<h3 id="输入端口处理和基于目的的转发"><a href="#输入端口处理和基于目的的转发" class="headerlink" title="输入端口处理和基于目的的转发"></a>输入端口处理和基于目的的转发</h3><p>就像前面说的一样，最简单的情况就是对所有的网络地址设置转发端口，可行性不太行。</p>
+<p>书上举了一个例子，可以将同一网段的计算机设置一个链路出口，这样的话我们只需要使用 IP+子网掩码 + 端口即可很高效地完成转发。</p>
+<p>这里需要<strong>注意一点</strong>：如果多个子网匹配上了，则优先考虑子网掩码较长的规则，这种规则叫<strong>最长前缀匹配规则</strong>。</p>
+<h3 id="交换"><a href="#交换" class="headerlink" title="交换"></a>交换</h3><p>有三种方式：</p>
+<ul>
+<li>经内存交换</li>
+<li>经总线交换</li>
+<li>经互联网络交换</li>
+</ul>
+<img src="/2023/04/05/ComputerNetwork4/3.png" class="">
+
+<h3 id="输出端口处理"><a href="#输出端口处理" class="headerlink" title="输出端口处理"></a>输出端口处理</h3><p>如图：</p>
+<img src="/2023/04/05/ComputerNetwork4/4.png" class="">
+
+<h3 id="如何出现排队"><a href="#如何出现排队" class="headerlink" title="如何出现排队"></a>如何出现排队</h3><p>排队过长会导致出现丢包事件，就像我们所说的：“在网络种丢失”，“被路由器丢弃”。</p>
+<h4 id="输入排队"><a href="#输入排队" class="headerlink" title="输入排队"></a>输入排队</h4><p>假设输出端口缓存仅能存储一个分组，那么如下情况就会导致输入时延：</p>
+<img src="/2023/04/05/ComputerNetwork4/5.png" class="">
+
+<p>第一行和第三行的分组都要交换到输出端口第一行，那么我接受了第一行的分组之后，由于缓存满了，第三行的分组不得不等待。这种现象叫作输入排队交换机中的<strong>线路前部</strong>（Head-Of-the-Line，HOL）阻塞。</p>
+<h4 id="输出排队"><a href="#输出排队" class="headerlink" title="输出排队"></a>输出排队</h4><p>我们当队列满了的时候，新的分组到达我们不得不做出如下决定：</p>
+<ul>
+<li>丢弃这个分组。</li>
+<li>删除一个已有分组替换当前接收的分组。</li>
+</ul>
+<p>第二种做法是有利的，这可以向发送方提供一个拥塞信号。</p>
+<p>当输出端口排队的时候，可能会使用<strong>分组调度器</strong>在这些排队分组中选择一个分组来传输，对于如何选择是我们接下来要讨论的问题了。</p>
+<h4 id="缓存需要多少才够用"><a href="#缓存需要多少才够用" class="headerlink" title="缓存需要多少才够用"></a>缓存需要多少才够用</h4><p>这里可能颠覆之前的看法，在以前我们肯定都认为缓存越大越好，越大它越能容忍网络的波动。</p>
+<p>但是考虑这样的问题：假设缓存有25个分组的长度，输入速率正好等于输出速率，那么我每一个包的时延都是25倍单个包传输的时延，因此缓存过大不一定是好事，这会导致<strong>缓存膨胀</strong>。</p>
+<p>后面有一种AQM机制用于对抗缓存膨胀。</p>
+<h3 id="分组调度"><a href="#分组调度" class="headerlink" title="分组调度"></a>分组调度</h3><h4 id="先进先出"><a href="#先进先出" class="headerlink" title="先进先出"></a>先进先出</h4><p>字面意思 </p>
+<h4 id="优先权排队"><a href="#优先权排队" class="headerlink" title="优先权排队"></a>优先权排队</h4><p>会分两个队列，高优先权的队列一定比低优先权的队列先开始传输，但不被打断。</p>
+<h4 id="循环加权公平排队"><a href="#循环加权公平排队" class="headerlink" title="循环加权公平排队"></a>循环加权公平排队</h4><p>优先级不分上下，如果队列中有则会交替去发包。</p>
+<blockquote>
+<p>网络中立性：</p>
+<p>是指ISP必须在条件允许的情况下给用户提供</p>
+<ul>
+<li>无阻塞</li>
+<li>无限流</li>
+<li>无付费优先</li>
+</ul>
+<p>的服务。</p>
+</blockquote>
+<h2 id="网际协议"><a href="#网际协议" class="headerlink" title="网际协议"></a>网际协议</h2><p>有一句话：<strong>掌握IP编址就是掌握因特网的网络层</strong>！</p>
+<h3 id="IPv4数据报格式"><a href="#IPv4数据报格式" class="headerlink" title="IPv4数据报格式"></a>IPv4数据报格式</h3><p>网络层的分组被称为<strong>数据报</strong>，数据报的格式如下：</p>
+<img src="/2023/04/05/ComputerNetwork4/6.png" class="">
+
+<ul>
+<li>版本字段：这4比特规定了IP的版本，路由器可以查看该字段确定如何解析剩余的部分。</li>
+<li>首部长度：这4比特标识了首部的长度，因为首部长度必须是4的倍数，所以这里能表示4~64中4的整倍数。</li>
+<li>服务类型：能够区分实时数据报（比如IP电话应用）和非实时数据报（比如FTP），里面还有两个bit是可以告诉主机网络发生了拥塞。</li>
+<li>数据报长度（包括首部）：占16个bit，理论上长度是65535，但是实际上，数据报一般不超过1500字节，因为这个长度相当于链路层的payload长度。</li>
+<li>标识、标志、片偏移：这三个字段与所谓IP分片有关。</li>
+<li>寿命（Time-To-Live）：这个字段防止数据报出现环路，每当路由器处理数据报的时候，会把TTL-1，减为0的时候，数据报会被路由器丢弃。</li>
+<li>协议：指明了该数据报的上层传输层协议，是使用UDP还是TCP，UDP数据报此字段值为 17，TCP数据报此字段值为6。</li>
+<li>首部检验和：同TCP的吧，不过不同的是，因为存在TTL字段，所以每次需要修改一下检验和再发出去。</li>
+<li>源地址和目的地址：字面意思</li>
+<li>数据：就是payload了，但是ICMP报文也可以承载其它类型的数据。</li>
+</ul>
+<h3 id="IPv4编址"><a href="#IPv4编址" class="headerlink" title="IPv4编址"></a>IPv4编址</h3><p>首先明确一点：IP地址是和主机绑定的，是和主机的物理接口绑定的。</p>
+<p>IP地址采用点分十进制表示法，每个接口必须有一个全球唯一的IP地址（NAT接口除外）。这些地址不能随意决定，而是需要由其所连接的<strong>子网</strong>来决定。</p>
+<p>把IP地址拆成32位二进制数，可能会有连续的相同的高位，它们属于同一子网，比如我们最常见的：</p>
+<p>192.168.1.xxx的ip地址，在这里它们的最左侧24位的比特是相同的，这几个接口也通过一个<strong>不包含路由器的网络</strong>互联起来。该网络可能是以太网LAN互联或是无限接入点互联。</p>
+<img src="/2023/04/05/ComputerNetwork4/7.png" class="">
+
+<p>用IP的术语来说，左边三个主机与其<strong>路由器的接口</strong>形成一个<strong>子网</strong></p>
+<p>IP编址为这个子网分配一个地址223.1.1.0&#x2F;24,其中的 &#x2F;24记法，有时称为子网掩码（network mask），指示32比特中的最左侧24比特定义了子网地址，所有连接到这个网络的主机ip地址必须是 <code>223.1.1.xxx</code> 的形式。</p>
+<p>为了确定子网，分开主机和路由器的每个接口，产生几个隔离的网络岛，使用接口端接这些隔离的网络的端点。这些隔离的网络中的每一个都叫作一个<strong>子网</strong>。</p>
+<p>比如下面的网络：</p>
+<img src="/2023/04/05/ComputerNetwork4/8.png" class="">
+
+<p>使用三台路由器有6个子网，因此我们可以发现，路由器是用于连接不同子网的网络层设备。</p>
+<p>下面来看看因特网是如何处理编址的：</p>
+<p>因特网地址分配策略是：<strong>无类别域间路由选择</strong>（CIDR）。当使用子网寻址时，32比特的IP地址被划分为两部分，并且也具有点分十进制数形式a. h. c. d&#x2F;x,其中 x 指示了地址的第一部分中的比特数。</p>
+<p>前x位叫做该IP地址的网络部分，被称为地址前缀，这样的话在设计路由表的时候就只需要考虑前面的x比特，大大减少了所需的存储空间，使用单个网络前缀通告多个网络的能力称为<strong>地址聚合</strong>，即具有相同网络前缀，但是子网掩码长度不一样的多个网络，一般来说，较短子网掩码的网络可以包括较长子网掩码的网络。</p>
+<p>然后就是，多个子网匹配的话会给到最长的前缀（尽可能小的网络）。而剩余的32-x比特可以认为是区分子网的内部设备所使用的。</p>
+<p>CIDR之前，IP地址的网络部分被限制为长度8、16、24比特，分别叫A，B，C类的网络地址。但是这样的分配方案不太合理，因为一个B类网络地址有65534个主机，而一个C类网络地址的主机数为254，假设我有一个公司需要1000台主机，C类网络地址放不下，而B类网络地址会导致大量地址占用。</p>
+<p>主机号全0标识网络地址，全1表示广播地址，特别的：255.255.255.255 表示整个网络的主机。</p>
+<h4 id="获取一块地址"><a href="#获取一块地址" class="headerlink" title="获取一块地址"></a>获取一块地址</h4><p>我们PC要获取IP地址需要从ISP中获得分配的地址，而ISP得到的地址块是由权威机构指定的。</p>
+<h4 id="获取主机地址：动态主机配置协议"><a href="#获取主机地址：动态主机配置协议" class="headerlink" title="获取主机地址：动态主机配置协议"></a>获取主机地址：动态主机配置协议</h4><p>这其实就是DHCP协议，我们理解为可以自动获取网络接口的IP地址就好了，因为这个特性，它也被称为<strong>即插即用协议</strong>或者是<strong>零配置协议</strong>。</p>
+<p>DHCP是 <code>C/S</code> 协议，最简单的情况就是每个子网都有一个DHCP服务器，这样每个计算机接入该子网都能获得自己的IP地址。如果该子网中不存在DHCP服务器，则需要一个<strong>DHCP中继代理</strong>，它会指明DHCP服务器的地址。</p>
+<p>DHCP方式获取IP地址的步骤如下：</p>
+<img src="/2023/04/05/ComputerNetwork4/9.png" class="">
+
+<p>如下四个步骤：</p>
+<ul>
+<li>DHCP服务器发现：首先我得找到我子网的DHCP服务器吧，这可通过使用DHCP发现报文（DHCP discover message）来完成，DHCP客户端使用68端口广播，DHCP服务器在67端口接收广播。</li>
+<li>DHCP服务器提供：使用DHCP提供报文给客户端做出响应，这里我也必须广播，因为此时主机并没有IP地址，包含有收到的 发现报文的事务ID、向客户推荐的IP地址、网络掩码以及IP地址租用期（address lease time） 即IP地址有效的时间量。</li>
+<li>DHCP请求：向DHCP服务器请求自己的IP地址。</li>
+<li>DHCP ACK：对DHCP请求报文回应，证实所要求的参数。</li>
+</ul>
+<p>在客户端正式获得一个ip地址之前，发送的都是广播。</p>
+<h2 id="网络地址转换"><a href="#网络地址转换" class="headerlink" title="网络地址转换"></a>网络地址转换</h2><p>32位的IP地址中，有三段私有地址：</p>
+<ul>
+<li>10.0.0.0&#x2F;8</li>
+<li>172.16.0.0&#x2F;12</li>
+<li>192.168.0.0&#x2F;16</li>
+</ul>
+<p>私有地址到公网地址的转换需要通过网络地址转换（Network Address Translation，NAT），具有私有地址IP的主机仅在该网络有意义，不过私有地址已经足够我们平时的生活，因为拥有私有地址的我们同样能通过NAT访问因特网任意一台主机，因为因特网的主机IP是唯一的。</p>
+<p>那私有地址如何收发来自因特网的分组呢？答案在于理解NAT。</p>
+<p>NAT使得一个私有网络的所有设备聚合成一台具有单一公网IP的设备。</p>
+<img src="/2023/04/05/ComputerNetwork4/10.png" class="">
+
+<p>过程是这样的：</p>
+<p>10.0.0.1的主机向1.1.1.1的主机发送一个分组，那么在与公网连接的路由器会把该私有地址（包括端口）进行端口映射并存储在NAT转换表当中。路由器向公网发送分组的时候，把源IP和端口改为了自己与公网连接的那个IP和对应的NAT映射端口。这样在公网主机想往回发送分组的时候，就会发送到这里的IP和端口，路由器收到分组会查看NAT表，返回给对应的内网主机。</p>
+<h3 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h3><p>因为32位的IP地址即将用完，因此研发了IPv6协议，IPv6地址为128位长度，数据报也有所不同，IPv6的数据报如图所示：</p>
+<img src="/2023/04/05/ComputerNetwork4/11.png" class="">
+
+<p>IPv6相比IPv4具有以下优点：</p>
+<ul>
+<li>除了单播和多播以外，还出现了<strong>任播地址</strong>，使得我们可以发送数据报给预期IP地址的任何一个。</li>
+<li>固定40字节的首部长度</li>
+<li>流标签可以给特殊的分组加上标签。</li>
+</ul>
+<p>下面详细解释一下IPv4数据报的字段：</p>
+<ul>
+<li>版本：用于标识IP版本号，IPv6中，该字段值为6。</li>
+<li>流量类型：与IPv4中的TOS一致。</li>
+<li>流标签：用于区分优先权。</li>
+<li>有效荷载长度：就是有效数据的长度。</li>
+<li>下一个首部：标识需要交付给哪个传输层协议。</li>
+<li>跳限制：同TTL。</li>
+<li>源地址和目的地址：字面意思。</li>
+<li>数据：字面意思。</li>
+</ul>
+<h2 id="通用转发和SDN"><a href="#通用转发和SDN" class="headerlink" title="通用转发和SDN"></a>通用转发和SDN</h2><p>基于目的地的转发的特征主要分两个步骤：匹配+操作，这样的转发表在OpenFlow中称为<strong>流表</strong>。</p>
+<img src="/2023/04/05/ComputerNetwork4/12.png" class="">
+
+<p>流表包含如下字段：</p>
+<ul>
+<li>首部字段集合：可以匹配首部字段的值。</li>
+<li>计数器集合，这里可以包括与该表项匹配的分组数量。</li>
+<li>操作：这里的操作可以进行转发或者丢弃，或者是改写首部字段的值。</li>
+</ul>
+<h3 id="匹配"><a href="#匹配" class="headerlink" title="匹配"></a>匹配</h3><p>可以匹配以下首部字段：</p>
+<img src="/2023/04/05/ComputerNetwork4/13.png" class="">
+
+<p>包括链路层，传输层首部和网络层的地址，协议类型以及TOS。</p>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><ul>
+<li>转发：可以转发到一个特定的物理端口，或者是广播到所有端口。</li>
+<li>丢弃：没有操作的流表标识该分组会被丢弃。</li>
+<li>修改字段：除了IP协议字段外的所有二三四层的字段中的值可以重写。</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>从书上给的三个例子来看，它可以完成如下的功能：</p>
+<ul>
+<li>简单转发</li>
+<li>负载均衡</li>
+<li>防火墙</li>
+</ul>
+<h2 id="中间盒"><a href="#中间盒" class="headerlink" title="中间盒"></a>中间盒</h2><p>用于提供除转发以外的功能，比如NAT，安全服务，增强性能等等</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>在本章中，我们讨论了网络层的数据平面（data plane）功能，即每台路由器的如下功能：决定到达路由器的输入链路之一的分组如何转发到该路由器的输岀链路之一。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2023/04/05/ComputerNetwork4/">https://xia0ji233.github.io/2023/04/05/ComputerNetwork4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/04/10/ComputerNetwork5/" title="计算机网络——自顶向下的方法第五章的学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计算机网络——自顶向下的方法第五章的学习</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/19/ComputerNetwork3/" title="计算机网络——自顶向下的方法第三章的学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">计算机网络——自顶向下的方法第三章的学习</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">153</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A2%97%E6%A6%82"><span class="toc-number">1.</span> <span class="toc-text">梗概</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82%E6%A6%82%E8%BF%B0"><span class="toc-number">2.</span> <span class="toc-text">网络层概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E5%8F%91%E5%92%8C%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2%E5%92%8C%E6%8E%A7%E5%88%B6%E5%B9%B3%E9%9D%A2"><span class="toc-number">2.1.</span> <span class="toc-text">转发和路由选择：数据平面和控制平面</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%B9%B3%E9%9D%A2%EF%BC%9A%E4%BC%A0%E7%BB%9F%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.1.</span> <span class="toc-text">控制平面：传统的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%B9%B3%E9%9D%A2%EF%BC%9ASDN%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.2.</span> <span class="toc-text">控制平面：SDN方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.2.</span> <span class="toc-text">网络服务模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0%E6%A6%82%E8%BF%B0"><span class="toc-number">2.2.1.</span> <span class="toc-text">第四章概述</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">路由器工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E7%AB%AF%E5%8F%A3%E5%A4%84%E7%90%86%E5%92%8C%E5%9F%BA%E4%BA%8E%E7%9B%AE%E7%9A%84%E7%9A%84%E8%BD%AC%E5%8F%91"><span class="toc-number">3.1.</span> <span class="toc-text">输入端口处理和基于目的的转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2"><span class="toc-number">3.2.</span> <span class="toc-text">交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E7%AB%AF%E5%8F%A3%E5%A4%84%E7%90%86"><span class="toc-number">3.3.</span> <span class="toc-text">输出端口处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%87%BA%E7%8E%B0%E6%8E%92%E9%98%9F"><span class="toc-number">3.4.</span> <span class="toc-text">如何出现排队</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%8E%92%E9%98%9F"><span class="toc-number">3.4.1.</span> <span class="toc-text">输入排队</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%8E%92%E9%98%9F"><span class="toc-number">3.4.2.</span> <span class="toc-text">输出排队</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E9%9C%80%E8%A6%81%E5%A4%9A%E5%B0%91%E6%89%8D%E5%A4%9F%E7%94%A8"><span class="toc-number">3.4.3.</span> <span class="toc-text">缓存需要多少才够用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E8%B0%83%E5%BA%A6"><span class="toc-number">3.5.</span> <span class="toc-text">分组调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%88%E8%BF%9B%E5%85%88%E5%87%BA"><span class="toc-number">3.5.1.</span> <span class="toc-text">先进先出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E6%9D%83%E6%8E%92%E9%98%9F"><span class="toc-number">3.5.2.</span> <span class="toc-text">优先权排队</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E5%8A%A0%E6%9D%83%E5%85%AC%E5%B9%B3%E6%8E%92%E9%98%9F"><span class="toc-number">3.5.3.</span> <span class="toc-text">循环加权公平排队</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E9%99%85%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.</span> <span class="toc-text">网际协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IPv4%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">IPv4数据报格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IPv4%E7%BC%96%E5%9D%80"><span class="toc-number">4.2.</span> <span class="toc-text">IPv4编址</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E4%B8%80%E5%9D%97%E5%9C%B0%E5%9D%80"><span class="toc-number">4.2.1.</span> <span class="toc-text">获取一块地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E4%B8%BB%E6%9C%BA%E5%9C%B0%E5%9D%80%EF%BC%9A%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.2.2.</span> <span class="toc-text">获取主机地址：动态主机配置协议</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">5.</span> <span class="toc-text">网络地址转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IPv6"><span class="toc-number">5.1.</span> <span class="toc-text">IPv6</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E8%BD%AC%E5%8F%91%E5%92%8CSDN"><span class="toc-number">6.</span> <span class="toc-text">通用转发和SDN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D"><span class="toc-number">6.1.</span> <span class="toc-text">匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C"><span class="toc-number">6.2.</span> <span class="toc-text">操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">6.3.</span> <span class="toc-text">例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E7%9B%92"><span class="toc-number">7.</span> <span class="toc-text">中间盒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

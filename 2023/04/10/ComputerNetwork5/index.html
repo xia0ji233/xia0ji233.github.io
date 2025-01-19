@@ -1,0 +1,523 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>计算机网络——自顶向下的方法第五章的学习 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这一章讲了网络层的控制平面。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络——自顶向下的方法第五章的学习">
+<meta property="og:url" content="https://xia0ji233.github.io/2023/04/10/ComputerNetwork5/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="这一章讲了网络层的控制平面。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-04-10T13:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-16T13:54:06.647Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2023/04/10/ComputerNetwork5/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '计算机网络——自顶向下的方法第五章的学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-16 21:54:06'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">153</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">计算机网络——自顶向下的方法第五章的学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-10T13:00:00.000Z" title="发表于 2023-04-10 21:00:00">2023-04-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-16T13:54:06.647Z" title="更新于 2025-01-16 21:54:06">2025-01-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/">书籍阅读</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">自顶向下计算机网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>21分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="计算机网络——自顶向下的方法第五章的学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这一章讲了网络层的控制平面。</p>
+<p>上一章中，有句话说的挺好：一个人总是要不断超越自我，否则还有什么乐趣可言？</p>
+<span id="more"></span>
+
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>这一章主要学习控制平面，会学习多种协议，诸如 RIP，OSPF和BGP协议，以及后面的ICMP和SNMP协议。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在通用转发的操作中，路由器可以转发，修改，复制，重写一个分组。完成这些工作可能又两种方法：</p>
+<ul>
+<li>每路由器控制：相当于分布式控制，路由器不知道全局的拓扑情况，通过互相告知的方法选择最合适的路由。RIP，OSPF，BGP协议都是使用的这种方式控制。</li>
+<li>逻辑集中式控制：相当于集中控制，远程控制器知道全局的拓扑，可以给每一个路由器下发最合适的路由表。SDN就是通过逻辑集中式控制实现的。</li>
+</ul>
+<h2 id="路由选择算法"><a href="#路由选择算法" class="headerlink" title="路由选择算法"></a>路由选择算法</h2><p>我们把拓扑结构抽象成数据结构中的图，边权表示路径长度或者说开销。</p>
+<img src="/2023/04/10/ComputerNetwork5/1.png" class="">
+
+<p>我们的目的自然是要使得数据包在传输的时候走过最短的路径（shortest path）。</p>
+<p>一般来说，根据该算法是集中式还是分散式来划分：</p>
+<ul>
+<li>集中式路由选择算法：主要是用链路状态（Link State，LS）算法，这里我们假设知道全局的拓扑结构，且清楚地知道每一条路由的开销。</li>
+<li>分散式路由选择算法：主要是使用距离向量（Distance-Vector，DV）算法，属于是分布式的，也许更为天然地适合那些路由器直接交互的控制平面。</li>
+</ul>
+<p>根据算法是静态还是动态的进行分类，可以分为：</p>
+<ul>
+<li>静态路由算法：人工配置路由表，除非人为干预，否则不会改变路由表。</li>
+<li>动态路由算法：会根据网络的情况合理地调整自己的路由表。</li>
+</ul>
+<p>最后可以分为负载敏感或者负载迟钝的，是否敏感主要在于某条链路的开销是否能真实反映链路的真实拥塞水平。显然 RIP，OSPF，BGP都是负载迟钝的算法。</p>
+<h3 id="链路状态路由选择算法"><a href="#链路状态路由选择算法" class="headerlink" title="链路状态路由选择算法"></a>链路状态路由选择算法</h3><p>这个算法也就是OSPF协议所使用的<strong>Dijkstra</strong>最短路径算法了。</p>
+<p>作为ACMer对这个当然很熟了已经，这个算法运行在每一个路由器中，每个路由器以自己为源点运行这个 $O(n^2)$ 的算法，当然如果我们用一个堆维护当前点的最小值，那么可以以 $O(nlog_2n)$ 的复杂度得到所有的最短路。</p>
+<p>Dijkstra单源最短路的思想就是：维护所有点与自己的距离，初始只有自己邻居的距离知道，其它点的距离都是无穷大，此时选择一个距离最小的点，把它加到一个集合中，再去寻找以这个点为起点的距离（加上它到源点的距离）最短的节点，同样也选择到源点距离最小的点加入其中，如此循环，直到得到每一个点的最短距离。</p>
+<h3 id="距离向量路由选择算法"><a href="#距离向量路由选择算法" class="headerlink" title="距离向量路由选择算法"></a>距离向量路由选择算法</h3><p>距离向量（Distance-Vector，DV）算法是一种<strong>迭代</strong>的、<strong>异步</strong>的和<strong>分布式</strong>的算法。</p>
+<ul>
+<li>说它是分布式的，是因为每个节点都要从一个或多个直 接相连邻居接收某些信息，执行计算，然后将其计算结果分发给邻居。</li>
+<li>说它是迭代的，是因为此过程一直要持续到邻居之间无更多信息要交换为止。</li>
+<li>说它是异步的，是因为它不要求所有 节点相互之间步伐一致地操作。</li>
+</ul>
+<p>它首先会直接维护自己到邻居的开销，同时也要记住自己到其它节点的总开销。一开始，它只知道自己到邻居的开销。</p>
+<img src="/2023/04/10/ComputerNetwork5/2.png" class="">
+
+<p>然后把自己所知道的信息全部发给邻居，邻居知道后，把自己相应的距离表更新。</p>
+<h4 id="距离向量算法：链路开销的改变与故障"><a href="#距离向量算法：链路开销的改变与故障" class="headerlink" title="距离向量算法：链路开销的改变与故障"></a>距离向量算法：链路开销的改变与故障</h4><p>需要知道一点的是：当链路状态发生改变，它们也要响应的作出转变。举个例子：</p>
+<img src="/2023/04/10/ComputerNetwork5/3.png" class="">
+
+<p>看a图，本来的状态为：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>x</th>
+<th>y</th>
+<th>z</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x</td>
+<td>0</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>y</td>
+<td>4</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>z</td>
+<td>5</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>当 xy 的距离变为 1 的时候，x 和 y 迅速感受到。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>x</th>
+<th>y</th>
+<th>z</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x</td>
+<td>0</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr>
+<td>y</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>z</td>
+<td>5</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>然后y把消息告诉了 z，z知道了 x 到 y 的距离变成 1 之后，马上算，我到 x 的距离就是 2，算法进入静止状态。</p>
+<p>只两轮就到了平衡状态，链路状态变优的好消息迅速得到了传播，称为<strong>好消息传得快</strong>。</p>
+<hr>
+<p>我们再来看链路状态增加的情况，也就是上面的 b 图。</p>
+<p>此时遇到了路由选择环路，过程是这样的，初始状态还是一样，只不过此时 xy 的开销骤然变大，</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>x</th>
+<th>y</th>
+<th>z</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x</td>
+<td>0</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>y</td>
+<td>4</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>z</td>
+<td>5</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>我们来看此时 y 的视角。我要更新我到x的距离，我到 x 的距离应该就是 <code>min(edge(y,z)+dis(x,z),edge(y,x)+dis(x,x))</code>，把值都带进去，因为此时 y 只能清晰地认知它到 x 的距离变成了 60，它并不能知道此时 z 到 x 的距离也变高了，它只会认为是之前的 5，因此带入上式可得到 ：</p>
+<p><code>dis(x,y)=min(edge(y,z)+dis(x,z),edge(y,x)+dis(x,x))=min(1+5,60+0)=6</code>。</p>
+<p>上面的情况一定是先发生的，因为它们俩的变化只有 x 和 y 会做出反应之后通告了 z 之后，z 才会作出反应。</p>
+<p>z 此时作出反应：因为 <code>dis(x,y)</code> 发生了变化，我也得考虑一下，我到 z 的距离，就是 ：</p>
+<p><code>dis(z,x)=min(edge(z,y)+dis(y,x),edge(z,x)+dis(x,x))=min(1+6,50+0)=7</code>。</p>
+<p>然后它发出通告，告诉了y，那么 y 还是用那个公式去算：</p>
+<p><code>dis(x,y)=min(edge(y,z)+dis(x,z),edge(y,x)+dis(x,x))=min(1+7,60+0)=8</code>。</p>
+<p>可以发现，出现循环了！</p>
+<p>而且此时我们遇到<strong>路由选择环路</strong>（route loop），而且此时正常分组会在它们之间不断跳跃，因为按照它们的算法，它们到 z 的最短距离都是发给对方。分组便会在这两个路由器之间来回发送，直到 TTL&#x3D;0 或者其中一个路由器意识到它们错了修改自己的转发表为止。</p>
+<p>那么就像刚刚的循环会持续多久呢？按书上的说法，会持续 44 次，因为要让 y 正确认识到 z 到 x 的最短距离应该是 50。而初始情况的 <code>dis(z,x)=5</code>，经过 44 次循环之后应当就变成 50 了。</p>
+<p>如果xy和zx的链路开销变成 9999，甚至是 9999 呢，那就要循环接近9999次才能解决问题，可以看到x到y的距离增加的<strong>坏消息传的慢</strong>，这个问题有时候也被称为<strong>无穷计数</strong>问题。</p>
+<h4 id="距离向量算法：增加毒性逆转"><a href="#距离向量算法：增加毒性逆转" class="headerlink" title="距离向量算法：增加毒性逆转"></a>距离向量算法：增加毒性逆转</h4><p>刚才描述的特定循环的场景可以通过使用一种称为<strong>毒性逆转</strong>（poisoned reverse）的技术而加以避免。其思想较为简单：如果z通过 y 路由选择到目的地 x，则z将通告 y，它 （即z）到 x 的距离是无穷大，也就是 z 将向 y 通告 <code>dis(z,x)=inf</code>。这样让 y 知道之后重新做那个式子的选择：</p>
+<p><code>dis(x,y)=min(edge(y,z)+dis(x,z),edge(y,x)+dis(x,x))=min(1+inf,60+0)=60</code>。</p>
+<p>然后转发给 z ，z 马上可以决定：</p>
+<p><code>dis(z,x)=min(edge(z,y)+dis(y,x),edge(z,x)+dis(x,x))=min(1+60,50+0)=50</code>。</p>
+<p>然后 z 转发给 x，x也能马上收敛得到预期值：</p>
+<p><code>dis(x,y)=min(edge(y,z)+dis(x,z),edge(y,x)+dis(x,x))=min(1+50,60+0)=51</code></p>
+<p>这样我只是撒了一个善意的小谎言，我能提前结束这 44 次不必要的循环，当然因为这个机制的存在，y 在认为走 z 再转发给 x 的距离比较短的同时，也会告诉 y，<code>dis(y,x)=inf</code>，此时算法就可以达到稳定状态了。</p>
+<p>但是它也没有解决一般无穷计数问题，应该认识到，涉及多个节点而不是两个直接相连的节点环路不能用毒性逆转的技术检测到。</p>
+<h4 id="LS与DV路由选择算法比较"><a href="#LS与DV路由选择算法比较" class="headerlink" title="LS与DV路由选择算法比较"></a>LS与DV路由选择算法比较</h4><p>直接说结论吧：</p>
+<ul>
+<li>报文复杂性：LS比较高，因为一次链路发生改变要通告全体成员，然后全体又因为这个报文要发给其它所有人自己对应的新的距离，复杂性为 $O(NE)$，而DV算法仅仅在每次迭代的时候通告相邻路由器即可。</li>
+<li>收敛速度：LS比较快，因为LS基本是有全局视角一样的去算距离，而DV算法会在链路增大的时候产生无穷计数的问题。</li>
+<li>健壮性：LS算法比较好，因为对于DV算法来说，一个恶意的通告会导致所有流量到该路由器，从而扩散到整个网络。</li>
+</ul>
+<h2 id="因特网自治系统内部的路由选择"><a href="#因特网自治系统内部的路由选择" class="headerlink" title="因特网自治系统内部的路由选择"></a>因特网自治系统内部的路由选择</h2><p>因特网是一个具有 32 位地址的集合，现在已经有超过10亿台主机，让路由器记住所有的 IP 地址显然不太可能。因此需要降低因特网这种大型网络的复杂性。</p>
+<p>可以把主机和路由器组织进一个<strong>自治系统</strong>（Autonomous System，AS），一个自治系统由其全局唯一的AS号（ASN）所标识。就像IP 地址那样，AS号由ICANN区域注册机构所分配。在一个自治系 统内运行的路由选择算法叫作自治系统内部路由选择协议（intra-autonomous system routing protocol）。内部路由选择协议主要有<strong>路由信息协议</strong>（Routing Information Protocol，RIP）和<strong>开放最短路优先协议</strong>（Open Shortest Path First，OSPF）。</p>
+<h3 id="RIP协议"><a href="#RIP协议" class="headerlink" title="RIP协议"></a>RIP协议</h3><p>RIP 是一种分布式的基于<strong>距离向量</strong>的路由选择协议，是互联网的标准协议，其最大优点就是<strong>简单</strong>。</p>
+<p>RIP 定义从一个路由器到另一个路由器的距离为 1，这个距离也可以叫<strong>跳数</strong>（hop count）。从一路由器到非直接连接的网络的距离定义为所经过的路由器数加1。“加1”是因为到达目的网络后就进行<strong>直接交付</strong>，而到直接连接的网络的距离已经定义为1。</p>
+<p>每经过一个路由器，跳数就加1。RIP 认为好的路由就是它通过的路由器的数目少，即“距离短”。RIP 允许一条路径最多只能包含15 个路由器。因此“距离”等于 16 时即相当于不可达。可见 RIP 只适用于小型互联网。</p>
+<p>RIP 不能自动选择最优路由，只会选择跳数最少的路由。</p>
+<p>RIP 的特点：</p>
+<ul>
+<li>仅和相邻路由器交换信息，不相邻的路由器不交换信息。</li>
+<li>路由器交换的信息是当前本路由器所知道的全部信息，即自己现在的路由表。</li>
+<li>按固定的时间间隔交换路由信息，例如，每隔30 秒。然后路由器根据收到的路由信息更新路由表。当网络拓扑发生变化时，路由器也及时向相邻路由器通告拓扑变化后的路由信息。</li>
+</ul>
+<p>RIP 还具有距离向量算法的所有特点，诸如<strong>好消息传得快，坏消息传得慢</strong>等特点。RIP 协议使用运输层的用户数据报 UDP 进行传送（使用UDP 的端口520）</p>
+<h4 id="RIP报文格式"><a href="#RIP报文格式" class="headerlink" title="RIP报文格式"></a>RIP报文格式</h4><p>如下图所示：</p>
+<img src="/2023/04/10/ComputerNetwork5/4.png" class="">
+
+<p>由首部和路由部分组成。</p>
+<p>RIP 的首部占 4 个字节，其中的命令字段指出报文的意义。例如，1 表示请求路由信息，2 表示对请求路由信息的响应或未被请求而发出的路由更新报文。必为0部分是为了对齐4个字节。</p>
+<p>RIP2 报文中的路由部分由若干个路由信息组成。每个路由信息需要用20 个字节。</p>
+<ul>
+<li>地址族标识符（又称为地址类别）字段用来标志所使用的地址协议。如采用IP 地址就令这个字段的值为 2。</li>
+<li>路由标记填入自治系统号ASN（Autonomous System Number），这是考虑使RIP 有可能收到本自治系统以外的路由选择信息。</li>
+<li>再后面指出某个网络地址、该网络的子网掩码、下一跳路由器地址以及到此网络的距离。</li>
+</ul>
+<p>一个RIP 报文最多可包括 25 个路由，因而RIP 报文的最大长度是 4 + 20 × 25 &#x3D; 504 字节。如超过，必须再用一个 RIP 报文来传送。</p>
+<p>RIP2 还具有简单的鉴别功能。若使用鉴别功能，则将原来写入第一个路由信息（20 字节）的位置用作鉴别。这时应将地址族标识符置为全1（即0xFFFF），而路由标记写入鉴别类型，剩下的16 字节为鉴别数据。在鉴别数据之后才写入路由信息，但这时最多只能再放入 24 个路由信息。</p>
+<h3 id="OSPF协议"><a href="#OSPF协议" class="headerlink" title="OSPF协议"></a>OSPF协议</h3><p>OSPF是一种链路状态协议，它使用<strong>洪泛</strong>链路状态信息和Dijkstra最低开销路径算法。OSPF报文直接使用 IP 承载，协议字段的值为 89。</p>
+<p>OSPF 具有以下优点：</p>
+<ul>
+<li>安全：可以鉴别路由器是否可信，保证数据的真实性。</li>
+<li>多条相同开销的路径：当开销相同时，不会单一地选择一条路径。</li>
+<li>单播与多播路由选择的综合支持：多播OSPF （MOSPF）提供对OSPF的简单扩展，以便提供多播路由选择。MOSPF使用现有的OSPF链路数据库，并为现有的OSPF链路状态广播机制增加了一种新型的链路状态通告。</li>
+<li>支持层次化结构。</li>
+</ul>
+<h2 id="ISP之间的路由选择：BGP"><a href="#ISP之间的路由选择：BGP" class="headerlink" title="ISP之间的路由选择：BGP"></a>ISP之间的路由选择：BGP</h2><p>AS之间还需要有通信协议，AS之间通信必须运行相同的AS间路由选择协议，称为边界网关协议（Broder Gateway Protocol, BGP）</p>
+<h3 id="BGP的作用"><a href="#BGP的作用" class="headerlink" title="BGP的作用"></a>BGP的作用</h3><p>BGP其实就是用于连接 AS，确保自治系统之间的通信。BGP为每台路由器提供了一种完成以下任务的手段：</p>
+<ul>
+<li>从邻居AS获得前缀的可达性信息。</li>
+<li>确定到该前缀的“最好的”路由。</li>
+</ul>
+<p>下面我们开始研究这两点。</p>
+<h3 id="通告BGP路由信息"><a href="#通告BGP路由信息" class="headerlink" title="通告BGP路由信息"></a>通告BGP路由信息</h3><p>一台路由器，要么是一台网关路由器（gateway router），要么是一台内部路由器（internal router）。</p>
+<img src="/2023/04/10/ComputerNetwork5/5.png" class="">
+
+<p>如图有三个 AS，连接其它AS的路由器就是网关路由器，而只连接自己AS路由器的路由器就是内部路由器。</p>
+<p>每对路由器通过使用<strong>179</strong>端口的半永久 TCP连接交换路由选择信息。每条直接连接以及所有通过该连接发送的BGP报文，称为  BGP连接（BGP cormection），跨越两个AS的BGP连接称为外部 BGP （eBGP）连接，而在相同AS中的两台路由器之间的 BGP会话称为内部 BGP（iBGP）连接。就像下图展示的一样：</p>
+<img src="/2023/04/10/ComputerNetwork5/6.png" class="">
+
+<p>一台主机（x）想表明自己在 AS3 中可以直接发 <code>AS3 x</code>，当经过边界路由器的时候，它会带上自己的自治系统号，比如这个信息被转到了 2c 这里，2c 他就会表明通过跟我自治系统的连接可以找到 AS3 中的 x。它会给其它的路由器发送这样的信息：<code>AS2 AS3 x</code>，为了防止回传，我们规定，如果一台路由器在路径列表中看到包含了它自己的AS，它将拒绝该通告。当经过 AS1 的时候，AS1 收到 <code>AS2 AS3 x</code>，它就知道了，我应该先经过 AS2，再去找到 AS3 中的 x。</p>
+<h3 id="确定最好路由"><a href="#确定最好路由" class="headerlink" title="确定最好路由"></a>确定最好路由</h3><p>当路由器通过BGP连接 通告前缀时，它在前缀中包括一些BGP属性（BGP attribute）。用BGP术语来说，前缀及 其属性称为路由（route）。两个较为重要的属性是AS-PATH和NEXT-HOP。AS-PATH属性包含了通告已经通过的AS的列表，</p>
+<p>NEXT-HOP是AS-PATH起始的路由器接口的IP地址</p>
+<img src="/2023/04/10/ComputerNetwork5/7.png" class="">
+
+<p>比如路由器 2a 来说，最左侧的接口的IP地址就是 NEXT-HOP，对于AS-PATH&#x3D;<code>AS2 AS3 x</code> 来说。</p>
+<p>而路由器 3d 来说，最左侧的接口的IP地址就是 NEXT-HOP，对于 AS-PATH&#x3D;<code>AS3 x</code> 来说。</p>
+<h4 id="热土豆路由选择"><a href="#热土豆路由选择" class="headerlink" title="热土豆路由选择"></a>热土豆路由选择</h4><p>它不会查阅最好的路由，它只会尽可能快速地把数据包送出自己的 AS，比如对于 1b 到 3d 的转发，虽然通过 1d 的右边端口可以很快地到达，但是它仍会选择 1c 路由器的端口转发到 AS2 中。</p>
+<img src="/2023/04/10/ComputerNetwork5/8.png" class="">
+
+<p>因此我们把分组看成是烫手的土豆，每个 AS 都在尽最大可能送出自己的分组。因此它是自私的算法，因为它只关心自己的开销而不管其它的开销。</p>
+<p>在做这个的时候也是想到了一点，在数据包传给 AS2的时候，那个路由器会不会认为AS1可以直接到达，并且AS1的下一跳最近而把数据包还给AS1的网关路由器，然后它们之间就循环了，因为对方路由器都是最近的下一跳并且可达，总之，纯粹的热土豆路由选择算法应用场景还是比较小的。</p>
+<h4 id="路由器选择算法"><a href="#路由器选择算法" class="headerlink" title="路由器选择算法"></a>路由器选择算法</h4><p>实际应用中，所有路由器会被管理员指定一个本地偏好。<strong>本地偏好</strong>：本地偏好是一种策略属性，完全由AS网络管理员设置。具有最高本地偏好值的路由被选择。然后再根据以下算法选择路由：</p>
+<ul>
+<li>从余下的路由中（所有都具有相同的最高本地偏好值），将选择具有最短AS-PATH的路由。如果该规则是路由选择的唯一规则，则BGP将使用<strong>距离向量算法</strong>决定路径，其中距离测度使用AS跳的跳数而不是路由器跳的跳数（也就是经过多少个AS转发的）。</li>
+<li>余下的路由就是拥有相同本地偏好且具有相同 AS-PATH 长度的路由，这个时候使用热土豆转发一个具有最近 NEXT HOP 的路由。</li>
+<li>如果仍留下多条路由，该路由器使用BGP标识符来选择路由。</li>
+</ul>
+<p>可以看到，这个算法不再自私，它会选择尽量少的 AS-PATH 长度。</p>
+<h3 id="IP任播"><a href="#IP任播" class="headerlink" title="IP任播"></a>IP任播</h3><p>任播是指把数据包发送给一个 IP 集合中的任意一个主机。比较常见的应用就是镜像网站，因为地理位置缘故，为了保证较快的访问速度，在多个地理位置建立相同的网站，在访问的时候选择任意一个地理位置接近的网站。</p>
+<p>CDN就是一个使用IP任播的应用，但是实际上 CDN 不使用 IP 任播，而是让原网站将DNS解析到CDN服务器，然后CDN提供商做内容分发。</p>
+<p>实际中，DNS解析是使用IP任播的方式去解析的，IP任播会将数据包发送到地理位置最近的一台根DNS服务器。</p>
+<h3 id="路由选择策略"><a href="#路由选择策略" class="headerlink" title="路由选择策略"></a>路由选择策略</h3><p>来参考一下这样的网络：</p>
+<img src="/2023/04/10/ComputerNetwork5/9.png" class="">
+
+<p>考虑这样的问题：</p>
+<p>B网络给Y的流量是否会经过X，如果经过X，X必然不愿意，因此客户网络永远不会通告自己有到达其它网络的办法。</p>
+<p>在考虑W到Y是否会经过B，因为W和Y都不是B的客户，浪费我的流量服务不属于我的客户我必然不愿意。商业运行的ISP们都遵从的一个经验法则是：任何穿越某ISP主干网的流量必须是其源或目的（或两者）位于该ISP的某个客户网络中；不然的话这些流量将会免费搭车通过该ISP的网络。</p>
+<h3 id="因特网的呈现"><a href="#因特网的呈现" class="headerlink" title="因特网的呈现"></a>因特网的呈现</h3><p>讲述了一个公司，怎么注册自己的门户网站和域名邮箱等等服务。</p>
+<p>无非就是我先和ISP签订协议，分配IP和域名，并安排人到我的公司物理链接和配置。要向域名管理商拿到一个域名并且把自己的一台主机变为域名服务器并把IP地址告诉域名管理商。</p>
+<p>我自己添加 www 子域作为 web 服务器，添加 mail 子域作为邮件服务器。</p>
+<h2 id="SDN控制平面"><a href="#SDN控制平面" class="headerlink" title="SDN控制平面"></a>SDN控制平面</h2><p>SDN的四个关键特征：</p>
+<ul>
+<li>基于流的转发：像前面提到的，可以根据运输层，网络层，链路层首部的各个字段进行转发，丢弃，修改首部等操作。</li>
+<li>数据平面与控制平面分离：数据平面由分组交换机组成，是相对简单但快速的设别，该设备在他们的流表中执行匹配+操作的功能，而控制平面由服务器以及决定管理交换机的流表软件组成。</li>
+<li>网络控制功能：SDN控制平面由软件实现，网络控制应用程序通过调用SDN提供的北向API获取，监视，编程，控制下面的网络设备。</li>
+<li>可编程的网络：决定使用什么样的算法去转发以及操作分组。</li>
+</ul>
+<h3 id="SDN控制器和网络控制应用程序"><a href="#SDN控制器和网络控制应用程序" class="headerlink" title="SDN控制器和网络控制应用程序"></a>SDN控制器和网络控制应用程序</h3><p>这一章感觉没有特别重要的东西。</p>
+<h3 id="OpenFlow协议"><a href="#OpenFlow协议" class="headerlink" title="OpenFlow协议"></a>OpenFlow协议</h3><p>运行在6653端口之上。</p>
+<h2 id="ICMP：因特网控制报文协议"><a href="#ICMP：因特网控制报文协议" class="headerlink" title="ICMP：因特网控制报文协议"></a>ICMP：因特网控制报文协议</h2><p>我们在连接失败的时候，通常会发送一个ICMP给到原TCP链接，以便于告诉主机发生了一些什么事情导致了怎么怎么样的情况，比如我们 nc 常见的，Destination net unreachable，这些信息就是通过 ICMP 告诉套接字的，当套接字收到了ICMP报文，便会根据这个去查找对应的 info 和采取对应的操作。</p>
+<p>ICMP通常被认为是IP的一部分，但从体系结构上讲它位于IP之上，因为ICMP报文是承载在IP分组中的（它属于网络层协议）。这就是说，ICMP报文是作为IP有效载荷承载的。当一台主机收到一个指明上层协议为 ICMP 的IP数据报时（<strong>上层协议编码为1</strong>）。</p>
+<p>ICMP报文有一个类型字段和一个编码字段，对应的信息如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th>ICMP类型</th>
+<th>编码</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>回显回答（对 ping 的回答）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>目的网络不可达</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>目的主机不可达</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>目的协议不可达</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>目的端口不可达</td>
+</tr>
+<tr>
+<td>3</td>
+<td>6</td>
+<td>目的网络未知</td>
+</tr>
+<tr>
+<td>3</td>
+<td>7</td>
+<td>目的主机未知</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0</td>
+<td>源抑制（拥塞控制）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0</td>
+<td>回显请求</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0</td>
+<td>路由器通告</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0</td>
+<td>路由器发现</td>
+</tr>
+<tr>
+<td>11</td>
+<td>0</td>
+<td>TTL过期</td>
+</tr>
+<tr>
+<td>12</td>
+<td>0</td>
+<td>IP 首部损坏</td>
+</tr>
+</tbody></table>
+<p>另一个有趣的ICMP报文是源抑制报文。这种报文在实践中很少使用。其最初目的是执行拥塞控制，即使得拥塞的路由器向一台主机发送一个ICMP源抑制报文，以强制该主机减小其发送速率。</p>
+<p>随便抓一个 IP 分组过来。</p>
+<img src="/2023/04/10/ComputerNetwork5/10.png" class="">
+
+<p>里面有八位的 type 字段和八位的 code 字段，后面还有一系列数据。</p>
+<p><code>traceroute</code> 程序的原理就是使用 <code>ICMP</code> 报文去获取链路上的路由信息的。为了判断源和目的地之间所有路由器的名字和地址，源主机中的Traceroute向目的地主机发送一系列普通的IP数据报。这些数据报的每个携带了一个具有<strong>不可达</strong>UDP端口号的UDP报文段。第一个数据报的TTL为1，第二个的TTL为2，第三个的TTL为3，依次类推。当第 n 个数据报到达第 n 台路由器时，第 n 台路由器观察到这个数据报的TTL正好过期。</p>
+<p>根据IP协议规则，路由器丢弃该数据报并发送 一个ICMP告警报文给源主机（类型11编码0）。该告警报文包含了路由器的名字和它的IP地址。当该ICMP报文返回源主机时，源主机从定时器得到往返时延，从ICMP报文中得到第n台路由器的名字与IP地址。这便是traceroute的工作原理了。</p>
+<p>一般这个不可达的端口为 33434。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>我们学习了构建控制平面有两大类方法：传统的每路由器控制（其中在每台路由器中 运行算法，并且路由器中的路由选择组件与其他路由器中的路由选择组件通信）和软件定义网络（SDN）控制（其中一个逻辑上集中的控制器计算并向每台路由器分发转发表为它们所用）。我们在5.2节中学习了两种基本的路由选择算法，即链路状态和距离矢量，用 于计算图中的最小开销路径；这些算法在每路由器控制和SDN控制中都有应用。这些算法是两种广泛部署的因特网路由选择协议OSPF和BGP的基础，我们在5. 3节和5. 4节中讨论了这两种协议。我们在5. 5节中讨论了网络层控制平面的SDN方法，研究了SDN网络控制应用程序、SDN控制器，以及控制器和SDN控制设备之间通信所使用的0penFlow 协议。在5.6节中，我们包括了管理IP网络的某些技术细节：ICMP （互联网控制报文协议）。</p>
+<p>网络层到这里就结束了，下面就只剩下链路层了，这本书也快结束了。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2023/04/10/ComputerNetwork5/">https://xia0ji233.github.io/2023/04/10/ComputerNetwork5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/04/12/tencent-race-2023-pre/" title="腾讯游戏安全大赛2023初赛题解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">腾讯游戏安全大赛2023初赛题解</div></div></a></div><div class="next-post pull-right"><a href="/2023/04/05/ComputerNetwork4/" title="计算机网络——自顶向下的方法第四章的学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">计算机网络——自顶向下的方法第四章的学习</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">153</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">2.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">路由选择算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95"><span class="toc-number">3.1.</span> <span class="toc-text">链路状态路由选择算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%9D%E7%A6%BB%E5%90%91%E9%87%8F%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95"><span class="toc-number">3.2.</span> <span class="toc-text">距离向量路由选择算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%9D%E7%A6%BB%E5%90%91%E9%87%8F%E7%AE%97%E6%B3%95%EF%BC%9A%E9%93%BE%E8%B7%AF%E5%BC%80%E9%94%80%E7%9A%84%E6%94%B9%E5%8F%98%E4%B8%8E%E6%95%85%E9%9A%9C"><span class="toc-number">3.2.1.</span> <span class="toc-text">距离向量算法：链路开销的改变与故障</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%9D%E7%A6%BB%E5%90%91%E9%87%8F%E7%AE%97%E6%B3%95%EF%BC%9A%E5%A2%9E%E5%8A%A0%E6%AF%92%E6%80%A7%E9%80%86%E8%BD%AC"><span class="toc-number">3.2.2.</span> <span class="toc-text">距离向量算法：增加毒性逆转</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LS%E4%B8%8EDV%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95%E6%AF%94%E8%BE%83"><span class="toc-number">3.2.3.</span> <span class="toc-text">LS与DV路由选择算法比较</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%A0%E7%89%B9%E7%BD%91%E8%87%AA%E6%B2%BB%E7%B3%BB%E7%BB%9F%E5%86%85%E9%83%A8%E7%9A%84%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9"><span class="toc-number">4.</span> <span class="toc-text">因特网自治系统内部的路由选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RIP%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.1.</span> <span class="toc-text">RIP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RIP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.1.1.</span> <span class="toc-text">RIP报文格式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OSPF%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.2.</span> <span class="toc-text">OSPF协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ISP%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%EF%BC%9ABGP"><span class="toc-number">5.</span> <span class="toc-text">ISP之间的路由选择：BGP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BGP%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">5.1.</span> <span class="toc-text">BGP的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E5%91%8ABGP%E8%B7%AF%E7%94%B1%E4%BF%A1%E6%81%AF"><span class="toc-number">5.2.</span> <span class="toc-text">通告BGP路由信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E6%9C%80%E5%A5%BD%E8%B7%AF%E7%94%B1"><span class="toc-number">5.3.</span> <span class="toc-text">确定最好路由</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%83%AD%E5%9C%9F%E8%B1%86%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9"><span class="toc-number">5.3.1.</span> <span class="toc-text">热土豆路由选择</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95"><span class="toc-number">5.3.2.</span> <span class="toc-text">路由器选择算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IP%E4%BB%BB%E6%92%AD"><span class="toc-number">5.4.</span> <span class="toc-text">IP任播</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%E7%AD%96%E7%95%A5"><span class="toc-number">5.5.</span> <span class="toc-text">路由选择策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%A0%E7%89%B9%E7%BD%91%E7%9A%84%E5%91%88%E7%8E%B0"><span class="toc-number">5.6.</span> <span class="toc-text">因特网的呈现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SDN%E6%8E%A7%E5%88%B6%E5%B9%B3%E9%9D%A2"><span class="toc-number">6.</span> <span class="toc-text">SDN控制平面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SDN%E6%8E%A7%E5%88%B6%E5%99%A8%E5%92%8C%E7%BD%91%E7%BB%9C%E6%8E%A7%E5%88%B6%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">6.1.</span> <span class="toc-text">SDN控制器和网络控制应用程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OpenFlow%E5%8D%8F%E8%AE%AE"><span class="toc-number">6.2.</span> <span class="toc-text">OpenFlow协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ICMP%EF%BC%9A%E5%9B%A0%E7%89%B9%E7%BD%91%E6%8E%A7%E5%88%B6%E6%8A%A5%E6%96%87%E5%8D%8F%E8%AE%AE"><span class="toc-number">7.</span> <span class="toc-text">ICMP：因特网控制报文协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
