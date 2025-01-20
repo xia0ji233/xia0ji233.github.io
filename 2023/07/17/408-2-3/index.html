@@ -1,0 +1,384 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>计算机网络复习（3） | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据链路层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络复习（3）">
+<meta property="og:url" content="https://xia0ji233.github.io/2023/07/17/408-2-3/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="数据链路层">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-07-17T10:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-20T05:59:07.582Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2023/07/17/408-2-3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '计算机网络复习（3）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-20 13:59:07'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">292</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">85</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">计算机网络复习（3）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-17T10:00:00.000Z" title="发表于 2023-07-17 18:00:00">2023-07-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-20T05:59:07.582Z" title="更新于 2025-01-20 13:59:07">2025-01-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%80%83%E7%A0%94/408/">408</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">7.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>23分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="计算机网络复习（3）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>数据链路层</p>
+<span id="more"></span>
+
+<h2 id="数据链路层的功能"><a href="#数据链路层的功能" class="headerlink" title="数据链路层的功能"></a>数据链路层的功能</h2><p>在物理层的基础上向网络层提供服务，对网络层表现为一条无差错的逻辑链路。</p>
+<h3 id="提供的服务"><a href="#提供的服务" class="headerlink" title="提供的服务"></a>提供的服务</h3><p>数据链路层可能提供以下的服务：</p>
+<ul>
+<li>成帧：链路层封装IP数据报，帧的结构由链路层协议规定。</li>
+<li>链路接入：媒体访问控制协议（Medium Access Control，MAC）规定了帧在链路上传输的规则.</li>
+<li>可靠交付：如果链路层实现可靠交付，通常是通过确认和重传取得的。对于高比特差错的链路来说，链路层通常要实现可靠交付，比如无线传输链路而不是通过运输层或应用层协议迫使进行端到端的数据重传。对于低比特差错的链路来说，可靠交付将是不必要的开销，出于此，许多链路层协议不提供可靠交付服务。数据链路层可能提供<strong>无连接无确认</strong>的服务，<strong>有确认无连接</strong>的服务，或者是<strong>有连接有确认</strong>的服务。</li>
+<li>检错和纠错：实际链路传输的时候，需要考虑是由信号衰减和电磁噪声导致的。上层也提供了有限的差错检测，也就是因特网检验和，IP校验了它的首部字段，TCP，UDP校验了全部字段。</li>
+</ul>
+<h3 id="数据链路"><a href="#数据链路" class="headerlink" title="数据链路"></a>数据链路</h3><p>基本概念：</p>
+<ul>
+<li>链路（link）：是一条无源的点到点的物理线路段，中间没有任何其他的交换结点。</li>
+<li>数据链路（data link）：除了物理线路外，还必须有通信协议来控制这些数据的传输。把协议加到物理线路上，就形成了数据链路，现在的适配器都实现了物理层和数据链路层的协议。早期的通信协议（protocol）叫通信规程（procedure），因此在数据链路层，这两个概念相同。</li>
+</ul>
+<h2 id="三个基本问题"><a href="#三个基本问题" class="headerlink" title="三个基本问题"></a>三个基本问题</h2><h4 id="封装成帧"><a href="#封装成帧" class="headerlink" title="封装成帧"></a>封装成帧</h4><p>将数据前后分别添加首部和尾部，构成了帧，首部和尾部的作用是用于进行<strong>帧界定</strong>。比如如果数据限定在 ASCII 字符集，那么我们可以使用非ASCII字符集作为帧的首部和尾部。我们把首部的控制字符称为 SOH（Start Of Header），结束的控制字符称为 EOT（End Of Transmission）。</p>
+<p>但是我们如果传输二进制文件的话，我们传输的字节很可能是任意（00-FF）的，这种能传输任意字节数据的行为我们称为<strong>透明传输</strong>。</p>
+<h4 id="透明传输"><a href="#透明传输" class="headerlink" title="透明传输"></a>透明传输</h4><p>当数据出现了控制字符代表的字节时，节点很可能认为传输已经结束而丢弃后面正常的数据，比如下面的图中</p>
+
+
+<p>如果数据出现了 EOT，就会把后面的数据全部丢弃，直到下一个 SOH 被接收为止。</p>
+<p>为了解决这个问题，我们可以使用字节填充的方式解决，若在数据中出现特殊控制字符，在前面填充一个 ESC（0x1B） 字节，表示这个是一个正常数据不是控制字符，如果我要表示 ESC 这个字符，那么我双写即可。</p>
+<p>这样就可以完美解决透明传输的问题</p>
+
+
+<h4 id="差错控制"><a href="#差错控制" class="headerlink" title="差错控制"></a>差错控制</h4><p>在传输过程中可能会产生比特差错：1 可能会变成 0 而 0 也可能变成 1。</p>
+<p>在一段时间内，传输错误的比特占所传输比特总数的比率称为误码率 BER (Bit Error Rate)。</p>
+<p>误码率与信噪比有很大的关系。</p>
+<p>为了保证数据传输的可靠性，在计算机网络传输数据时，必须采用各种差错检测措施，循环冗余校验就是其中一种。</p>
+<h4 id="循环冗余校验"><a href="#循环冗余校验" class="headerlink" title="循环冗余校验"></a>循环冗余校验</h4><p>首先确定一个 <code>r+1</code> 的比特位，作为<strong>生成多项式</strong>G，且要求最高位必为1，然后把 <code>d</code> 位的数据位左移 <code>r</code> 位得到一个值，如下图所示：</p>
+
+
+<p>然后用这个值去除之前给定的比特模式。</p>
+<p>在除法过程中，加法不进位，减法不借位，因此加减都变成异或运算了</p>
+<p>最后会得到 r 位的余数，那么这个余数替换掉最后末尾的 r 位 0 就是最后的数据位了，CRC 在检验的时候会计算整个比特位是否可以被 r+1 位的模式除且不留余数，如果可以那就说明数据是正确的，如果不是就说明数据传输发生了偏差。</p>
+<p>以下是关于 CRC 的一个计算过程：</p>
+
+
+<h4 id="帧检验序列"><a href="#帧检验序列" class="headerlink" title="帧检验序列"></a>帧检验序列</h4><p>帧检验序列（<strong>Frame Check Sequence</strong>，<code>FCS</code>）是 CRC 的一种应用场景，两个并不等同。</p>
+<p>仅用循环冗余检验 CRC 差错检测技术只能做到无差错接受（accept）。<strong>无差错接受</strong>是指凡是接受的帧（即不包括丢弃的帧），我们都能以非常接近于 1 的概率认为这些帧在传输过程中没有产生差错。也就是说凡是接收端数据链路层接受的帧都没有传输差错（有差错的帧就丢弃而不接受）。</p>
+<p>要做到可靠传输（即发送什么就收到什么）就必须再加上确认和重传机制。 </p>
+<h4 id="汉明码"><a href="#汉明码" class="headerlink" title="汉明码"></a>汉明码</h4><p>汉明码的编码需要满足以下的条件：</p>
+<p>假设数据位个数为 n，检验位的个数为 k，那么 $n+k&#x3D;2^k-1$，最常见的就是$n&#x3D;4,k&#x3D;3$。</p>
+<p>它的编码过程如下：</p>
+<ul>
+<li>定义数列 ${P_n}$ 来存放所有的数据，并为其编号：$P_1P_2\cdots P_{2^k-1}$。</li>
+<li>每个 2 的整数次幂的位置上放置校验码，其它位置放置数据位。</li>
+<li>对于校验位的计算，将由若干个数据位异或得到结果，异或的所有做运算的数据位的下标$(i)$与校验位的下标$(j)$满足 $i&amp;j&#x3D;&#x3D;j$。举个例子就是，j&#x3D;1的时候，将所有奇数位置（$x&amp;1&#x3D;&#x3D;1$即为奇数位置）上的数据位进行异或运算。</li>
+<li>最终对每一个校验位重新对它异或的数据再次进行异或，得到的结果如果全 0 则表示没有发生差错。如果发生差错，则得到的结果的二进制的值就是出错的位置。</li>
+<li>对于原理可以这么思考：对于一个位置下标的二进制值为 $00101001$ 的数据，如果发生了差错，对于异或运算来说，它会影响所有与它作了异或运算的位，而它会与所有自己二进制值为 1 的位置上的校验位进行异或运算，如果只有这一位发生差错，则它们都会变成 1，也指示出了出错的位置。</li>
+</ul>
+<p>为了更好的理解汉明码，这里我也是写了一个测试程序，想要掌握建议自己也写一个玩玩，也挺简单的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> maxn 200005</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> s[<span class="number">10000</span>];</span><br><span class="line"><span class="type">char</span> ham[<span class="number">20000</span>];</span><br><span class="line"><span class="type">int</span> k[<span class="number">10000</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">menu</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hamming Code Test\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;1.generate\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;2.Test\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;3.exit\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Your choice:&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">gen</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,k;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;input n for length of data:&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n); </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;input k for length of Test:&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;k);</span><br><span class="line">    <span class="type">int</span> N=(<span class="number">1</span>&lt;&lt;k)<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span>(n&gt;<span class="number">10000</span>||n+k!=N)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;error value for n k\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;input your string(only contain 0,1):&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s<span class="number">+1</span>);</span><br><span class="line">    <span class="type">int</span> len=<span class="built_in">strlen</span>(s<span class="number">+1</span>);</span><br><span class="line">    <span class="keyword">if</span>(len!=n)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;error length\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> ; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> i=<span class="number">1</span>,j=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;=n)&#123;</span><br><span class="line">        j++;</span><br><span class="line">        <span class="keyword">if</span>((j&amp;(~j<span class="number">+1</span>))==j)&#123;</span><br><span class="line">            ham[j]=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ham[j]=s[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;k;i++)&#123;</span><br><span class="line">        <span class="type">int</span> pos=<span class="number">1</span>&lt;&lt;i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> l=<span class="number">1</span>;l&lt;=j;l++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(l!=pos&amp;&amp;(l&amp;pos)==pos)&#123;</span><br><span class="line">                ham[pos]^=ham[l];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=j;i++)&#123;</span><br><span class="line">        <span class="built_in">putchar</span>(<span class="string">&#x27;0&#x27;</span>+ham[i]);</span><br><span class="line">    &#125;<span class="built_in">putchar</span>(<span class="number">10</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;done\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Test</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;input the hamming code data(only contain 0,1):&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,ham<span class="number">+1</span>);</span><br><span class="line">    <span class="type">int</span> len=<span class="built_in">strlen</span>(ham<span class="number">+1</span>);</span><br><span class="line">    <span class="type">int</span> x=len<span class="number">+1</span>;</span><br><span class="line">    <span class="keyword">if</span>((x&amp;(~x<span class="number">+1</span>))!=x)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;error length for hamming code\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=len;i&lt;&lt;=<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="type">int</span> k=ham[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> l=<span class="number">1</span>;l&lt;=len;l++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(l!=i&amp;&amp;(l&amp;i)==i)&#123;</span><br><span class="line">                k^=ham[l]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        res+=i*k;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(res)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;error bit in %d\n&quot;</span>,res);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;correct\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> k=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(k)&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">switch</span>(<span class="built_in">menu</span>())&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                <span class="built_in">gen</span>();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                <span class="built_in">Test</span>();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;Unknown Choice!\n&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;        </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="流量控制与可靠传输协议"><a href="#流量控制与可靠传输协议" class="headerlink" title="流量控制与可靠传输协议"></a>流量控制与可靠传输协议</h2><p>基本上有三种可靠传输协议：停等协议，后退N帧（Go Back N，GBN）协议，选择重传（SR），后两种是通过滑动窗口实现的。</p>
+<h3 id="停等协议"><a href="#停等协议" class="headerlink" title="停等协议"></a>停等协议</h3><p>实现非常简单，但是信道利用率非常低。发送方一次只发送一个帧，等到接收方确认之后，再发送下一个帧。</p>
+<h3 id="后退N帧协议"><a href="#后退N帧协议" class="headerlink" title="后退N帧协议"></a>后退N帧协议</h3><p>允许发送方一次发送多个帧，并且采用<strong>累积确认</strong>的方法，累计确认就是说，我如果发送了 ACK 为 5 的确认帧，说明 5 号之前的帧都被完整无误地接收到。只能<strong>按序接收</strong>，一旦出现了不属于当前期望的帧的序号，会立刻丢弃。</p>
+<p>如果发送的某个帧出现了丢失，那么会等到这个帧的计时器超时之后，才才再次从出错的帧开始重传，而此时发送端可能已经发送了很多个帧，并且准确到达了目标节点，但是因为后退 N 帧协议只能按序接受的缘故，在信道质量差的时候，后退N帧协议效率也会比停等协议差。</p>
+<h3 id="选择重传"><a href="#选择重传" class="headerlink" title="选择重传"></a>选择重传</h3><p>选择重传（SR）协议通过让发送方<strong>仅重传那些它怀疑在接收方出错</strong>（即丢失或受损）的分组而避免了不必要的重传。它会缓存失序的分组，等到能排成有序时候交付上层，移动窗口，同时发送确认报文，使得接收方同步移动。此时不采用累积确认，而是<strong>逐个确认</strong>，只有<strong>超时</strong>（丢失）和<strong>否定帧</strong>（受损）会引发重传，其它情况一律不会发生重传，接收方对于收到的<strong>冗余分组</strong>，需要<strong>再次发送ACK确认</strong>，因为冗余分组可能是发生了 <strong>ACK 丢失</strong>或者是<strong>高延迟</strong>引发的重传，对于后者的情况，我们不必重新发送 ACK，但是前者的情况我们必须重新确认，否则会导致发送方一直处于超时而无限重传这个分组。</p>
+<p>（以下摘抄自我对自顶向下第三章的解读）</p>
+<p>这里探讨一下接收窗口大小的问题，如果窗口大小和序号大小一致，很容易出现接收方不知道这个序号是一个新分组还是重传，因为都有可能。</p>
+<p>这里其实只要窗口大小&lt;&#x3D;序号大小的一半即可。因为考虑最极端情况，滑动窗口一次滑动最多不超过自身的长度，因此我接收的分组一定是最新分组。这里举一个极端的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 1 2 3 4 5 6 7 8 0 1 2 3 4</span><br></pre></td></tr></table></figure>
+
+<p>假设窗口大小为 5，那么此时 <code>0 1 2 3 4</code> 是待发送的。我假设 <code>1 2 3 4</code> 都已经被确认完毕，此时 0 到达，但是在 ACK 抵达发送端之前产生了超时，而接收端因为接受了 <code>0 1 2 3 4</code> 滑动窗口已经移动到 <code>5 6 7 8 0</code>，那么此时我再接收到一个 <code>0</code> 我就不知道是重传还是新分组了。</p>
+<p>所以我需要保证我一次滑动的距离不能有和我之前在窗口中相同序号的分组。</p>
+<p>证明一下：假设序号大小为 n，窗口大小为 p。</p>
+<p>假设当前所在分组为 <code>i</code>，此时的最后一个分组是 <code>i+p-1</code>，那么我一次最多滑动 p 的距离，此时第一个分组是 <code>i+p</code>，最后一个分组是 <code>i+2p-1</code>。那么观察上面的序列号，如果两个序号逻辑位置相差为 <code>n+1</code>，那么这两个序号是相同的。</p>
+<p>不难发现，我需要让我的最右端点，落不到这个 n+1 那个点的距离。</p>
+<p>也就是 <code>i+n+1&gt;i+2p-1</code> 稍微移一下得到了 $p&lt;\frac{n+2}{2}$，等价于 $p\le\frac{n}{2}$，也就是 p 要小于等于 n 的一半。</p>
+<p>证毕！</p>
+<p>总结就是，发送窗口和接收窗口不能超过序号大小的一半。</p>
+<h2 id="介质访问控制"><a href="#介质访问控制" class="headerlink" title="介质访问控制"></a>介质访问控制</h2><p>这个存在的意义就是使得通信的多节点避免发生碰撞，使用合理的手段控制达到通信互不干扰的目的。</p>
+<p>常见的介质访问控制方法有：信道划分（静态），随机访问介质控制，轮询访问介质访问控制。</p>
+<h3 id="信道划分介质访问控制"><a href="#信道划分介质访问控制" class="headerlink" title="信道划分介质访问控制"></a>信道划分介质访问控制</h3><p>有这几种方式（考纲内）：</p>
+<ul>
+<li>频分复用（Frequency division multiplexing，FDM）：将多路的基带信号调制到不同频率的载波上，叠加形成符合信号的多路复用技术，每条子信道的带宽可以不相同但是不能超出信道总带宽，为了防止码间串扰，相邻信道需要添加保护频带。</li>
+<li>时分复用（Time division multiplexing，TDM）：将物理信道按时间划分为时间片，在某一个时间片内，仅允许特定的信号发送。但是当只有一个信号活跃的时候，它的信道利用率仅有 $\frac{1}{n}$，因此出现统计时分复用（Statistical Time Division Multiplexing，STDM），它可以根据信号活跃度，按需分配时隙。</li>
+<li>波分复用（Wavelength Division Multiplexing，WDM）：特指光信号的频分复用，在光纤中，传输多种不同波长（频率）的光信号可以使得信号互不干扰，最后用波长分解器分解出来，光处于高频段，具有很高的带宽。</li>
+<li>码分复用（Code Division Multiplexing，CDM）：又叫码分多址（Code Division Multiple Access，CDMA）。给定一个码片向量 $(a_1,a_2,_\cdots a_n),a_i\in {-1,1}$，这代表这个信号的 1 的码片，全部取负得到 0 的码片。同时会有不同的另一组向量表示其它信号的 1 的码片，这些码片会两两正交，也就是内积为 0，或者直白点说就是点积为0。当接收方接收到信号的时候，会对所有码片进行内积运算，之后会除向量维度数目，如果得到的结果为 1，说明这个码片所属的发送方发送了 1，如果为 -1 说明它发送了 0，如果为 0，说明它什么也没发送。<ul>
+<li>1.共有 4 个站进行码分多址CDMA通信。4 个站的码片序列为：A.（-1,-1,-1,+1,+1,-1,+1,+1）B.（-1,-1,+1,-1,+1,+1,+1,-1）C.（-1,+1,-1,+1,+1,+1,-1,-1）D.（-1,+1,-1,-1,-1,-1,+1,-1）。现收到这样的码片序列：（-1,+1,-3,+1,-1,-3,+1,+1）。问哪个站发送数据了？发送数据的站发送的 1 还是 0？</li>
+<li>解析：S·A&#x3D;（+1-1+3+1-1+3+1+1）&#x2F;8&#x3D;1，A 发送 1，S·B&#x3D;（+1-1-3-1-1-3+1-1）&#x2F;8&#x3D;-1，B发送0，S·C&#x3D;（+1+1+3+1-1-3-1-1）&#x2F;8&#x3D;0，C无发送，S·D&#x3D;（+1+1+3-1+1+3+1-1）&#x2F;8&#x3D;1，D 发送 1。</li>
+</ul>
+</li>
+</ul>
+<h3 id="随机访问介质控制"><a href="#随机访问介质控制" class="headerlink" title="随机访问介质控制"></a>随机访问介质控制</h3><p>第二大类多访问协议是随机接入协议。一个传输节点总是以信道的全部速率（即 R bps）进行发送。当遇到碰撞的时候，涉及碰撞的每个节点反复地重发它的分组，到该帧无碰撞地通过为止，它又叫<strong>争用型协议</strong>。</p>
+<p>它肯定不会立刻发送，因为如果双方都立刻发送肯定又会发生碰撞，它在重发该帧之前等待一个随机时延，这个时延会独立地随机选择。因为如果双方延迟一样的时间，那么再次发送一样也会发生碰撞。于是让它们分别随机等待就会有这样的结果出现：这些节点之一所选择的时延充分小于其他碰撞节点的时延，并因此能够无碰撞地将它的帧在信道中发出。</p>
+<p>随机接入协议最常用的有两种：ALOHA协议和<strong>载波监听多路访问</strong>（CSMA）协议，以太网就是一种流行并广泛部署的 CSMA 协议。</p>
+<h4 id="时隙ALOHA"><a href="#时隙ALOHA" class="headerlink" title="时隙ALOHA"></a>时隙ALOHA</h4><p>这是比较简单的随机接入协议，做如下假设：</p>
+<ul>
+<li>所有帧由L比特组成。</li>
+<li>时间上被划分为 L&#x2F;R 秒的时隙，也就是刚好传输一帧的时间。</li>
+<li>节点只会在时隙起点开始传播。</li>
+<li>节点之间是同步的，它们都清楚的知道当前是否是时隙起点。（这个同步往往是比较难的）</li>
+<li>如果发生碰撞，那么发生碰撞的这个时隙的结束所有节点都知道发生了碰撞。</li>
+<li>对于发送的事件，只需要考虑三点：<ul>
+<li>当有个帧要发送时，等待下一次最近的时隙发送。</li>
+<li>如果没有碰撞，则该时隙发送成功。</li>
+<li>如果有碰撞，那么该节点以 p 的概率在后续的时隙重传该帧（1-p的概率在此时隙不重传，而在下个时隙继续以p的概率重传）。</li>
+</ul>
+</li>
+</ul>
+<p>时隙ALOHA有以下优点：</p>
+<ul>
+<li>唯一活跃的节点能占用整个信道的带宽，以全速率发送。</li>
+<li>时隙ALOHA也是高度分散的，因为每个节点检测碰撞并独立地决定什么时候重传。</li>
+<li>时隙ALOHA也是一个极为简单的协议。</li>
+</ul>
+<p>这里进行了多个活跃节点效率的计算，具体计算过程不需要掌握，需要记住它最后的效率是 <code>1/e≈0.37</code>。</p>
+<h4 id="ALOHA"><a href="#ALOHA" class="headerlink" title="ALOHA"></a>ALOHA</h4><p>它不需要同步时隙，但是效率相比时隙ALOHA下降了一半。</p>
+<h4 id="载波侦听多路访问（CSMA）"><a href="#载波侦听多路访问（CSMA）" class="headerlink" title="载波侦听多路访问（CSMA）"></a>载波侦听多路访问（CSMA）</h4><p>对于人类来说，为了获得更多的数据量，有礼貌的人类交谈有两个重要的规则：</p>
+<ul>
+<li>说话之前先听。在网络领域中，这叫<strong>载波侦听</strong>（carrier sensing）</li>
+<li>如果与他人同时开始说话，停止说话。在网络领域中，这叫<strong>碰撞检测</strong>（collision detection）</li>
+</ul>
+<p>这两个规则包含在<strong>载波侦听多路访问</strong>（Carrier Sense Multiple Access，CSMA）和具有碰撞检测的 CSMA（CSMA with Collision Detection）。</p>
+<p>来看下面这张图：</p>
+
+
+<p>在途中的时刻，B在t0的时候开始传输，而 D 在t1的时候并没有听到 B 正在传输，因此它也开始发，于是产生了碰撞。</p>
+<p>显然广播信道的<strong>端到端信道传播时延</strong>（channel propagation delay）越长，载波侦听节点不能侦听到网络中另一个节点已经开始传输的机会就越大，效率就会变低。</p>
+<p>对于碰撞的处理方式，CSMA 协议分为<strong>三种</strong>：</p>
+<ul>
+<li>1-坚持：发生冲突后马上监听信道，如果空闲立刻重传，如果忙则持续监听。</li>
+<li>非坚持：发生冲突后如果空闲，立刻重传，如果忙则随机等待一个时间后再次监听。</li>
+<li>p-坚持：发生冲突后，如果信道空闲，那么以 p 的概率发送数据，1-p 的概率推迟到下一个时隙，如果忙则持续监听。</li>
+</ul>
+<h4 id="具有碰撞检测的载波侦听多路访问（CSMA-CD）"><a href="#具有碰撞检测的载波侦听多路访问（CSMA-CD）" class="headerlink" title="具有碰撞检测的载波侦听多路访问（CSMA&#x2F;CD）"></a>具有碰撞检测的载波侦听多路访问（CSMA&#x2F;CD）</h4><p>从网络适配器的视角来讲解 CSMA&#x2F;CD：</p>
+<ol>
+<li>适配器从网络层一条获得数据报，准备链路层帧，并将其放入帧适配器缓存中。</li>
+<li>如果适配器侦听到信道空闲，它开始传输帧。如果正在忙，那么重复步骤2。</li>
+<li>在传输过程中，适配器监视来自其他使用该广播信道的适配器的信号能量的存在。（边发送边检测）</li>
+<li>如果适配器传输整个帧而未检测到来自其他适配器的信号能量，该适配器就完成 了该帧。在另一方面，如果适配器在传输时检测到来自其他适配器的信号能量，它中止传输。</li>
+<li>中止传输后，适配器等待一个随机时间量，然后返回步骤2。</li>
+</ol>
+<p>用于以太网以及 <strong>DOCSIS</strong> 电缆网络多路访问协议中的<strong>二进制指数后退</strong>（binary exponential backoff）算法，简练地解决了这个问题。在连续经历过 n 次碰撞后，节点随机地从 ${0,1,2,…,2^n-1}$ 中选择一个 K 值作为等待的时间。因此，一个帧经历的碰撞越多，K选择的间隔越大。对于<strong>以太网</strong>，一个节点等待的实际时间量是 <code>Kx512</code>比特时间（即发送512比特进入以太网所需时间量的K倍），n 能够取的最大值在10以内。</p>
+<p>因为每次碰撞，选择等待的集合呈指数增长，因此该算法被叫做<strong>二进制指数后退</strong>。</p>
+<hr>
+<h5 id="CSMA-CD-效率"><a href="#CSMA-CD-效率" class="headerlink" title="CSMA&#x2F;CD 效率"></a>CSMA&#x2F;CD 效率</h5><p>显然，当只有一个节点有一个帧发送时，该节点能够以信道全速率进行传输。然而，如果很多节点都有帧要发送，信道的有效传输速率可能会小得多。令 $d_{prop}$ 表示信号能量在任意两个适配器之间传播所需的最大时间。令 $d_{trans}$ 表示传输一个最大长度的以太网帧的时间。</p>
+<p>最后我们得到效率为 $\frac{1}{1+5\times\frac{d_{prop}}{d_{trans}}}$。当 $d_{prop}$ 趋于0的时候，效率趋于 1，因为如果没有传播时延，则根本不会发生碰撞，因为监听总能实时判断出当前信道是否空闲。当 $d_{trans}$ 趋于无穷的时候，传输效率也趋于 1，因为一个帧取得信道之后，它将占用很长的时间，因此大的部分时间都在有效工作。</p>
+<h4 id="CSMA-CA"><a href="#CSMA-CA" class="headerlink" title="CSMA&#x2F;CA"></a>CSMA&#x2F;CA</h4><p>CA 的意思是碰撞避免。这个协议在无线局域网中应用广泛，因为无线信道的质量比较低，因此链路层采用确认重传的方案，可以理解为停等协议。</p>
+<p>802.11协议规定，所有站发送完帧之后需要等待一段事件才能发送下一帧，这个等待的时间称为帧间间隔（InterFrame Space，IFS）。802.11 是用了三种 IFS：</p>
+<ul>
+<li>SIFS（短IFS）：分隔一次对话的帧，常见的帧类型有 ACK帧，CTS（Clear To Send，允许发送）帧，分片后的数据帧，回答AP探寻的帧。</li>
+<li>PIFS（点协调IFS）：PCF操作中使用。</li>
+<li>DIFS（分布式协调IFS）：用于异步帧竞争访问的时延。</li>
+</ul>
+<p>上面的帧长度，依次下来变长。</p>
+<p>CSMA&#x2F;CA 的算法大致如下：</p>
+<ol>
+<li>站点有数据发送，检测到信道空闲（不空闲则跳下一步），等待 DIFS 的时间后，发送整个数据帧，到第四步。</li>
+<li>站点执行 CSMA&#x2F;CA 算法，选取一个随机值回退，信道忙时计数器保持不变，空闲时进行倒计时。</li>
+<li>计时器到0，发送整个数据帧等待确认。</li>
+<li>发送站收到确认，如果要发送第二帧，需要从步骤2开始。</li>
+</ol>
+<p>如果重传计时器控制的时间内没有收到确认帧，需要重传，则继续2的算法发送帧。</p>
+<h4 id="处理隐蔽站"><a href="#处理隐蔽站" class="headerlink" title="处理隐蔽站"></a>处理隐蔽站</h4><p>通过使用 RTS（requests to send）控制帧和 CTS（clear to send）控制帧。</p>
+<p>考虑一种情况，有三个站点，A和B可以通信，B和C可以通信，但是A和C不能感知对方的存在，于是它们可能同时向B发送数据，此时必然导致碰撞的发生，这就是<strong>隐蔽站的问题</strong>。</p>
+<p>为了解决这个问题，我们允许发送站预约信道，发送站会发送 RTS 帧请求预约信道，接收方收到之后，会广播一个 CTS 帧，包括这次通信所需要的时间，这样的话，A发送请求给B，B就能广播给其它人，这样其他人就会被抑制发送，而发送方也可以根据这个广播帧作为对我 RTS 的一个回应，A就知道B已经给它预约好信道了。</p>
+<p>广播 CTS 的目的有两个：</p>
+<ul>
+<li>让源站知道我已经接受了你的许可。</li>
+<li>让其它站不要在指定时间内发送数据。</li>
+</ul>
+<h3 id="轮询访问"><a href="#轮询访问" class="headerlink" title="轮询访问"></a>轮询访问</h3><p>最典型的是令牌传递协议，节点在逻辑上形成一个环，拥有令牌的节点具有发送数据帧的权限。因此不会发生冲突，因为同一时间只能有一个节点具有令牌。当所有节点都不发送数据帧的时候，只有令牌在网络中传输。</p>
+<h3 id="最小帧长度"><a href="#最小帧长度" class="headerlink" title="最小帧长度"></a>最小帧长度</h3><p>这是一个比较重要的概念。一般来说，链路层采用 CSMA&#x2F;CD 算法来避免和检测冲突，我们考虑这个图：</p>
+
+
+<p>假设t0时刻，B 发送数据，到了 D，在一个恰好的时间节点，D想发送数据，而此时恰好D监听是空闲的，但是它只要发数据马上就会产生碰撞，此时D马上停止，但是远在 B 的节点确不知道发生了碰撞，依然还在不停地发。此时发生了碰撞之后链路上的数据应该都是不正确了，都不能用了，但是B需要在它知道发生了碰撞的时候才会停止。最坏应当是一倍的最长端到端延时。</p>
+<p>但是仅仅是冲突发生到 B 节点知道最长花一段的端到端延时，可是发生碰撞的时候，B已经发送了若干数据，第一个比特发生的碰撞，此时应当已经发了相当于一倍最长端到端延时的数据。最坏的打算，B会发送两倍端到端时延的数据。我们认为这种数据是十分难以处理的（无法判断是正常帧还是错误帧），因此规定一个最小帧长，使得小于多少字节的帧无效。这个长度一般是两倍端到端延时（传播延时）与带宽乘积。</p>
+<h3 id="错题"><a href="#错题" class="headerlink" title="错题"></a>错题</h3><ul>
+<li>同轴电缆在没有中继的情况下传输距离不超过500m。</li>
+<li>同一局域网中，MAC地址的冲突会导致两个设备都不能正确通信。</li>
+<li>链路聚合不是VLAN的优点。</li>
+<li>快速以太网采用保持最短帧长不变，减小最大传输距离来提高传输速率。</li>
+</ul>
+<h2 id="点对点协议"><a href="#点对点协议" class="headerlink" title="点对点协议"></a>点对点协议</h2><p>目前使用得最广泛的数据链路层协议是点对点协议 PPP (Point-to-Point Protocol)。</p>
+<p>用户使用拨号电话线接入互联网时， 用户计算机和 ISP 进行通信时所使用的数据链路层协议就是 PPP 协议。</p>
+<h3 id="协议组成"><a href="#协议组成" class="headerlink" title="协议组成"></a>协议组成</h3><ul>
+<li>一个将 IP 数据报封装到串行链路的方法。</li>
+<li>链路控制协议 LCP (Link Control Protocol)。</li>
+<li>网络控制协议 NCP (Network Control Protocol)。</li>
+</ul>
+<h3 id="帧格式"><a href="#帧格式" class="headerlink" title="帧格式"></a>帧格式</h3>
+
+<h3 id="透明传输问题"><a href="#透明传输问题" class="headerlink" title="透明传输问题"></a>透明传输问题</h3><p>在同步传输的时候，PPP采用比特填充方式。</p>
+<p>在异步传输的时候，PPP采用字符填充法。</p>
+<h2 id="链路层设备"><a href="#链路层设备" class="headerlink" title="链路层设备"></a>链路层设备</h2><h3 id="网桥"><a href="#网桥" class="headerlink" title="网桥"></a>网桥</h3><p>它可以连接两个局域网，形成更大的局域网，它的工作原理仅仅是，连接两个网络中，如果收到的帧的目的地址是发送方的目的网络，直接丢弃，否则转发给另一个网络。</p>
+<p>理解起来很简单：就是这个帧不需要经过网桥那就丢弃，否则转发。</p>
+<h3 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h3><p>本质是一个多端口网桥。</p>
+<p>可以隔离冲突域，VLAN功能还可以隔离广播域。</p>
+<p>使用交换机能提升用户的使用带宽，拥有自学习的功能，根据源MAC地址学习，根据目的MAC地址转发。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2023/07/17/408-2-3/">https://xia0ji233.github.io/2023/07/17/408-2-3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/08/01/Game4/" title="游戏安全的学习（4）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">游戏安全的学习（4）</div></div></a></div><div class="next-post pull-right"><a href="/2023/07/05/Probability-Theory2/" title="概率论（2）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">概率论（2）</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">292</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">85</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-number">1.</span> <span class="toc-text">数据链路层的功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BE%9B%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.1.</span> <span class="toc-text">提供的服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF"><span class="toc-number">1.2.</span> <span class="toc-text">数据链路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">三个基本问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%81%E8%A3%85%E6%88%90%E5%B8%A7"><span class="toc-number">2.0.1.</span> <span class="toc-text">封装成帧</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%8F%E6%98%8E%E4%BC%A0%E8%BE%93"><span class="toc-number">2.0.2.</span> <span class="toc-text">透明传输</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%AE%E9%94%99%E6%8E%A7%E5%88%B6"><span class="toc-number">2.0.3.</span> <span class="toc-text">差错控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E5%86%97%E4%BD%99%E6%A0%A1%E9%AA%8C"><span class="toc-number">2.0.4.</span> <span class="toc-text">循环冗余校验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%A7%E6%A3%80%E9%AA%8C%E5%BA%8F%E5%88%97"><span class="toc-number">2.0.5.</span> <span class="toc-text">帧检验序列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B1%89%E6%98%8E%E7%A0%81"><span class="toc-number">2.0.6.</span> <span class="toc-text">汉明码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E4%B8%8E%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.</span> <span class="toc-text">流量控制与可靠传输协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E7%AD%89%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.1.</span> <span class="toc-text">停等协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E9%80%80N%E5%B8%A7%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.2.</span> <span class="toc-text">后退N帧协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%87%8D%E4%BC%A0"><span class="toc-number">3.3.</span> <span class="toc-text">选择重传</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E8%B4%A8%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">4.</span> <span class="toc-text">介质访问控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E9%81%93%E5%88%92%E5%88%86%E4%BB%8B%E8%B4%A8%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">4.1.</span> <span class="toc-text">信道划分介质访问控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE%E4%BB%8B%E8%B4%A8%E6%8E%A7%E5%88%B6"><span class="toc-number">4.2.</span> <span class="toc-text">随机访问介质控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%9A%99ALOHA"><span class="toc-number">4.2.1.</span> <span class="toc-text">时隙ALOHA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ALOHA"><span class="toc-number">4.2.2.</span> <span class="toc-text">ALOHA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E6%B3%A2%E4%BE%A6%E5%90%AC%E5%A4%9A%E8%B7%AF%E8%AE%BF%E9%97%AE%EF%BC%88CSMA%EF%BC%89"><span class="toc-number">4.2.3.</span> <span class="toc-text">载波侦听多路访问（CSMA）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B7%E6%9C%89%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%9A%84%E8%BD%BD%E6%B3%A2%E4%BE%A6%E5%90%AC%E5%A4%9A%E8%B7%AF%E8%AE%BF%E9%97%AE%EF%BC%88CSMA-CD%EF%BC%89"><span class="toc-number">4.2.4.</span> <span class="toc-text">具有碰撞检测的载波侦听多路访问（CSMA&#x2F;CD）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#CSMA-CD-%E6%95%88%E7%8E%87"><span class="toc-number">4.2.4.1.</span> <span class="toc-text">CSMA&#x2F;CD 效率</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CSMA-CA"><span class="toc-number">4.2.5.</span> <span class="toc-text">CSMA&#x2F;CA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E9%9A%90%E8%94%BD%E7%AB%99"><span class="toc-number">4.2.6.</span> <span class="toc-text">处理隐蔽站</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AE%E8%AF%A2%E8%AE%BF%E9%97%AE"><span class="toc-number">4.3.</span> <span class="toc-text">轮询访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E5%B8%A7%E9%95%BF%E5%BA%A6"><span class="toc-number">4.4.</span> <span class="toc-text">最小帧长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E9%A2%98"><span class="toc-number">4.5.</span> <span class="toc-text">错题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E5%8D%8F%E8%AE%AE"><span class="toc-number">5.</span> <span class="toc-text">点对点协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E7%BB%84%E6%88%90"><span class="toc-number">5.1.</span> <span class="toc-text">协议组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A7%E6%A0%BC%E5%BC%8F"><span class="toc-number">5.2.</span> <span class="toc-text">帧格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%8F%E6%98%8E%E4%BC%A0%E8%BE%93%E9%97%AE%E9%A2%98"><span class="toc-number">5.3.</span> <span class="toc-text">透明传输问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF%E5%B1%82%E8%AE%BE%E5%A4%87"><span class="toc-number">6.</span> <span class="toc-text">链路层设备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E6%A1%A5"><span class="toc-number">6.1.</span> <span class="toc-text">网桥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="toc-number">6.2.</span> <span class="toc-text">交换机</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
