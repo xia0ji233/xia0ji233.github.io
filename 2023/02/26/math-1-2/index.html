@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>高等数学复习（2） | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="高等数学复习（2）——数列极限。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高等数学复习（2）">
+<meta property="og:url" content="https://xia0ji233.github.io/2023/02/26/math-1-2/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="高等数学复习（2）——数列极限。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-02-26T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-20T02:19:30.680Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2023/02/26/math-1-2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '高等数学复习（2）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-20 10:19:30'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">119</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">高等数学复习（2）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-26T12:00:00.000Z" title="发表于 2023-02-26 20:00:00">2023-02-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-20T02:19:30.680Z" title="更新于 2025-01-20 10:19:30">2025-01-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%80%83%E7%A0%94/">考研</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/">数一</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/">高等数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="高等数学复习（2）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>写在前面：中间闭关了一星期没有学习，主要是因为期末考试，再加上有师傅结合我当前的情况给我提了一些建议，我觉得很棒，把考研的目标院校转为了<!--中科院信工所-->，希望最后能成功上岸吧，今天接着更新高数的笔记。</p>
+</blockquote>
+<p>高等数学复习（2）——数列极限。</p>
+<span id="more"></span>
+
+<h2 id="数列极限"><a href="#数列极限" class="headerlink" title="数列极限"></a>数列极限</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>需要记住一种语言的说明：</p>
+<p>$\lim\limits_{n\to\infty} {x_n}&#x3D;a\Leftrightarrow \forall \epsilon &gt;0,\exists N \in N_+,当n&gt;N时,恒有|x_n-a|&lt;\epsilon$</p>
+<p>直白点就是讲，如果给定任意一个够小的数 $\epsilon$，我只要确定有一个整数 $N$ 使得它之后的值全部趋近于 a 即可，即 $&lt;\epsilon$。</p>
+<h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><ol>
+<li>唯一性：极限存在即唯一。</li>
+<li>有界：极限存在则有界</li>
+<li>保号：极限存在则可以确定极限值的符号，只能保部分的数列，不能保所有的。（important）</li>
+</ol>
+<h3 id="夹逼准则"><a href="#夹逼准则" class="headerlink" title="夹逼准则"></a>夹逼准则</h3><p>简单来讲，就是数列放缩，如果能放大到其中一个数列，算出极限值，再缩小到一个数列算出极限值。如果极限值一样，那么这样也能间接算出数列的极限值。</p>
+<h3 id="单调有界准则"><a href="#单调有界准则" class="headerlink" title="单调有界准则"></a>单调有界准则</h3><p>单调有界的数列必有极限，我们要判断：数列递减且有下界，或者是数列递增且有上界。</p>
+<p>此时极限值就是该边界值。</p>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>如果数列有一个子列极限为常数，另一个子列极限为无穷。</p>
+<p>此时称此数列<strong>无界且不是无穷大量</strong>。</p>
+<h3 id="数列放缩法"><a href="#数列放缩法" class="headerlink" title="数列放缩法"></a>数列放缩法</h3><p>一般用于拆成好计算的模式，并且配合夹逼准则可以快速求出不好求的数列的极限。</p>
+<p>总结一点规律：对于加法不好求极限的时候，可以采取通用思路：</p>
+<blockquote>
+<p>观察每一项取最大，放大就可以把每一项都变成最大，缩小可以把除了最大项之外的项都变为 0。</p>
+</blockquote>
+<h3 id="裂项相消法"><a href="#裂项相消法" class="headerlink" title="裂项相消法"></a>裂项相消法</h3><p>用于这样的数列求和：$\frac{1}{1\times 2}+\frac{1}{2\times 3}+…+\frac{1}{n\times (n+1)}$</p>
+<p>可以直接拆项 $\frac{1}{1}-\frac{1}{2}+\frac{1}{2}-\frac{1}{3}+…+\frac{1}{n}-\frac{1}{n+1}$</p>
+<p>中间全部抵消最后得：$\frac{1}{1}-\frac{1}{n+1}$。</p>
+<h3 id="数学归纳法"><a href="#数学归纳法" class="headerlink" title="数学归纳法"></a>数学归纳法</h3><p>感觉需要捡起来这些知识了，都是高考考到过的基本都忘了。</p>
+<p>数学归纳法证明思路是这样的：</p>
+<blockquote>
+<p>验证第一项成立（最简单）</p>
+<p>以第n项成立作为条件，推导得到第 n+1 项也成立。</p>
+<p>如此这样遍可以验证整个数列都在某个条件成立了。</p>
+</blockquote>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>这里放做到的两个大题：</p>
+<blockquote>
+<blockquote>
+<p>例题1：设 $ x_{n+1}&#x3D;\sqrt{2+x_n},x_1&#x3D;\sqrt 2,证明\lim\limits_{n\to\infty} {x_n}存在,并求\lim\limits_{n\to\infty} {x_n}$。</p>
+</blockquote>
+<p>这题可以直接使用数学归纳法，因为直接证明并不好证明。</p>
+<p>最直白的说法可以这么说：如果 $x_n&lt;2$，那么 $x_{n+1}&#x3D;\sqrt{2+x_n}&lt;\sqrt{2+2}&#x3D;2$</p>
+<p>又因为 $x_1&lt;2$，因此这里就可以使用数学归纳法，最终证明出来这个数列是有界的，有界还不够，有上界还需要证明单调递增才能得出数列极限，因此我们下一步需要证明数列单调递增，虽然我们直接看是单调递增的，但是我们需要证明出来才有用。</p>
+<p>一般求数列的单调性我们直接看 $x_{n+1}-x_n$ 或者是 $\frac{x_{n+1}}{x_n}$ 的值。</p>
+<p>这里可以通过直接作差得到 $x_{n+1}-x_n&#x3D;\sqrt{2+x_n}-x_n$</p>
+<p>这里直接分子有理化得到式子：</p>
+<p>$\frac{(\sqrt{2+x_n}-x_n)(\sqrt{2+x_n}+x_n)}{\sqrt{2+x_n}+x_n}&#x3D;\frac{2+x_n-x_n^2}{\sqrt{2+x_n}+x_n}&#x3D;\frac{(2-x_n)(1+x_n)}{\sqrt{2+x_n}+x_n}$</p>
+<p>显然当 $x_n&lt;2$ 时，这个式子恒 $&gt;0$，因此数列单调递增。</p>
+<p>根据单调有界准则推出极限存在，$\lim\limits_{n\to\infty} {x_n}&#x3D;2$</p>
+<p>证毕。</p>
+</blockquote>
+<p>这一题很巧妙地要运用数学归纳法和单调有界准则去计算数列的极限。</p>
+<p>下一题：</p>
+<blockquote>
+<blockquote>
+<p>例题2：$设x_n&#x3D;25,x_{n+1}&#x3D;\arctan(x_n)$</p>
+<p>(1)：证明数列 ${x_n}$ 存在极限,并求出其值。</p>
+<p>(2)：求 $\lim\limits_{n\to\infty} \frac{x_n-x_{n+1}}{x_n^3}$。</p>
+</blockquote>
+<p>(1)：第一题直接这么证：先证明 $\arctan x$ 在 $x&gt;0$ 的时候是单调增函数，且 $\arctan x&gt;0$，因此这个函数有下界 $0$。</p>
+<p>然后再说明 $x&gt;0$ 的时候 $x&gt;\arctan x$ 恒成立。</p>
+<p>$x_{n+1}&#x3D;\arctan(x_n)&lt;x_n$ 得到数列是单调递减的。</p>
+<p>根据单调有界准则，即可判定数列极限存在且 $\lim\limits_{n\to\infty} {x_n}&#x3D;0$。</p>
+<p>(2)：第二题直接使用洛必达法则可以直接求证，或者如果记得住等价无穷小代换也可以写。</p>
+<p>式子可以转变一下，根据上一题的结论可以把要求的目标 $\lim\limits_{n\to\infty} \frac{x_n-x_{n+1}}{x_n^3}$ 转换成 $\lim\limits_{t\to 0} \frac{t-\arctan t}{t^3}$</p>
+<p>这个式子可以直接洛必达，或者用等价无穷小代换 $x\to 0$ 的时候 $x-\arctan x$与$\frac{1}{3}x^3$互为等价无穷小。</p>
+<p>最后得到值为 $\frac{1}{3}$。</p>
+</blockquote>
+<p>加油，坚持每一天！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2023/02/26/math-1-2/">https://xia0ji233.github.io/2023/02/26/math-1-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/27/math-1-3/" title="高等数学复习（3）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">高等数学复习（3）</div></div></a></div><div class="next-post pull-right"><a href="/2023/02/12/CSAPP_12/" title="CS:APP第十二章学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS:APP第十二章学习</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">283</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">119</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%88%97%E6%9E%81%E9%99%90"><span class="toc-number">1.</span> <span class="toc-text">数列极限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8"><span class="toc-number">1.2.</span> <span class="toc-text">性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%B9%E9%80%BC%E5%87%86%E5%88%99"><span class="toc-number">1.3.</span> <span class="toc-text">夹逼准则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E8%B0%83%E6%9C%89%E7%95%8C%E5%87%86%E5%88%99"><span class="toc-number">1.4.</span> <span class="toc-text">单调有界准则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85"><span class="toc-number">1.5.</span> <span class="toc-text">补充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%88%97%E6%94%BE%E7%BC%A9%E6%B3%95"><span class="toc-number">1.6.</span> <span class="toc-text">数列放缩法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A3%82%E9%A1%B9%E7%9B%B8%E6%B6%88%E6%B3%95"><span class="toc-number">1.7.</span> <span class="toc-text">裂项相消法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%BD%92%E7%BA%B3%E6%B3%95"><span class="toc-number">1.8.</span> <span class="toc-text">数学归纳法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">1.9.</span> <span class="toc-text">例题</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
