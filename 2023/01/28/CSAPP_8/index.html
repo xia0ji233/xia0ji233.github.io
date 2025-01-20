@@ -1,0 +1,462 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CS:APP第八章学习 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="开始学 CSAPP的第八章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS:APP第八章学习">
+<meta property="og:url" content="https://xia0ji233.github.io/2023/01/28/CSAPP_8/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="开始学 CSAPP的第八章">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-01-28T09:30:00.000Z">
+<meta property="article:modified_time" content="2025-01-16T13:21:17.719Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2023/01/28/CSAPP_8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS:APP第八章学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-16 21:21:17'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">292</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS:APP第八章学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-28T09:30:00.000Z" title="发表于 2023-01-28 17:30:00">2023-01-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-16T13:21:17.719Z" title="更新于 2025-01-16 21:21:17">2025-01-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/">书籍阅读</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/CSAPP/">CSAPP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">7.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>24分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS:APP第八章学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>开始学 CSAPP的第八章</p>
+<p>逐步更新：</p>
+<ul>
+<li>2023-1-25：开始写</li>
+<li>2023-1-28：写完</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="梗概"><a href="#梗概" class="headerlink" title="梗概"></a>梗概</h2><p>程序计数器假设有一个值序列 $a_1,a_2, … , a_{n-1}$，其中，每个 ak是某个相应指令 Ik的地址，每次从地址 ak到 ak+1的过渡称为 控制转移。而这样的控制转移序列叫做处理器的 控制流。<br>最简单的一种控制流是一个平滑的序列，其中每个指令 $I_k$ 和 $I_{k+1}$ 在内存中的位置都是相邻的。当然也有平滑流的突变，即指令 $I_k$ 和 $I_{k+1}$ 在内存中的位置不相邻，通常是由跳转、调用和返回这种程序指令造成的。这些指令都是一些必要机制，使得程序能够对由程序变量表示的内部程序状态的变化做出反应。</p>
+<p>同理，系统也必须能够对系统状态的变化做出反应，这些系统状态不能由内部程序变量捕获，而且也不一定要会程序的执行相关，现代系统通过使控制流突变来对系统状态变化做出反应，一般将这种突变称为异常控制流。</p>
+<p>调试器触发断点的一种方法是，将断点处的目标指令替换为一个不规范指令（<code>int 3</code>），并捕获由此引发的异常。</p>
+<p>所以，对于我们来说，学习异常处理是非常有必要的。</p>
+<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>异常是一场控制流的一种形式，它一部分由硬件实现，一部分由操作系统实现。当处理器状态发生一个重要的变化时，处理器正在执行某个指令 $I_{curr}$，此时发生了某个异常，会通过一张 异常表（<code>exception table</code>）跳转到指定异常的异常处理程序（<code>exception handler</code>）。完成之后，有三种情况：</p>
+<img src="/2023/01/28/CSAPP_8/1.png" class="">
+
+<ul>
+<li>返回给发生异常时，正在执行的那个指令</li>
+<li>返回给发生异常时，当前指令的下一条指令</li>
+<li>结束被中断的程序</li>
+</ul>
+<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><p>系统会对每种类型的异常都分配一个异常号，有些是处理器设计者分配的，有些是操作系统开发者分配的。前者包括一些指令方面的异常（除零，缺页，违规内存访问），后者就是包括向操作系统请求硬件服务的信号。</p>
+<p>异常表的基址存储在一个特殊的寄存器中。</p>
+<img src="/2023/01/28/CSAPP_8/2.png" class="">
+
+<p>异常处理和过程调用比较类似但是有些许区别。</p>
+<ul>
+<li>过程调用时，跳转到处理程序之前，处理器会把返回地址压入栈中，以及其它一些由调用者保存的寄存器，返回地址通常是下一条指令。而异常处理时，会把所有的寄存器放到栈中，并且根据异常情况，会执行原来的指令，下一条指令或者是终止程序。</li>
+<li>如果控制从用户态（ring3）到内核态（ring0），所有的项目会被压入内核栈。</li>
+<li>异常处理程序运行在内核态下，对操作系统所有资源都有绝对的访问权限。</li>
+</ul>
+<h3 id="异常的类别"><a href="#异常的类别" class="headerlink" title="异常的类别"></a>异常的类别</h3><p>异常可以分为以下四种：</p>
+<ol>
+<li>中断</li>
+<li>陷入</li>
+<li>故障</li>
+<li>终止</li>
+</ol>
+<img src="/2023/01/28/CSAPP_8/3.png" class="">
+
+<h4 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h4><p>中断是来自处理器外部 <code>I/O</code> 设备的信号的结果，它不是指令的直接产物。硬件中断不是由任何一条专门的指令造成的，从这个意义上来说它是异步的。</p>
+<img src="/2023/01/28/CSAPP_8/4.png" class="">
+
+<p>中断处理完成之后，将继续处理下一条指令，好像中断没有发生过一样。</p>
+<p>而剩下的异常类型都是同步的，也就是由指令直接引发的异常。</p>
+<h4 id="陷阱和系统调用"><a href="#陷阱和系统调用" class="headerlink" title="陷阱和系统调用"></a>陷阱和系统调用</h4><p>陷阱是有意的异常，是执行一条指令的结果，在异常处理完毕之后，也会顺着程序流往下运行。</p>
+<p>用户程序需要经常向内核请求服务，比如读写文件（<code>read/write</code>），创建进程（<code>fork</code>），加载一个新的进程（<code>execve</code>），终止当前进程（<code>exit</code>）。处理器为我们提供了一条特殊的 <code>syscall</code> 指令，当用户想要请求服务 n 时，会把 n 保存给 <code>%rax</code> 寄存器，再执行 <code>syscall</code> 此时会进入一个陷阱处理函数，并根据传进来的参数调用合理的处理程序。</p>
+<img src="/2023/01/28/CSAPP_8/5.png" class="">
+
+<p>虽然在我们看来，系统调用跟调用一个普通函数没有什么区别，但是因为很多操作需要在内核态下完成，所以我们需要系统调用。</p>
+<h4 id="故障"><a href="#故障" class="headerlink" title="故障"></a>故障</h4><p>故障发生时，会首先交由故障处理程序尝试修正故障，如果成功修正那么可能返回给引起故障的指令并重新执行那条指令，如果不能成功修正，那么调用内核中的 <code>abort</code> 例程终止该程序。</p>
+<img src="/2023/01/28/CSAPP_8/6.png" class="">
+
+<h4 id="终止"><a href="#终止" class="headerlink" title="终止"></a>终止</h4><p>终止一般是因为发生了不可恢复的致命错误造成的结果，比如 CPU 断电，内存位损坏发生的奇偶校验错误。终止发生之后，不会返回控制权给应用程序。</p>
+<h3 id="Linux-x86-64系统异常"><a href="#Linux-x86-64系统异常" class="headerlink" title="Linux&#x2F;x86_64系统异常"></a>Linux&#x2F;x86_64系统异常</h3><p>这里面没有什么新的知识点。就是说异常号 <code>0~31</code> 为系统架构师定义，剩余为操作系统开发者定义，比如除数为 0 或者是写只读文本段都是 <code>0~31</code> 的异常。</p>
+<p>进行系统调用的时候，<code>%rax</code> 保存系统调用号，<code>%rdi,%rsi,%rdx,%r10,%r8,%r9</code> 保存参数，和正常寄存器传参略微有点区别。返回时，<code>%rax</code> 保存返回值，<code>%rcx,%r11</code> 寄存器都会被破坏。</p>
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>进程是当今计算机科学中最深刻最成功的概念之一。</p>
+<p>进程的定义是：每个程序的运行实例都运行在进程的上下文（<code>context</code>）之中，上下文是由 代码，数据，栈，寄存器内容，程序计数器，环境变量，以及打开的文件描述符的集合。</p>
+<p>它提供了两种抽象：</p>
+<ul>
+<li>一个独立的逻辑控制流：给进程一种自己独占处理器的假象</li>
+<li>一个私有的地址空间：它提供一个程序独占系统内存的假象。</li>
+</ul>
+<h3 id="逻辑控制流"><a href="#逻辑控制流" class="headerlink" title="逻辑控制流"></a>逻辑控制流</h3><p>一个进程的程序计数器（PC）序列叫逻辑控制流。在实际运行的情况中，进程并不独占处理器，就像下面这张图：</p>
+<img src="/2023/01/28/CSAPP_8/7.png" class="">
+
+<p>三个逻辑控制流的执行是交错的，但是单独看一个进程可以认为是连续的，并不改变程序的运行结果。</p>
+<h3 id="并发流"><a href="#并发流" class="headerlink" title="并发流"></a>并发流</h3><p>我们说两个进程并发当且仅当程序开始到结束的时间片有重合，下面介绍一些概念：</p>
+<ul>
+<li>并发：多个流并发地执行</li>
+<li>多任务：一个进程和其它进程轮流执行，也叫时间分片</li>
+<li>时间片：进程独占处理器的一段时间</li>
+</ul>
+<h3 id="私有地址空间"><a href="#私有地址空间" class="headerlink" title="私有地址空间"></a>私有地址空间</h3><p>进程之间是独立运行的，进程的地址空间不能被任意读写的。从这个意义上来说，这个地址空间是私有的。</p>
+<p>下面的图中我们可以看到一个进程的地址空间分布：</p>
+<img src="/2023/01/28/CSAPP_8/8.png" class="">
+
+<h3 id="用户模式和内核模式"><a href="#用户模式和内核模式" class="headerlink" title="用户模式和内核模式"></a>用户模式和内核模式</h3><p>为了防止用户的不规范操作损坏操作系统，处理器规定了一个用户模式和内核模式，在用户模式下，可执行的指令可操作的地址是有限的，只有当中断，故障，陷入时，操作系统才会把进程切换为内核模式。</p>
+<p>处理器会控制寄存器中的一个模式位来提供私有的地址空间。这个寄存器描述了当前进程拥有的特权，当设置了模式位的时候，进程运行在内核模式，此时可以访问系统中的任何内存位置。没设置位模式的时候，操作系统运行在用户模式，不允许执行特权指令和访问内核数据，否则会导致致命的保护故障，我们必须通过系统调用接口间接地访问内核代码和数据。</p>
+<p>Linux 提供了 <code>/proc</code> 文件系统，允许我们用户模式进程访问内核数据结构的内容。在 2.6 版本的 Linux 中引入了 <code>/sys</code> 文件系统他输出关于系统总线和设备的额外的底层信息。</p>
+<p>比如 <code>/proc/cpuinfo</code> 里面包含了 CPU 的类型，<code>/proc/&lt;process id&gt;/maps</code> 包含了进程使用的内存段。</p>
+<h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><p>内核为每个进程维持一个上下文，上下文就是重新启动一个被抢占的进程所需要的状态，包括寄存器、程序计数器、用户栈、内核栈和各种内核数据结构。在进程执行的某些时刻，内核可以决定抢占当前进程，并重新开始一个先前被抢占了的进程，这种策略叫做调度。内核中有一个专门的调度程序，被称为调度器。</p>
+<p>当内核选择一个进程时，就说内核调度了该进程，内核调度新进程抢占当前进程后，会使用上下文切换机制来进行控制转移，如从进程A切换到进程B：</p>
+<ol>
+<li><p>保存进程A的上下文</p>
+</li>
+<li><p>恢复被保存的进程B的上下文</p>
+</li>
+<li><p>将控制传递到新恢复的进程</p>
+</li>
+</ol>
+<p>执行上下文切换时，CPU 会切换到内核模式。</p>
+<p>中断会引发上下文切换，前面其实说过，中断一般是由硬件引发的，异步的，比如磁盘读取，一般由内存和硬盘自己交换数据而不需要 CPU 干预，磁盘只需要在硬盘读取完数据之后告诉 CPU 即可，而这个告诉的手段实际上就是用中断。</p>
+<h2 id="系统调用错误处理"><a href="#系统调用错误处理" class="headerlink" title="系统调用错误处理"></a>系统调用错误处理</h2><p>告诉我们学会包装系统调用的函数，使得代码看起来更加简单。</p>
+<h2 id="进程控制"><a href="#进程控制" class="headerlink" title="进程控制"></a>进程控制</h2><p>unix 提供了大量进程操作的系统调用。</p>
+<h3 id="获取pid"><a href="#获取pid" class="headerlink" title="获取pid"></a>获取pid</h3><p><code>getpid</code> 和 <code>getppid</code> 分别获取自己的进程 id 和父进程的进程 id。</p>
+<h3 id="创建和终止进程"><a href="#创建和终止进程" class="headerlink" title="创建和终止进程"></a>创建和终止进程</h3><p>我们认为进程永远处于以下三种状态之一：</p>
+<ul>
+<li>运行：要么正在占用 CPU 执行，要么等待被执行并且会被调度。</li>
+<li>停止：进程的执行被挂起（<code>suspended</code>），且不会被调度，运行的进程收到了 <code>SIGSTOP,SIGTSTP,SIGTTIN,SIGTTOU</code> 信号时，进程停止，并且一直保持收到 <code>SIGCONT</code> 信号为止。</li>
+<li>终止：进程永远停止，不会被恢复执行状态。导致进程停止的原因有三点：收到一个终止进程的信号、从主程序返回、调用 exit。</li>
+</ul>
+<p>使用 fork 系统调用可以创建一个新的进程，与父进程上下文几乎一致的子进程。fork 调用一次，返回两次，父进程返回子进程的 pid，子进程返回 0，因此我们可以使用返回值来区分是父进程还是子进程。</p>
+<p>虽然父进程和子进程的地址空间值一模一样，但是他们之间是<strong>独立</strong>的。</p>
+<h3 id="回收子进程"><a href="#回收子进程" class="headerlink" title="回收子进程"></a>回收子进程</h3><p>进程终止之后，内核不会立即把它从系统清除，而是会保持终止状态直到被父进程回收。回收时做以下几步：</p>
+<ul>
+<li>子进程的退出状态通过内核告知父进程</li>
+<li>父进程选择抛弃子进程</li>
+<li>子进程彻底消失</li>
+</ul>
+<p>已终止但是未回收的进程叫<strong>僵死进程</strong>。</p>
+<p>如果父进程还没有回收僵死进程就终止了，那么僵死进程会变成孤儿进程，由 <code>init</code> 进程回收，<code>init</code> 是系统运行时就一直存在的进程，进程 pid 为 1，是所有进程的父进程或祖先进程。因为僵死进程即使没有运行，依然要占用内存资源。</p>
+<p>使用 <code>waitpid(pid_t pid,int *statusp,int options)</code> 函数等待它的子进程终止或者停止。</p>
+<p>默认情况下（<code>options=0</code>）<code>waitpid</code> 一旦接收到等待集合中的其中一个子进程的信号，就会立刻返回。</p>
+<h4 id="等待集合成员"><a href="#等待集合成员" class="headerlink" title="等待集合成员"></a>等待集合成员</h4><p>等待集合由 pid 参数控制</p>
+<ul>
+<li><code>pid&gt;0</code> ，则等待的进程为单独的进程 id 为 pid 进程。</li>
+<li><code>pid=-1</code>，则等待进程为当前进程所有的子进。</li>
+</ul>
+<h4 id="修改默认行为"><a href="#修改默认行为" class="headerlink" title="修改默认行为"></a>修改默认行为</h4><p>可以通过一些宏的组合来达到某些行为：</p>
+<ul>
+<li>WNOHANG：让父进程处于不挂起（Wait No Hang）状态，不会被阻塞，如果此时子进程返回则函数返回子进程 pid，否则返回0。</li>
+<li>WUNTRACED：就是不跟踪（Untraced）子进程，这个再看吧</li>
+<li>WCONTINUED：如果父进程进程在 <code>stop</code> 状态又收到了 <code>SIGCONT</code> 信号，也返回。</li>
+</ul>
+<p>为了研究这个 <code>WCONTINUED</code> 信号，写了一个 <code>demo</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/pthreadtypes.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;threads.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">callback</span><span class="params">(<span class="type">pid_t</span> s)</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;pid :%d\n&quot;</span>,s);</span><br><span class="line">    sleep(<span class="number">1</span>);</span><br><span class="line">    kill(s,SIGSTOP);</span><br><span class="line">    sleep(<span class="number">1</span>);</span><br><span class="line">    kill(s,SIGCONT);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">pid_t</span> pid=fork();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;fork returns %d\n&quot;</span>,pid);</span><br><span class="line">    <span class="keyword">if</span>(!pid)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;start\n&quot;</span>);</span><br><span class="line">        sleep(<span class="number">5</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;over1\n&quot;</span>);</span><br><span class="line">        sleep(<span class="number">5</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;over2\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">pthread_t</span> tid;</span><br><span class="line">    pthread_create(&amp;tid,<span class="literal">NULL</span>,callback,pid);</span><br><span class="line">    waitpid(pid,<span class="literal">NULL</span>,WCONTINUED);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以发现，</p>
+<h4 id="检查退出状态"><a href="#检查退出状态" class="headerlink" title="检查退出状态"></a>检查退出状态</h4><p>这里有一个 <code>int*</code> 类型的参数，我们可以使用这个参数获得进程退出的状态。</p>
+<p>然后有一些宏可以判断程序的返回值：</p>
+<ul>
+<li>WIFEXIED(status)：如果调用 exit 或者是 return 终止，那么此值为真。</li>
+<li>WEXITSTATUS(status)：只有在上面状态为真时定义此状态，返回一个正常中止的程序定义的退状态。</li>
+<li>WIFSINALED(status)：如果因为一个未捕获的信号终止，此值为真。</li>
+<li>WTERMSIG(status)：返回导致子进程终止的信号的编号，只有上面状态为真时有此字段。</li>
+<li>WIFSTOPPED(status)：如果当前子进程是停止的，那么此值为真。</li>
+<li>WSTOPSIG(status)：引起子进程停止的信号只有上面状态为真时有此字段。</li>
+<li>WIFCONTINUED(status)：如果子进程收到了 <code>SIGCONT</code> 信号启动，则返回真。</li>
+</ul>
+<h4 id="错误条件"><a href="#错误条件" class="headerlink" title="错误条件"></a>错误条件</h4><p>如果进程无子进程，那么返回 -1 并设置 errno 为 <code>ECHILD</code>，如果被信号中断也返回 -1并设置 <code>errno</code> 为 <code>EINTR</code>。</p>
+<h4 id="wait函数"><a href="#wait函数" class="headerlink" title="wait函数"></a>wait函数</h4><p>waitpid的简化版本，调用 <code>wait(&amp;status)</code> 等同于 <code>waitpid(-1,&amp;status,0)</code>。</p>
+<h4 id="使用waitpid的示例"><a href="#使用waitpid的示例" class="headerlink" title="使用waitpid的示例"></a>使用waitpid的示例</h4><p>这里给了一个程序，可以让我们看到 <code>waitpid</code> 的妙用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;error.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">pid_t</span> pid;</span><br><span class="line">    <span class="type">int</span> status;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">2</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>((pid=fork())==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">100</span>+i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>((pid=waitpid(<span class="number">-1</span>,&amp;status,<span class="number">0</span>))&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(WIFEXITED(status))&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;child %d exit with code %d normally\n&quot;</span>,pid,WEXITSTATUS(status));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以发现，程序不会按照顺序回收子进程，这取决于机器的调度。</p>
+<p>我们可以手动编写代码让它变得按照顺序回收，就是创建一个数组保存 pid，每次循环只回收指定进程，但是这依然不能保证子进程会按顺序结束，但是一定按顺序回收。</p>
+<h3 id="让进程休眠"><a href="#让进程休眠" class="headerlink" title="让进程休眠"></a>让进程休眠</h3><p>使用 <code>sleep(int secs)</code> 让程序休眠指定的秒数，<code>Sleep()</code> 是休眠指定的毫秒数。</p>
+<p>一般返回为 0，如果被某些信号终止，则返回剩余秒数。</p>
+<p>使用 <code>pause()</code> 让程序休眠直到收到某个信号，它总是返回 <code>-1</code>。</p>
+<h3 id="加载并运行程序"><a href="#加载并运行程序" class="headerlink" title="加载并运行程序"></a>加载并运行程序</h3><p><code>execve(const char *filename,const char *argv[,const char *env[])</code> 函数用于在当前进程中加载并运行一个新的程序。</p>
+<p><code>execve</code> 调用一次就无法返回了，除非加载失败并返回错误。</p>
+<p>一般来说，加载的程序会以这样的入口去加载 <code>int main(int argc,char *argv[],char *env[])</code>，这里 <code>execve</code> 的后面两个参数就是这里的参数。</p>
+<p>对于环境变量，Linux 提供了几个函数来操作环境变量。</p>
+<p><code>char *getenv(char *name)</code> 用于获取一个环境变量，成功就返回 <code>value</code> 的指针，这里是 <code>value</code> 的指针，不是一整个条目的指针，失败就返回 <code>NULL</code>。</p>
+<p><code>int setenv(const char *name,const char *newvalue,int overwrite)</code> 用于给环境变量 <code>name</code> 设置一个新的值 <code>newvalue</code>，如果已经存在，那么判断 <code>overwrite</code> 是否非 0，非 0 则直接替换。</p>
+<p><code>void unsetenv(char *name)</code> 用于取消一个环境变量。</p>
+<p>据此我们可以写出一个简易的 SHELL 程序，利用 <code>fork</code> 和 <code>execve</code> 的搭配就可以解决，主要工作量还是在解析命令上面。</p>
+<h3 id="利用-fork-和-execve-运行程序"><a href="#利用-fork-和-execve-运行程序" class="headerlink" title="利用 fork 和 execve 运行程序"></a>利用 fork 和 execve 运行程序</h3><p>这里就教我们写一个shell了，其实很简单，我们 <code>fork</code> 出一个子进程，然后子进程用于 <code>execve</code> 装载父进程读入的一个命令，父进程有两种选择，一个是等待执行完毕（一般shell都支持的），这个可以直接使用 wait 实现，或者是加一个 <code>&amp;</code> 挂在后台运行，我们只要根据加没加 <code>&amp;</code> 判断 wait 的参数即可。</p>
+<p>此时我们还有选择处理信号，因为收到了 <code>Ctrl+C</code> 的终止信号之后，我们不应当终止父进程，而应该把它转发给子进程，让子进程去处理。这个是后话了，本节的内容应该到此就结束了。</p>
+<h2 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h2><p>Linux 支持以下 30 多种不同的信号。</p>
+<img src="/2023/01/28/CSAPP_8/9.png" class="">
+
+<h3 id="信号术语"><a href="#信号术语" class="headerlink" title="信号术语"></a>信号术语</h3><h4 id="发送信号"><a href="#发送信号" class="headerlink" title="发送信号"></a>发送信号</h4><p>发送信号可以因为某些事件导致内核发送信号，也可以是某些进程主动调用 <code>kill</code> 函数发送信号。</p>
+<h4 id="接收信号"><a href="#接收信号" class="headerlink" title="接收信号"></a>接收信号</h4><p>进程接收到信号之后，可以忽略这个信号，终止，或者是执行一个信号处理程序（signal handler）的用户层函数捕获这个信号。</p>
+<img src="/2023/01/28/CSAPP_8/10.png" class="">
+
+<p>一种信号只能被接收最多一次，一个发出但没有被接收的信号称为待处理信号（pending signal），内核为每个进程维护一个 pending 位向量，表示哪些类型的向量被传送但未被接收。</p>
+<p>信号可以被阻塞，被阻塞的信号仍然可以被发送但是不会做出任何反应，维护一个 <code>Block</code> 位向量表示哪些类型的信号被阻塞。接收一个信号会清除 <code>pending</code> 位向量的对应位。</p>
+<h3 id="发送信号-1"><a href="#发送信号-1" class="headerlink" title="发送信号"></a>发送信号</h3><p>所有的信号发送机制都是基于进程组的概念。</p>
+<h4 id="进程组"><a href="#进程组" class="headerlink" title="进程组"></a>进程组</h4><p>每个进程都只属于一个进程组（group id）。使用 <code>getpgrp()</code> 可以返回当前进程进程组的 id，<code>setpgid(pid_t pid,pid_t pgid)</code> 可以为指定进程设置进程组 <code>id</code>，如果 <code>pid</code> 参数为 <code>0</code>，那么表示对自身设置，如果 <code>pgid</code> 为 <code>0</code>，表示创建一个 gid 等于 pid 的一个组并加入其中。</p>
+<h4 id="使用-bin-kill-发送信号"><a href="#使用-bin-kill-发送信号" class="headerlink" title="使用 &#x2F;bin&#x2F;kill 发送信号"></a>使用 &#x2F;bin&#x2F;kill 发送信号</h4><p><code>/bin/kill -9 11111</code> 可以给 pid 为 <code>11111</code> 的进程发送 信号  9（SIGKILL）。如果 pid 为负，则表示给对应的组中所有的进程发送这个信号。</p>
+<p>此时除了发送信号 9 给该进程以外，内核还会额外发送一个 17 （SIGCHLD）信号给它的父进程。</p>
+<h4 id="从键盘发送信号"><a href="#从键盘发送信号" class="headerlink" title="从键盘发送信号"></a>从键盘发送信号</h4><p>在 shell 中，使用作业（job）来表示一条命令所创建的进程，在任何时刻，最多有一个前台作业和 0 个或多个后台作业。</p>
+<p>默认情况下，在键盘中输入 <code>Ctrl+C</code> 会导致内核发送一个 <code>SIGINT</code> 信号到前台进程组中的每一个进程，最终结果就是终止前台作业，使用 <code>Ctrl+Z</code> 会发送一个 <code>SIGSTOP</code> 信号给所有前台作业，默认情况下会挂起前台作业。</p>
+<h4 id="kill函数发送信号"><a href="#kill函数发送信号" class="headerlink" title="kill函数发送信号"></a>kill函数发送信号</h4><p>使用 <code>kill(pid_t pid,int sig)</code> 发送一个 <code>sig</code> 信号给进程 id 为 pid 的进程。</p>
+<p>特殊地：</p>
+<ul>
+<li>pid &#x3D; 0：给自己所在的进程组中的每一个进程发送信号</li>
+<li>pid &lt; 0：给组 id 为 <code>|pid|</code> 的所有进程发送信号</li>
+</ul>
+<h4 id="alarm-函数发送信号"><a href="#alarm-函数发送信号" class="headerlink" title="alarm 函数发送信号"></a>alarm 函数发送信号</h4><p><code>unsigned alarm(unsigned secs)</code> 函数可以给自身发送 <code>SIGALRM</code> 信号，内核会创建一个定时器，到指定秒数之后，内核会发送一个 <code>SIGALRM</code> 信号，返回值为上一次闹钟所剩余的秒数，如果是第一次调用，则返回 0。</p>
+<h3 id="接收信号-1"><a href="#接收信号-1" class="headerlink" title="接收信号"></a>接收信号</h3><p>当内核吧进程从内核模式切换到用户模式时，会检查进程中未阻塞的待处理信号的集合（pending&amp;~blocked），接下来会按照从小到大的顺序强制进程接收这些信号，收到信号会让进程采取某些行为，一旦完成那就把控制流交还给进程，并执行原逻辑流中的下一条指令。</p>
+<p>每个信号会有一个默认的行为，这些行为是下面中的一种：</p>
+<ul>
+<li>终止进程</li>
+<li>终止进程并转储内存</li>
+<li>挂起进程</li>
+<li>忽略信号</li>
+</ul>
+<p>使用 <code>signal(int signum,sighandler_t handler)</code> 函数可以修改 signum 信号的默认行为为 <code>handler</code> 函数处理。但是它的 handler 可以是一些特殊值。</p>
+<ul>
+<li>SIG_IGN 表示忽略该信号</li>
+<li>SIG_DFL 表示恢复该信号的默认处理</li>
+</ul>
+<p>只有两种信号不能修改默认行为，也不能忽略，那就是 <code>SIGKILL</code> 和 <code>SIGSTOP</code>。</p>
+<p>在服务器中常见的可能会是前台任务卡住，并且 <code>Ctrl+C</code> 也不好使，那么我们使用 <code>Ctrl+Z</code> 是一定能够停止当前任务的，因为 <code>Ctrl+Z</code> 发送信号 <code>SIGSTOP</code> 不能被忽略不能被捕获。</p>
+<p>通常情况下，在信号处理程序执行 <code>return</code> 时，会把控制流交还给被之前被中断那条指令的后面一条指令，例外的情况就是某些系统在执行系统调用的时候收到信号，系统调用会直接返回一个错误。</p>
+<p>一个信号处理程序可能会被另一个信号处理程序打断，但是不会被自己打断。</p>
+<img src="/2023/01/28/CSAPP_8/11.png" class="">
+
+<h3 id="阻塞和解除阻塞信号"><a href="#阻塞和解除阻塞信号" class="headerlink" title="阻塞和解除阻塞信号"></a>阻塞和解除阻塞信号</h3><p>内核默认阻塞已经处于 <code>pending</code> 集合中的信号，我们也可以显式地阻塞信号，使用函数 <code>sigprocmask(int how,const sigset_t *set,sigset_t *oldset)</code> 可以改变当前的 <code>block</code> 集合值。</p>
+<p>根据 how 参数的值函数会有以下行为：</p>
+<ul>
+<li>SIG_BLOCK：把 set 中的信号添加到 block 中。</li>
+<li>SIG_UNBLOCK：从 block 中删除 set 中的信号。</li>
+<li>SIG_SETMASK：让 block 直接等于 set 集合。</li>
+</ul>
+<p>在此之前的值会保存在 <code>oldset</code> 所指向的参数中。</p>
+<p>对于集合的操作，我们可以使用下面的一些函数：</p>
+<ul>
+<li><code>int sigemptyset(sigset* set)</code> 初始化 set 为空集</li>
+<li><code>int sigfillset(sigset* set)</code> 将 set 填满信号</li>
+<li><code>int sigaddset(sigset* set, int signum)</code> 将 signum 信号添加到集合中</li>
+<li><code>int sigdelset(sigset* set, int signum)</code> 将 signum 信号从集合中删除</li>
+</ul>
+<h3 id="编写信号处理程序"><a href="#编写信号处理程序" class="headerlink" title="编写信号处理程序"></a>编写信号处理程序</h3><h4 id="安全的信号处理"><a href="#安全的信号处理" class="headerlink" title="安全的信号处理"></a>安全的信号处理</h4><h5 id="G0"><a href="#G0" class="headerlink" title="G0"></a>G0</h5><p>让我们尽量对 handler进行简单的处理，过于复杂的逻辑尽量在主函数实现。</p>
+<h5 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h5><p>要编写异步信号安全的函数。要么这个函数不可被中断，要么它可重入。</p>
+<ul>
+<li>可重入意味着它只会调用局部变量而不访问任何全局变量。</li>
+<li>不可被中断意味着这个函数要么不执行，要么完全执行。</li>
+</ul>
+<p>例如以下信号处理程序：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">handler</span><span class="params">(<span class="type">int</span> sig)</span></span>&#123;</span><br><span class="line">    n++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它就显然不符合上面的其中一个要求，我们知道 <code>n++</code> 实际上会分三步完成，从内存中取值，+1，放回内存中。</p>
+<p>假设在中间被其它信号打断，同样对 n 进行了运算，那么就会导致出现非预期的结果，而且这种 bug 往往十分难查，因此我们要从写代码层面杜绝此类事件的发生。</p>
+<p>所有的 IO 函数都是不安全的，因为它们可被打断，且在调用 IO 函数的时候都会访问一个 <code>_IO_2_1_stdout</code> 的全局结构，我们最安全的选择就是使用 <code>write</code> 函数打印，因为它是直接走系统调用去输出的，系统调用不会被打断。</p>
+<h5 id="G2"><a href="#G2" class="headerlink" title="G2"></a>G2</h5><p>保存和恢复 errno，有些函数依赖于 errno 的内容，尽量保证进入之前保存这个字段，等到结束了再恢复回去。</p>
+<h5 id="G3"><a href="#G3" class="headerlink" title="G3"></a>G3</h5><p>在进去之前可以选择阻塞所有信号，等到结束了再恢复阻塞，可以保证不会被其它信号处理程序打断。</p>
+<h5 id="G4"><a href="#G4" class="headerlink" title="G4"></a>G4</h5><p>使用 volatile 声明全局变量，这个关键字会让编译器不对其中的代码做出优化，每次引用都会从内存中读出值，保证了安全性。</p>
+<h5 id="G5"><a href="#G5" class="headerlink" title="G5"></a>G5</h5><p>使用 <code>sig_atomic_t</code> 类型，它保证了读和写都是原子的不可被打断的。</p>
+<h4 id="正确的信号处理"><a href="#正确的信号处理" class="headerlink" title="正确的信号处理"></a>正确的信号处理</h4><p>这一节基于一个特性：同种类型的信号不会排队，当 <code>pending</code> 集合中已经有了对应种类的信号时，再次收到就会被内核丢弃，所以我们不能使用信号来计数。</p>
+<h4 id="可移植的信号处理"><a href="#可移植的信号处理" class="headerlink" title="可移植的信号处理"></a>可移植的信号处理</h4><p>略</p>
+<h3 id="同步流以避免讨厌的并发错误"><a href="#同步流以避免讨厌的并发错误" class="headerlink" title="同步流以避免讨厌的并发错误"></a>同步流以避免讨厌的并发错误</h3><p>略</p>
+<h3 id="显式地等待信号"><a href="#显式地等待信号" class="headerlink" title="显式地等待信号"></a>显式地等待信号</h3><p>略</p>
+<h2 id="非本地跳转"><a href="#非本地跳转" class="headerlink" title="非本地跳转"></a>非本地跳转</h2><p>C 语言提供了一种用户级异常控制流形式，称为非本地跳转（non local jump），它将控制直接从一个函数转移到另一个当前正在执行的函数，而不需要经过正常的调用—返回序列。非本地跳转是通过 setjmp 和 longjmp 函数来提供的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;setjmp.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">setjmp</span><span class="params">(jmp_buf env)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">sigsetjmp</span><span class="params">(sigjmp_buf env, <span class="type">int</span> savesigs)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回：setjmp 返回 0，longjmp 返回非零。</span></span><br></pre></td></tr></table></figure>
+
+<p>下面举了一个例子助我们理解这两个函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;setjmp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line">jmp_buf buf;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> error1 = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> error2 = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">foo</span><span class="params">(<span class="type">void</span>)</span>, <span class="title function_">bar</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">switch</span> (setjmp(buf)) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">        foo();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Detected an error1 condition in foo\n&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Detected an error2 condition in foo\n&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Unknown error condition in foo\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Deeply nested function foo */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">foo</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;call in foo\n&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (error1)</span><br><span class="line">        longjmp(buf, <span class="number">1</span>);</span><br><span class="line">    bar();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">bar</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;call in bar\n&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (error2)</span><br><span class="line">        longjmp(buf, <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结一下就是： <code>setjmp</code> 函数调用一次返回多次，调用会把当前状态保存在 <code>buf</code> 中并返回 0。直到后面遇到 <code>longjmp</code> 时，会根据保存的位置恢复寄存器状态，并将返回值置为第二个参数。</p>
+<p>它的另一个妙用是可以在接收信号的时候不返回被中断的位置，也不直接退出，而是可以重新指定跳转位置。</p>
+<p>比如下面的例程</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;setjmp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">sigjmp_buf buf;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">handler</span><span class="params">(<span class="type">int</span> sig)</span></span><br><span class="line">&#123;</span><br><span class="line">    siglongjmp(buf, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!sigsetjmp(buf, <span class="number">1</span>)) &#123;</span><br><span class="line">        signal(SIGINT, handler);</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;starting&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;restarting&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        sleep(<span class="number">1</span>);</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;processing...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>); <span class="comment">/* Control never reaches here */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它实现了我们按 <code>ctrl+C</code> 就重启的一个效果。</p>
+<p>我们先看看没有信号时的逻辑：先设置一个处理函数，输出 <code>start</code>，再 <code>while 1</code> 去输出 <code>processing...</code>。</p>
+<p>在 <code>while 1</code> 中当我们按下 <code>Ctrl+C</code>，指令在循环中的一个地方被中断，如果没有 <code>setjmp</code> 和 <code>longjmp</code> 的处理，那么我们收到这个信号之后，要么接着回去（return），要么退出（exit），但是有了这两个函数我们可以设置一个点位，让它信号处理完毕之后都回到那个点位去。</p>
+<img src="/2023/01/28/CSAPP_8/12.png" class="">
+
+<p>操作进程的工具</p>
+<h2 id="操作进程的工具"><a href="#操作进程的工具" class="headerlink" title="操作进程的工具"></a>操作进程的工具</h2><p>Linux 为我们提供了大量操作进程的工具</p>
+<ul>
+<li><strong>STRACE：</strong>打印一个正在运行的程序和它的子进程调用的每个系统调用的轨迹。对于好奇的学生而言，这是一个令人着迷的工具。用 -static 编译你的程序，能得到一个更干净的、不带有大量与共享库相关的输出的轨迹。</li>
+<li><strong>PS：</strong>列出当前系统中的进程（包括僵死进程）。</li>
+<li><strong>TOP：</strong>打印出关于当前进程资源使用的信息。</li>
+<li><strong>PMAP：</strong>显示进程的内存映射。</li>
+<li><strong>&#x2F;proc：</strong>一个虚拟文件系统，以 ASCII 文本格式输出大量内核数据结构的内容，用户程序可以读取这些内容。比如，输入 “cat&#x2F;proc&#x2F;loadavg”，可以看到你的 Linux 系统上当前的平均负载。</li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>复制粘贴一下吧：</p>
+<p>异常控制流（ECF）发生在计算机系统的各个层次，是计算机系统中提供并发的<strong>基本机制</strong>。</p>
+<p>在硬件层，异常是由处理器中的事件触发的控制流中的突变。控制流传递给一个软件处理程序，该处理程序进行一些处理，然后返回控制给被中断的控制流。</p>
+<p>有四种不同类型的异常：中断、故障、终止和陷阱。当一个外部 I&#x2F;O 设备（例如定时器芯片或者磁盘控制器）设置了处理器芯片上的中断管脚时，（对于任意指令）中断会异步地发生。控制返回到故障指令后面的那条指令。一条指令的执行可能导致故障和终止同步发生。故障处理程序会重新启动故障指令，而终止处理程序从不将控制返回给被中断的流。最后，陷阱就像是用来实现向应用提供到操作系统代码的受控的人口点的系统调用的函数调用。</p>
+<p>在操作系统层，内核用 ECF 提供进程的基本概念。进程提供给应用两个重要的抽象：</p>
+<ol>
+<li>逻辑控制流，它提供给每个程序一个假象，好像它是在独占地使用处理器。</li>
+<li>私有地址空间，它提供给每个程序一个假象，好像它是在独占地使用主存。</li>
+</ol>
+<p>在操作系统和应用程序之间的接口处，应用程序可以创建子进程，等待它们的子进程停止或者终止，运行新的程序，以及捕获来自其他进程的信号。信号处理的语义是微妙的，并且随系统不同而不同。然而，在与 Posix 兼容的系统上存在着一些机制，允许程序清楚地指定期望的信号处理语义。</p>
+<p>最后，在应用层，C 程序可以使用非本地跳转来规避正常的调用&#x2F;返回栈规则，并且直接从一个函数分支到另一个函数。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2023/01/28/CSAPP_8/">https://xia0ji233.github.io/2023/01/28/CSAPP_8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/30/Windows2/" title="Windows基础知识（2）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Windows基础知识（2）</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/25/Windows1/" title="Windows基础知识（1）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Windows基础知识（1）</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">292</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A2%97%E6%A6%82"><span class="toc-number">1.</span> <span class="toc-text">梗概</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8"><span class="toc-number">2.</span> <span class="toc-text">异常</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">2.1.</span> <span class="toc-text">异常处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E7%9A%84%E7%B1%BB%E5%88%AB"><span class="toc-number">2.2.</span> <span class="toc-text">异常的类别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD"><span class="toc-number">2.2.1.</span> <span class="toc-text">中断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%B7%E9%98%B1%E5%92%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="toc-number">2.2.2.</span> <span class="toc-text">陷阱和系统调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%85%E9%9A%9C"><span class="toc-number">2.2.3.</span> <span class="toc-text">故障</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%88%E6%AD%A2"><span class="toc-number">2.2.4.</span> <span class="toc-text">终止</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-x86-64%E7%B3%BB%E7%BB%9F%E5%BC%82%E5%B8%B8"><span class="toc-number">2.3.</span> <span class="toc-text">Linux&#x2F;x86_64系统异常</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">3.1.</span> <span class="toc-text">逻辑控制流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E6%B5%81"><span class="toc-number">3.2.</span> <span class="toc-text">并发流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%81%E6%9C%89%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="toc-number">3.3.</span> <span class="toc-text">私有地址空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%A8%A1%E5%BC%8F%E5%92%8C%E5%86%85%E6%A0%B8%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.4.</span> <span class="toc-text">用户模式和内核模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2"><span class="toc-number">3.5.</span> <span class="toc-text">上下文切换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">系统调用错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="toc-number">5.</span> <span class="toc-text">进程控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96pid"><span class="toc-number">5.1.</span> <span class="toc-text">获取pid</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%92%8C%E7%BB%88%E6%AD%A2%E8%BF%9B%E7%A8%8B"><span class="toc-number">5.2.</span> <span class="toc-text">创建和终止进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%94%B6%E5%AD%90%E8%BF%9B%E7%A8%8B"><span class="toc-number">5.3.</span> <span class="toc-text">回收子进程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%89%E5%BE%85%E9%9B%86%E5%90%88%E6%88%90%E5%91%98"><span class="toc-number">5.3.1.</span> <span class="toc-text">等待集合成员</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E8%A1%8C%E4%B8%BA"><span class="toc-number">5.3.2.</span> <span class="toc-text">修改默认行为</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E9%80%80%E5%87%BA%E7%8A%B6%E6%80%81"><span class="toc-number">5.3.3.</span> <span class="toc-text">检查退出状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E6%9D%A1%E4%BB%B6"><span class="toc-number">5.3.4.</span> <span class="toc-text">错误条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wait%E5%87%BD%E6%95%B0"><span class="toc-number">5.3.5.</span> <span class="toc-text">wait函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8waitpid%E7%9A%84%E7%A4%BA%E4%BE%8B"><span class="toc-number">5.3.6.</span> <span class="toc-text">使用waitpid的示例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A9%E8%BF%9B%E7%A8%8B%E4%BC%91%E7%9C%A0"><span class="toc-number">5.4.</span> <span class="toc-text">让进程休眠</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E5%B9%B6%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="toc-number">5.5.</span> <span class="toc-text">加载并运行程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-fork-%E5%92%8C-execve-%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="toc-number">5.6.</span> <span class="toc-text">利用 fork 和 execve 运行程序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7"><span class="toc-number">6.</span> <span class="toc-text">信号</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E6%9C%AF%E8%AF%AD"><span class="toc-number">6.1.</span> <span class="toc-text">信号术语</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7"><span class="toc-number">6.1.1.</span> <span class="toc-text">发送信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6%E4%BF%A1%E5%8F%B7"><span class="toc-number">6.1.2.</span> <span class="toc-text">接收信号</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7-1"><span class="toc-number">6.2.</span> <span class="toc-text">发送信号</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%BB%84"><span class="toc-number">6.2.1.</span> <span class="toc-text">进程组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-bin-kill-%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7"><span class="toc-number">6.2.2.</span> <span class="toc-text">使用 &#x2F;bin&#x2F;kill 发送信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E9%94%AE%E7%9B%98%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7"><span class="toc-number">6.2.3.</span> <span class="toc-text">从键盘发送信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kill%E5%87%BD%E6%95%B0%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7"><span class="toc-number">6.2.4.</span> <span class="toc-text">kill函数发送信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#alarm-%E5%87%BD%E6%95%B0%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7"><span class="toc-number">6.2.5.</span> <span class="toc-text">alarm 函数发送信号</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6%E4%BF%A1%E5%8F%B7-1"><span class="toc-number">6.3.</span> <span class="toc-text">接收信号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E5%92%8C%E8%A7%A3%E9%99%A4%E9%98%BB%E5%A1%9E%E4%BF%A1%E5%8F%B7"><span class="toc-number">6.4.</span> <span class="toc-text">阻塞和解除阻塞信号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="toc-number">6.5.</span> <span class="toc-text">编写信号处理程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E7%9A%84%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86"><span class="toc-number">6.5.1.</span> <span class="toc-text">安全的信号处理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#G0"><span class="toc-number">6.5.1.1.</span> <span class="toc-text">G0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#G1"><span class="toc-number">6.5.1.2.</span> <span class="toc-text">G1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#G2"><span class="toc-number">6.5.1.3.</span> <span class="toc-text">G2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#G3"><span class="toc-number">6.5.1.4.</span> <span class="toc-text">G3</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#G4"><span class="toc-number">6.5.1.5.</span> <span class="toc-text">G4</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#G5"><span class="toc-number">6.5.1.6.</span> <span class="toc-text">G5</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E7%A1%AE%E7%9A%84%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86"><span class="toc-number">6.5.2.</span> <span class="toc-text">正确的信号处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E7%A7%BB%E6%A4%8D%E7%9A%84%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86"><span class="toc-number">6.5.3.</span> <span class="toc-text">可移植的信号处理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E6%B5%81%E4%BB%A5%E9%81%BF%E5%85%8D%E8%AE%A8%E5%8E%8C%E7%9A%84%E5%B9%B6%E5%8F%91%E9%94%99%E8%AF%AF"><span class="toc-number">6.6.</span> <span class="toc-text">同步流以避免讨厌的并发错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%BE%E5%BC%8F%E5%9C%B0%E7%AD%89%E5%BE%85%E4%BF%A1%E5%8F%B7"><span class="toc-number">6.7.</span> <span class="toc-text">显式地等待信号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E6%9C%AC%E5%9C%B0%E8%B7%B3%E8%BD%AC"><span class="toc-number">7.</span> <span class="toc-text">非本地跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-number">8.</span> <span class="toc-text">操作进程的工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

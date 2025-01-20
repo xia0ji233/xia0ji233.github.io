@@ -1,0 +1,387 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CS:APP第五章学习 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="开始学 CSAPP的第五章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS:APP第五章学习">
+<meta property="og:url" content="https://xia0ji233.github.io/2023/01/12/CSAPP_5/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="开始学 CSAPP的第五章">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-01-12T04:30:00.000Z">
+<meta property="article:modified_time" content="2025-01-16T13:21:17.717Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2023/01/12/CSAPP_5/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS:APP第五章学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-16 21:21:17'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">292</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS:APP第五章学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-12T04:30:00.000Z" title="发表于 2023-01-12 12:30:00">2023-01-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-16T13:21:17.717Z" title="更新于 2025-01-16 21:21:17">2025-01-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/">书籍阅读</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/CSAPP/">CSAPP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>18分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS:APP第五章学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>开始学 CSAPP的第五章</p>
+<p>逐步更新吧~</p>
+<ul>
+<li>2023-01-08 19:00:00 第一次写</li>
+<li>2023-01-11 23:00:00 更新新内容</li>
+<li>2023-01-12 12:30:00 写完第五章</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="优化编译器的能力和局限性"><a href="#优化编译器的能力和局限性" class="headerlink" title="优化编译器的能力和局限性"></a>优化编译器的能力和局限性</h2><p>也懒得去复制书上的东西了，就是告诉了我们编译器在编译代码的时候会对代码做出优化等等之类的，但是我们的优化需要足够安全，我们必须保证在任何情况下，优化和不优化的代码只会带来效率上的差异而不会对任何形式输出的任何结果产生差异。</p>
+<p>这一章主要介绍了一个例子</p>
+<p>问：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">test</span><span class="params">(<span class="type">int</span> *x,<span class="type">int</span> *y)</span>&#123;</span><br><span class="line">	*x+=*y;</span><br><span class="line">	*x+=*y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>能否用以下程序作为优化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">test</span><span class="params">(<span class="type">int</span> *x,<span class="type">int</span> *y)</span>&#123;</span><br><span class="line">	*x+=<span class="number">2</span>*(*y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>乍一看好像可以，因为就是 x 所指向的 <code>int</code> 内存加了两次 <code>y</code>，完全可以用，并且对比上下的代码，上面需要进行 6 次访存（读 y，读x，写x，读y，读x，写x），而下面的代码只需要 3 次访存（读y，读x，写x）</p>
+<p>感觉很完美，但是实际上是不行的，因为如果 x 和 y 指向相同的内存，那么两个示例运行起来就会有差异了。</p>
+<p>这里我们让 <code>x=1</code>，运行示例 <code>test(&amp;x,&amp;x)</code> 之后发现，上面的代码运行完之后 x&#x3D;4，而下面的代码运行之后 x&#x3D;3，因此在编译的时候，不能用下面的代码作为上面代码的优化版本。</p>
+<p>这造成了一个主要的妨碍优化的因素，这也是可能严重限制编译器产生优化代码机会的程序的一个方面。如果编译器不能确定两个指针是否指向同一个位置，就必须假设什么情况都有可能，这就限制了可能的优化策略。</p>
+<p>这种两个指针可能指向同一个内存位置的情况称为内存别名使用（memory aliasing）</p>
+<blockquote>
+<p>练习5.1    下面的问题说明了内存别名使用可能会导致意想不到的程序行为的方式。考虑下面这个交换两个值的过程：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Swap value x at xp with value y at yp */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">long</span> *xp, <span class="type">long</span> *yp)</span>&#123;</span><br><span class="line">	*xp = *xp + *уp; <span class="comment">/* x+y */</span></span><br><span class="line">	*уp = *xp - *уp; <span class="comment">/* x+y-y = x */</span></span><br><span class="line">	*xp = *xp - *уp; <span class="comment">/* x+у-x = y */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果调用这个过程时xp等于yp，会有什么样的效果？</p>
+<p>第二个妨碍优化的因素是函数调用。作为一个示例，考虑下面这两个过程：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">func1</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> f() + f() + f() + f();</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">long</span> <span class="title function_">func2</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">4</span>*f();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最初看上去两个过程计算的都是相同的结果，但是func2只调用f一次，而func调用f四次。以func1作为源代码时，会很想产生func2风格的代码。</p>
+<p>不过，考虑下面f的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> counter = <span class="number">0</span>; </span><br><span class="line"><span class="type">long</span> <span class="title function_">f</span><span class="params">()</span>&#123;</span><br><span class="line">   	<span class="keyword">return</span> counter++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个函数有个副作用——它修改了全局程序状态的一部分。改变调用它的次数会改变程序的行为。特别地，假设开始时全局变量counter都设置为0，对func1的调用会返回0+1+2+3&#x3D;6，而对func2的调用会返回4*0&#x3D;0。<br>大多数编译器不会试图判断一个函数是否没有副作用，如果没有，就可能被优化成像func2中的样子。相反，编译器会假设最糟的情况，并保持所有的函数调用不变。</p>
+</blockquote>
+<p>这两个例子分别介绍了内存别名和函数调用带来的一个优化难题。</p>
+<h2 id="表示程序性能"><a href="#表示程序性能" class="headerlink" title="表示程序性能"></a>表示程序性能</h2><p>我们引入度量标准每元素的周期数，就是平均每个元素需要多少的时钟周期完成，这里用时钟周期而不用时间主要是因为机器的差异不在我们对程序优化的考虑范围之内。</p>
+<p>这里举了一个例子，给定一个数列 ${a_i}$ 要求计算出它的前缀和序列。</p>
+<p>下面写了两个函数去计算：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Compute prefix sum of vector a */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">psum1</span><span class="params">(<span class="type">float</span> a[], <span class="type">float</span> p[], <span class="type">long</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">long</span> i; </span><br><span class="line">    p[<span class="number">0</span>] = a[<span class="number">0</span>]; </span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">1</span>; i&lt;n; i++)</span><br><span class="line">        p[i] = p[i<span class="number">-1</span>] + a[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">psum2</span><span class="params">(<span class="type">float</span> a[], <span class="type">float</span> p[], <span class="type">long</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">long</span> i; </span><br><span class="line">    p[<span class="number">0</span>] = a[<span class="number">0</span>]; </span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n<span class="number">-1</span>; i+=<span class="number">2</span>) &#123;</span><br><span class="line">        <span class="type">float</span> mid_val = p[i<span class="number">-1</span>] + a[i]; </span><br><span class="line">        p[i]= mid_val; </span><br><span class="line">        p[i+<span class="number">1</span>] =mid_val + a[i+<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* For even n, finish remaining element */</span></span><br><span class="line">    <span class="keyword">if</span> (i&lt;n)</span><br><span class="line">        p[i] = p[i<span class="number">-1</span>] + a[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数 psum1每次迭代计算结果数列的一个元素。第二个函数使用循环展开的技术，每次迭代计算两个元素。</p>
+<p>这里对两个函数把 n 和周期数进行最小二乘拟合：</p>
+<img src="/2023/01/12/CSAPP_5/1.png" class="">
+
+<p>最小二乘拟合：</p>
+<blockquote>
+<p>对于一个数据点$(x_1,y_1),…,(x_n,y_n)$的集合，我们常常试图画一条线，它能最接近于这些数据代表的 $X-Y$ 趋势。使用最小二乘拟合，寻找一条形如 $y&#x3D;mx+b$ 的线，使得下面这个误差度量最小：<br>$E(m,b)&#x3D;\sum ^{n} _{i&#x3D;1}(mx_i+b-y_i)^2$<br>将$E(m,b)$分别对 m 和 b 求导，把两个导数函数设置为0，进行推导就能得出计算 m 和 b 的算法。</p>
+</blockquote>
+<p>结论：</p>
+<blockquote>
+<p>我们发现，psum1和psum2的运行时间（用时钟周期为单位）分别近似于等式368+9.0n和368+6.0n。这两个等式表明对代码计时和初始化过程、准备循环以及完成过程的开销为368个周期加上每个元素6.0或9.0周期的线性因子。对于较大的n的值（比如说大于200），运行时间就会主要由线性因子来决定。这些项中的系数称为每元素的周期数（简称CPE）的有效值。注意，我们更愿意用每个元素的周期数而不是每次循环的周期数来度量，这是因为像循环展开这样的技术使得我们能够用较少的循环完成计算，而我们最终关心的是，对于给定的向量长度，程序运行的速度如何。我们将精力集中在减小计算的 CPE上。根据这种度量标准，psum2 的 CPE 为 6.0，优于 CPE 为 9.0 的 psum1。</p>
+</blockquote>
+<p>下面是我自己的看法：</p>
+<p>就是循环展开可以减小访存的一个次数，而访存往往是计算机执行指令时最耗时间的一个指令。我们观察一下 psum1，每次循环有这几次访存：读 <code>p[i-1]</code> 读 <code>a[i]</code>，写  <code>p[i]</code> 三次访存。</p>
+<p>而在 psum2 中，我们每次循环有这几次访存：读 <code>p[i-1]</code> ，读 <code>a[i]</code>，读 <code>a[i+1]</code>，写 <code>p[i]</code> ，写 <code>p[i+1]</code>，虽然说有五次访存，但是 <code>psum2</code> 一次循环的操作数是 <code>psum1</code> 的两次。并且在算上 <code>psum1</code> 需要更多的条件跳转语句，这样它被 <code>n</code> 影响的就更多了，相比于此， <code>psum2</code> 就优秀了许多。</p>
+<p>所以循环展开是编译器优化一个很好的手段。</p>
+<h2 id="程序示例"><a href="#程序示例" class="headerlink" title="程序示例"></a>程序示例</h2><p>这里我们声明一类数据结构：</p>
+<img src="/2023/01/12/CSAPP_5/2.png" class="">
+
+<p>我们在四个数据类型下面做测试：<code>int</code>，<code>long</code>，<code>float</code>，<code>double</code>。分别对他们进行求和和求积的操作来测试程序的 CPE。</p>
+<p>最后我们得到了这样的结果：</p>
+<img src="/2023/01/12/CSAPP_5/3.png" class="">
+
+<p>首先就可以看到，使用命令行选项“-O1”，就会进行一些基本的优化。正如可以看到的，程序员不需要做什么，就会显著地提高程序性能-超过两个数量级。通常，养成至少使用这个级别优化的习惯是很好的。（使用-Og优化级别能得到相似的性能结果。）在剩下的测试中，我们使用 -O1和-O2级别的优化来生成和测量程序。</p>
+<h2 id="消除循环的低效率"><a href="#消除循环的低效率" class="headerlink" title="消除循环的低效率"></a>消除循环的低效率</h2><p>第一点是我们在打 ACM 中会遇到的一个问题，<code>for(int i=0;i&lt;length(x);i++)</code> 这样的代码过程，一般来说 <code>length(x)</code> 作为一个固定值不会发生改变，但是我们每次循环都要判断一次条件，这样会导致重复执行 n 次 <code>length(x)</code>，所以我们可以定义一个变量，让测试条件都是用这个值。</p>
+<p>依稀记得某次自己算法 submit 的脑残写法：<code>for(int i=0;i&lt;strlen(s);i++)</code> …</p>
+<p>优化的版本：</p>
+<img src="/2023/01/12/CSAPP_5/4.png" class="">
+
+<p>优化的结果我们也列一张表：</p>
+<img src="/2023/01/12/CSAPP_5/5.png" class="">
+
+<p>没有特别明显的CPE下降，但是也是有效率上的提升，这样的优化称为 <strong>代码移动</strong>。</p>
+<p>但是这种优化不能靠编译器去做，编译器通常会非常小心。它们不能可靠地发现一个函数是否会有副作用，因而假设函数会有副作用，就像前面说过的那样。例如，如果vec_length有某种副作用，么combine1和combine2可能就会有不同的行为。为了改进代码，程序员必须经常帮助编译器显式地完成代码的移动。</p>
+<p>蚌埠住了啊，下面就讲到了我们上面提到的这个例子。</p>
+<img src="/2023/01/12/CSAPP_5/6.png" class="">
+
+<p>这个示例说明了编程时一个常见的问题，一个看上去无足轻重的代码片断有隐藏的渐近低效率（asymptotic inefficiency）。人们可不希望一个小写字母转换函数成为程序性能的限制因素。通常，会在小数据集上测试和分析程序，对此，lower1的性能是足够的。不过，当程序最终部署好以后，过程完全可能被应用到一个有100万个字符的串上。突然，这段无危险的代码变成了一个主要的性能瓶颈。相比较而言，lower2的性能对于任意长度的字符串来说都是足够的。大型编程项目中出现这样问题的故事比比皆是，一个有经验的程序员工作的一部分就是避免引入这样的渐近低效率。</p>
+<h2 id="减少过程调用"><a href="#减少过程调用" class="headerlink" title="减少过程调用"></a>减少过程调用</h2><p>像我们看到过的那样，过程调用会带来开销，而且妨碍大多数形式的程序优化。从combine2 的代码（见图 5-6）中我们可以看出，每次循环迭代都会调用 get_vec_element来获取下一个向量元素。对每个向量引用，这个函数要把向量索引i与循环边界做比较，很明显会造成低效率。在处理任意的数组访问时，边界检查可能是个很有用的特性，但是对combine2代码的简单分析表明所有的引用都是合法的。</p>
+<p>但是当我们去掉重复的判断边界，直接去访问元素的话：</p>
+<img src="/2023/01/12/CSAPP_5/7.png" class="">
+
+<p>发现效率并没有明显的提升</p>
+<img src="/2023/01/12/CSAPP_5/8.png" class="">
+
+<p>而现在，我们可以将这个转换视为一系列步骤中的一步，这些步骤将最终产生显著的性能提升。</p>
+<h2 id="消除不必要的内存引用"><a href="#消除不必要的内存引用" class="headerlink" title="消除不必要的内存引用"></a>消除不必要的内存引用</h2><p>就比如说 <code>*dest=*dest OP data[i]</code>，每一次使用我都要访存，然后写一次，不如我就新建一个临时变量。等到结束的时候再写到这个 <code>*dest</code> 里面去，这个优化依然只能我们完成，编译器不能帮我们完成。</p>
+<p>而这个做法让我们的程序效率有了质的飞跃</p>
+<img src="/2023/01/12/CSAPP_5/9.png" class="">
+
+<p>这里有一个很有意思的练习题：</p>
+<blockquote>
+<img src="/2023/01/12/CSAPP_5/10.png" class="">
+</blockquote>
+<p>对比两个代码，我们可以发现 <code>O2</code> 级别的优化少了一步 <code>vmovsd (%rbx),%xmm0</code> 从内存中读取的一个行为，这里相当于把 <code>xmm0</code> 作为了一个临时变量 <code>acc</code> 了，只是说为了防止和源程序有差异，这里还是会每次循环更新 <code>*dest</code> 的值的，所以说这里的优化接近 <code>combine4</code>，但是还达不到 <code>combine4</code> 的原因。</p>
+<h2 id="理解现代处理器"><a href="#理解现代处理器" class="headerlink" title="理解现代处理器"></a>理解现代处理器</h2><p>现代处理器可以做到<strong>指令级并行</strong>，多条指令可以并行执行，同时又呈现出一种简单的顺序执行的表象。</p>
+<p>两种下界描述了程序的最大性能：</p>
+<ul>
+<li>latency bound延迟界限，当一系列操作必须按照严格顺序执行时，某一条指令开始前，上一条指令必须结束。代码中的数据相关性会限制指令级并行，程序受限于延时界限。</li>
+<li>throughput bound吞吐量界限，处理器功能单元的原始计算能力，是程序性能的<strong>终极限制</strong></li>
+</ul>
+<h3 id="整体操作"><a href="#整体操作" class="headerlink" title="整体操作"></a>整体操作</h3><p>超标量(superscalar)处理器可以在每个时钟周期执行多个操作，并且是乱序的(out-of-order)。</p>
+<img src="/2023/01/12/CSAPP_5/11.png" class="">
+
+<p>处理器的设计有两个部分，都是用非常复杂的数字电路实现的：</p>
+<ul>
+<li>指令控制单元(ICU, instruction controll unit)，负责从icache中读取指令序列，生成一组基本操作，发送给EU。</li>
+<li>执行单元(EU, execution unit)，每个时钟周期接收多个操作，执行操作。</li>
+</ul>
+<p><strong>分支预测(branch prediction)<strong>：处理器猜测是否会选择分支，同时预测分支的目标地址。包括在</strong>取指控制</strong>块中。</p>
+<p>**投机执行(speculative execution)**：处理器取出预测的分支会跳到的指令，进行指令译码，在确定分支之前就开始执行。如果之后确定分支预测错误，会将状态重置到分支点，取出并执行另一个方向上的指令，这个步骤会造成性能损耗。</p>
+<p><strong>指令译码</strong>：接收程序指令，将他们转换成一组基本操作（微操作），例如两个数相加，从内存读数据，向内存写数据。通常一条只对寄存器操作的指令转换成一个操作，而一个包括内存引用的指令转换成多个操作。执行单元可以并行执行多条基本操作。</p>
+<p>例子：</p>
+<p>只对寄存器操作的指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addq %rax,%rax</span><br></pre></td></tr></table></figure>
+
+<p>转换成1个加法操作。</p>
+<p>又比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addq %rax,8(%rdx)</span><br></pre></td></tr></table></figure>
+
+<p>转换成3个操作，加载，加法，存储。</p>
+<ul>
+<li><strong>功能单元</strong>：EU每个时钟周期可以接收多个来自取指单元的操作。例如Intel Core i7 Haswell8个功能单元，每个功能单元可以执行多种不同的操作。</li>
+<li><strong>退役单元retirement unit</strong>：在队列中记录正在执行的指令的信息，确保乱序执行的结果遵守机器级程序的顺序语义。退役单元控制寄存器的更新，一旦一条指令执行完成，并且<strong>分支预测</strong>的结果被确认为预测正确，那么这条指令可以退役(retire)，对寄存器的更新可以被执行，否则这条指令被清空(flushed)，并且丢弃计算的结果。</li>
+</ul>
+<p>退役就是指<strong>预测正确</strong>且<strong>已经执行</strong>的指令可以不再执行的一个行为，任何预测执行的指令对寄存器和内存的更新只有当指令退役时才会执行。</p>
+<p><strong>寄存器重命名(register renaming)<strong>：对寄存器的更新只有在指令退役时才会执行，在执行单元间传送指令（退役之前）需要用到寄存器重命名机制。当一条更新寄存器<code>r</code>的指令译码时，产生标记<code>t</code>，条目<code>(r,t)</code>被加入到一张表中，随后以<code>r</code>为操作数的指令在指令译码时，发送到EU时会包含以<code>t</code>为操作数源的值。当执行单元完成第一个操作时，会生成结果<code>(v,t)</code>，之后需要<code>t</code>的指令都可以用<code>v</code>的值。</strong>值可以从一个操作直接转发到另一个操作，无需读写寄存器</strong>。</p>
+<h3 id="功能单元的性能"><a href="#功能单元的性能" class="headerlink" title="功能单元的性能"></a>功能单元的性能</h3><ul>
+<li>延迟latency：完成运算所需要的总时间，一般整数加法1、乘法3、除法3~30，浮点数加法3、乘法5、除法3~15。</li>
+<li>发射时间issue time：两个连续同类运算之间需要的最小时钟周期，通常fully pipelined运算发射时间都是1，例如加法和乘法。除法一般没有流水线，<code>issue time = latency</code>。</li>
+<li>容量capacity：功能单元的数量。</li>
+<li>最大吞吐量：容量为C，发射时间为I，则最大吞吐量为每时钟周期<code>C/I</code></li>
+</ul>
+<h4 id="参考机性能"><a href="#参考机性能" class="headerlink" title="参考机性能"></a>参考机性能</h4><table>
+<thead>
+<tr>
+<th>界限</th>
+<th>整数+</th>
+<th>整数*</th>
+<th>浮点数+</th>
+<th>浮点数*</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>延迟</td>
+<td>1.00</td>
+<td>3.00</td>
+<td>3.00</td>
+<td>5.00</td>
+</tr>
+<tr>
+<td>吞吐量</td>
+<td>0.50</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>0.50</td>
+</tr>
+</tbody></table>
+<p>注意：吞吐量不完全是由capacity决定的，虽然整数加法有4个功能单元，但是加载功能单元只有2个，所以吞吐量是<code>1/2</code>而不是<code>1/4</code>。</p>
+<h3 id="处理器操作的抽象模型"><a href="#处理器操作的抽象模型" class="headerlink" title="处理器操作的抽象模型"></a>处理器操作的抽象模型</h3><p>将程序用数据流(data flow)表示，展现不同操作之间的数据相关性是如何限制他们的执行顺序的，这些限制形成了图中的关键路径(critical path)，是执行一组指令所需的时钟周期的下界，优化程序时要优化关键路径。</p>
+<h2 id="性能优化实例"><a href="#性能优化实例" class="headerlink" title="性能优化实例"></a>性能优化实例</h2><h4 id="原始代码"><a href="#原始代码" class="headerlink" title="原始代码"></a>原始代码</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// OP为+时IDENT为0</span></span><br><span class="line"><span class="comment">// OP为*时IDENT为1</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">combine1</span><span class="params">(vec_ptr v, <span class="type">data_t</span> *dest)</span>&#123;</span><br><span class="line">    <span class="type">long</span> i;</span><br><span class="line">    *dest = IDENT;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; vec_length(v); i++)&#123;  <span class="comment">// 这里vec_length(v)重复求值了</span></span><br><span class="line">        <span class="type">data_t</span> val;</span><br><span class="line">        get_vec_element(v, i, &amp;val);</span><br><span class="line">        *dest = *dest OP val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="消除循环的低效率-1"><a href="#消除循环的低效率-1" class="headerlink" title="消除循环的低效率"></a>消除循环的低效率</h4><p>优化方法称为<strong>代码移动(code motion)</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">combine2</span><span class="params">(vec_ptr v, <span class="type">data_t</span> *dest)</span>&#123;</span><br><span class="line">    <span class="type">long</span> i;</span><br><span class="line">    <span class="type">long</span> length = vec_length(v);  <span class="comment">// 将不变的长度放到循环外</span></span><br><span class="line">    *dest = IDENT;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; length; i++)&#123;</span><br><span class="line">        <span class="type">data_t</span> val;</span><br><span class="line">        get_vec_element(v, i, &amp;val);</span><br><span class="line">        *dest = *dest OP val;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="减少过程调用-1"><a href="#减少过程调用-1" class="headerlink" title="减少过程调用"></a>减少过程调用</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">data_t</span>* <span class="title function_">get_vec_start</span><span class="params">(vec_ptr v)</span>&#123;<span class="keyword">return</span> v-&gt;data;&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">combine3</span><span class="params">(vec_ptr v, <span class="type">data_t</span> *dest)</span>&#123;</span><br><span class="line">    <span class="type">long</span> i;</span><br><span class="line">    <span class="type">long</span> length = vec_length(v);</span><br><span class="line">    <span class="type">data_t</span> *data = get_vec_start(v);  <span class="comment">// 获取数组起始地址</span></span><br><span class="line">    *dest = IDENT;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; length; i++)&#123;</span><br><span class="line">        <span class="type">data_t</span> val;</span><br><span class="line">        *dest = *dest OP data[i];  <span class="comment">// 将函数调用get_vec_element(v, i, &amp;val)改为内存偏移量</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="消除不必要的内存引用-1"><a href="#消除不必要的内存引用-1" class="headerlink" title="消除不必要的内存引用"></a>消除不必要的内存引用</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">combine4</span><span class="params">(vec_ptr v, <span class="type">data_t</span> *dest)</span>&#123;</span><br><span class="line">    <span class="type">long</span> i;</span><br><span class="line">    <span class="type">long</span> length = vec_length(v);</span><br><span class="line">    <span class="type">data_t</span> *data = get_vec_start(v);</span><br><span class="line">    <span class="type">data_t</span> acc = IDENT;  <span class="comment">// 计算结果保存在局部变量，减少内存寻址次数</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; length; i++)&#123;</span><br><span class="line">        <span class="type">data_t</span> val;</span><br><span class="line">        acc = acc OP data[i];</span><br><span class="line">    &#125;</span><br><span class="line">    *dest = acc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="循环展开"><a href="#循环展开" class="headerlink" title="循环展开"></a>循环展开</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">combine5</span><span class="params">(vec_ptr v, <span class="type">data_t</span> *dest)</span>&#123;</span><br><span class="line">    <span class="type">long</span> i;</span><br><span class="line">    <span class="type">long</span> length = vec_length(v);</span><br><span class="line">    <span class="type">long</span> limit = length - <span class="number">1</span>;</span><br><span class="line">    <span class="type">data_t</span> *data = get_vec_start(v);</span><br><span class="line">    <span class="type">data_t</span> acc = IDENT;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2x1 循环展开</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; limit; i+=<span class="number">2</span>)&#123;</span><br><span class="line">        acc = (acc OP data[i]) OP data[i+<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (; i &lt; length; i++)&#123;</span><br><span class="line">        acc = acc OP data[i];</span><br><span class="line">    &#125;</span><br><span class="line">    *dest = acc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="提高并行性"><a href="#提高并行性" class="headerlink" title="提高并行性"></a>提高并行性</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">combine6</span><span class="params">(vec_ptr v, <span class="type">data_t</span> *dest)</span>&#123;</span><br><span class="line">    <span class="type">long</span> i;</span><br><span class="line">    <span class="type">long</span> length = vec_length(v);</span><br><span class="line">    <span class="type">long</span> limit = length - <span class="number">1</span>;</span><br><span class="line">    <span class="type">data_t</span> *data = get_vec_start(v);</span><br><span class="line">    <span class="type">data_t</span> acc0 = IDENT;  <span class="comment">// 多个累积变量</span></span><br><span class="line">    <span class="type">data_t</span> acc1 = IDENT;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2x2 循环展开</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; limit; i+=<span class="number">2</span>)&#123;</span><br><span class="line">        acc0 = acc0 OP data[i];</span><br><span class="line">        acc1 = acc1 OP data[i+<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (; i &lt; length; i++)&#123;</span><br><span class="line">        acc0 = acc0 OP data[i];</span><br><span class="line">    &#125;</span><br><span class="line">    *dest = acc0 OP acc1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>到这里程序已经突破了延迟界限。</p>
+<h4 id="重新结合变换"><a href="#重新结合变换" class="headerlink" title="重新结合变换"></a>重新结合变换</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">combine7</span><span class="params">(vec_ptr v, <span class="type">data_t</span> *dest)</span>&#123;</span><br><span class="line">    <span class="type">long</span> i;</span><br><span class="line">    <span class="type">long</span> length = vec_length(v);</span><br><span class="line">    <span class="type">long</span> limit = length - <span class="number">1</span>;</span><br><span class="line">    <span class="type">data_t</span> *data = get_vec_start(v);</span><br><span class="line">    <span class="type">data_t</span> acc = IDENT;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2x1a 循环展开</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; limit; i+=<span class="number">2</span>)&#123;</span><br><span class="line">        acc = acc OP (data[i] OP data[i+<span class="number">1</span>]);  <span class="comment">// 重新结合</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (; i &lt; length; i++)&#123;</span><br><span class="line">        acc = acc OP data[i];</span><br><span class="line">    &#125;</span><br><span class="line">    *dest = acc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="一些限制因素"><a href="#一些限制因素" class="headerlink" title="一些限制因素"></a>一些限制因素</h2><h3 id="寄存器溢出"><a href="#寄存器溢出" class="headerlink" title="寄存器溢出"></a>寄存器溢出</h3><p>循环展开的并行度如果超出了寄存器个数，会造成寄存器溢出，编译器将局部变量分配到栈上，造成性能下降。解决办法是控制循环展开的数量。</p>
+<h3 id="分支预测错误处罚"><a href="#分支预测错误处罚" class="headerlink" title="分支预测错误处罚"></a>分支预测错误处罚</h3><p>在参考机上，预测错误处罚时19个时钟周期，损耗很大。解决办法是通过 <strong>“功能性的”</strong> 代码代替 <strong>“命令式的”</strong> 代码。 例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 优化前命令式</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">minmax1</span><span class="params">(<span class="type">long</span> a[], <span class="type">long</span> b[], <span class="type">long</span> n)</span>&#123;</span><br><span class="line">    <span class="type">long</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;n; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (a[i] &gt; b[i])&#123;  <span class="comment">// 分支预测错误时损耗很大</span></span><br><span class="line">            <span class="type">long</span> t = a[i];  <span class="comment">// 交换a[i]和b[i]</span></span><br><span class="line">            a[i] = b[i];</span><br><span class="line">            b[i] = t;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 优化后功能性的</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">minmax1</span><span class="params">(<span class="type">long</span> a[], <span class="type">long</span> b[], <span class="type">long</span> n)</span>&#123;</span><br><span class="line">    <span class="type">long</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;n; i++)&#123;</span><br><span class="line">        <span class="type">long</span> min = a[i] &lt; b[i] ? a[i] : b[i];  <span class="comment">// 编译为条件传送汇编代码，避免分支预测</span></span><br><span class="line">        <span class="type">long</span> max = a[i] &lt; b[i] ? b[i] : a[i];</span><br><span class="line">        a[i] = min;</span><br><span class="line">        b[i] = max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="理解内存性能"><a href="#理解内存性能" class="headerlink" title="理解内存性能"></a>理解内存性能</h2><p>咕咕咕，这一节完全看不懂</p>
+<h2 id="性能提高的技术"><a href="#性能提高的技术" class="headerlink" title="性能提高的技术"></a>性能提高的技术</h2><p>这里做个总结，感觉对我们平时写高效率代码挺有帮助的。</p>
+<h4 id="高级设计"><a href="#高级设计" class="headerlink" title="高级设计"></a>高级设计</h4><ul>
+<li>选择适当的算法和数据结构</li>
+</ul>
+<h4 id="基本编码原则"><a href="#基本编码原则" class="headerlink" title="基本编码原则"></a>基本编码原则</h4><ul>
+<li>消除连续函数调用，将计算移到循环外</li>
+<li>消除不必要的内存引用</li>
+</ul>
+<h4 id="低级优化"><a href="#低级优化" class="headerlink" title="低级优化"></a>低级优化</h4><ul>
+<li>循环展开</li>
+<li>使用多个累积变量、重新结合技术提高指令级并行</li>
+<li>用功能性风格重写条件操作，使编译采用条件传送</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2023/01/12/CSAPP_5/">https://xia0ji233.github.io/2023/01/12/CSAPP_5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/12/Go17/" title="Golang入门学习（17）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Golang入门学习（17）</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/11/Git3/" title="Git学习之路（3）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Git学习之路（3）</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">292</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E8%83%BD%E5%8A%9B%E5%92%8C%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">优化编译器的能力和局限性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E7%A4%BA%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD"><span class="toc-number">2.</span> <span class="toc-text">表示程序性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.</span> <span class="toc-text">程序示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B6%88%E9%99%A4%E5%BE%AA%E7%8E%AF%E7%9A%84%E4%BD%8E%E6%95%88%E7%8E%87"><span class="toc-number">4.</span> <span class="toc-text">消除循环的低效率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%8F%E5%B0%91%E8%BF%87%E7%A8%8B%E8%B0%83%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">减少过程调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B6%88%E9%99%A4%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E5%86%85%E5%AD%98%E5%BC%95%E7%94%A8"><span class="toc-number">6.</span> <span class="toc-text">消除不必要的内存引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%90%86%E8%A7%A3%E7%8E%B0%E4%BB%A3%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text">理解现代处理器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%93%8D%E4%BD%9C"><span class="toc-number">7.1.</span> <span class="toc-text">整体操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E5%8D%95%E5%85%83%E7%9A%84%E6%80%A7%E8%83%BD"><span class="toc-number">7.2.</span> <span class="toc-text">功能单元的性能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%9C%BA%E6%80%A7%E8%83%BD"><span class="toc-number">7.2.1.</span> <span class="toc-text">参考机性能</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E5%99%A8%E6%93%8D%E4%BD%9C%E7%9A%84%E6%8A%BD%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="toc-number">7.3.</span> <span class="toc-text">处理器操作的抽象模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%AE%9E%E4%BE%8B"><span class="toc-number">8.</span> <span class="toc-text">性能优化实例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E5%A7%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">8.0.1.</span> <span class="toc-text">原始代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B6%88%E9%99%A4%E5%BE%AA%E7%8E%AF%E7%9A%84%E4%BD%8E%E6%95%88%E7%8E%87-1"><span class="toc-number">8.0.2.</span> <span class="toc-text">消除循环的低效率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%8F%E5%B0%91%E8%BF%87%E7%A8%8B%E8%B0%83%E7%94%A8-1"><span class="toc-number">8.0.3.</span> <span class="toc-text">减少过程调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B6%88%E9%99%A4%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E5%86%85%E5%AD%98%E5%BC%95%E7%94%A8-1"><span class="toc-number">8.0.4.</span> <span class="toc-text">消除不必要的内存引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E5%B1%95%E5%BC%80"><span class="toc-number">8.0.5.</span> <span class="toc-text">循环展开</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%90%E9%AB%98%E5%B9%B6%E8%A1%8C%E6%80%A7"><span class="toc-number">8.0.6.</span> <span class="toc-text">提高并行性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E6%96%B0%E7%BB%93%E5%90%88%E5%8F%98%E6%8D%A2"><span class="toc-number">8.0.7.</span> <span class="toc-text">重新结合变换</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%99%90%E5%88%B6%E5%9B%A0%E7%B4%A0"><span class="toc-number">9.</span> <span class="toc-text">一些限制因素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E6%BA%A2%E5%87%BA"><span class="toc-number">9.1.</span> <span class="toc-text">寄存器溢出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%BD%9A"><span class="toc-number">9.2.</span> <span class="toc-text">分支预测错误处罚</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%90%86%E8%A7%A3%E5%86%85%E5%AD%98%E6%80%A7%E8%83%BD"><span class="toc-number">10.</span> <span class="toc-text">理解内存性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%8F%90%E9%AB%98%E7%9A%84%E6%8A%80%E6%9C%AF"><span class="toc-number">11.</span> <span class="toc-text">性能提高的技术</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E8%AE%BE%E8%AE%A1"><span class="toc-number">11.0.1.</span> <span class="toc-text">高级设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BC%96%E7%A0%81%E5%8E%9F%E5%88%99"><span class="toc-number">11.0.2.</span> <span class="toc-text">基本编码原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%8E%E7%BA%A7%E4%BC%98%E5%8C%96"><span class="toc-number">11.0.3.</span> <span class="toc-text">低级优化</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

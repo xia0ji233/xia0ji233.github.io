@@ -1,0 +1,1027 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Windows基础知识（2） | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Windows基础知识（2）——鼠标键盘消息处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows基础知识（2）">
+<meta property="og:url" content="https://xia0ji233.github.io/2023/01/30/Windows2/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="Windows基础知识（2）——鼠标键盘消息处理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-01-30T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-20T06:04:19.571Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2023/01/30/Windows2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Windows基础知识（2）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-20 14:04:19'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">292</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Windows基础知识（2）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-30T12:00:00.000Z" title="发表于 2023-01-30 20:00:00">2023-01-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-20T06:04:19.571Z" title="更新于 2025-01-20 14:04:19">2025-01-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">计算机系统</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/">Windows</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/">应用程序开发</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Windows基础知识（2）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Windows基础知识（2）——鼠标键盘消息处理</p>
+<span id="more"></span>
+
+<h2 id="前置芝士"><a href="#前置芝士" class="headerlink" title="前置芝士"></a>前置芝士</h2><h3 id="焦点"><a href="#焦点" class="headerlink" title="焦点"></a>焦点</h3><p>一般来说，我们选中一个窗口就叫获取了一个焦点，键盘输入事件只会发送给具有焦点的窗口或者是控件。我们按下一个按键，会将我们的按键格式化成一个消息给内核，内核通过打包这个消息发送给具有焦点的窗体应用程序。</p>
+<h2 id="键盘事件"><a href="#键盘事件" class="headerlink" title="键盘事件"></a>键盘事件</h2><p>我们可以处理的键盘按键大致分为两类：</p>
+<ul>
+<li>系统按键：WM_KEYDOWN，WM_KEYUP。</li>
+<li>非系统按键：WM_SYSKEYDOWN，WM_SYSKEYUP。</li>
+</ul>
+<p><code>WM_KEYDOWN</code> 事件表示一个键按下，如果一直按住会持续地发送此类消息。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> WM_KEYDOWN: &#123;</span><br><span class="line">    <span class="keyword">switch</span> (wParam) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;B&#x27;</span>: &#123;</span><br><span class="line">            <span class="built_in">MessageBox</span>(<span class="literal">NULL</span>, <span class="string">L&quot;123&quot;</span>, <span class="string">L&quot;123&quot;</span>, MB_OK);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>WM_KEYUP</code> 就是键盘弹起事件。</p>
+<p>判断有没有按住某个按键使用 <code>GetKeyBoardState(nVirtKey)</code>，参数是虚拟键码，如果按住这个键则返回 <code>&lt;0</code> 的值。</p>
+<p>下面是常见键盘键码的说明：</p>
+<table>
+<thead>
+<tr>
+<th align="left">返回的常量</th>
+<th align="left">Value</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>VK_LBUTTON</code></td>
+<td align="left">0x01</td>
+<td align="left">鼠标左键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_RBUTTON</code></td>
+<td align="left">0x02</td>
+<td align="left">鼠标右键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_CANCEL</code></td>
+<td align="left">0x03</td>
+<td align="left">控制中断处理</td>
+</tr>
+<tr>
+<td align="left"><code>VK_MBUTTON</code></td>
+<td align="left">0x04</td>
+<td align="left">中间鼠标按钮 (三键鼠标)</td>
+</tr>
+<tr>
+<td align="left"><code>VK_XBUTTON1</code></td>
+<td align="left">0x05</td>
+<td align="left">X1 鼠标按钮</td>
+</tr>
+<tr>
+<td align="left"><code>VK_XBUTTON2</code></td>
+<td align="left">0x06</td>
+<td align="left">X2 鼠标按钮</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">0x07</td>
+<td align="left">Undefined</td>
+</tr>
+<tr>
+<td align="left"><code>VK_BACK</code></td>
+<td align="left">0x08</td>
+<td align="left">BACKSPACE 密钥</td>
+</tr>
+<tr>
+<td align="left"><code>VK_TAB</code></td>
+<td align="left">0x09</td>
+<td align="left">Tab 键</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">0x0A-0B</td>
+<td align="left">预留</td>
+</tr>
+<tr>
+<td align="left"><code>VK_CLEAR</code></td>
+<td align="left">0x0C</td>
+<td align="left">CLEAR 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_RETURN</code></td>
+<td align="left">0x0D</td>
+<td align="left">Enter 键</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">0x0E-0F</td>
+<td align="left">Undefined</td>
+</tr>
+<tr>
+<td align="left"><code>VK_SHIFT</code></td>
+<td align="left">0x10</td>
+<td align="left">SHIFT 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_CONTROL</code></td>
+<td align="left">0x11</td>
+<td align="left">Ctrl 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_MENU</code></td>
+<td align="left">0x12</td>
+<td align="left">Alt 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_PAUSE</code></td>
+<td align="left">0x13</td>
+<td align="left">PAUSE 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_CAPITAL</code></td>
+<td align="left">0x14</td>
+<td align="left">CAPS LOCK 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_KANA</code></td>
+<td align="left">0x15</td>
+<td align="left">IME Kana 模式</td>
+</tr>
+<tr>
+<td align="left"><code>VK_HANGUEL</code></td>
+<td align="left">0x15</td>
+<td align="left">IME 朝鲜文库埃尔模式 (保持兼容性;使用 <code>VK_HANGUL</code>)</td>
+</tr>
+<tr>
+<td align="left"><code>VK_HANGUL</code></td>
+<td align="left">0x15</td>
+<td align="left">IME Hanguel 模式</td>
+</tr>
+<tr>
+<td align="left"><code>VK_IME_ON</code></td>
+<td align="left">0x16</td>
+<td align="left">IME On</td>
+</tr>
+<tr>
+<td align="left"><code>VK_JUNJA</code></td>
+<td align="left">0x17</td>
+<td align="left">IME Junja 模式</td>
+</tr>
+<tr>
+<td align="left"><code>VK_FINAL</code></td>
+<td align="left">0x18</td>
+<td align="left">IME 最终模式</td>
+</tr>
+<tr>
+<td align="left"><code>VK_HANJA</code></td>
+<td align="left">0x19</td>
+<td align="left">IME Hanja 模式</td>
+</tr>
+<tr>
+<td align="left"><code>VK_KANJI</code></td>
+<td align="left">0x19</td>
+<td align="left">IME Kanji 模式</td>
+</tr>
+<tr>
+<td align="left"><code>VK_IME_OFF</code></td>
+<td align="left">0x1A</td>
+<td align="left">IME 关闭</td>
+</tr>
+<tr>
+<td align="left"><code>VK_ESCAPE</code></td>
+<td align="left">0x1B</td>
+<td align="left">ESC 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_CONVERT</code></td>
+<td align="left">0x1C</td>
+<td align="left">IME 转换</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NONCONVERT</code></td>
+<td align="left">0x1D</td>
+<td align="left">IME 不转换</td>
+</tr>
+<tr>
+<td align="left"><code>VK_ACCEPT</code></td>
+<td align="left">0x1E</td>
+<td align="left">IME 接受</td>
+</tr>
+<tr>
+<td align="left"><code>VK_MODECHANGE</code></td>
+<td align="left">0x1F</td>
+<td align="left">IME 模式更改请求</td>
+</tr>
+<tr>
+<td align="left"><code>VK_SPACE</code></td>
+<td align="left">0x20</td>
+<td align="left">空格键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_PRIOR</code></td>
+<td align="left">0x21</td>
+<td align="left">PAGE UP 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NEXT</code></td>
+<td align="left">0x22</td>
+<td align="left">PAGE DOWN 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_END</code></td>
+<td align="left">0x23</td>
+<td align="left">END 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_HOME</code></td>
+<td align="left">0x24</td>
+<td align="left">HOME 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_LEFT</code></td>
+<td align="left">0x25</td>
+<td align="left">向左键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_UP</code></td>
+<td align="left">0x26</td>
+<td align="left">向上键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_RIGHT</code></td>
+<td align="left">0x27</td>
+<td align="left">向右键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_DOWN</code></td>
+<td align="left">0x28</td>
+<td align="left">向下键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_SELECT</code></td>
+<td align="left">0x29</td>
+<td align="left">SELECT 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_PRINT</code></td>
+<td align="left">0x2A</td>
+<td align="left">PRINT 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_EXECUTE</code></td>
+<td align="left">0x2B</td>
+<td align="left">EXECUTE 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_SNAPSHOT</code></td>
+<td align="left">0x2C</td>
+<td align="left">打印屏幕键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_INSERT</code></td>
+<td align="left">0x2D</td>
+<td align="left">INS 密钥</td>
+</tr>
+<tr>
+<td align="left"><code>VK_DELETE</code></td>
+<td align="left">0x2E</td>
+<td align="left">DEL 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_HELP</code></td>
+<td align="left">0x2F</td>
+<td align="left">帮助密钥</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">0x3A-40</td>
+<td align="left">Undefined</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">0x41</td>
+<td align="left">密钥</td>
+</tr>
+<tr>
+<td align="left"><code>VK_LWIN</code></td>
+<td align="left">0x5B</td>
+<td align="left">左Windows键 (自然键盘)</td>
+</tr>
+<tr>
+<td align="left"><code>VK_RWIN</code></td>
+<td align="left">0x5C</td>
+<td align="left">右Windows键 (自然键盘)</td>
+</tr>
+<tr>
+<td align="left"><code>VK_APPS</code></td>
+<td align="left">0x5D</td>
+<td align="left">应用程序键 (自然键盘)</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">0x5E</td>
+<td align="left">保留</td>
+</tr>
+<tr>
+<td align="left"><code>VK_SLEEP</code></td>
+<td align="left">0x5F</td>
+<td align="left">计算机休眠键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NUMPAD0</code></td>
+<td align="left">0x60</td>
+<td align="left">数字键盘 0 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NUMPAD1</code></td>
+<td align="left">0x61</td>
+<td align="left">数字键盘 1 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NUMPAD2</code></td>
+<td align="left">0x62</td>
+<td align="left">数字键盘 2 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NUMPAD3</code></td>
+<td align="left">0x63</td>
+<td align="left">数字键盘 3 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NUMPAD4</code></td>
+<td align="left">0x64</td>
+<td align="left">数字键盘 4 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NUMPAD5</code></td>
+<td align="left">0x65</td>
+<td align="left">数字键盘 5 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NUMPAD6</code></td>
+<td align="left">0x66</td>
+<td align="left">数字键盘 6 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NUMPAD7</code></td>
+<td align="left">0x67</td>
+<td align="left">数字键盘 7 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NUMPAD8</code></td>
+<td align="left">0x68</td>
+<td align="left">数字键盘 8 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NUMPAD9</code></td>
+<td align="left">0x69</td>
+<td align="left">数字键盘 9 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_MULTIPLY</code></td>
+<td align="left">0x6A</td>
+<td align="left">乘键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_ADD</code></td>
+<td align="left">0x6B</td>
+<td align="left">添加密钥</td>
+</tr>
+<tr>
+<td align="left"><code>VK_SEPARATOR</code></td>
+<td align="left">0x6C</td>
+<td align="left">分隔符键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_SUBTRACT</code></td>
+<td align="left">0x6D</td>
+<td align="left">减去键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_DECIMAL</code></td>
+<td align="left">0x6E</td>
+<td align="left">十进制键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_DIVIDE</code></td>
+<td align="left">0x6F</td>
+<td align="left">除键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F1</code></td>
+<td align="left">0x70</td>
+<td align="left">F1 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F2</code></td>
+<td align="left">0x71</td>
+<td align="left">F2 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F3</code></td>
+<td align="left">0x72</td>
+<td align="left">F3 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F4</code></td>
+<td align="left">0x73</td>
+<td align="left">F4 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F5</code></td>
+<td align="left">0x74</td>
+<td align="left">F5 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F6</code></td>
+<td align="left">0x75</td>
+<td align="left">F6 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F7</code></td>
+<td align="left">0x76</td>
+<td align="left">F7 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F8</code></td>
+<td align="left">0x77</td>
+<td align="left">F8 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F9</code></td>
+<td align="left">0x78</td>
+<td align="left">F9 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F10</code></td>
+<td align="left">0x79</td>
+<td align="left">F10 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F11</code></td>
+<td align="left">0x7A</td>
+<td align="left">F11 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F12</code></td>
+<td align="left">0x7B</td>
+<td align="left">F12 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F13</code></td>
+<td align="left">0x7C</td>
+<td align="left">F13 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F14</code></td>
+<td align="left">0x7D</td>
+<td align="left">F14 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F15</code></td>
+<td align="left">0x7E</td>
+<td align="left">F15 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F16</code></td>
+<td align="left">0x7F</td>
+<td align="left">F16 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F17</code></td>
+<td align="left">0x80</td>
+<td align="left">F17 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F18</code></td>
+<td align="left">0x81</td>
+<td align="left">F18 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F19</code></td>
+<td align="left">0x82</td>
+<td align="left">F19 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F20</code></td>
+<td align="left">0x83</td>
+<td align="left">F20 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F21</code></td>
+<td align="left">0x84</td>
+<td align="left">F21 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F22</code></td>
+<td align="left">0x85</td>
+<td align="left">F22 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F23</code></td>
+<td align="left">0x86</td>
+<td align="left">F23 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_F24</code></td>
+<td align="left">0x87</td>
+<td align="left">F24 键</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">0x88-8F</td>
+<td align="left">未分配</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NUMLOCK</code></td>
+<td align="left">0x90</td>
+<td align="left">NUM LOCK 密钥</td>
+</tr>
+<tr>
+<td align="left"><code>VK_SCROLL</code></td>
+<td align="left">0x91</td>
+<td align="left">SCROLL LOCK 键</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">0x92-96</td>
+<td align="left">OEM 特定</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">0x97-9F</td>
+<td align="left">未分配</td>
+</tr>
+<tr>
+<td align="left"><code>VK_LSHIFT</code></td>
+<td align="left">0xA0</td>
+<td align="left">左 SHIFT 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_RSHIFT</code></td>
+<td align="left">0xA1</td>
+<td align="left">右 SHIFT 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_LCONTROL</code></td>
+<td align="left">0xA2</td>
+<td align="left">左 Ctrl 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_RCONTROL</code></td>
+<td align="left">0xA3</td>
+<td align="left">右 Ctrl 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_LMENU</code></td>
+<td align="left">0xA4</td>
+<td align="left">左 Alt 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_RMENU</code></td>
+<td align="left">0xA5</td>
+<td align="left">右 ALT 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_BROWSER_BACK</code></td>
+<td align="left">0xA6</td>
+<td align="left">浏览器后退键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_BROWSER_FORWARD</code></td>
+<td align="left">0xA7</td>
+<td align="left">浏览器前进键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_BROWSER_REFRESH</code></td>
+<td align="left">0xA8</td>
+<td align="left">浏览器刷新键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_BROWSER_STOP</code></td>
+<td align="left">0xA9</td>
+<td align="left">浏览器停止键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_BROWSER_SEARCH</code></td>
+<td align="left">0xAA</td>
+<td align="left">浏览器搜索键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_BROWSER_FAVORITES</code></td>
+<td align="left">0xAB</td>
+<td align="left">浏览器收藏键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_BROWSER_HOME</code></td>
+<td align="left">0xAC</td>
+<td align="left">浏览器“开始”和“主页”键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_VOLUME_MUTE</code></td>
+<td align="left">0xAD</td>
+<td align="left">静音键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_VOLUME_DOWN</code></td>
+<td align="left">0xAE</td>
+<td align="left">音量减小键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_VOLUME_UP</code></td>
+<td align="left">0xAF</td>
+<td align="left">音量增加键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_MEDIA_NEXT_TRACK</code></td>
+<td align="left">0xB0</td>
+<td align="left">下一曲目键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_MEDIA_PREV_TRACK</code></td>
+<td align="left">0xB1</td>
+<td align="left">上一曲目键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_MEDIA_STOP</code></td>
+<td align="left">0xB2</td>
+<td align="left">停止媒体键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_MEDIA_PLAY_PAUSE</code></td>
+<td align="left">0xB3</td>
+<td align="left">播放&#x2F;暂停媒体键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_LAUNCH_MAIL</code></td>
+<td align="left">0xB4</td>
+<td align="left">启动邮件键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_LAUNCH_MEDIA_SELECT</code></td>
+<td align="left">0xB5</td>
+<td align="left">选择媒体键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_LAUNCH_APP1</code></td>
+<td align="left">0xB6</td>
+<td align="left">启动应用程序 1 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_LAUNCH_APP2</code></td>
+<td align="left">0xB7</td>
+<td align="left">启动应用程序 2 键</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">0xB8-B9</td>
+<td align="left">预留</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_1</code></td>
+<td align="left">0xBA</td>
+<td align="left">用于其他字符;它可能因键盘而异。 对于美国标准键盘，“;：”键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_PLUS</code></td>
+<td align="left">0xBB</td>
+<td align="left">对于任何国家&#x2F;地区，“+”键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_COMMA</code></td>
+<td align="left">0xBC</td>
+<td align="left">对于任何国家&#x2F;地区，“，键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_MINUS</code></td>
+<td align="left">0xBD</td>
+<td align="left">对于任何国家&#x2F;地区，“-”键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_PERIOD</code></td>
+<td align="left">0xBE</td>
+<td align="left">对于任何国家&#x2F;地区，“.”键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_2</code></td>
+<td align="left">0xBF</td>
+<td align="left">用于其他字符;它可能因键盘而异。 对于美国标准键盘，“&#x2F;？” key</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_3</code></td>
+<td align="left">0xC0</td>
+<td align="left">用于其他字符;它可能因键盘而异。 对于美国标准键盘，“~”键</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">0xC1-D7</td>
+<td align="left">预留</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">0xD8-DA</td>
+<td align="left">未分配</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_4</code></td>
+<td align="left">0xDB</td>
+<td align="left">用于其他字符;它可能因键盘而异。 对于美国标准键盘，“[{”键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_5</code></td>
+<td align="left">0xDC</td>
+<td align="left">用于其他字符;它可能因键盘而异。 对于美国标准键盘，“|”键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_6</code></td>
+<td align="left">0xDD</td>
+<td align="left">用于其他字符;它可能因键盘而异。 对于美国标准键盘，“]}”键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_7</code></td>
+<td align="left">0xDE</td>
+<td align="left">用于其他字符;它可能因键盘而异。 对于美国标准键盘，“单引号&#x2F;双引号”键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_8</code></td>
+<td align="left">0xDF</td>
+<td align="left">用于其他字符;它可能因键盘而异。</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">0xE0</td>
+<td align="left">保留</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">0xE1</td>
+<td align="left">OEM 特定</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_102</code></td>
+<td align="left">0xE2</td>
+<td align="left"><code>&lt;&gt;</code>美国标准键盘上的键，或&#96;\</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">0xE3-E4</td>
+<td align="left">OEM 特定</td>
+</tr>
+<tr>
+<td align="left"><code>VK_PROCESSKEY</code></td>
+<td align="left">0xE5</td>
+<td align="left">IME PROCESS 密钥</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">0xE6</td>
+<td align="left">OEM 特定</td>
+</tr>
+<tr>
+<td align="left"><code>VK_PACKET</code></td>
+<td align="left">0xE7</td>
+<td align="left">用于将 Unicode 字符当作键击传递。 该 <code>VK_PACKET</code> 键是用于非键盘输入方法的 32 位虚拟键值的低字。 有关详细信息，请参阅“备注”，以及<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/ns-winuser-keybdinput"><code>KEYBDINPUT</code></a><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-sendinput"><code>SendInput</code></a><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/inputdev/wm-keydown"><code>WM_KEYDOWN</code></a><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/inputdev/wm-keyup"><code>WM_KEYUP</code></a></td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">0xE8</td>
+<td align="left">未分配</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">0xE9-F5</td>
+<td align="left">OEM 特定</td>
+</tr>
+<tr>
+<td align="left"><code>VK_ATTN</code></td>
+<td align="left">0xF6</td>
+<td align="left">Attn 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_CRSEL</code></td>
+<td align="left">0xF7</td>
+<td align="left">CrSel 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_EXSEL</code></td>
+<td align="left">0xF8</td>
+<td align="left">ExSel 密钥</td>
+</tr>
+<tr>
+<td align="left"><code>VK_EREOF</code></td>
+<td align="left">0xF9</td>
+<td align="left">擦除 EOF 密钥</td>
+</tr>
+<tr>
+<td align="left"><code>VK_PLAY</code></td>
+<td align="left">0xFA</td>
+<td align="left">播放键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_ZOOM</code></td>
+<td align="left">0xFB</td>
+<td align="left">缩放键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_NONAME</code></td>
+<td align="left">0xFC</td>
+<td align="left">预留</td>
+</tr>
+<tr>
+<td align="left"><code>VK_PA1</code></td>
+<td align="left">0xFD</td>
+<td align="left">PA1 键</td>
+</tr>
+<tr>
+<td align="left"><code>VK_OEM_CLEAR</code></td>
+<td align="left">0xFE</td>
+<td align="left">清除键</td>
+</tr>
+</tbody></table>
+<p>在上面，大写字母和数字就是它对应的 ASCII 值。</p>
+<p>这里再学习几个 API：</p>
+<p><code>SendMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)</code> 用于向指定窗口发送一个消息，它的参数和主过程调用函数一致，通过这个我们可以自定义消息类型。</p>
+<p>寻找窗口句柄，可以根据窗口类，也可以根据窗口标题，<code>FindWindowA([in, optional] LPCSTR lpClassName,[in, optional] LPCSTR lpWindowName);</code> 函数，当我们不需要使用窗口类寻找时，就把窗口类参数置为 NULL 即可。</p>
+<h2 id="鼠标事件"><a href="#鼠标事件" class="headerlink" title="鼠标事件"></a>鼠标事件</h2><p>三种状态，三个按钮。</p>
+<p>所谓三个按钮就是：</p>
+<ul>
+<li>左键（LBUTTON）</li>
+<li>中键（RBUTTON）</li>
+<li>右键（MBUTTON）</li>
+</ul>
+<p>所谓三个状态就是：</p>
+<ul>
+<li>单击（DOWN，UP）</li>
+<li>双击（DBLCLK）</li>
+<li>拖动</li>
+</ul>
+<blockquote>
+<p>一般来说，<code>WM_</code>  开头的宏都是顶层 Message 事件。</p>
+</blockquote>
+<p>这三个按键，三个状态可以组成九种不同的消息，在这九个消息中，鼠标的位置被记录在了 <code>lparam</code> 参数中，低 16 位表示了 x 轴的坐标，高 16 位表示了 y 轴的坐标。</p>
+<p>wParam 记录了同时间有没有其它按键，使用 <code>MK_LBUTTON &amp; wParam</code> 可以判断是否按下了左键。</p>
+<p>据此，我们可以写一个直线绘制的项目</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> WM_LBUTTONDOWN: &#123;</span><br><span class="line">    y = <span class="built_in">HIWORD</span>(lParam);</span><br><span class="line">    x = <span class="built_in">LOWORD</span>(lParam);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> WM_LBUTTONUP:&#123;</span><br><span class="line">    HPEN hPen = <span class="built_in">CreatePen</span>(BS_SOLID, <span class="number">1</span>, <span class="built_in">RGB</span>(<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>));</span><br><span class="line">    HDC hDC = <span class="built_in">GetDC</span>(hWnd);</span><br><span class="line">    <span class="built_in">SelectObject</span>(hDC, hPen);</span><br><span class="line">    <span class="built_in">MoveToEx</span>(hDC, x, y, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="built_in">LineTo</span>(hDC, <span class="built_in">LOWORD</span>(lParam), <span class="built_in">HIWORD</span>(lParam));</span><br><span class="line">    <span class="built_in">ReleaseDC</span>(hWnd,hDC);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主要原理就是在按下左键的时候记录坐标，弹起时创建画笔并绘制。</p>
+<img src="/2023/01/30/Windows2/1.png" class="">
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2023/01/30/Windows2/">https://xia0ji233.github.io/2023/01/30/Windows2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/01/CSAPP_9/" title="CS:APP第九章学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS:APP第九章学习</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/28/CSAPP_8/" title="CS:APP第八章学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS:APP第八章学习</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">292</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E8%8A%9D%E5%A3%AB"><span class="toc-number">1.</span> <span class="toc-text">前置芝士</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%84%A6%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text">焦点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">键盘事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">鼠标事件</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

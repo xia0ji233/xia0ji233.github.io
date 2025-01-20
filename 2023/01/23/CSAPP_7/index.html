@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CS:APP第七章学习 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="开始学 CSAPP的第七章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS:APP第七章学习">
+<meta property="og:url" content="https://xia0ji233.github.io/2023/01/23/CSAPP_7/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="开始学 CSAPP的第七章">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-01-23T13:30:00.000Z">
+<meta property="article:modified_time" content="2025-01-16T13:21:17.718Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2023/01/23/CSAPP_7/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS:APP第七章学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-16 21:21:17'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">292</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS:APP第七章学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-23T13:30:00.000Z" title="发表于 2023-01-23 21:30:00">2023-01-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-16T13:21:17.718Z" title="更新于 2025-01-16 21:21:17">2025-01-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/">书籍阅读</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/CSAPP/">CSAPP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>19分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS:APP第七章学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>开始学 CSAPP的第七章</p>
+<p>逐步更新：</p>
+<ul>
+<li>2023-1-20：开始写</li>
+<li>2023-1-23：写完</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="梗概"><a href="#梗概" class="headerlink" title="梗概"></a>梗概</h2><p>这一节讲的就是链接，链接作为编译可执行文件的最后一步，也是比较重要的，书上也罗列了一些链接带来的问题：</p>
+<ul>
+<li>理解链接器将帮助你构造大型程序</li>
+<li>理解链接器将帮助你避免一些危险的编程错误</li>
+<li>理解链接将帮助你理解语言的作用域规则是如何实现的。例如，全局和局部变量之间的区别是什么？当你定义一个具有static属性的变量或者函数时，实际到底意味着什么</li>
+<li>理解链接将帮助你理解其他重要的系统概念</li>
+</ul>
+<h2 id="编译器驱动程序"><a href="#编译器驱动程序" class="headerlink" title="编译器驱动程序"></a>编译器驱动程序</h2><p>它给了一个多文件编译的一个示例，也不写了，大概意思就是一个地方调用函数但是不写定义，另一个文件写该函数的定义，然后把两个文件一起编译得到可执行文件。</p>
+<p>其实我们所说的广义上的编译器（如 gcc）指的是编译系统给我们提供的编译器驱动程序，它是语言预处理器（cpp），编译器（cc1），汇编器（as），链接器（ld）的集合。</p>
+<p>把 <code>main.c</code> 和 <code>sum.c</code> 一起编译的一个命令是：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o prog main.c sum.c</span><br></pre></td></tr></table></figure>
+
+<p>把它的步骤拆开就是这样的：</p>
+<p>预编译展开头文件和替换宏定义</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpp main.c /tmp/main.i</span><br></pre></td></tr></table></figure>
+
+<p>编译：将高级语言翻译成低级语言</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cc1 /tmp/main.i /tmp/main.s</span><br></pre></td></tr></table></figure>
+
+<p>汇编：将汇编语言翻译成机器语言</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">as /tmp/main.s /tmp/main.o</span><br></pre></td></tr></table></figure>
+
+<p>同样的步骤处理 <code>sum.c</code> 文件。</p>
+<p>链接</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ld -o prog /tmp/main.o /tmp/sum.o </span><br></pre></td></tr></table></figure>
+
+<p>我们要运行一个可执行文件（ELF）就直接在 shell 中输入该文件的具体路径。</p>
+<h2 id="静态链接"><a href="#静态链接" class="headerlink" title="静态链接"></a>静态链接</h2><p>完成了汇编这一步我们得到的文件还不可以直接运行，我们需要让链接器完成两个主要的任务：</p>
+<ul>
+<li>符号解析，这一步是为了让每一个符号引用和一个符号定义关联起来。</li>
+<li>重定位，编译器和汇编器生成从地址0开始的代码和数据节，这一步是为了给每个符号一个确定的虚拟地址。</li>
+</ul>
+<h2 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h2><p>目标文件有三种形式：</p>
+<ul>
+<li>可重定位目标文件：其实就理解为.o文件</li>
+<li>可执行目标文件：理解为 ELF 文件</li>
+<li>共享目标文件：理解为libc</li>
+</ul>
+<h2 id="可重定位目标文件"><a href="#可重定位目标文件" class="headerlink" title="可重定位目标文件"></a>可重定位目标文件</h2><p>它有很多节组成，常见的也就是那些</p>
+<ul>
+<li>text：代码段</li>
+<li>rodata：只读数据段</li>
+<li>bss：未初始化全局变量和静态变量</li>
+<li>data：已初始化的全局变量和静态变量</li>
+<li>symtab：符号表，保存全局变量的信息，默认生成，可以使用STRIP命令去除。</li>
+<li>rel.text：被链接的时候会被修改位置。</li>
+<li>rel.data：被链接的时候会被修改位置。</li>
+<li>.debug：调试符号表，只有以 -g 选项时会得到这张表，其中包含了局部变量的定义和类型，以及原始的 C 文件，只有 -g 命令会生成这张表。</li>
+</ul>
+<p>为什么区分 bss 段和 data 段？因为初始化的变量需要使用一段空间去保存初始化得到的值，而未初始化则不需要，可以理解为减少文件落地的大小，实际上初始化与否不影响内存的占用大小。</p>
+<h2 id="符号和符号表"><a href="#符号和符号表" class="headerlink" title="符号和符号表"></a>符号和符号表</h2><p>符号表包含了一个模块的引用符号信息，一共有三种不同的符号：</p>
+<ul>
+<li>由模块 m 定义并能被其它模块引用的<strong>全局符号</strong>，对应于非静态的 C 函数和全局变量。</li>
+<li>由其它模块定义并被模块 m 引用的<strong>全局符号</strong>。</li>
+<li>定义在模块 m 并只被 m 引用的局部符号，他们对应了静态的 C 函数和全局变量。</li>
+</ul>
+<p>所以说，静态变量作用域只能是本文件，其它文件不能引用。</p>
+<p>symtab是不包含局部非静态变量的任何符号的，它们在编译阶段就能被处理完了，因为它们通过栈来管理，可以通过编译加上 -g 参数选择保留局部变量符号在 .debug 中。</p>
+<p>静态的局部变量不会在栈中管理，会放到 bss 或者是 data 段上。</p>
+<p>这张符号表包含这样一个结构体条目的数组：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> name;</span><br><span class="line">    <span class="comment">/* String table offset */</span></span><br><span class="line">    <span class="type">char</span> type:<span class="number">4</span>,</span><br><span class="line">    <span class="comment">/* Function or data (4 bits) */</span></span><br><span class="line">    binding:<span class="number">4</span>;</span><br><span class="line">    <span class="comment">/* Local or global (4 bits) */</span></span><br><span class="line">    <span class="type">char</span> reserved;</span><br><span class="line">    <span class="comment">/* Unused */</span></span><br><span class="line">    <span class="type">short</span> section;</span><br><span class="line">    <span class="comment">/* Section header index */</span></span><br><span class="line">    <span class="type">long</span> value;</span><br><span class="line">    <span class="comment">/* Section offset or absolute address */</span></span><br><span class="line">    <span class="type">long</span> size;</span><br><span class="line">    <span class="comment">/* Object size in bytes */</span></span><br><span class="line">&#125; Elf64_Symbol;</span><br></pre></td></tr></table></figure>
+
+<p>这里有一个很有趣的定义，它把一个 char 类型分给了两个条目，两个条目分别占四位。</p>
+<p>可重定位的目标文件还包含了三个伪节。</p>
+<ul>
+<li>ABS：该节的符号不该被重定位</li>
+<li>UNDEF：未定义的符号，没有在本模块定义的符号</li>
+<li>COMMON：还未被分配位置的初始化的数据目标</li>
+</ul>
+<p>ELF 不会包含这些节，因为ELF已经把符号确定到了一个地址上，符号已经没有存在的意义了。</p>
+<p>比如用书上的C文件去编译得到 .o 文件，使用 <code>readelf -s main.o</code> 去读出它的符号表，我们着重看最后四行：</p>
+<img src="/2023/01/23/CSAPP_7/1.png" class="">
+
+<p>array 是我们定义的数组，这里的下标是 3，表示 data 段。</p>
+<p>main 是我们的主函数，这里下标是1，表示 text 段。</p>
+<p>sum 是我们在 main.c 申明的函数，它在 UND 段，因为在本模块没有定义，所以是在 UND 段。</p>
+<p>未初始化的数据目标会在 COMMON 节。</p>
+<h2 id="符号解析"><a href="#符号解析" class="headerlink" title="符号解析"></a>符号解析</h2><p>当编译器遇到一个不在当前模块中定义的符号时，会假设该符号在其它模块定义并生成链接符号表条目，并交给链接器处理。如果找不到这个符号，那么就输出一条错误信息并终止。</p>
+<p>比如下面的程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">foo</span><span class="params">()</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    foo();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用以下命令编译 <code>gcc -g s.c -o s</code> 就会在链接阶段报出错误 <code>undefined reference to &#39;foo&#39;</code>。</p>
+<p>对这种全局符号解析会遇到一个多定义的问题，如果多个模块定义了相同的全局符号，在引用的时候连接器要么报错，要么以一种方式选择一个而丢弃其它所有的定义。</p>
+<p>这里作者经过试验也是得出了一个结论：</p>
+<p>对于变量而言，如果是相同的定义类型（对于具体类型这个比较弱，只要占用空间一样就会被认定为是相同），那么会使用被初始化的那个定义，其余定义被丢弃，如果出现多个初始化，那么报错退出。</p>
+<p>如果是不一样大小的类型，那么会使用较大的那个定义，这时候，如果只有较小的定义被初始化那么会报错退出。</p>
+<blockquote>
+<p>C++和JAVA的函数重载。在这两个语言当中，函数名允许重复，此时会有一个叫名称粉碎机制，会把函数名和类型一起生成一个新的名称，在底层看上去还是唯一的，这个过程叫重整，相反的过程叫恢复。</p>
+</blockquote>
+<h3 id="链接器如何解析多重定义"><a href="#链接器如何解析多重定义" class="headerlink" title="链接器如何解析多重定义"></a>链接器如何解析多重定义</h3><p>没想到下一节就讲了，然后作者还傻乎乎的去试了以下hh。</p>
+<p>他这里规定了强弱符号，函数和已初始化的变量都是强符号，未初始化的全局变量则是弱符号，它有这么一个规定：</p>
+<ul>
+<li>不允许有多个同名的强符号</li>
+<li>如果有一个强符号和多个弱符号，那么选择强符号的定义</li>
+<li>如果有多个弱符号，那么随机选择一个。会不会挑最大那个就不知道了</li>
+</ul>
+<p>后面举了一个例子表示，链接器不会检测到定义了多个相同的全局符号，它只会判断有没有满足第一个规则，如果满足了它不会说任何话，这就会导致我们定义了相同的两个符号，编译到一起之后，两边的函数操作的是同一个变量，而如果我们单一地去查一个文件很难发现问题。</p>
+<p>为了避免这类错误，我们尽量加上 <code>-fno-common</code> 标志来高速链接器遇到多重符号定义的时候触发一个错误。</p>
+<h3 id="与静态库链接"><a href="#与静态库链接" class="headerlink" title="与静态库链接"></a>与静态库链接</h3><p>将所有相关的目标模块打包成为一个单独的文件，称为静态库，它可以用作链接器的输入，当需要生成一个可执行的文件时，它只会复制静态库里被应用程序引用的目标模块。</p>
+<p>书上介绍了如果没有静态库链接的情况该怎么办，一种是编译器去寻找合适的函数，缺点是编译器开发人员压力很大；第二种是把函数编译成可重定位的文件形式，缺点是程序员需要自己找到对应的可重定位文件进行链接。</p>
+<p>后面讲了静态库的编译方法和链接方法：</p>
+<p>用命令 <code>ar rcs out.a xx1.o xx2.o ....</code> 命令把可重定位文件整合成 <code>out.a</code> 静态库。链接的时候，我们需要将我们编译出的可重定向文件和静态库文件一起作为链接器的数。</p>
+<p>这里实验一遍吧，本来不想实验的，可是看着内容有点多，为了理解还是实验吧。</p>
+<p>创建 add.c 和 sub.c 文件，内容如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//add.c</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//sub.c</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">sub</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a-b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先用命令 <code>gcc -c add.c sub.c</code> 创建 .o 文件</p>
+<p>然后用命令 <code> ar rcs libmath.a add.o sub.o</code> 去生成 libcmath.a 静态库。</p>
+<p>然后创建一个 <code>main.c</code> 文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.c</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">int</span> a=add(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用命令 <code>gcc --static -o a.out libcmath.a</code> 生成 可执行文件。</p>
+<p>并且链接器很聪明，因为 main.c 只调用了 add 函数，所以在 a.out 文件中，不会看到任何 sub 相关的代码。</p>
+<h3 id="链接器如何使用静态库来解析引用"><a href="#链接器如何使用静态库来解析引用" class="headerlink" title="链接器如何使用静态库来解析引用"></a>链接器如何使用静态库来解析引用</h3><p>这里介绍了静态链接的过程，告诉了我们在静态链接的时候需要注意参数顺序。</p>
+<p>链接过程中维护了三个集合 <code>E U D</code> 分别是可重定位文件集合，未解析符号的集合，已经定义的符号集合。</p>
+<p>对于每一个输入文件，会判断是目标文件还是静态库文件，如果是目标文件，那么修改 U 和 D 来反映文件中的符号引用，并继续下一个文件，如果是存档文件（.a），那么匹配 U 中的一个引用，如果匹配成功会把对应的符号从 U 删除并加入到 D 中，并且会把 .a 中的对应的模块（.o）加入到 E 集合中，而不包含的可重定位文件会被丢弃。</p>
+<p>如果扫描完所有的输入文件之后， U 非空，那么报错推出，否则合并 E 集合的可重定位文件输出可执行文件。</p>
+<p>如果我们在静态链接的时候，把静态库放在了前面，那么会因为匹配不到任何一个 U 中的符号（因为一开始 U 为空）而直接被链接器丢弃。所以在上面的情况，我们如果使用命令 <code>gcc --static -o a.out libcmath.a main.c</code>  则会报错。</p>
+<h2 id="重定位"><a href="#重定位" class="headerlink" title="重定位"></a>重定位</h2><p>重定位的目的就是为了确定所有符号的地址以及修改代码让符号可以被正确地引用。</p>
+<h3 id="重定位条目"><a href="#重定位条目" class="headerlink" title="重定位条目"></a>重定位条目</h3><p>每当汇编器遇到了对最终位置不确定的目标引用，就会生成一个重定位条目，告诉链接器如何修改这个引用，这个重定位条目可以时代码段的，也可以是数据段的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">long</span> offset;</span><br><span class="line">    <span class="type">long</span> type:<span class="number">32</span>,</span><br><span class="line">    symbol:<span class="number">32</span>;</span><br><span class="line">    <span class="type">long</span> addend;</span><br><span class="line">&#125;Elf64_Rela;</span><br></pre></td></tr></table></figure>
+
+<p>ELF 定义了32种不同类型的引用，这里我们只需要知道两类：</p>
+<p>一类是 PC 相对寻址（<code>R_X86_64_PC32</code>），一类是绝对地址引用（<code>R_X86_64_32</code>）。</p>
+<p>比如 call 这一类的，如果符号不在自己这我需要重定位之后，算出这一条指令到对应符号的一个偏移值作为 call 指令的操作数。比如 mov 这一类的，需要知道确定的一个地址放到上面，那就是绝对地址引用。</p>
+<p>书上给的例子我确实没编译出来，因为现在基本也是 ip 相对寻址了。</p>
+<img src="/2023/01/23/CSAPP_7/2.png" class="">
+
+<p>图中框出的部分是要被重定位的代码，可以看到这里在传值的时候使用了 <code>lea (%rip)</code>，它也是 PC 相对寻址。</p>
+<p>而书上的例子这里是 mov 指令，那就是绝对寻址了。</p>
+<h2 id="可执行目标文件"><a href="#可执行目标文件" class="headerlink" title="可执行目标文件"></a>可执行目标文件</h2><p>这是一个 ELF 文件的信息结构</p>
+<img src="/2023/01/23/CSAPP_7/3.png" class="">
+
+<p>LOAD（段表头部） 段会告诉我们哪些段在哪个位置，权限是什么，如下图所示：</p>
+<img src="/2023/01/23/CSAPP_7/4.png" class="">
+
+<p>这里也解释了一个现象，就是段的起始地址不一定是从一页的起始位置开始，它可能会有偏移，据书上这么讲，它的起始地址应该满足下面的式子：</p>
+<p>$off\ mod\ align&#x3D;vaddr\ mod\ align$</p>
+<p>据说是因为加载速度会变快，这个原因会在第九章讲到，那就尽请期待吧。</p>
+<h2 id="加载可执行目标文件"><a href="#加载可执行目标文件" class="headerlink" title="加载可执行目标文件"></a>加载可执行目标文件</h2><p>在Linux中运行可执行目标文件prog，可以在Linux shell的命令行运行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">linux&gt; ./prog</span><br></pre></td></tr></table></figure>
+
+<p>通过调用某个驻留在存储器中叫做加载器的操作系统代码来运行它，加载器将可执行目标文件中的代码与数据从磁盘复制到内存，然后通过跳转到程序的第一条指令或入口点来运行该程序，这个将程序复制到内存并运行的过程叫做<strong>加载</strong></p>
+<p>加载器加载的一个操作顺序是：在表头的引导下将文件读取到内存中，接下来跳转到程序的入口点 <code>_start</code> 函数，这个函数会调用 <code>libc.so</code> 的 <code>__libc_start_main</code> 函数去初始化执行环境，里面还会调用用户层的 <code>main</code> 函数。这里就到了我们自己认为的入口函数了，但是其实 <code>main</code> 函数并不是最先被执行的。</p>
+<p>下面是 <code>x86_64</code> 运行环境的一个内存空间，64位系统我们只用了 48 位。</p>
+<img src="/2023/01/23/CSAPP_7/5.png" class="">
+
+<h2 id="动态链接共享库"><a href="#动态链接共享库" class="headerlink" title="动态链接共享库"></a>动态链接共享库</h2><p>前面讨论了静态链接，它的一个劣势就是会导致可执行文件占用磁盘空间过大，并且多个程序一起运行时，有很大一部分的内存资源存放的是同样的代码，也造成了内存的浪费。静态链接唯一的优势就是不依赖环境，只要架构支持，就一定能运行，而动态链接需要比较严格的环境要求。</p>
+<p>共享库是在运行时加载，可以加载到任意的内存，因此编译的时候，必须编译位置无关代码。</p>
+<img src="/2023/01/23/CSAPP_7/6.png" class="">
+
+<p>编译动态链接库的命令：<code>gcc -shared -fpic -o out.so file1.c file2.c</code></p>
+<p>而这里的 <code>-shared</code> 表明生成动态链接库文件，<code>-fpic</code> 参数要求生成位置无关代码。</p>
+<p>此时可以把这个库作为输入文件进行编译了，这个时候并不会把库的代码复制到可执行文件中，而是会留下一些重定位项用于运行时重定位，那么在 Linux 的 ELF 当中我们知道这是有 PLT 和 GOT 表实现的。</p>
+<p>动态链接的优点就是文件体积小，多个文件同时运行占用内存显著地小了很多，缺点则是编译完成之后要转移机器运行必须连着库文件一起打包，这一点会比较麻烦。</p>
+<hr>
+<p>下面是自己的试验：</p>
+<p>准备两个 c 文件编译库，跟之前一样用 add 和 sub。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//add.c</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//sub.c</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">sub</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a-b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再准备一个调用输出的 main.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;val:%d\n&quot;</span>,add(<span class="number">1</span>,<span class="number">2</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译库：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -fpic -shared -o libmath.so add.c sub.c</span><br></pre></td></tr></table></figure>
+
+<p>编译程序：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o ./a.out main.c ./libmath.so</span><br></pre></td></tr></table></figure>
+
+<p>这里需要注意库名需要指定具体的路径，可以用相对路径，如果不指定会默认从 <code>/lib/x86_64-linux-gnu/</code> 目录下加载对应名字的库，如果没有就会报 no such file。</p>
+<h2 id="从应用程序中加载和链接共享库"><a href="#从应用程序中加载和链接共享库" class="headerlink" title="从应用程序中加载和链接共享库"></a>从应用程序中加载和链接共享库</h2><p>动态链接库有一个很秒的应用就是 WEB 服务器：一般来说网站是需要处理并发请求的，而常规的思路就是主进程死循环阻塞，遇到有请求连接的时候 fork 一个子进程去 execve 对应的一个函数去处理请求。然而现在可以基于动态链接的思路，当一个请求到达时，直接去调用动态链接库的函数去处，这样我们处理一个请求的内存开销仅仅只有函数调用所产生的内存开销，并且带来的一个好处就是更新网站时可以直接替换动态链接库而不需要停止服务。</p>
+<p>我们可以使用 <code>dlfcn.h</code> 文件中的一些函数来实时获取动态链接库的函数，使用函数指针接收。</p>
+<p>也写一个demo吧：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">int</span> (*func)(<span class="type">int</span>,<span class="type">int</span>);</span><br><span class="line">    <span class="type">void</span> *handle=dlopen(<span class="string">&quot;./libmath.so&quot;</span>,RTLD_LAZY);</span><br><span class="line">    <span class="keyword">if</span>(!handle)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    func=dlsym(handle,<span class="string">&quot;add&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,func(<span class="number">1</span>,<span class="number">2</span>));</span><br><span class="line">    dlclose(handle);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="位置无关代码"><a href="#位置无关代码" class="headerlink" title="位置无关代码"></a>位置无关代码</h2><p>可以加载而无需重定位的代码称为<strong>位置无关代码</strong>（Position-Independent Code，PIC）用户对GCC使用-fpic选项指示GNU编译系统生成PIC代码。共享库的编译必须总是使用该选项。</p>
+<p>PLT 和 GOT 怎么实现的之前搞pwn的也是知道的，用了一个延迟绑定机制，在第一次运行的时候会调用函数 <code>dl_runtime_resolve</code> 函数去寻找指定函数的地址并调用。PLT表和GOT表的工作原理可以看<a href="/2021/07/19/ret2dl_resolve/">这篇</a>。感觉写的不是很好，等空了回来补一下吧，mark了。</p>
+<h2 id="库打桩机制"><a href="#库打桩机制" class="headerlink" title="库打桩机制"></a>库打桩机制</h2><p>怎么说呢，类似 hook 吧，只是这个 hook 发生在编译时。</p>
+<p>比如，<code>main -&gt; malloc</code> 是正常的一个调用栈，而我们可以在中间插入我们自己写的代码变成了 <code>main -&gt; mymalloc -&gt; malloc</code>。</p>
+<h3 id="编译时打桩"><a href="#编译时打桩" class="headerlink" title="编译时打桩"></a>编译时打桩</h3><p>建立下面三个文件：</p>
+<p>malloc.h：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> malloc mymalloc</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> free myfree</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">mymalloc</span><span class="params">(<span class="type">int</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">myfree</span><span class="params">(<span class="type">void</span> *)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>malloc.c：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="keyword">ifdef</span> COMPILETIME</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;malloc.h&gt;</span></span></span><br><span class="line"><span class="comment">/* malloc wrapper function */</span></span><br><span class="line"><span class="type">void</span> * <span class="title function_">mymalloc</span><span class="params">(<span class="type">size_t</span> size)</span>&#123;</span><br><span class="line">    <span class="type">void</span> * ptr = <span class="built_in">malloc</span>(size); </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;malloc(%d)=%p\n&quot;</span>,(<span class="type">int</span>)size, ptr); </span><br><span class="line">    <span class="keyword">return</span> ptr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* free wrapper function */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">myfree</span><span class="params">(<span class="type">void</span> * ptr)</span>&#123;</span><br><span class="line">    <span class="built_in">free</span> (ptr); </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;free(%p)\n&quot;</span>, ptr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"># <span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>我们搞一个动作就是让它在 malloc 分配或者是 free 的时候打印它的具体调用参数。</p>
+<p>main.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;malloc.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">void</span> *p=<span class="built_in">malloc</span>(<span class="number">0x20</span>);</span><br><span class="line">    <span class="built_in">free</span>(p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先编译库：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -c malloc.c -o malloc.o</span><br></pre></td></tr></table></figure>
+
+<p>再打桩编译</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -g main.c -o a.out main.c malloc.o -I.</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/01/23/CSAPP_7/7.png" class="">
+
+<p>这个在调试的时候挺有用的，而且不会破坏它的源码。</p>
+<h3 id="链接时打桩"><a href="#链接时打桩" class="headerlink" title="链接时打桩"></a>链接时打桩</h3><p>就还是这个源码，库还是一样的编译成可重定位的模块，同时也把 main.c 也编译成可重定位的模块。</p>
+<p>链接时库打桩有点麻烦，我们不能自定义调用名。在我们自己写的模块中，我们定义的函数必须是 <code>__wrap_xxx</code> 比如 <code>__wrap_malloc</code> 这样的，我们在 <code>__wrap_malloc</code> 中调用真实的 <code>malloc</code> 要写成 <code>__real_malloc</code> 去调用。</p>
+<p>我们在 malloc 和 free 两个函数打桩，就是用下面的命令生成：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -g -Wl,--wrap,malloc -Wl,--wrap,free -o a.out main.o malloc.o</span><br></pre></td></tr></table></figure>
+
+<p>每个 <code>-Wl,--wrap,xxx</code> 就表示使用 <code>__wrap_xxx</code> 函数去替换 <code>xxx</code> 函数，而 <code>__wrap_xxx</code> 函数在我们自己写的一个模块中定义了。</p>
+<h3 id="运行时打桩"><a href="#运行时打桩" class="headerlink" title="运行时打桩"></a>运行时打桩</h3><p>运行时打桩出现了点问题，因为书上可能所用的版本比较老，因此没有出现这样的情况，实际上 <code>printf</code> 会调用 <code>malloc</code>，所以我们在里面用 <code>printf</code> 的时候会调用自身然后又打一次桩，造成死循环，但是 free 不会这样循环，因此我们打桩打在 free 上。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//malloc.c</span></span><br><span class="line"><span class="meta"># <span class="keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"><span class="comment">/* malloc wrapper function */</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> * <span class="title function_">malloc</span><span class="params">(<span class="type">size_t</span> size)</span>&#123;</span><br><span class="line">    <span class="type">void</span> *(* mallocp) (<span class="type">size_t</span> size); </span><br><span class="line">    mallocp = dlsym(RTLD_NEXT, <span class="string">&quot;malloc&quot;</span>); <span class="comment">/* Get address of libc malloc */</span></span><br><span class="line">    <span class="type">char</span> * ptr = mallocp(size); <span class="comment">/* Call libc malloc */</span></span><br><span class="line">    <span class="keyword">return</span> ptr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">free</span><span class="params">(<span class="type">void</span> *ptr)</span>&#123;</span><br><span class="line">    <span class="type">void</span> (*freep) (<span class="type">void</span> *) = <span class="literal">NULL</span>; </span><br><span class="line">    <span class="keyword">if</span> (!ptr)</span><br><span class="line">        <span class="keyword">return</span>; </span><br><span class="line">    freep = dlsym(RTLD_NEXT, <span class="string">&quot;free&quot;</span>); <span class="comment">/* Get address of libc free:*/</span> </span><br><span class="line">    freep(ptr); <span class="comment">/* Call libc free */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;free(%p)\n&quot;</span>, ptr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用命令 <code>gcc  malloc.c -o malloc.so -ldl -shared -fPIC</code> 编译得到 <code>.so</code> 库。</p>
+<p>然后使用命令 <code>LD_PRELOAD=&quot;./malloc.so&quot; ./xxxx</code> 来运行时加载 <code>malloc.so</code> 进行打桩，它可以对任何程序这么做。</p>
+<img src="/2023/01/23/CSAPP_7/8.png" class="">
+
+<p>这就是运行时打桩了。</p>
+<h2 id="处理目标文件的工具"><a href="#处理目标文件的工具" class="headerlink" title="处理目标文件的工具"></a>处理目标文件的工具</h2><ul>
+<li>ar：创建静态库，插入、删除、列出和提取成员。</li>
+<li>strings：列出一个目标文件中所有可打印的字符串。</li>
+<li>strip：从目标文件中删除符号表信息。</li>
+<li>nm：列出一个目标文件的符号表中定义的符号。</li>
+<li>size：列出目标文件中节的名字和大小。</li>
+<li>readelf：显示一个目标文件的完整结构，包括ELF头中编码的所有信息。包含SIZE 和 NM 的功能。</li>
+<li>objdump：所有二进制工具之母。能够显示一个目标文件中所有的信息。它最大勺作用是反汇编.text节中的二进制指令。</li>
+<li>ldd：列出一个动态链接 ELF 文件的链接库</li>
+</ul>
+<p>这里我私人再推一款 patchelf，可以很方便地为我们切换libc的库。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>通过学习链接这个过程，学会了多文件编译的方法，以及变量，函数作用域。目标二进制文件的三种形式：可重定位的，可执行的和共享的。也知道了怎么去编译得到一个静态库和共享库，以及对应的链接方式，还学习了重定位的一个方法，对这个理解也加深了很多。</p>
+<p>最后知道了一个打桩机制，对于我们调试来说又是一等利器。CSAPP，永远的神！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2023/01/23/CSAPP_7/">https://xia0ji233.github.io/2023/01/23/CSAPP_7/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/25/Windows1/" title="Windows基础知识（1）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Windows基础知识（1）</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/21/Game3/" title="游戏安全的学习（3）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">游戏安全的学习（3）</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">292</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A2%97%E6%A6%82"><span class="toc-number">1.</span> <span class="toc-text">梗概</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.</span> <span class="toc-text">编译器驱动程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">静态链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">目标文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">可重定位目标文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E5%92%8C%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-number">6.</span> <span class="toc-text">符号和符号表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E8%A7%A3%E6%9E%90"><span class="toc-number">7.</span> <span class="toc-text">符号解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E5%99%A8%E5%A6%82%E4%BD%95%E8%A7%A3%E6%9E%90%E5%A4%9A%E9%87%8D%E5%AE%9A%E4%B9%89"><span class="toc-number">7.1.</span> <span class="toc-text">链接器如何解析多重定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E9%9D%99%E6%80%81%E5%BA%93%E9%93%BE%E6%8E%A5"><span class="toc-number">7.2.</span> <span class="toc-text">与静态库链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E5%99%A8%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%9D%99%E6%80%81%E5%BA%93%E6%9D%A5%E8%A7%A3%E6%9E%90%E5%BC%95%E7%94%A8"><span class="toc-number">7.3.</span> <span class="toc-text">链接器如何使用静态库来解析引用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E4%BD%8D"><span class="toc-number">8.</span> <span class="toc-text">重定位</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E4%BD%8D%E6%9D%A1%E7%9B%AE"><span class="toc-number">8.1.</span> <span class="toc-text">重定位条目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="toc-number">9.</span> <span class="toc-text">可执行目标文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="toc-number">10.</span> <span class="toc-text">加载可执行目标文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%85%B1%E4%BA%AB%E5%BA%93"><span class="toc-number">11.</span> <span class="toc-text">动态链接共享库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%8A%A0%E8%BD%BD%E5%92%8C%E9%93%BE%E6%8E%A5%E5%85%B1%E4%BA%AB%E5%BA%93"><span class="toc-number">12.</span> <span class="toc-text">从应用程序中加载和链接共享库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%8D%E7%BD%AE%E6%97%A0%E5%85%B3%E4%BB%A3%E7%A0%81"><span class="toc-number">13.</span> <span class="toc-text">位置无关代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%93%E6%89%93%E6%A1%A9%E6%9C%BA%E5%88%B6"><span class="toc-number">14.</span> <span class="toc-text">库打桩机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E6%97%B6%E6%89%93%E6%A1%A9"><span class="toc-number">14.1.</span> <span class="toc-text">编译时打桩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E6%97%B6%E6%89%93%E6%A1%A9"><span class="toc-number">14.2.</span> <span class="toc-text">链接时打桩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E6%89%93%E6%A1%A9"><span class="toc-number">14.3.</span> <span class="toc-text">运行时打桩</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-number">15.</span> <span class="toc-text">处理目标文件的工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">16.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

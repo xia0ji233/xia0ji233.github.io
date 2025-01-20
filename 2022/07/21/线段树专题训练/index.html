@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>线段树专题训练 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="练一下线段树专题吧，本篇博客持续更新！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线段树专题训练">
+<meta property="og:url" content="https://xia0ji233.github.io/2022/07/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="练一下线段树专题吧，本篇博客持续更新！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2022-07-21T07:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-19T18:26:44.812Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2022/07/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '线段树专题训练',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-20 02:26:44'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">292</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">线段树专题训练</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-21T07:00:00.000Z" title="发表于 2022-07-21 15:00:00">2022-07-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-19T18:26:44.812Z" title="更新于 2025-01-20 02:26:44">2025-01-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/ICPC/">ICPC</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/ICPC/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="线段树专题训练"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>练一下线段树专题吧，本篇博客持续更新！</p>
+<span id="more"></span>
+
+<h1 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h1><p>线段树是算法竞赛中常用的用来维护 <strong>区间信息</strong> 的数据结构。</p>
+<p>线段树可以在 $O(\log N)$ 的时间复杂度内实现单点修改、区间修改、区间查询（区间求和，求区间最大值，求区间最小值）等操作。</p>
+<p>线段树维护的信息在很多时候可以认为是满足（幺）半群的性质的信息。</p>
+<p>一个幺半群 $M&#x3D;(S,\circ ,e)$，其中 $\circ$ 为在集合 $S$ 上定义的二元运算符，幺半群具有以下性质：</p>
+<ul>
+<li>封闭性：$\forall x\in S$ 和 $\forall y\in S$ 有 $x\circ y\in S$。</li>
+<li>结合律：$\forall x,y,z\in S$ 有 $(x\circ y)\circ z&#x3D;x\circ (y\circ z)$。</li>
+<li>存在幺元：即 $\exists e\in S$ 满足 $\forall x \in S$ 有 $e\circ x&#x3D;x$，$e$ 为左幺元；或 $x\circ e&#x3D;x$，$e$ 为右幺元。</li>
+</ul>
+<p>我们观察到线段树上的信息一般满足这样的性质，一些数域上的加法与乘法自然，考虑二元的 $\max(x,y)$ 运算，此时幺元为 $-\infty$ 也满足这样的性质（一般左右幺元相同时简称为幺元）。</p>
+<p>线段树将每个长度不为 $1$ 的区间划分成左右两个区间递归求解，把整个线段划分为一个树形结构，通过合并左右两区间信息来求得该区间的信息。这种数据结构可以方便的进行大部分的区间操作。</p>
+<p>有个大小为 $5$ 的数组 $a&#x3D;{10,11,12,13,14}$，要将其转化为线段树，有以下做法：设线段树的根节点编号为 $1$，用数组 $d$ 来保存我们的线段树，$d_i$ 用来保存线段树上编号为 $i$ 的节点的值（这里每个节点所维护的值就是这个节点所表示的区间总和）。</p>
+<p>我们先给出这棵线段树的形态，如图所示：</p>
+<img src="/2022/07/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/segt1.svg" class="">
+
+<p>图中每个节点中用红色字体标明的区间，表示该节点管辖的 $a$ 数组上的位置区间。如 $d_1$ 所管辖的区间就是 $[1,5]$（$a_1,a_2, \cdots ,a_5$），即 $d_1$ 所保存的值是 $a_1+a_2+ \cdots +a_5$，$d_1&#x3D;60$ 表示的是 $a_1+a_2+ \cdots +a_5&#x3D;60$。</p>
+<p>通过观察不难发现，$d_i$ 的左儿子节点就是 $d_{2\times i}$，$d_i$ 的右儿子节点就是 $d_{2\times i+1}$。如果 $d_i$ 表示的是区间 $[s,t]$（即 $d_i&#x3D;a_s+a_{s+1}+ \cdots +a_t$) 的话，那么 $d_i$ 的左儿子节点表示的是区间 $[ s, \frac{s+t}{2} ]$，$d_i$ 的右儿子表示的是区间 $[ \frac{s+t}{2} +1,t ]$。</p>
+<p>在实现时，我们考虑递归建树。设当前的根节点为 $p$，如果根节点管辖的区间长度已经是 $1$，则可以直接根据 $a$ 数组上相应位置的值初始化该节点。否则我们将该区间从中点处分割为两个子区间，分别进入左右子节点递归建树，最后合并两个子节点的信息。（以上来自wiki）</p>
+<p>在进行区间操作的时候，我们一般不会把状态更新到每个节点，如果更新，那么一次操作最大的复杂度会是 $O(n)$。因此我们会采取懒惰标记的方式去记录这次的操作，如果这次更新完整地包含了一个区间，那么我们对这个区间打上懒惰标记，不继续往下更新，若要查询，则会将懒惰标记加到对应的节点上去。可以证明，每一次操作不会超过4个区间，加上区间操作是从上往下延的，那么一次操作理论最坏的情况应该是 $O(log_2n)$，非常符合我们的要求。查询复杂度同理，也是 $O(log_2n)$。</p>
+<p>这里需要注意几点：</p>
+<h2 id="懒惰标记怎么打？"><a href="#懒惰标记怎么打？" class="headerlink" title="懒惰标记怎么打？"></a>懒惰标记怎么打？</h2><p>当当前区间完全包含于我要操作的区间，这个时候可能会有点疑问，这个区间的值我是加或者不加，我的懒惰标记肯定会给到这个区间，但是这个值加不加，懒惰标记给到了，那么一个区间带了一个懒惰标记，它的值到底是意味着加了还是没加呢？因为感觉理论上好像都可行的，但是这里实际情况是：要加！因为我区间的值会被更新到父亲节点，如果我不加，那么更新上去的节点值就是错误的。因此此时我一定要把值加上去。那么一个区间带了懒惰标记它的含义是：我自己的值已经加上去了，但是我的儿子区间和孙子，曾孙子区间都没加上这个值，等会过来的时候都需要加上，那么带了懒惰标记的那个区间是已经加上了的。</p>
+<p>所以懒惰标记什么含义一定要搞清楚，不能模棱两可，不能，不能！！！</p>
+<h2 id="什么时候push-down"><a href="#什么时候push-down" class="headerlink" title="什么时候push down"></a>什么时候push down</h2><p>懒惰标记下传的操作我们叫 <code>push_down</code>。什么时候需要呢？我们理解了懒惰标记的含义之后，我们就清楚了，带了懒惰标记的区间，本身已经加上了值，只是儿子都没加上去。那么如果我直接再对整个区间操作，需不需要 <code>push_down</code> 呢？不需要，因为这个区间已经是真实值了，但是我在对一个带有懒惰标记的区间的儿子区间尝试进行操作的时候呢？那肯定需要了！因为儿子区间还不是真实值，还得加上父亲给它的懒惰标记才是。</p>
+<p>那么我们 <code>push_down</code> 一次就会把一个区间的懒惰标记清零，给对应的两个儿子区间加上对应的值，并把懒惰标记分发给他们。</p>
+<h1 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h1><h2 id="P2023-AHOI2009-维护序列"><a href="#P2023-AHOI2009-维护序列" class="headerlink" title="P2023 [AHOI2009] 维护序列"></a>P2023 [AHOI2009] 维护序列</h2><h3 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h3><p>老师交给小可可一个维护数列的任务，现在小可可希望你来帮他完成。</p>
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>有一个长为 $n$ 的数列 ${a_n}$，有如下三种操作形式：</p>
+<ol>
+<li>格式 <code>1 t g c</code>，表示把所有满足 $t\le i\le g$ 的 $a_i$ 改为 $a_i\times c$ ;</li>
+<li>格式 <code>2 t g c</code> 表示把所有满足 $t\le i\le g$ 的 $a_i$ 改为 $a_i+c$ ;</li>
+<li>格式 <code>3 t g</code> 询问所有满足 $t\le i\le g$ 的 $a_i$ 的和，由于答案可能很大，你只需输出这个数模 $p$ 的值。</li>
+</ol>
+<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h3><p>第一行两个整数 $n$ 和 $p$。</p>
+<p>第二行含有 $n$ 个非负整数，表示数列 ${a_i}$ 。</p>
+<p>第三行有一个整数 $m$，表示操作总数。</p>
+<p>从第四行开始每行描述一个操作，同一行相邻两数之间用一个空格隔开，每行开头和末尾没有多余空格。</p>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h3><p>对每个操作 3，按照它在输入中出现的顺序，依次输出<strong>一行一个整数</strong>表示询问结果。</p>
+<h3 id="样例-1"><a href="#样例-1" class="headerlink" title="样例 #1"></a>样例 #1</h3><h4 id="样例输入-1"><a href="#样例输入-1" class="headerlink" title="样例输入 #1"></a>样例输入 #1</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">7 43</span><br><span class="line">1 2 3 4 5 6 7</span><br><span class="line">5</span><br><span class="line">1 2 5 5</span><br><span class="line">3 2 4</span><br><span class="line">2 3 7 9</span><br><span class="line">3 1 3</span><br><span class="line">3 4 7</span><br></pre></td></tr></table></figure>
+
+<h4 id="样例输出-1"><a href="#样例输出-1" class="headerlink" title="样例输出 #1"></a>样例输出 #1</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">35</span><br><span class="line">8</span><br></pre></td></tr></table></figure>
+
+<h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><h4 id="样例输入输出-1-解释"><a href="#样例输入输出-1-解释" class="headerlink" title="样例输入输出 1 解释"></a>样例输入输出 1 解释</h4><ul>
+<li>初始时数列为 ${1,2,3,4,5,6,7}$。</li>
+<li>经过第 $1$ 次操作后，数列为 ${1,10,15,20,25,6,7}$。</li>
+<li>对第 $2$ 次操作，和为 $10+15+20&#x3D;45$，模 $43$ 的结果是 $2$。</li>
+<li>经过第 $3$ 次操作后，数列为 ${1,10,24,29,34,15,16}$。</li>
+<li>对第 $4$ 次操作，和为 $1+10+24&#x3D;35$，模 $43$ 的结果是 $35$。</li>
+<li>对第 $5$ 次操作，和为 $29+34+15+16&#x3D;94$，模 $43$ 的结果是$8$。</li>
+</ul>
+<h4 id="数据规模与约定"><a href="#数据规模与约定" class="headerlink" title="数据规模与约定"></a>数据规模与约定</h4><p>测试数据规模如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th align="center">数据点编号</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+<th align="center">6</th>
+<th align="center">7</th>
+<th align="center">8</th>
+<th align="center">9,10</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">$n&#x3D;$</td>
+<td align="center">$10$</td>
+<td align="center">$1000$</td>
+<td align="center">$1000$</td>
+<td align="center">$10000$</td>
+<td align="center">$60000$</td>
+<td align="center">$70000$</td>
+<td align="center">$80000$</td>
+<td align="center">$90000$</td>
+<td align="center">$100000$</td>
+</tr>
+<tr>
+<td align="center">$m&#x3D;$</td>
+<td align="center">$10$</td>
+<td align="center">$1000$</td>
+<td align="center">$1000$</td>
+<td align="center">$10000$</td>
+<td align="center">$60000$</td>
+<td align="center">$70000$</td>
+<td align="center">$80000$</td>
+<td align="center">$90000$</td>
+<td align="center">$100000$</td>
+</tr>
+</tbody></table>
+<p>对于全部的测试点，保证 $0 \leq p, a_i, c \leq 10^9$，$1 \leq t \leq g \leq n$。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>是一个线段树的翻版题，只不过要取模，并且有乘法，乘法其实跟加法一样，如果区间里的数都乘上一个数，那么其实就相当于先和再乘，乘法懒惰标记默认应该为1。因为既有加法也有乘法，因此我们需要两个懒惰标记，当懒惰标记乘上去时，加法的懒惰标记应该对应要乘上去，在push_down的时候，我们先乘，再加即可。</p>
+<h2 id="标程"><a href="#标程" class="headerlink" title="标程"></a>标程</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> maxn 200005</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> n,p;</span><br><span class="line"><span class="type">int</span> a[maxn];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">e</span>&#123;</span><br><span class="line">    <span class="type">int</span> l;</span><br><span class="line">    <span class="type">int</span> r;</span><br><span class="line">    <span class="type">int</span> sum;</span><br><span class="line">    <span class="type">int</span> lazy1;</span><br><span class="line">    <span class="type">int</span> lazy2;</span><br><span class="line">&#125;tree[maxn&lt;&lt;<span class="number">2</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">(<span class="type">int</span> now,<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">    tree[now].l=l;</span><br><span class="line">    tree[now].r=r;</span><br><span class="line">    tree[now].lazy1=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(l==r)&#123;</span><br><span class="line">        tree[now].sum=a[r];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">build</span>(now&lt;&lt;<span class="number">1</span>,l,mid);</span><br><span class="line">    <span class="built_in">build</span>(now&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid<span class="number">+1</span>,r);</span><br><span class="line">    tree[now].sum=(tree[now&lt;&lt;<span class="number">1</span>].sum+tree[now&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].sum)%p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add_lazy</span><span class="params">(<span class="type">int</span> i,<span class="type">int</span> lazy1,<span class="type">int</span> lazy2)</span></span>&#123;</span><br><span class="line">    tree[i].sum*=lazy1;</span><br><span class="line">    tree[i].sum%=p;</span><br><span class="line">    tree[i].sum+=(tree[i].r-tree[i].l<span class="number">+1</span>)*lazy2;</span><br><span class="line">    tree[i].sum%=p;</span><br><span class="line">    tree[i].lazy1*=lazy1;</span><br><span class="line">    tree[i].lazy2*=lazy1;</span><br><span class="line">    tree[i].lazy1%=p;</span><br><span class="line">    tree[i].lazy2%=p;</span><br><span class="line">    tree[i].lazy2+=lazy2;</span><br><span class="line">    tree[i].lazy2%=p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">push_down</span><span class="params">(<span class="type">int</span> i)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> lazy1=tree[i].lazy1,lazy2=tree[i].lazy2;</span><br><span class="line">    tree[i].lazy1=<span class="number">1</span>;</span><br><span class="line">    tree[i].lazy2=<span class="number">0</span>;</span><br><span class="line">    <span class="built_in">add_lazy</span>(i&lt;&lt;<span class="number">1</span>,lazy1,lazy2);</span><br><span class="line">    <span class="built_in">add_lazy</span>(i&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,lazy1,lazy2);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">query</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> now)</span></span>&#123;</span><br><span class="line">    <span class="comment">//printf(&quot;query(%lld,%lld,%lld)\n&quot;,l,r,now);</span></span><br><span class="line">    <span class="keyword">if</span>(l&lt;=tree[now].l&amp;&amp;r&gt;=tree[now].r)&#123;</span><br><span class="line">        ans+=tree[now].sum;</span><br><span class="line">        <span class="comment">//printf(&quot;sum=%d\n&quot;,tree[now].sum);</span></span><br><span class="line">        ans%=p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">push_down</span>(now);</span><br><span class="line">        <span class="type">int</span> mid=tree[now].l+tree[now].r&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(l&lt;=mid)<span class="built_in">query</span>(l,r,now&lt;&lt;<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span>(r&gt;mid)<span class="built_in">query</span>(l,r,now&lt;&lt;<span class="number">1</span>|<span class="number">1</span>);</span><br><span class="line">        tree[now].sum=tree[now&lt;&lt;<span class="number">1</span>].sum+tree[now&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].sum;</span><br><span class="line">        tree[now].sum%=p;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> num,<span class="type">int</span> now)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l&lt;=tree[now].l&amp;&amp;r&gt;=tree[now].r)&#123;</span><br><span class="line">        <span class="built_in">add_lazy</span>(now,<span class="number">1</span>,num);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">push_down</span>(now);</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> mid=tree[now].l+tree[now].r&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(l&lt;=mid)<span class="built_in">add</span>(l,r,num,now&lt;&lt;<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span>(r&gt;mid)<span class="built_in">add</span>(l,r,num,now&lt;&lt;<span class="number">1</span>|<span class="number">1</span>);</span><br><span class="line">        tree[now].sum=tree[now&lt;&lt;<span class="number">1</span>].sum+tree[now&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].sum;</span><br><span class="line">        tree[now].sum%=p;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">mul</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> num,<span class="type">int</span> now)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l&lt;=tree[now].l&amp;&amp;r&gt;=tree[now].r)&#123;</span><br><span class="line">        <span class="built_in">add_lazy</span>(now,num,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">push_down</span>(now);</span><br><span class="line">        <span class="type">int</span> mid=tree[now].r+tree[now].l&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(l&lt;=mid)<span class="built_in">mul</span>(l,r,num,now&lt;&lt;<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span>(r&gt;mid)<span class="built_in">mul</span>(l,r,num,now&lt;&lt;<span class="number">1</span>|<span class="number">1</span>);</span><br><span class="line">        tree[now].sum=tree[now&lt;&lt;<span class="number">1</span>].sum+tree[now&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].sum;</span><br><span class="line">        tree[now].sum%=p;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">ifndef</span> ONLINE_JUDGE</span></span><br><span class="line">        <span class="built_in">freopen</span>(<span class="string">&quot;1.in&quot;</span>,<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">    <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;p);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,a+i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">build</span>(<span class="number">1</span>,<span class="number">1</span>,n);</span><br><span class="line">    <span class="type">signed</span> q;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;q);</span><br><span class="line">    <span class="keyword">while</span>(q--)&#123;</span><br><span class="line">        <span class="type">signed</span> op,l,r,num;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;op);</span><br><span class="line">        <span class="keyword">if</span>(op==<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d&quot;</span>,&amp;l,&amp;r,&amp;num);</span><br><span class="line">            <span class="built_in">mul</span>(l,r,num,<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(op==<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d&quot;</span>,&amp;l,&amp;r,&amp;num);</span><br><span class="line">            <span class="built_in">add</span>(l,r,num,<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;l,&amp;r);</span><br><span class="line">            ans=<span class="number">0</span>;</span><br><span class="line">            <span class="comment">//printf(&quot;l=%d r=%d\n&quot;,l,r);</span></span><br><span class="line">            <span class="built_in">query</span>(l,r,<span class="number">1</span>);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2022/07/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/">https://xia0ji233.github.io/2022/07/21/%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/07/23/%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1(2022-7-23)%E9%A2%98%E8%A7%A3/" title="牛客多校(2022-7-23)题解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">牛客多校(2022-7-23)题解</div></div></a></div><div class="next-post pull-right"><a href="/2022/07/09/Educational%20Codeforces%20Round%20131(Div.2)/" title="Educational Codeforces Round 131(Div.2)解析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Educational Codeforces Round 131(Div.2)解析</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">292</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%BF%E6%AE%B5%E6%A0%91"><span class="toc-number">1.</span> <span class="toc-text">线段树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%87%92%E6%83%B0%E6%A0%87%E8%AE%B0%E6%80%8E%E4%B9%88%E6%89%93%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">懒惰标记怎么打？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99push-down"><span class="toc-number">1.2.</span> <span class="toc-text">什么时候push down</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">练习题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#P2023-AHOI2009-%E7%BB%B4%E6%8A%A4%E5%BA%8F%E5%88%97"><span class="toc-number">2.1.</span> <span class="toc-text">P2023 [AHOI2009] 维护序列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E8%83%8C%E6%99%AF"><span class="toc-number">2.1.1.</span> <span class="toc-text">题目背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-number">2.1.2.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%A0%BC%E5%BC%8F"><span class="toc-number">2.1.3.</span> <span class="toc-text">输入格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F"><span class="toc-number">2.1.4.</span> <span class="toc-text">输出格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B-1"><span class="toc-number">2.1.5.</span> <span class="toc-text">样例 #1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B%E8%BE%93%E5%85%A5-1"><span class="toc-number">2.1.5.1.</span> <span class="toc-text">样例输入 #1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B%E8%BE%93%E5%87%BA-1"><span class="toc-number">2.1.5.2.</span> <span class="toc-text">样例输出 #1</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA"><span class="toc-number">2.1.6.</span> <span class="toc-text">提示</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA-1-%E8%A7%A3%E9%87%8A"><span class="toc-number">2.1.6.1.</span> <span class="toc-text">样例输入输出 1 解释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%A7%84%E6%A8%A1%E4%B8%8E%E7%BA%A6%E5%AE%9A"><span class="toc-number">2.1.6.2.</span> <span class="toc-text">数据规模与约定</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">2.1.7.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E7%A8%8B"><span class="toc-number">2.2.</span> <span class="toc-text">标程</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/31/Summary2024/" title="2024年终总结">2024年终总结</a><time datetime="2024-12-31T11:00:00.000Z" title="发表于 2024-12-31 19:00:00">2024-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/11/qwb2024_final_reverse/" title="强网杯S8决赛Reverse writeup">强网杯S8决赛Reverse writeup</a><time datetime="2024-12-11T05:00:00.000Z" title="发表于 2024-12-11 13:00:00">2024-12-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/08/qwb2024_final/" title="强网杯S8决赛pwn writeup">强网杯S8决赛pwn writeup</a><time datetime="2024-12-07T17:00:00.000Z" title="发表于 2024-12-08 01:00:00">2024-12-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/24/WindowsDriver1/" title="windows驱动开发（1）——Windows驱动字符串">windows驱动开发（1）——Windows驱动字符串</a><time datetime="2024-11-24T15:00:00.000Z" title="发表于 2024-11-24 23:00:00">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/23/WindowsDriver0/" title="windows驱动开发（0）——Windows驱动开发的基础知识">windows驱动开发（0）——Windows驱动开发的基础知识</a><time datetime="2024-11-22T19:00:00.000Z" title="发表于 2024-11-23 03:00:00">2024-11-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
