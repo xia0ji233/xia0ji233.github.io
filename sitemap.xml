@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://xia0ji233.github.io/2025/01/25/WindowsProcess5/</loc>
+    
+    <lastmod>2025-01-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://xia0ji233.github.io/2025/01/25/WindowsProcess4/</loc>
     
     <lastmod>2025-01-24</lastmod>
@@ -1793,7 +1802,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2022/12/14/CPP1/</loc>
+    <loc>https://xia0ji233.github.io/2022/12/15/CPP2/</loc>
     
     <lastmod>2025-01-19</lastmod>
     
@@ -1802,7 +1811,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2022/12/15/CPP2/</loc>
+    <loc>https://xia0ji233.github.io/2022/12/14/CPP1/</loc>
     
     <lastmod>2025-01-19</lastmod>
     
@@ -1820,7 +1829,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2023/08/01/Game4/</loc>
+    <loc>https://xia0ji233.github.io/2023/01/21/Game3/</loc>
     
     <lastmod>2025-01-17</lastmod>
     
@@ -1829,7 +1838,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2023/01/21/Game3/</loc>
+    <loc>https://xia0ji233.github.io/2023/08/01/Game4/</loc>
     
     <lastmod>2025-01-17</lastmod>
     
@@ -1982,7 +1991,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2023/05/16/driver4/</loc>
+    <loc>https://xia0ji233.github.io/2023/05/16/driver5/</loc>
     
     <lastmod>2025-01-17</lastmod>
     
@@ -1991,7 +2000,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2023/05/16/driver5/</loc>
+    <loc>https://xia0ji233.github.io/2023/05/16/driver4/</loc>
     
     <lastmod>2025-01-17</lastmod>
     
@@ -2189,7 +2198,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2022/05/06/Codeforces%20Round%20787(Div.3)/</loc>
+    <loc>https://xia0ji233.github.io/2022/05/03/Codeforces%20Round%20786(Div.3)/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2198,7 +2207,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2022/05/03/Codeforces%20Round%20786(Div.3)/</loc>
+    <loc>https://xia0ji233.github.io/2022/05/06/Codeforces%20Round%20787(Div.3)/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2252,7 +2261,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2023/04/10/ComputerNetwork5/</loc>
+    <loc>https://xia0ji233.github.io/2023/04/26/ComputerNetwork6/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2261,7 +2270,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2023/04/26/ComputerNetwork6/</loc>
+    <loc>https://xia0ji233.github.io/2023/04/10/ComputerNetwork5/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2279,7 +2288,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2023/03/12/ComputerNetwork2/</loc>
+    <loc>https://xia0ji233.github.io/2023/03/19/ComputerNetwork3/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2288,7 +2297,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2023/03/19/ComputerNetwork3/</loc>
+    <loc>https://xia0ji233.github.io/2023/03/12/ComputerNetwork2/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2351,15 +2360,6 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2022/12/27/Go5/</loc>
-    
-    <lastmod>2025-01-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xia0ji233.github.io/2022/12/25/Go3/</loc>
     
     <lastmod>2025-01-16</lastmod>
@@ -2370,6 +2370,15 @@
   
   <url>
     <loc>https://xia0ji233.github.io/2022/12/26/Go4/</loc>
+    
+    <lastmod>2025-01-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xia0ji233.github.io/2022/12/27/Go5/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2414,7 +2423,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2023/01/08/Go15/</loc>
+    <loc>https://xia0ji233.github.io/2023/01/09/Go16/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2423,7 +2432,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2023/01/09/Go16/</loc>
+    <loc>https://xia0ji233.github.io/2023/01/08/Go15/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2450,7 +2459,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2022/12/30/Go11/</loc>
+    <loc>https://xia0ji233.github.io/2022/12/30/Go12/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2459,7 +2468,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2022/12/30/Go12/</loc>
+    <loc>https://xia0ji233.github.io/2022/12/30/Go11/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2585,7 +2594,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2022/09/22/CSAPP_3/</loc>
+    <loc>https://xia0ji233.github.io/2022/12/27/CSAPP_4/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2594,7 +2603,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/2022/12/27/CSAPP_4/</loc>
+    <loc>https://xia0ji233.github.io/2022/09/22/CSAPP_3/</loc>
     
     <lastmod>2025-01-16</lastmod>
     
@@ -2777,14 +2786,14 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/ICPC/%E5%9B%BE%E8%AE%BA/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E8%80%83%E7%A0%94/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E8%80%83%E7%A0%94/</loc>
+    <loc>https://xia0ji233.github.io/categories/ICPC/%E5%9B%BE%E8%AE%BA/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2805,7 +2814,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%9B%98/%E5%A4%9A%E6%A0%A1%E8%81%94%E8%B5%9B/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E8%80%83%E7%A0%94/408/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2819,14 +2828,14 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E8%80%83%E7%A0%94/408/</loc>
+    <loc>https://xia0ji233.github.io/categories/ICPC/%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/ICPC/%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%9B%98/%E5%A4%9A%E6%A0%A1%E8%81%94%E8%B5%9B/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2840,14 +2849,14 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/CTF/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/</loc>
+    <loc>https://xia0ji233.github.io/categories/CTF/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2896,14 +2905,14 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/CTF/Crypto/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/</loc>
+    <loc>https://xia0ji233.github.io/categories/CTF/Crypto/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2959,14 +2968,21 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%9B%98/HITCTF2022/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%9B%98/HITCTF2023/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%9B%98/HITCTF2023/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2025-01-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xia0ji233.github.io/categories/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%9B%98/HITCTF2022/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -2981,13 +2997,6 @@
   
   <url>
     <loc>https://xia0ji233.github.io/categories/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%9B%98/KCTF/</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xia0ji233.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3015,6 +3024,27 @@
   </url>
   
   <url>
+    <loc>https://xia0ji233.github.io/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/%E8%B0%A2%E4%B9%A6/</loc>
+    <lastmod>2025-01-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/</loc>
+    <lastmod>2025-01-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xia0ji233.github.io/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2025-01-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://xia0ji233.github.io/categories/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%9B%98/CatCTF/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
@@ -3029,21 +3059,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/%E8%B0%A2%E4%B9%A6/</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xia0ji233.github.io/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/PE%E6%96%87%E4%BB%B6%E5%88%86%E6%9E%90/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3071,6 +3087,13 @@
   </url>
   
   <url>
+    <loc>https://xia0ji233.github.io/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/</loc>
+    <lastmod>2025-01-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://xia0ji233.github.io/categories/%E4%B9%A6%E7%B1%8D%E9%98%85%E8%AF%BB/%E8%A2%AB%E8%AE%A8%E5%8E%8C%E7%9A%84%E5%8B%87%E6%B0%94/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
@@ -3085,14 +3108,14 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/ISO/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/%E6%B8%B8%E6%88%8F%E5%AE%89%E5%85%A8/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/%E6%B8%B8%E6%88%8F%E5%AE%89%E5%85%A8/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/ISO/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3106,13 +3129,6 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E4%B8%80/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
@@ -3120,14 +3136,14 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E5%B7%A5%E5%85%B7/Git/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E5%B7%A5%E5%85%B7/Git/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3183,6 +3199,20 @@
   </url>
   
   <url>
+    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/hook%E6%8A%80%E6%9C%AF/</loc>
+    <lastmod>2025-01-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xia0ji233.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/CVE-2021-3493/</loc>
+    <lastmod>2025-01-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://xia0ji233.github.io/categories/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%9B%98/%E5%BC%BA%E7%BD%91%E6%9D%AFS8%E5%86%B3%E8%B5%9B/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
@@ -3197,7 +3227,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/hook%E6%8A%80%E6%9C%AF/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/CVE-2021-4145/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3218,14 +3248,14 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/x86%E6%9E%B6%E6%9E%84/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/CVE-2022-0847/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/CVE-2021-3493/</loc>
+    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/x86%E6%9E%B6%E6%9E%84/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3246,20 +3276,6 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/ICPC/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xia0ji233.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/CVE-2021-4145/</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://xia0ji233.github.io/categories/%E5%B7%A5%E5%85%B7/LLVM/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
@@ -3267,7 +3283,7 @@
   </url>
   
   <url>
-    <loc>https://xia0ji233.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/CVE-2022-0847/</loc>
+    <loc>https://xia0ji233.github.io/categories/ICPC/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3275,13 +3291,6 @@
   
   <url>
     <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Linux/%E7%9F%A5%E8%AF%86%E6%9D%82%E8%B0%88/</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xia0ji233.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/PE%E6%96%87%E4%BB%B6%E5%88%86%E6%9E%90/</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
