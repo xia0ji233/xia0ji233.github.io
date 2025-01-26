@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>windows句柄表学习（1） | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="来了解一下Windows内核的句柄表。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows句柄表学习（1）">
+<meta property="og:url" content="https://xia0ji233.github.io/2025/01/26/WindowsObjectTable1/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="来了解一下Windows内核的句柄表。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2025-01-26T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-26T08:38:05.832Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2025/01/26/WindowsObjectTable1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'windows句柄表学习（1）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-01-26 16:38:05'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">302</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">85</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">windows句柄表学习（1）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-01-26T08:00:00.000Z" title="发表于 2025-01-26 16:00:00">2025-01-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-26T08:38:05.832Z" title="更新于 2025-01-26 16:38:05">2025-01-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">计算机系统</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/">Windows</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/">进程与线程</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="windows句柄表学习（1）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>来了解一下Windows内核的句柄表。</p>
+<span id="more"></span>
+
+<h2 id="句柄"><a href="#句柄" class="headerlink" title="句柄"></a>句柄</h2><p>句柄就类似 <code>Linux</code> 的文件描述符，指示了某个进程在内核对象的偏移，内核可以通过这个下标找到对应的内核对象。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HANDLE g_hMutex = ::<span class="built_in">CreateMutex</span>( <span class="literal">NULL</span> , FALSE, <span class="string">&quot;XYZ&quot;</span>);</span><br><span class="line">HANDLE g_hMutex = ::<span class="built_in">OpenMutex</span>( MUTEX_ALL_ACCESSFALSE, <span class="string">&quot;XYZ&quot;</span>);</span><br><span class="line">HANDLE g_hEvent = ::<span class="built_in">CreateEvent</span>( <span class="literal">NULL</span>, TRUE, FALSE, <span class="literal">NULL</span>);</span><br><span class="line">HANDLE g_hThread = ::<span class="built_in">CreateThread</span>( <span class="literal">NULL</span>, <span class="number">0</span>, Proc,<span class="literal">NULL</span>, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>句柄是给3环用的，而不是给内核用的</strong> 。所以在写驱动的时候，不要搞句柄花里胡哨的东西。<code>Windows</code>所有涉及句柄的<code>API</code>，一旦到了真正函数实现的部分，就立刻使用<code>ObReferenceObjectByHandle</code>把它转化为真正的指向内核对象的指针。</p>
+<h2 id="句柄表"><a href="#句柄表" class="headerlink" title="句柄表"></a>句柄表</h2><p>之前看进程结构体里面，其实就有一个成员叫句柄表 <code>ObjectTable</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dt _EPROCESS</span><br><span class="line">ntdll!_EPROCESS</span><br><span class="line">   <span class="number">+0x000</span> Pcb              : _KPROCESS</span><br><span class="line">   <span class="number">+0x0f0</span> ExceptionPortState : Pos <span class="number">0</span>, <span class="number">3</span> Bits</span><br><span class="line">   <span class="number">+0x0f4</span> ObjectTable      : Ptr32 _HANDLE_TABLE</span><br><span class="line">   <span class="number">+0x0f8</span> Token            : _EX_FAST_REF</span><br></pre></td></tr></table></figure>
+
+<h3 id="句柄表结构"><a href="#句柄表结构" class="headerlink" title="句柄表结构"></a>句柄表结构</h3><p>句柄表也是有一个专门的结构维护的，来看看：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dt _HANDLE_TABLE</span><br><span class="line">ntdll!_HANDLE_TABLE</span><br><span class="line">   <span class="number">+0x000</span> TableCode        : Uint4B</span><br><span class="line">   <span class="number">+0x004</span> QuotaProcess     : Ptr32 _EPROCESS</span><br><span class="line">   <span class="number">+0x008</span> UniqueProcessId  : Ptr32 Void</span><br><span class="line">   <span class="number">+0x00c</span> HandleLock       : _EX_PUSH_LOCK</span><br><span class="line">   <span class="number">+0x010</span> HandleTableList  : _LIST_ENTRY</span><br><span class="line">   <span class="number">+0x018</span> HandleContentionEvent : _EX_PUSH_LOCK</span><br><span class="line">   <span class="number">+0x01c</span> DebugInfo        : Ptr32 _HANDLE_TRACE_DEBUG_INFO</span><br><span class="line">   <span class="number">+0x020</span> ExtraInfoPages   : Int4B</span><br><span class="line">   <span class="number">+0x024</span> Flags            : Uint4B</span><br><span class="line">   <span class="number">+0x024</span> StrictFIFO       : Pos <span class="number">0</span>, <span class="number">1</span> Bit</span><br><span class="line">   <span class="number">+0x028</span> FirstFreeHandle  : Uint4B</span><br><span class="line">   <span class="number">+0x02c</span> LastFreeHandleEntry : Ptr32 _HANDLE_TABLE_ENTRY</span><br><span class="line">   <span class="number">+0x030</span> HandleCount      : Uint4B</span><br><span class="line">   <span class="number">+0x034</span> NextHandleNeedingPool : Uint4B</span><br><span class="line">   <span class="number">+0x038</span> HandleCountHighWatermark : Uint4B</span><br></pre></td></tr></table></figure>
+
+<p>最低两位表示句柄表的级数，例如最低两位位为 <code>0</code> 表示该句柄表存放的是真正的句柄，如果为 01 或者 10 则表示指向了一个句柄表，如下图所示：</p>
+<img src="/2025/01/26/WindowsObjectTable1/1.png" class="">
+
+<p>顺表介绍一下句柄在句柄表中的结构，一个句柄项占 <code>8</code> 字节，通常来说一个句柄表会占一个页（4KB），所以一个句柄表最多容纳 512 个句柄项。</p>
+<img src="/2025/01/26/WindowsObjectTable1/2.png" class="">
+
+<p>①：这一块共计两个字节，高位字节是给<code>SetHandleInformation</code>这个函数用的，比如写成如下形式，那么这个位置将被写入<code>0x02</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">SetHandleInformation</span>(Handle,HANDLE_FLAG_PROTECT_FROM_CLOSE,HANDLE_FLAG_PROTECT_FROM_CLOSE);</span><br></pre></td></tr></table></figure>
+
+<p><code>HANDLE_FLAG_PROTECT_FROM_CLOSE</code>宏的值为<code>0x00000002</code>，取最低字节，最终 ① 这块是<code>0x0200</code>。</p>
+<p>②：这块是访问掩码，是给<code>OpenProcess</code>这个函数用的，具体的存的值就是这个函数的第一个参数的值。</p>
+<p>③ 和 ④ 这两个块共计四个字节，其中<code>bit0-bit2</code>存的是这个句柄的属性，其中<code>bit2</code>和<code>bit0</code>默认为<code>0</code>和<code>1</code>; <code>bit1</code>表示的函数是该句柄是否可继承，<code>OpenProcess</code>的第二个参数与<code>bit1</code>有关，bit31-bit3则是存放的该内核对象在内核中的具体的地址。</p>
+<p>挂在进程下的句柄表就叫<strong>私有句柄表</strong>，除此之外内核还维护一张<strong>全局句柄表</strong>。</p>
+<h3 id="私有句柄表"><a href="#私有句柄表" class="headerlink" title="私有句柄表"></a>私有句柄表</h3><p>私有句柄表有很多类型的句柄，文件句柄、进程句柄、线程句柄、快照句柄等等。</p>
+<p>这里以 <code>OpenProcess</code> 打开的句柄为例。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdafx.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DWORD pid=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;pid);</span><br><span class="line">	HANDLE hProcess=<span class="built_in">OpenProcess</span>(PROCESS_ALL_ACCESS,FALSE,pid);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;HANDLE=%p&quot;</span>,hProcess);</span><br><span class="line">	<span class="built_in">getchar</span>();</span><br><span class="line">	<span class="built_in">getchar</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为发现 win7 的镜像自带的任务管理器居然没有显示 pid，所以使用 CE 查看。</p>
+<img src="/2025/01/26/WindowsObjectTable1/3.png" class="">
+
+<p>这里获取了 <code>explorer.exe</code> 的句柄，返回值为 <code>0x2C</code>。</p>
+<p>这里需要注意的是，句柄表项指向的仍然不是真正的内核对象，而是一个 <code>_OBJECT_HEADER</code> 结构，在里面可以区分该句柄是进程句柄，线程句柄还是其它句柄。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">kd&gt;!process <span class="number">0</span> <span class="number">0</span></span><br><span class="line">PROCESS <span class="number">887</span>fc888  SessionId: <span class="number">1</span>  Cid: <span class="number">0634</span>    Peb: <span class="number">7</span>ffdc000  ParentCid: <span class="number">0614</span></span><br><span class="line">    DirBase: <span class="number">401</span>d3000  ObjectTable: <span class="number">92303268</span>  HandleCount: <span class="number">567.</span></span><br><span class="line">    Image: explorer.exe</span><br><span class="line">PROCESS <span class="number">87</span>d73450  SessionId: <span class="number">1</span>  Cid: <span class="number">0</span>d30    Peb: <span class="number">7</span>ffd9000  ParentCid: <span class="number">070</span>c</span><br><span class="line">    DirBase: <span class="number">7480</span>b000  ObjectTable: <span class="number">923</span>c7920  HandleCount:  <span class="number">17.</span></span><br><span class="line">    Image: Test<span class="number">1.</span>exe</span><br></pre></td></tr></table></figure>
+
+<p>可以快速得到该进程的句柄表位置，然后找到该句柄表。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dt _HANDLE_TABLE <span class="number">923</span>c7920</span><br><span class="line">nt!_HANDLE_TABLE</span><br><span class="line">   <span class="number">+0x000</span> TableCode        : <span class="number">0xa4cfc001</span></span><br><span class="line">   <span class="number">+0x004</span> QuotaProcess     : <span class="number">0x87d73450</span> _EPROCESS</span><br><span class="line">   <span class="number">+0x008</span> UniqueProcessId  : <span class="number">0x00000d30</span> Void</span><br><span class="line">   <span class="number">+0x00c</span> HandleLock       : _EX_PUSH_LOCK</span><br><span class="line">   <span class="number">+0x010</span> HandleTableList  : _LIST_ENTRY [ <span class="number">0xa4c25708</span> - <span class="number">0xab485c68</span> ]</span><br><span class="line">   <span class="number">+0x018</span> HandleContentionEvent : _EX_PUSH_LOCK</span><br><span class="line">   <span class="number">+0x01c</span> DebugInfo        : (null) </span><br><span class="line">   <span class="number">+0x020</span> ExtraInfoPages   : <span class="number">0</span>n0</span><br><span class="line">   <span class="number">+0x024</span> Flags            : <span class="number">0</span></span><br><span class="line">   <span class="number">+0x024</span> StrictFIFO       : <span class="number">0</span>y0</span><br><span class="line">   <span class="number">+0x028</span> FirstFreeHandle  : <span class="number">0x30</span></span><br><span class="line">   <span class="number">+0x02c</span> LastFreeHandleEntry : <span class="number">0xa4cb3ff8</span> _HANDLE_TABLE_ENTRY</span><br><span class="line">   <span class="number">+0x030</span> HandleCount      : <span class="number">0x11</span></span><br><span class="line">   <span class="number">+0x034</span> NextHandleNeedingPool : <span class="number">0x1800</span></span><br><span class="line">   <span class="number">+0x038</span> HandleCountHighWatermark : <span class="number">0x11</span></span><br></pre></td></tr></table></figure>
+
+<p>TableCode 的最低两位为 1，说明是二级的句柄表，需要索引一次，也就是将句柄下标 &#x2F;512 得到二级句柄表所在的下标，取512模得到二级句柄表内的偏移。</p>
+<p>0x2C 的实际下标是 <code>0x2C/4=11</code>， 那么 <code>11/512=0</code>，<code>11%512=11</code>，即可知道应该找第一个二级句柄表，表内偏移为 <code>11*8</code> （每个句柄项大小为 8）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dd <span class="number">0xa4cfc000</span></span><br><span class="line">a4cfc000  ab7c1000 a4d01000 a4cb3000 <span class="number">00000000</span></span><br><span class="line">a4cfc010  <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span></span><br><span class="line">a4cfc020  <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span></span><br><span class="line">a4cfc030  <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span></span><br><span class="line">a4cfc040  <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span></span><br><span class="line">a4cfc050  <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span></span><br><span class="line">a4cfc060  <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span></span><br><span class="line">a4cfc070  <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span></span><br></pre></td></tr></table></figure>
+
+<p>三级句柄表同理可得。其实跟分页是同理的，例如常见的 10-10-12 是二级页表 2-9-9-12 是三级页表。不过需要注意的是，32位的系统中，每个二级句柄表可以存下 1024 个句柄指针，所以三级句柄表可能实际跟二级句柄表又有些许差异，不过影响不大。不过这里有一个小技巧，句柄表初始化的时候，在 AccessMode 的位置上会显示后一个句柄的实际值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dq ab7c1000</span><br><span class="line">ReadVirtual: ab7c1000 <span class="keyword">not</span> properly sign extended</span><br><span class="line">ab7c1000  fffffffe`<span class="number">00000000</span> <span class="number">0000000</span>9`ab552a69</span><br><span class="line">ab7c1010  <span class="number">00000003</span>`<span class="number">98453741</span> <span class="number">00100020</span>`<span class="number">8889</span>c259</span><br><span class="line">ab7c1020  <span class="number">001</span>f0003`<span class="number">87</span>c461f9 <span class="number">001</span>f0001`<span class="number">882</span>bfc31</span><br><span class="line">ab7c1030  <span class="number">001</span>f0001`<span class="number">86</span>a20ee9 <span class="number">00100020</span>`<span class="number">86</span>a28be1</span><br><span class="line">ab7c1040  <span class="number">0000000</span>9`ab5a0c39 <span class="number">0002001</span>9`ab61a201</span><br><span class="line">ab7c1050  <span class="number">00000001</span>`ab6c<span class="number">69e1</span> <span class="number">001</span>fffff`<span class="number">887</span>fc871</span><br><span class="line">ab7c1060  <span class="number">00000034</span>`<span class="number">00000000</span> <span class="number">0000003</span>8`<span class="number">00000000</span></span><br><span class="line">ab7c1070  <span class="number">0000003</span>c`<span class="number">00000000</span> <span class="number">00000040</span>`<span class="number">00000000</span></span><br></pre></td></tr></table></figure>
+
+<p>可以很清楚看到后面连成片的 <code>0x34</code>，<code>0x38</code>，<code>0x3c</code> 等，0x34 所在的位置句柄值就是 0x30，同理，前面就找到了 <code>0x2C</code> 的句柄 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">001fffff`887fc871</span><br></pre></td></tr></table></figure>
+
+<p>可以发现 <code>AccessMode</code> 是 <code>0xFFFF</code> 也就是 <code>PROCESS_ALL_ACCESS</code> 的赋值，最高三位未赋予实际意义（也就是说0x1FFF就足以表示 <code>PROCESS_ALL_ACCESS</code>），取何值不影响。</p>
+<p>将取出来的值去掉最低三位拿到的地址就是 <code>887fc870</code>，这是一个 <code>_OBJECT_HEADER</code> 结构，如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dt _OBJECT_HEADER <span class="number">887</span>fc870</span><br><span class="line">nt!_OBJECT_HEADER</span><br><span class="line">   <span class="number">+0x000</span> PointerCount     : <span class="number">0</span>n317</span><br><span class="line">   <span class="number">+0x004</span> HandleCount      : <span class="number">0</span>n8</span><br><span class="line">   <span class="number">+0x004</span> NextToFree       : <span class="number">0x00000008</span> Void</span><br><span class="line">   <span class="number">+0x008</span> Lock             : _EX_PUSH_LOCK</span><br><span class="line">   <span class="number">+0x00c</span> TypeIndex        : <span class="number">0x7</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="string">   +0x00d TraceFlags       : 0 &#x27;</span>&#x27;</span><br><span class="line">   <span class="number">+0x00e</span> InfoMask         : <span class="number">0x8</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="string">   +0x00f Flags            : 0 &#x27;</span>&#x27;</span><br><span class="line">   <span class="number">+0x010</span> ObjectCreateInfo : <span class="number">0x8874e040</span> _OBJECT_CREATE_INFORMATION</span><br><span class="line">   <span class="number">+0x010</span> QuotaBlockCharged : <span class="number">0x8874e040</span> Void</span><br><span class="line">   <span class="number">+0x014</span> SecurityDescriptor : <span class="number">0x922ba4aa</span> Void</span><br><span class="line">   <span class="number">+0x018</span> Body             : _QUAD</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>TypeIndex</code> 可以辨认该句柄是什么类型的句柄，据说早年是用一个字符串标识的，个人感觉可能是浪费内存了就使用这个 TypeIndex 去存储类型，其中 <code>+0x18</code> 的偏移就是句柄对应的 <code>EPROCESS</code> 的结构。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dt _EPROCESS <span class="number">887</span>fc870<span class="number">+0x18</span></span><br><span class="line">nt!_EPROCESS</span><br><span class="line">   <span class="number">+0x000</span> Pcb              : _KPROCESS</span><br><span class="line">   <span class="number">+0x16c</span> ImageFileName    : [<span class="number">15</span>]  <span class="string">&quot;explorer.exe&quot;</span></span><br><span class="line">   <span class="number">+0x17b</span> PriorityClass    : <span class="number">0x2</span> <span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>成功找到对应的 <code>EPROCESS</code> 结构，可以看到，这个地址就是 <code>explorer.exe</code> 进程实际 <code>EPROCESS</code> 结构的地址（可在 <code>!process 0 0</code> 命令输出）。</p>
+<h3 id="全局句柄表"><a href="#全局句柄表" class="headerlink" title="全局句柄表"></a>全局句柄表</h3><p>全局句柄表指针由内核的全局变量 <code>PspCidTable</code> 维护，故此全局句柄表因此又被称为<strong>CID句柄表</strong>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dd PspCidTable</span><br><span class="line"><span class="number">83</span>d7ad54  <span class="number">8e801070</span> <span class="number">00000000</span> <span class="number">80000020</span> <span class="number">00000101</span></span><br><span class="line"><span class="number">83</span>d7ad64  <span class="number">800002e0</span> <span class="number">80000024</span> <span class="number">00000000</span> <span class="number">00000000</span></span><br><span class="line"><span class="number">83</span>d7ad74  <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000113</span></span><br><span class="line"><span class="number">83</span>d7ad84  <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">83</span>d2d482 <span class="number">00000000</span></span><br><span class="line"><span class="number">83</span>d7ad94  <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">0000000</span>8</span><br><span class="line"><span class="number">83</span>d7ada4  <span class="number">00000000</span> <span class="number">83</span>d7ada8 <span class="number">83</span>d7ada8 <span class="number">00000000</span></span><br><span class="line"><span class="number">83</span>d7adb4  <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span></span><br><span class="line"><span class="number">83</span>d7adc4  <span class="number">00000000</span> <span class="number">80</span>dc8c38 <span class="number">80</span>dc4c38 <span class="number">00000000</span></span><br><span class="line">kd&gt; dt _HANDLE_TABLE <span class="number">8e801070</span></span><br><span class="line">ntdll!_HANDLE_TABLE</span><br><span class="line">   <span class="number">+0x000</span> TableCode        : <span class="number">0x8e804000</span></span><br><span class="line">   <span class="number">+0x004</span> QuotaProcess     : (null) </span><br><span class="line">   <span class="number">+0x008</span> UniqueProcessId  : (null) </span><br><span class="line">   <span class="number">+0x00c</span> HandleLock       : _EX_PUSH_LOCK</span><br><span class="line">   <span class="number">+0x010</span> HandleTableList  : _LIST_ENTRY [ <span class="number">0x8e801080</span> - <span class="number">0x8e801080</span> ]</span><br><span class="line">   <span class="number">+0x018</span> HandleContentionEvent : _EX_PUSH_LOCK</span><br><span class="line">   <span class="number">+0x01c</span> DebugInfo        : (null) </span><br><span class="line">   <span class="number">+0x020</span> ExtraInfoPages   : <span class="number">0</span>n0</span><br><span class="line">   <span class="number">+0x024</span> Flags            : <span class="number">1</span></span><br><span class="line">   <span class="number">+0x024</span> StrictFIFO       : <span class="number">0</span>y1</span><br><span class="line">   <span class="number">+0x028</span> FirstFreeHandle  : <span class="number">0x178</span></span><br><span class="line">   <span class="number">+0x02c</span> LastFreeHandleEntry : <span class="number">0x8e8041e0</span> _HANDLE_TABLE_ENTRY</span><br><span class="line">   <span class="number">+0x030</span> HandleCount      : <span class="number">0x1a7</span></span><br><span class="line">   <span class="number">+0x034</span> NextHandleNeedingPool : <span class="number">0x800</span></span><br><span class="line">   <span class="number">+0x038</span> HandleCountHighWatermark : <span class="number">0x1a7</span></span><br><span class="line">kd&gt; dq <span class="number">0x8e804000</span></span><br><span class="line"><span class="number">8e804000</span>  fffffffe`<span class="number">00000000</span> <span class="number">00000000</span>`<span class="number">868e5901</span></span><br><span class="line"><span class="number">8e804010</span>  <span class="number">00000000</span>`<span class="number">868e5629</span> <span class="number">00000000</span>`<span class="number">86944431</span></span><br><span class="line"><span class="number">8e804020</span>  <span class="number">00000000</span>`<span class="number">86944921</span> <span class="number">00000000</span>`<span class="number">86940</span>d49</span><br><span class="line"><span class="number">8e804030</span>  <span class="number">00000000</span>`<span class="number">86940931</span> <span class="number">00000000</span>`<span class="number">86934</span>d49</span><br><span class="line"><span class="number">8e804040</span>  <span class="number">00000000</span>`<span class="number">86934</span>a71 <span class="number">00000000</span>`<span class="number">86930</span>d49</span><br><span class="line"><span class="number">8e804050</span>  <span class="number">00000000</span>`<span class="number">86930</span>a71 <span class="number">00000000</span>`<span class="number">8691</span>cd49</span><br><span class="line"><span class="number">8e804060</span>  <span class="number">00000000</span>`<span class="number">8691</span>ca71 <span class="number">00000000</span>`<span class="number">8690</span>cd49</span><br><span class="line"><span class="number">8e804070</span>  <span class="number">00000000</span>`<span class="number">8690</span>ca71 <span class="number">00000000</span>`<span class="number">868</span>f4d49</span><br></pre></td></tr></table></figure>
+
+<p>全局句柄表顾名思义不依附于任何一个进程。每个进程和线程都有一个唯一的编号：<code>PID</code>和<code>TID</code>，这两个值其实就是全局句柄表中的索引，统称<code>CID</code>。进程和线程的查询，主要是以下三个函数，按照给定的<code>PID</code>或<code>TID</code>从<code>PspCidTable</code>从查找相应的进线程对象：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PsLookupProcessThreadByCid</span>(x, x, x);</span><br><span class="line"><span class="built_in">PsLookupProcessByProcessId</span>(HANDLE ProcessId, PEPROCESS *Process);</span><br><span class="line"><span class="built_in">PsLookupThreadByThreadId</span>(HANDLE ThreadId, PETHREAD *Thread);  </span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>[1]：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/wingsummer/p/15823780.html">https://www.cnblogs.com/wingsummer/p/15823780.html</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2025/01/26/WindowsObjectTable1/">https://xia0ji233.github.io/2025/01/26/WindowsObjectTable1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/01/25/WindowsProcess5/" title="windows进程与线程学习——深入研究线程调度（2）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">windows进程与线程学习——深入研究线程调度（2）</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">302</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">85</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%A5%E6%9F%84"><span class="toc-number">1.</span> <span class="toc-text">句柄</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%A5%E6%9F%84%E8%A1%A8"><span class="toc-number">2.</span> <span class="toc-text">句柄表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%A5%E6%9F%84%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="toc-number">2.1.</span> <span class="toc-text">句柄表结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%81%E6%9C%89%E5%8F%A5%E6%9F%84%E8%A1%A8"><span class="toc-number">2.2.</span> <span class="toc-text">私有句柄表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%A5%E6%9F%84%E8%A1%A8"><span class="toc-number">2.3.</span> <span class="toc-text">全局句柄表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">3.</span> <span class="toc-text">参考文献</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/26/WindowsObjectTable1/" title="windows句柄表学习（1）">windows句柄表学习（1）</a><time datetime="2025-01-26T08:00:00.000Z" title="发表于 2025-01-26 16:00:00">2025-01-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/25/WindowsProcess5/" title="windows进程与线程学习——深入研究线程调度（2）">windows进程与线程学习——深入研究线程调度（2）</a><time datetime="2025-01-25T14:00:00.000Z" title="发表于 2025-01-25 22:00:00">2025-01-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/25/WindowsProcess4/" title="windows进程与线程学习——深入研究线程调度（1）">windows进程与线程学习——深入研究线程调度（1）</a><time datetime="2025-01-24T17:00:00.000Z" title="发表于 2025-01-25 01:00:00">2025-01-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/24/WindowsProcess3/" title="windows进程与线程学习——调度实现的学习">windows进程与线程学习——调度实现的学习</a><time datetime="2025-01-24T14:00:00.000Z" title="发表于 2025-01-24 22:00:00">2025-01-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/24/WindowsProcess2/" title="windows进程与线程学习——调度相关结构学习">windows进程与线程学习——调度相关结构学习</a><time datetime="2025-01-24T08:00:00.000Z" title="发表于 2025-01-24 16:00:00">2025-01-24</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><script src="/live2d-widget/dist/autoload.js"></script><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
