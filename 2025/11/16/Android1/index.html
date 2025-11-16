@@ -1,0 +1,572 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Android逆向学习（1） | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="开始学习Android逆向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android逆向学习（1）">
+<meta property="og:url" content="https://xia0ji233.github.io/2025/11/16/Android1/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="开始学习Android逆向">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2025-11-16T02:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-16T02:33:52.647Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2025/11/16/Android1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Android逆向学习（1）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-11-16 10:33:52'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">309</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">90</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Android逆向学习（1）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-11-16T02:00:00.000Z" title="发表于 2025-11-16 10:00:00">2025-11-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-16T02:33:52.647Z" title="更新于 2025-11-16 10:33:52">2025-11-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CTF/">CTF</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CTF/Android/">Android</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>16分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Android逆向学习（1）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>开始学习Android逆向</p>
+<span id="more"></span>
+
+<h2 id="APK文件结构"><a href="#APK文件结构" class="headerlink" title="APK文件结构"></a>APK文件结构</h2><p>随便使用 7-zip 打开一个 apk 文件</p>
+<img src="/2025/11/16/Android1/1.png" class="">
+
+<p>列出一些关键的文件和目录的用途</p>
+<table>
+<thead>
+<tr>
+<th align="left">文件</th>
+<th align="left">注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">assets目录</td>
+<td align="left">存放APK的静态资源文件，比如视频，音频，图片等</td>
+</tr>
+<tr>
+<td align="left">lib 目录</td>
+<td align="left">armeabi-v7a基本通用所有android设备，arm64-v8a只适用于64位的android设备，x86常见用于android模拟器，其目录下的.so文件是c或c++编译的动态链接库文件</td>
+</tr>
+<tr>
+<td align="left">META-INF目录</td>
+<td align="left">保存应用的签名信息</td>
+</tr>
+<tr>
+<td align="left">res目录</td>
+<td align="left">res目录存放资源文件，包括图片，字符串等等，APK的脸蛋由他的layout文件设计</td>
+</tr>
+<tr>
+<td align="left">AndroidManifest.xml</td>
+<td align="left">APK的应用清单信息，它描述了应用的名字，版本，权限，引用的库文件等等信息</td>
+</tr>
+<tr>
+<td align="left">classes.dex文件</td>
+<td align="left">classes.dex是java源码编译后生成的java字节码文件，APK运行的主要逻辑</td>
+</tr>
+<tr>
+<td align="left">resources.arsc文件</td>
+<td align="left">resources.arsc是编译后的二进制资源文件，它是一个映射表，映射着资源和id，通过R文件中的id就可以找到对应的资源</td>
+</tr>
+</tbody></table>
+<h3 id="双开"><a href="#双开" class="headerlink" title="双开"></a>双开</h3><p>最简单的思路就是给 apk 换个包名，换个包名之后系统识别会是两个不同的 apk，就能实现共存。</p>
+<h2 id="APK逆向"><a href="#APK逆向" class="headerlink" title="APK逆向"></a>APK逆向</h2><h3 id="什么是JVM、Dalvik、ART"><a href="#什么是JVM、Dalvik、ART" class="headerlink" title="什么是JVM、Dalvik、ART"></a>什么是JVM、Dalvik、ART</h3><p>JVM是JAVA虚拟机，运行JAVA字节码程序</p>
+<p>Dalvik是Google专门为Android设计的一个虚拟机，Dalvik有专属的文件执行格式dex(Dalvik executable)</p>
+<p>Art(Android Runtime)相当于Dalvik的升级版，本质与Dalvik无异</p>
+<h3 id="smali及其语法"><a href="#smali及其语法" class="headerlink" title="smali及其语法"></a>smali及其语法</h3><p>smali是Dalvik的寄存器语言，smali代码是dex反编译而来的。</p>
+<p>关键字</p>
+<table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">.class</td>
+<td align="left">类名</td>
+</tr>
+<tr>
+<td align="left">.super</td>
+<td align="left">父类名，继承的上级类名名称</td>
+</tr>
+<tr>
+<td align="left">.source</td>
+<td align="left">源名</td>
+</tr>
+<tr>
+<td align="left">.field</td>
+<td align="left">变量</td>
+</tr>
+<tr>
+<td align="left">.method</td>
+<td align="left">方法名</td>
+</tr>
+<tr>
+<td align="left">.register</td>
+<td align="left">寄存器</td>
+</tr>
+<tr>
+<td align="left">.end method</td>
+<td align="left">方法名的结束</td>
+</tr>
+<tr>
+<td align="left">public</td>
+<td align="left">公有</td>
+</tr>
+<tr>
+<td align="left">protected</td>
+<td align="left">半公开，只有同一家人才能用</td>
+</tr>
+<tr>
+<td align="left">private</td>
+<td align="left">私有，只能自己使用</td>
+</tr>
+<tr>
+<td align="left">.parameter</td>
+<td align="left">方法参数</td>
+</tr>
+<tr>
+<td align="left">.prologue</td>
+<td align="left">方法开始</td>
+</tr>
+<tr>
+<td align="left">.line xxx</td>
+<td align="left">位于第xxx行</td>
+</tr>
+</tbody></table>
+<p>数据类型对应</p>
+<table>
+<thead>
+<tr>
+<th align="left">smali类型</th>
+<th align="left">java类型</th>
+<th align="left">注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">V</td>
+<td align="left">void</td>
+<td align="left">无返回值</td>
+</tr>
+<tr>
+<td align="left">Z</td>
+<td align="left">boolean</td>
+<td align="left">布尔值类型，返回0或1</td>
+</tr>
+<tr>
+<td align="left">B</td>
+<td align="left">byte</td>
+<td align="left">字节类型，返回字节</td>
+</tr>
+<tr>
+<td align="left">S</td>
+<td align="left">short</td>
+<td align="left">短整数类型，返回数字</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="left">char</td>
+<td align="left">字符类型，返回字符</td>
+</tr>
+<tr>
+<td align="left">I</td>
+<td align="left">int</td>
+<td align="left">整数类型，返回数字</td>
+</tr>
+<tr>
+<td align="left">J</td>
+<td align="left">long （64位 需要2个寄存器存储）</td>
+<td align="left">长整数类型，返回数字</td>
+</tr>
+<tr>
+<td align="left">F</td>
+<td align="left">float</td>
+<td align="left">单浮点类型，返回数字</td>
+</tr>
+<tr>
+<td align="left">D</td>
+<td align="left">double （64位 需要2个寄存器存储）</td>
+<td align="left">双浮点类型，返回数字</td>
+</tr>
+<tr>
+<td align="left">string</td>
+<td align="left">String</td>
+<td align="left">文本类型，返回字符串</td>
+</tr>
+<tr>
+<td align="left">Lxxx&#x2F;xxx&#x2F;xxx</td>
+<td align="left">object</td>
+<td align="left">对象类型，返回对象</td>
+</tr>
+</tbody></table>
+<p>常用指令</p>
+<table>
+<thead>
+<tr>
+<th align="left">关键字</th>
+<th align="left">注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">const</td>
+<td align="left">重写整数属性，真假属性内容，只能是数字类型</td>
+</tr>
+<tr>
+<td align="left">const-string</td>
+<td align="left">重写字符串内容</td>
+</tr>
+<tr>
+<td align="left">const-wide</td>
+<td align="left">重写长整数类型，多用于修改到期时间。</td>
+</tr>
+<tr>
+<td align="left">return</td>
+<td align="left">返回指令</td>
+</tr>
+<tr>
+<td align="left">if-eq</td>
+<td align="left">全称equal(a&#x3D;b)，比较寄存器ab内容，相同则跳</td>
+</tr>
+<tr>
+<td align="left">if-ne</td>
+<td align="left">全称not equal(a!&#x3D;b)，ab内容不相同则跳</td>
+</tr>
+<tr>
+<td align="left">if-eqz</td>
+<td align="left">全称equal zero(a&#x3D;0)，z即是0的标记，a等于0则跳</td>
+</tr>
+<tr>
+<td align="left">if-nez</td>
+<td align="left">全称not equal zero(a!&#x3D;0)，a不等于0则跳</td>
+</tr>
+<tr>
+<td align="left">if-ge</td>
+<td align="left">全称greater equal(a&gt;&#x3D;b)，a大于或等于则跳</td>
+</tr>
+<tr>
+<td align="left">if-le</td>
+<td align="left">全称little equal(a&lt;&#x3D;b)，a小于或等于则跳</td>
+</tr>
+<tr>
+<td align="left">goto</td>
+<td align="left">强制跳到指定位置</td>
+</tr>
+<tr>
+<td align="left">switch</td>
+<td align="left">分支跳转，一般会有多个分支线，并根据指令跳转到适当位置</td>
+</tr>
+<tr>
+<td align="left">iget</td>
+<td align="left">获取寄存器数据</td>
+</tr>
+</tbody></table>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>工具清单</p>
+<ul>
+<li>Android Studio：开发安卓应用（包括模块），毕竟会开发才能会逆向</li>
+<li>Jeb：APK逆向的优秀工具</li>
+<li>JADX：开源的 APK 逆向工具。</li>
+</ul>
+<p>目前就这么多，后面遇到再补…</p>
+<h3 id="签名校验"><a href="#签名校验" class="headerlink" title="签名校验"></a>签名校验</h3><p>这个跟传统密码学的校验还不太一样，这个校验主要校验的可以认为是公钥的 hash。</p>
+<p>传统的签名是：我将apk的重要文件进行hash之后，将hash用私钥加密得到一串签名，同时会放置一串公钥信息，验证签名的过程就是把文件 hash 和签名做公钥加密之后比较是否一致，这只是验证签名的完整性，而且通常来说不可能放在代码层校验，因为代码本身是签名要包括的内容。</p>
+<p>而真正的签名校验其实是在上述完整性保证的前提下，去验证<strong>公钥信息</strong>是否一致，因为只有拥有对应的私钥才能够签名，就意味着该 APK 肯定是由真正的开发者发布的。</p>
+<h3 id="Hook框架模块编写准备"><a href="#Hook框架模块编写准备" class="headerlink" title="Hook框架模块编写准备"></a>Hook框架模块编写准备</h3><p>以Xposed框架为例，在开发 app 时候需要做以下几步以便于 LSPOSED 等 Xposed 框架识别和加载。</p>
+<ol>
+<li>导入 Xposed API 的 jar 包</li>
+<li>打开 <code>build.gradle</code> 将该 jar 的依赖设置为 <code>compileOnly</code></li>
+<li>在 assets 目录新建 xposed_init 文件，将入口设置为 hook 的主框架</li>
+<li>修改 AndroidManifest.xml  文件</li>
+</ol>
+<p>OK，一步步来实现这一步骤，第一步将 <a href="Android1/XposedBridgeAPI-89.jar">jar包</a> 拖入项目中</p>
+<img src="/2025/11/16/Android1/2.png" class="">
+
+<p>第二步，打开 <code>build.gradle</code> 或者 <code>build.gradle.kts</code> 找到对应依赖，导入声明方式设置为 <code>compileOnly</code>。</p>
+<img src="/2025/11/16/Android1/3.png" class="">
+
+<p>第三步，在 assets 目录新建 xposed_init 文件，定义入口点。</p>
+<img src="/2025/11/16/Android1/4.png" class="">
+
+<p>这里我指向了 Hook 类，事实上你叫什么都无所谓。</p>
+<p>第四步，修改 <code>AndroidManifest.xml</code> 文件，将标签的 <code>application</code> 标签的内容设置为以下形式：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 是否是xposed模块，xposed根据这个来判断是否是模块 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:name</span>=<span class="string">&quot;xposedmodule&quot;</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 模块描述，显示在xposed模块列表那里第二行 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:name</span>=<span class="string">&quot;xposeddescription&quot;</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:value</span>=<span class="string">&quot;这是一个Xposed模块&quot;</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 最低xposed版本号(lib文件名可知) --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:name</span>=<span class="string">&quot;xposedminversion&quot;</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:value</span>=<span class="string">&quot;89&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里插一句这种 XML 格式的一些说明</p>
+<blockquote>
+<p>标签是 XML 的主要内容，以 HTML 为例，当设置一个 a 标签时  <code>&lt;a href=&#39;www.example.com&#39;&gt;test&lt;/a&gt;</code>，其中</p>
+<ul>
+<li><code>test</code> 是 a 标签的内容</li>
+<li><code>href</code> 是 a 标签的属性名，<code>www.example.com</code> 就是这个 a 标签 <code>href</code> 属性对应的属性值。</li>
+</ul>
+<p>标签不一定是成双成对出现的，可以是“孤儿标签”，例如 HTML 的 <code>&lt;br/&gt;</code>，它仅表示换行的意思，但是有些成双成对的标签它没有内容也可以成为孤儿标签，例如上面的例子可以变成 <code>&lt;a href=&#39;www.example.com&#39;/&gt;</code>，这在语法并没有问题，只是这个链接没有可以点击的对象而已。</p>
+</blockquote>
+<p>查看配置文件可以发现，这个 <code>application</code> 默认是一个“孤儿标签”，想给它加内容就需要把它改写成成双成对的形式，以便于向该标签添加内容。</p>
+<img src="/2025/11/16/Android1/5.png" class="">
+
+<p>好，做完这几步，这个 app 已经是一个合格的 Xposed 框架了。</p>
+<h3 id="hook方法的技巧"><a href="#hook方法的技巧" class="headerlink" title="hook方法的技巧"></a>hook方法的技巧</h3><p>先总结一下 hook 的方法：</p>
+<ul>
+<li><code>findAndHookMethod</code>：根据方法名和参数列表 hook 指定参数，适用于参数简单的方法。</li>
+<li><code>hookAllMethods</code>：仅根据方法名进行 hook，由于 JAVA 存在方法重载，因此可能指定名字会 hook 到原本不想 hook 的方法，仅适用于一些复杂参数的方法。</li>
+<li><code>findAndHookConstructor</code>：hook 指定的构造方法。</li>
+<li><code>hookAllConstructors</code>：hook 构造方法使用，多用于设置实例变量。</li>
+<li><code>setStaticObjectField</code>：设置静态成员值（除基本类型之外的静态变量都可以用这个方法）</li>
+<li><code>callStaticMethod</code>：调用某静态方法</li>
+<li><code>callMethod</code>：调用非静态方法</li>
+</ul>
+<p>这里 hook 的 demo 选择了<a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1740944-1-1.html">正己大神</a>对应课程的教程包。</p>
+<h4 id="hook普通方法"><a href="#hook普通方法" class="headerlink" title="hook普通方法"></a>hook普通方法</h4><p>先写一个 hello world 模块。</p>
+<p>用 jadx 打开要 hook 的包，选择 hook a方法，直接复制代码片段，该导的包就从 xposed 里面导就行。</p>
+<img src="/2025/11/16/Android1/6.png" class="">
+
+<p>这里写出如下代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xiaoji.xposeddemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.IXposedHookLoadPackage;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodHook;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedBridge;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedHelpers;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.callbacks.XC_LoadPackage;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Hook</span> <span class="keyword">implements</span> <span class="title class_">IXposedHookLoadPackage</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleLoadPackage</span><span class="params">(XC_LoadPackage.LoadPackageParam loadPackageParam)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="keyword">if</span>(!loadPackageParam.packageName.equals(<span class="string">&quot;com.zj.wuaipojie&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        XposedHelpers.findAndHookMethod(<span class="string">&quot;com.zj.wuaipojie.Demo&quot;</span>, loadPackageParam.classLoader, <span class="string">&quot;a&quot;</span>, String.class, <span class="keyword">new</span> <span class="title class_">XC_MethodHook</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">beforeHookedMethod</span><span class="params">(XC_MethodHook.MethodHookParam param)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">                <span class="built_in">super</span>.beforeHookedMethod(param);</span><br><span class="line">                XposedBridge.log(param.args[<span class="number">0</span>].toString());</span><br><span class="line">                <span class="type">String</span> <span class="variable">newstr</span> <span class="operator">=</span> <span class="string">&quot;xia0ji2333&quot;</span>;</span><br><span class="line">                param.args[<span class="number">0</span>] = newstr;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">afterHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">                <span class="built_in">super</span>.afterHookedMethod(param);</span><br><span class="line">                Log.e(<span class="string">&quot;zj2595&quot;</span>,<span class="string">&quot;返回值修改之前：&quot;</span>+param.getResult().toString()+<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">                param.setResult(<span class="string">&quot;被我修改了233&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>beforeHookedMethod</code> 用于在调用之前修改函数，通常用于监控参数等目的，在这里也可以选择直接拦截掉，<code>afterHookedMethod</code> 用于在调用之后修改函数，通常用于修改返回值，这里我分别实现修改参数和修改返回值的功能。</p>
+<p>加载 xposed 模块，安装之后在 lsposed 里面选择</p>
+<img src="/2025/11/16/Android1/7.png" class="">
+
+<p>最后启动 LOG，用 Android Studio 抓日志，hook 成功。</p>
+<img src="/2025/11/16/Android1/8.png" class="">
+
+<h4 id="hook复杂方法"><a href="#hook复杂方法" class="headerlink" title="hook复杂方法"></a>hook复杂方法</h4><p>以 <code>com.zj.wuaipojie.Demo</code> 包中的 <code>complexParameterFunc</code> 方法为例。</p>
+<img src="/2025/11/16/Android1/9.png" class="">
+
+<p>这个方法甚至有一个 <code>HashMap</code> 泛型，对于这种方法，如果不关心它的复杂参数，完全可以使用 <code>hookAllMethods</code> 来 <code>hook</code>。</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xiaoji.xposeddemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.IXposedHookLoadPackage;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodHook;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedBridge;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedHelpers;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.callbacks.XC_LoadPackage;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Hook</span> <span class="keyword">implements</span> <span class="title class_">IXposedHookLoadPackage</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleLoadPackage</span><span class="params">(XC_LoadPackage.LoadPackageParam loadPackageParam)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="keyword">if</span>(!loadPackageParam.packageName.equals(<span class="string">&quot;com.zj.wuaipojie&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">Class</span> <span class="variable">a</span> <span class="operator">=</span> loadPackageParam.classLoader.loadClass(<span class="string">&quot;com.zj.wuaipojie.Demo&quot;</span>);</span><br><span class="line">        XposedBridge.hookAllMethods(a, <span class="string">&quot;complexParameterFunc&quot;</span>, <span class="keyword">new</span> <span class="title class_">XC_MethodHook</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">beforeHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">                <span class="built_in">super</span>.beforeHookedMethod(param);</span><br><span class="line">                <span class="type">String</span> <span class="variable">a1</span> <span class="operator">=</span> param.args[<span class="number">0</span>].toString();</span><br><span class="line">                <span class="type">String</span> <span class="variable">a2</span> <span class="operator">=</span> param.args[<span class="number">1</span>].toString();</span><br><span class="line">                Log.e(<span class="string">&quot;zj2595&quot;</span>,a1);</span><br><span class="line">                Log.e(<span class="string">&quot;zj2595&quot;</span>,a2);</span><br><span class="line">                param.args[<span class="number">0</span>] = <span class="string">&quot;hooked_&quot;</span>+a1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最终结果也是 hook 上了：</p>
+<img src="/2025/11/16/Android1/10.png" class="">
+
+<h4 id="hook替换方法"><a href="#hook替换方法" class="headerlink" title="hook替换方法"></a>hook替换方法</h4><p>有些方法可能有副作用，例如 <code>a</code> 方法调用了 <code>exit</code> 函数，而我 hook 之后似乎没有办法阻止这个事情发生，这个时候就需要进行替换。</p>
+<p>假设这里输出的 <strong>这是替换函数</strong> 就是一个副作用函数，现在我想阻止它输出。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xiaoji.xposeddemo;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.IXposedHookLoadPackage;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodHook;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodReplacement;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedBridge;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedHelpers;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.callbacks.XC_LoadPackage;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Hook</span> <span class="keyword">implements</span> <span class="title class_">IXposedHookLoadPackage</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleLoadPackage</span><span class="params">(XC_LoadPackage.LoadPackageParam loadPackageParam)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="keyword">if</span>(!loadPackageParam.packageName.equals(<span class="string">&quot;com.zj.wuaipojie&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">Class</span> <span class="variable">a</span> <span class="operator">=</span> loadPackageParam.classLoader.loadClass(<span class="string">&quot;com.zj.wuaipojie.Demo&quot;</span>);</span><br><span class="line">        XposedBridge.hookAllMethods(a,<span class="string">&quot;repleaceFunc&quot;</span>,<span class="keyword">new</span> <span class="title class_">XC_MethodReplacement</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> Object <span class="title function_">replaceHookedMethod</span><span class="params">(MethodHookParam methodHookParam)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这里需要使用 <code>XC_MethodReplacement</code> 并实现 <code>replaceHookedMethod</code> 接口，直接给一个 <code>return &quot;&quot;</code> 即可。</p>
+<img src="/2025/11/16/Android1/11.png" class="">
+
+<p>可以看到原本应该输出的 <strong>这是替换函数</strong> 没有了。</p>
+<h3 id="hook变量的技巧"><a href="#hook变量的技巧" class="headerlink" title="hook变量的技巧"></a>hook变量的技巧</h3><p>在说这个之前，区分一下两种类型的变量，一种是静态的，它只有一份，一种是非静态的，它随具体实例。</p>
+<blockquote>
+<p>比如人这个类，数量就是对于整个人类而言的，它只有一个，所以通常来说它的定义是静态的变量。</p>
+<p>再比如身高对人类而言，每个人都有一个确定的身高，所以通常来说它只能定义为非静态变量。</p>
+</blockquote>
+<h4 id="Hook静态变量"><a href="#Hook静态变量" class="headerlink" title="Hook静态变量"></a>Hook静态变量</h4><p>使用 <code>setStaticObjectField</code> 方法即可。</p>
+<p>以图中的静态方法为例</p>
+<img src="/2025/11/16/Android1/12.png" class="">
+
+<p>直接调用方法修改即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xiaoji.xposeddemo;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.IXposedHookLoadPackage;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodHook;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodReplacement;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedBridge;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedHelpers;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.callbacks.XC_LoadPackage;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Hook</span> <span class="keyword">implements</span> <span class="title class_">IXposedHookLoadPackage</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleLoadPackage</span><span class="params">(XC_LoadPackage.LoadPackageParam loadPackageParam)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="keyword">if</span>(!loadPackageParam.packageName.equals(<span class="string">&quot;com.zj.wuaipojie&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> XposedHelpers.findClass(<span class="string">&quot;com.zj.wuaipojie.Demo&quot;</span>, loadPackageParam.classLoader);</span><br><span class="line">        XposedHelpers.setStaticObjectField(clazz, <span class="string">&quot;staticField&quot;</span>, <span class="string">&quot;Hooked Static Field Value by xia0ji233&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>结果也是成功修改：</p>
+<img src="/2025/11/16/Android1/13.png" class="">
+
+<h4 id="Hook非静态变量"><a href="#Hook非静态变量" class="headerlink" title="Hook非静态变量"></a>Hook非静态变量</h4><p>直接看代码和结果吧，主要使用 <code>hookAllConstructors</code> 方法去做</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xiaoji.xposeddemo;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.IXposedHookLoadPackage;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodHook;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodReplacement;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedBridge;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedHelpers;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.callbacks.XC_LoadPackage;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Hook</span> <span class="keyword">implements</span> <span class="title class_">IXposedHookLoadPackage</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleLoadPackage</span><span class="params">(XC_LoadPackage.LoadPackageParam loadPackageParam)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="keyword">if</span>(!loadPackageParam.packageName.equals(<span class="string">&quot;com.zj.wuaipojie&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> XposedHelpers.findClass(<span class="string">&quot;com.zj.wuaipojie.Demo&quot;</span>, loadPackageParam.classLoader);</span><br><span class="line">        XposedBridge.hookAllConstructors(clazz, <span class="keyword">new</span> <span class="title class_">XC_MethodHook</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">afterHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">                <span class="built_in">super</span>.afterHookedMethod(param);</span><br><span class="line">                <span class="comment">//param.thisObject获取当前所属的对象</span></span><br><span class="line">                <span class="type">Object</span> <span class="variable">ob</span> <span class="operator">=</span> param.thisObject;</span><br><span class="line">                XposedHelpers.setIntField(ob,<span class="string">&quot;privateInt&quot;</span>,<span class="number">114514</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里 hook 该类所有的构造函数，并在构造函数结束之后（实现 <code>afterHookedMethod</code> 方法）对成员的属性进行修改，成功修改实例的成员值。</p>
+<img src="/2025/11/16/Android1/14.png" class="">
+
+<h4 id="Hook构造函数"><a href="#Hook构造函数" class="headerlink" title="Hook构造函数"></a>Hook构造函数</h4><p>这里有参构造和无参构造一起 hook，用的是同一种方法，参数需要自己加才能 hook 到指定构造方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xiaoji.xposeddemo;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.IXposedHookLoadPackage;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodHook;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodReplacement;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedBridge;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedHelpers;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.callbacks.XC_LoadPackage;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Hook</span> <span class="keyword">implements</span> <span class="title class_">IXposedHookLoadPackage</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleLoadPackage</span><span class="params">(XC_LoadPackage.LoadPackageParam loadPackageParam)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="keyword">if</span>(!loadPackageParam.packageName.equals(<span class="string">&quot;com.zj.wuaipojie&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        XposedHelpers.findAndHookConstructor(<span class="string">&quot;com.zj.wuaipojie.Demo&quot;</span>, loadPackageParam.classLoader, <span class="keyword">new</span> <span class="title class_">XC_MethodHook</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">beforeHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">                <span class="built_in">super</span>.beforeHookedMethod(param);</span><br><span class="line">                Log.e(<span class="string">&quot;zj2595&quot;</span>,<span class="string">&quot;Demo Constructor Hooked&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        XposedHelpers.findAndHookConstructor(<span class="string">&quot;com.zj.wuaipojie.Demo&quot;</span>, loadPackageParam.classLoader, String.class, <span class="keyword">new</span> <span class="title class_">XC_MethodHook</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">beforeHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">                <span class="built_in">super</span>.beforeHookedMethod(param);</span><br><span class="line">                Log.e(<span class="string">&quot;zj2595&quot;</span>,<span class="string">&quot;Demo(String) Constructor Hooked, param: &quot;</span> + param.args[<span class="number">0</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为无参构造调用了有参构造，所以无参的构造 hook 先输出，再输出有参构造，如果是调用结束后的 hook 输出顺序则会相反。</p>
+<img src="/2025/11/16/Android1/16.png" class="">
+
+<h3 id="其它类型的hook"><a href="#其它类型的hook" class="headerlink" title="其它类型的hook"></a>其它类型的hook</h3><h4 id="主动调用"><a href="#主动调用" class="headerlink" title="主动调用"></a>主动调用</h4><p>当需要主动调用某方法时，需要使用方法 <code>callMethod</code>，不过这里只能调用非静态方法，因此必须拿到实例才能调用，实例可以自己新建也可以用某些方法拿到。</p>
+<p>如果是静态类，那就传类和静态方法名即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xiaoji.xposeddemo;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.IXposedHookLoadPackage;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodHook;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodReplacement;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedBridge;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedHelpers;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.callbacks.XC_LoadPackage;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Hook</span> <span class="keyword">implements</span> <span class="title class_">IXposedHookLoadPackage</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleLoadPackage</span><span class="params">(XC_LoadPackage.LoadPackageParam loadPackageParam)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="keyword">if</span>(!loadPackageParam.packageName.equals(<span class="string">&quot;com.zj.wuaipojie&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> XposedHelpers.findClass(<span class="string">&quot;com.zj.wuaipojie.Demo&quot;</span>,loadPackageParam.classLoader);</span><br><span class="line">        XposedHelpers.callMethod(clazz.newInstance(),<span class="string">&quot;refl&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里是非静态方法的主动调用，如果要调用静态方法，则换成</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> XposedHelpers.findClass(<span class="string">&quot;com.zj.wuaipojie.Demo&quot;</span>,loadPackageParam.classLoader);</span><br><span class="line">XposedHelpers.callMethod(clazz,<span class="string">&quot;staticFunc&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这里展示一下调用非静态方法的结果：</p>
+<img src="/2025/11/16/Android1/17.png" class="">
+
+<h4 id="反射调用"><a href="#反射调用" class="headerlink" title="反射调用"></a>反射调用</h4><p>先介绍一下反射吧（实则我也不懂）</p>
+<blockquote>
+<p>讲反射之前先讲一讲正射，正射是加载类最常见的一种方式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Apple</span> <span class="variable">apple</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Apple</span>();</span><br><span class="line">apple.setPrice(<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+
+<p>通过导入包 <code>apple</code> 并直接调用构造方法构造类的方法称为正射，正射需要在编译阶段就确定类。</p>
+<p>反射则是通过运行时动态加载类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Class</span> <span class="variable">clz</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;com.xiaoji.Apple&quot;</span>);</span><br><span class="line"><span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> clz.getMethod(<span class="string">&quot;setPrice&quot;</span>, <span class="type">int</span>.class);</span><br><span class="line"><span class="type">Constructor</span> <span class="variable">constructor</span> <span class="operator">=</span> clz.getConstructor();</span><br><span class="line"><span class="type">Object</span> <span class="variable">object</span> <span class="operator">=</span> constructor.newInstance();</span><br><span class="line">method.invoke(object, <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+
+<p>反射就是在运行时才知道要操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。</p>
+</blockquote>
+<p>反射调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xiaoji.xposeddemo;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.IXposedHookLoadPackage;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodHook;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XC_MethodReplacement;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedBridge;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.XposedHelpers;</span><br><span class="line"><span class="keyword">import</span> de.robv.android.xposed.callbacks.XC_LoadPackage;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Hook</span> <span class="keyword">implements</span> <span class="title class_">IXposedHookLoadPackage</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleLoadPackage</span><span class="params">(XC_LoadPackage.LoadPackageParam loadPackageParam)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="keyword">if</span>(!loadPackageParam.packageName.equals(<span class="string">&quot;com.zj.wuaipojie&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;com.zj.wuaipojie.Demo&quot;</span>,<span class="literal">false</span>,loadPackageParam.classLoader);</span><br><span class="line">        <span class="type">Method</span> <span class="variable">refl</span> <span class="operator">=</span> clazz.getDeclaredMethod(<span class="string">&quot;refl&quot;</span>);</span><br><span class="line">        refl.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        refl.invoke(clazz.newInstance());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>成功通过反射调用方法，调用私有方法时，需要使用 <code>setAccessible</code> 把权限设置一下。</p>
+<img src="/2025/11/16/Android1/18.png" class="">
+
+<h4 id="Hook内部类"><a href="#Hook内部类" class="headerlink" title="Hook内部类"></a>Hook内部类</h4><p>基本与 hook 普通方法一致，使用 <code>findAndHookMethod</code> 方法，在传类名的时候需要使用类似 <code>com.zj.wuaipojie.Demo$InnerClass</code> 的写法，用 <code>$</code> 区分内部类。</p>
+<hr>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>对于 Android 而言，我算是迈出了一小步吧，最近的几个月，可能在对新知识的学习上懈怠了不少，Android 对我而言是很早就进规划，但是一直没有动力学习的知识。感谢吾爱破解的正己大神，写出如此完善简洁易懂的教材，让我在学习的路上能够节省大量时间，也能对学习的知识一直保持一定的兴趣。</p>
+<p>希望接下来三个月内，可以把已有的知识点学完，等着过年抢吾爱的安卓红包了</p>
+<img src="/2025/11/16/Android1/face.jpg" class="">
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2025/11/16/Android1/">https://xia0ji233.github.io/2025/11/16/Android1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/10/20/qwb2025_pre_reverse/" title="强网杯S9初赛Reverse writeup"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">强网杯S9初赛Reverse writeup</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">309</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">90</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#APK%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">APK文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%BC%80"><span class="toc-number">1.1.</span> <span class="toc-text">双开</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#APK%E9%80%86%E5%90%91"><span class="toc-number">2.</span> <span class="toc-text">APK逆向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFJVM%E3%80%81Dalvik%E3%80%81ART"><span class="toc-number">2.1.</span> <span class="toc-text">什么是JVM、Dalvik、ART</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#smali%E5%8F%8A%E5%85%B6%E8%AF%AD%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">smali及其语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7"><span class="toc-number">2.3.</span> <span class="toc-text">工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C"><span class="toc-number">2.4.</span> <span class="toc-text">签名校验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hook%E6%A1%86%E6%9E%B6%E6%A8%A1%E5%9D%97%E7%BC%96%E5%86%99%E5%87%86%E5%A4%87"><span class="toc-number">2.5.</span> <span class="toc-text">Hook框架模块编写准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hook%E6%96%B9%E6%B3%95%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="toc-number">2.6.</span> <span class="toc-text">hook方法的技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#hook%E6%99%AE%E9%80%9A%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.1.</span> <span class="toc-text">hook普通方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hook%E5%A4%8D%E6%9D%82%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.2.</span> <span class="toc-text">hook复杂方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hook%E6%9B%BF%E6%8D%A2%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.3.</span> <span class="toc-text">hook替换方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hook%E5%8F%98%E9%87%8F%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="toc-number">2.7.</span> <span class="toc-text">hook变量的技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hook%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.1.</span> <span class="toc-text">Hook静态变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hook%E9%9D%9E%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F"><span class="toc-number">2.7.2.</span> <span class="toc-text">Hook非静态变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hook%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">2.7.3.</span> <span class="toc-text">Hook构造函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E5%AE%83%E7%B1%BB%E5%9E%8B%E7%9A%84hook"><span class="toc-number">2.8.</span> <span class="toc-text">其它类型的hook</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%8A%A8%E8%B0%83%E7%94%A8"><span class="toc-number">2.8.1.</span> <span class="toc-text">主动调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E8%B0%83%E7%94%A8"><span class="toc-number">2.8.2.</span> <span class="toc-text">反射调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hook%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-number">2.8.3.</span> <span class="toc-text">Hook内部类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">3.</span> <span class="toc-text">后记</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/16/Android1/" title="Android逆向学习（1）">Android逆向学习（1）</a><time datetime="2025-11-16T02:00:00.000Z" title="发表于 2025-11-16 10:00:00">2025-11-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/10/20/qwb2025_pre_reverse/" title="强网杯S9初赛Reverse writeup">强网杯S9初赛Reverse writeup</a><time datetime="2025-10-20T02:00:00.000Z" title="发表于 2025-10-20 10:00:00">2025-10-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/14/tencent-race-2025-final/" title="腾讯游戏安全竞赛2025决赛题解">腾讯游戏安全竞赛2025决赛题解</a><time datetime="2025-04-14T02:00:00.000Z" title="发表于 2025-04-14 10:00:00">2025-04-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/31/tencent-race-2025-pre/" title="腾讯游戏安全大赛2025初赛题解">腾讯游戏安全大赛2025初赛题解</a><time datetime="2025-03-31T02:00:00.000Z" title="发表于 2025-03-31 10:00:00">2025-03-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/17/WindowsAPC2/" title="windowsAPC学习（2）——APC挂入与执行">windowsAPC学习（2）——APC挂入与执行</a><time datetime="2025-02-17T05:00:00.000Z" title="发表于 2025-02-17 13:00:00">2025-02-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><script src="/live2d-widget/dist/autoload.js"></script><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
