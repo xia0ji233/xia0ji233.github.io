@@ -1,0 +1,527 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ARM汇编基础学习（1） | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天开始学学 ARM 指令集，也为之后安卓的学习铺铺路。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARM汇编基础学习（1）">
+<meta property="og:url" content="https://xia0ji233.github.io/2025/12/14/ARM1/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="今天开始学学 ARM 指令集，也为之后安卓的学习铺铺路。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2025-12-14T06:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-14T06:37:53.976Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2025/12/14/ARM1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ARM汇编基础学习（1）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-12-14 14:37:53'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">311</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">93</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ARM汇编基础学习（1）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-12-14T06:00:00.000Z" title="发表于 2025-12-14 14:00:00">2025-12-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-12-14T06:37:53.976Z" title="更新于 2025-12-14 14:37:53">2025-12-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">计算机系统</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/ARM%E6%9E%B6%E6%9E%84/">ARM架构</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ARM汇编基础学习（1）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>今天开始学学 ARM 指令集，也为之后安卓的学习铺铺路。</p>
+<span id="more"></span>
+
+<p>ARM 是一种 RISC（精简指令集计算）处理器，因此拥有简化指令集（100 条指令或更少）和比 CISC（复杂指令集） 更多的通用寄存器。与英特尔不同，ARM 使用仅在寄存器上操作的指令，并使用 Load&#x2F;Store 内存模型进行内存访问，这意味着只有 Load&#x2F;Store 指令可以访问内存，其余的运算操作必须在寄存器中完成。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>手上没有合适的 ARM 设备，只能用交叉编译器 + qemu 模拟，我认为这对于想学习 ARM 的同学来说也是成本最低的方案了。</p>
+<ul>
+<li>编译器：<code>LLVM 18.0.0</code></li>
+<li>运行环境：<code>qemu-arm-static</code></li>
+</ul>
+<p>编译器自己 git 拉源码构建，构建命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake  -G &quot;Visual Studio 17 2022&quot; -DLLVM_ENABLE_PROJECTS=&quot;clang;lld&quot; -DLLVM_TARGETS_TO_BUILD=&quot;X86;ARM;AArch64;Mips&quot; -DLLVM_ENABLE_PLUGINS=On -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS_DEBUG=&quot;/Ox&quot; -DCMAKE_CXX_FLAGS_DEBUG=&quot;/Ox&quot; -DLLVM_ENABLE_RTTI=ON -DLLVM_OBFUSCATION_LINK_INTO_TOOLS=OFF  -DCMAKE_INSTALL_PREFIX=&quot;../Windows&quot; ../</span><br></pre></td></tr></table></figure>
+
+<p>自己构建 LLVM 比较吃经济和配置，构建确保留出 512G 的固态空间和超过 24G 的内存，如果不行可以直接用官方 release 的 clang arm 版。</p>
+<h3 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h3><p>直接下载 arm 的 gcc 环境，解压，目录可以跟我不一致，也不一定要按照我摆放的位置。如果使用 apt 安装 arm 套件，去 <code>/usr/arm-linux-gnueabi</code> 和 <code>/usr/lib/gcc-cross/arm-linux-gnueabi</code> 中复制出来一下文件，然后用 clang 编译，缺啥用 L 和 B 参数指定路径就行。</p>
+<p>测试代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">15</span>;i++)&#123;</span><br><span class="line">        a+=i;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello world ARM the value=%d\n&quot;</span>,a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译命令：	</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -g 1.c -o main -fuse-ld=lld -target arm-linux-gnueabihf --sysroot=D:\Linux\ARM32\tool -L&quot;D:\Linux\ARM32\tool\lib&quot; -L&quot;D:\Linux\ARM32\tool\gcc\13&quot; -B&quot;D:\Linux\ARM32\tool\gcc\13&quot;   --static</span><br></pre></td></tr></table></figure>
+
+<p>真不建议用动态链接，巨多坑，想单纯学 ARM 还是静态链接吧。</p>
+<h3 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h3><p>模拟运行：</p>
+<img src="/2025/12/14/ARM1/1.png" class="">
+
+<hr>
+<p>环境 over，开始正式学习。</p>
+<p>静态分析结果</p>
+<img src="/2025/12/14/ARM1/2.png" class="">
+
+<p>可以发现明显的特点就是所有指令都是等长的（4字节）。</p>
+<h2 id="ARM指令集学习"><a href="#ARM指令集学习" class="headerlink" title="ARM指令集学习"></a>ARM指令集学习</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>和 x86 类似，分字节、字、双字、四字、8 字等等，但是和 x86 又有点不一样。</p>
+<ul>
+<li>字节：1byte</li>
+<li>半字：2bytes</li>
+<li>字：4bytes</li>
+</ul>
+<p>如图所示</p>
+<img src="/2025/12/14/ARM1/3.png" class="">
+
+<p>ARM 的操作指令都有尾缀指示操作数的大小，例如最基础的 ldr 和 str 指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ldr = Load Word</span><br><span class="line">ldrh = Load unsigned Half Word</span><br><span class="line">ldrsh = Load signed Half Word</span><br><span class="line">ldrb = Load unsigned Byte</span><br><span class="line">ldrsb = Load signed Bytes</span><br><span class="line"></span><br><span class="line">str = Store Word</span><br><span class="line">strh = Store unsigned Half Word</span><br><span class="line">strsh = Store signed Half Word</span><br><span class="line">strb = Store unsigned Byte</span><br><span class="line">strsb = Store signed Byte</span><br></pre></td></tr></table></figure>
+
+<h3 id="端序"><a href="#端序" class="headerlink" title="端序"></a>端序</h3><p>这是第二个要考虑的问题，到底是小端序还是大端序，x86 指令几乎都是小端序。而 ARM 在三版之前是小端序，在这之后是双端模式，由CPU的某个控制寄存器决定是小端还是大端模式。</p>
+<h3 id="ARM寄存器"><a href="#ARM寄存器" class="headerlink" title="ARM寄存器"></a>ARM寄存器</h3><p>寄存器的数量取决于 ARM 版本。根据 ARM 参考手册，除了 ARMv6-M 和 ARMv7-M 架构的处理器外，其他 ARM 架构有 30 个通用 32 位寄存器。前 16 个寄存器可在用户模式访问，额外的寄存器可在特权软件执行模式下访问（ARMv6-M 和 ARMv7-M 除外）。R0-15。这 16 个寄存器可分为两组：通用寄存器和特殊用途寄存器。</p>
+<img src="/2025/12/14/ARM1/4.png" class="">
+
+<p>下面做个详细介绍：</p>
+<ul>
+<li>R0-R12：在常见操作期间可用于存储临时值、指针（内存位置）等。例如，R0 在算术操作期间可以作为累加器使用，或用于存储先前调用函数的结果。R7 在与系统调用（syscall）工作时很有用，因为它存储系统调用号，而 R11 帮助我们跟踪栈边界，充当帧指针。此外，ARM 的函数调用约定规定，函数的前四个参数存储在 r0-r3 寄存器中。</li>
+<li>R13: SP（栈指针），即对应了 x86 的 esp。</li>
+<li>R14: LR（链接寄存器）。当进行函数调用时，链接寄存器会更新为指向函数调用起始处的下一条指令的内存地址。这样做允许程序在“子”函数执行完毕后返回到调用它的“父”函数。</li>
+<li>R15: PC（程序计数器）。程序计数器会自动递增所执行指令的大小。这个大小在 ARM 状态下始终为 4 字节，在 THUMB 模式下为 2 字节。当执行分支指令时，PC 会持有目标地址。在执行过程中，PC 在 ARM 状态下存储当前指令地址加 8（两条 ARM 指令），在 Thumb(v1)状态下存储当前指令地址加 4（两条 Thumb 指令）。这与 x86 不同，在 x86 中 PC 始终指向下一个将要执行的指令。</li>
+</ul>
+<h3 id="ARM的两种模式"><a href="#ARM的两种模式" class="headerlink" title="ARM的两种模式"></a>ARM的两种模式</h3><p>ARM 处理器可以在两种主要状态下运行，即 <code>ARM</code> 状态和 <code>Thumb</code> 状态。这两种状态之间的主要区别在于指令集，其中 ARM 状态下的指令始终为 32 位，而 Thumb 状态下的指令为 16 位（但也可以是 32 位）。</p>
+<p><code>ARM</code> 和 <code>Thumb</code> 状态的区别：</p>
+<ul>
+<li>条件执行：所有 ARM 状态下的指令都支持条件执行。一些 ARM 处理器版本可以通过使用 IT 指令在 Thumb 模式下实现条件执行。条件执行能够提高代码密度，因为它减少了需要执行的指令数量，并减少了昂贵的分支指令数量。</li>
+<li>32 位 <code>Thumb</code> 指令有一个 <code>.w</code> 后缀。</li>
+<li>如果当前程序状态寄存器中的 T 位被设置，处理器就处于 Thumb 模式。</li>
+</ul>
+<h3 id="ARM指令简介"><a href="#ARM指令简介" class="headerlink" title="ARM指令简介"></a>ARM指令简介</h3><p>基本的 ARM 指令如下格式所示：</p>
+<p><code>MNEMONIC&#123;S&#125;&#123;condition&#125; &#123;Rd&#125;, Operand1, Operand2</code></p>
+<ul>
+<li>MNEMONIC：指令助记符</li>
+<li>S：操作数大小（可选）</li>
+<li>condition：指令执行的条件（可选）</li>
+<li>Rd：存储操作数结果</li>
+<li>Operand1：第一个操作数</li>
+<li>Operand2：第二个操作数</li>
+</ul>
+<p>ARM 指令的第二个操作数既可以是立即数，也可以是寄存器本身，或附带各种移位与旋转操作形成的“寄存器经桶形移位器处理后的值”，例如：</p>
+<ul>
+<li><strong>#123</strong>：一个经过 ARM 特殊编码限制的立即数。</li>
+<li><strong>Rx</strong>：直接使用寄存器的原始值（如 R0，R1……）。</li>
+<li><strong>Rx, LSL n</strong>：寄存器的值左移 n 位，右侧补 0。</li>
+<li><strong>Rx, LSR n</strong>：寄存器的值逻辑右移 n 位，高位补 0。</li>
+<li><strong>Rx, ASR n</strong>：寄存器的值算术右移 n 位，高位补符号位。</li>
+<li><strong>Rx, ROR n</strong>：寄存器的值循环右移 n 位，移出的低位从高位重新进入。</li>
+<li><strong>Rx, RRX</strong>：寄存器的值右移 1 位，最低位进入进位标志，最高位由进位标志补入。</li>
+</ul>
+<p>举几个例子：</p>
+<ul>
+<li><code>mov r0, #123</code> → <code>r0 = 123</code></li>
+<li><code>mov r0, r1</code> → <code>r0 = r1</code></li>
+<li><code>mov r0, r1, LSL #3</code> → <code>r0 = r1 &lt;&lt; 3</code></li>
+<li><code>mov r0, r1, LSR #2</code> → <code>r0 = r1 &gt;&gt; 2</code>（逻辑右移）</li>
+<li><code>mov r0, r1, ASR #4</code> → <code>r0 = r1 &gt;&gt;&gt; 4</code>（算术右移）</li>
+<li><code>mov r0, r1, ROR #8</code> → <code>r0 = ROR(r1, 8)</code></li>
+<li><code>mov r0, r1, RRX</code> → <code>r0 = (C &lt;&lt; 31) | (r1 &gt;&gt; 1)</code></li>
+</ul>
+<p>前面讲到，ARM 指令可以附加条件。</p>
+<ul>
+<li><code>movle r0, r1</code>：当上一条指令的操作结果满足了小于等于的条件，则执行 <code>r0 = r1</code>。</li>
+</ul>
+<p>下面总结一下 ARM 的常见运算指令</p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MOV</td>
+<td>移动数据</td>
+</tr>
+<tr>
+<td>MVN</td>
+<td>移动和取反</td>
+</tr>
+<tr>
+<td>ADD</td>
+<td>加法</td>
+</tr>
+<tr>
+<td>SUB</td>
+<td>减法</td>
+</tr>
+<tr>
+<td>MUL</td>
+<td>乘法</td>
+</tr>
+<tr>
+<td>LSL</td>
+<td>逻辑左移</td>
+</tr>
+<tr>
+<td>LSR</td>
+<td>逻辑右移</td>
+</tr>
+<tr>
+<td>ASR</td>
+<td>算术右移</td>
+</tr>
+<tr>
+<td>ROR</td>
+<td>右旋转</td>
+</tr>
+<tr>
+<td>CMP</td>
+<td>比较</td>
+</tr>
+<tr>
+<td>AND</td>
+<td>按位与</td>
+</tr>
+<tr>
+<td>ORR</td>
+<td>按位或</td>
+</tr>
+<tr>
+<td>EOR</td>
+<td>按位异或</td>
+</tr>
+<tr>
+<td>LDR</td>
+<td>加载</td>
+</tr>
+<tr>
+<td>STR</td>
+<td>存储</td>
+</tr>
+<tr>
+<td>LDM</td>
+<td>加载多个</td>
+</tr>
+<tr>
+<td>STM</td>
+<td>存储多个</td>
+</tr>
+<tr>
+<td>PUSH</td>
+<td>压栈</td>
+</tr>
+<tr>
+<td>POP</td>
+<td>出栈</td>
+</tr>
+<tr>
+<td>B</td>
+<td>分支</td>
+</tr>
+<tr>
+<td>BL</td>
+<td>带链接分支</td>
+</tr>
+<tr>
+<td>BX</td>
+<td>分支和交换</td>
+</tr>
+<tr>
+<td>BLX</td>
+<td>带链接的分支和交换</td>
+</tr>
+<tr>
+<td>SWI&#x2F;SVC</td>
+<td>System  Call 系统调用</td>
+</tr>
+</tbody></table>
+<h3 id="Load-Store内存模型"><a href="#Load-Store内存模型" class="headerlink" title="Load&#x2F;Store内存模型"></a>Load&#x2F;Store内存模型</h3><p>开头说过，ARM 只能使用 Load&#x2F;Store 内存模型去访问内存。在 x86 中，不仅仅 mov 指令可以访问内存，一切运算都有可以访问内存指令模式，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add [rax], 1</span><br><span class="line">sub [rax], 1</span><br><span class="line">xor [rax], 1</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>ARM 的三种寻址模式</p>
+<ol>
+<li>立即数偏移</li>
+<li>寄存器偏移</li>
+<li>缩放寄存器偏移（Scale Register的翻译大概是这样…）</li>
+</ol>
+<h4 id="简单的例子"><a href="#简单的例子" class="headerlink" title="简单的例子"></a>简单的例子</h4><p>来看最简单的 load 和 store 的例子。</p>
+<ul>
+<li><code>LDR R2, [R0]</code>：将 <code>R0</code> 指向的内存加载进 <code>R2</code> 寄存器。</li>
+<li><code>STR R2, [R1]</code>：将 <code>R2</code> 的寄存器的值存入 <code>R1</code> 指向的内存</li>
+</ul>
+<p>这是最简单的，朴实无华的例子。</p>
+<h4 id="立即数偏移"><a href="#立即数偏移" class="headerlink" title="立即数偏移"></a>立即数偏移</h4><p>如下所示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">STR    Ra, [Rb, imm]</span><br><span class="line">LDR    Ra, [Rc, imm]</span><br></pre></td></tr></table></figure>
+
+<p><code>[Rb, imm]</code> 实际上访问的内存是 <code>Rb + imm</code>。</p>
+<p>这种访问模式还有另一种版本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">STR    Ra, [Rb, imm]!</span><br><span class="line">LDR    Ra, [Rc, imm]!</span><br></pre></td></tr></table></figure>
+
+<p>它在访问内存的同时，会将 <code>Rb/Rc</code> 执行更新操作，即等于</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">STR    Ra, [Rb, imm]</span><br><span class="line">add    Rb, imm</span><br><span class="line">LDR    Ra, [Rc, imm]</span><br><span class="line">add    Rc, imm</span><br></pre></td></tr></table></figure>
+
+<p>但是其实根据文档描述，它是先做加法，再存储的，即</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add    Rb, imm</span><br><span class="line">STR    Ra, [Rb]</span><br><span class="line">add    Rc, imm</span><br><span class="line">LDR    Ra, [Rc]</span><br></pre></td></tr></table></figure>
+
+<p>如图所示：</p>
+<img src="/2025/12/14/ARM1/5.png" class="">
+
+<p><code>pwndbg</code> 指示了该条指令预期修改的内存地址，正如介绍的那样。</p>
+<h4 id="寄存器偏移"><a href="#寄存器偏移" class="headerlink" title="寄存器偏移"></a>寄存器偏移</h4><p>其实就是把上述例子中的立即数改成了寄存器。。</p>
+<h3 id="条件执行与分支"><a href="#条件执行与分支" class="headerlink" title="条件执行与分支"></a>条件执行与分支</h3><p>如下表所示</p>
+<table>
+<thead>
+<tr>
+<th align="center">Condition Code</th>
+<th align="left">Meaning (for cmp or subs)</th>
+<th align="center">Status of Flags</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">EQ</td>
+<td align="left">Equal</td>
+<td align="center">Z&#x3D;&#x3D;1</td>
+</tr>
+<tr>
+<td align="center">NE</td>
+<td align="left">Not Equal</td>
+<td align="center">Z&#x3D;&#x3D;0</td>
+</tr>
+<tr>
+<td align="center">GT</td>
+<td align="left">Signed Greater Than</td>
+<td align="center"><code>(Z==0) &amp;&amp; (N==V)</code></td>
+</tr>
+<tr>
+<td align="center">LT</td>
+<td align="left">Signed Less Than</td>
+<td align="center">N!&#x3D;V</td>
+</tr>
+<tr>
+<td align="center">GE</td>
+<td align="left">Signed Greater Than or Equal</td>
+<td align="center">N&#x3D;&#x3D;V</td>
+</tr>
+<tr>
+<td align="center">LE</td>
+<td align="left">Signed Less Than or Equal</td>
+<td align="center">(Z&#x3D;&#x3D;1) || (N!&#x3D;V)</td>
+</tr>
+<tr>
+<td align="center">CS or HS</td>
+<td align="left">Unsigned Higher or Same (or Carry Set)</td>
+<td align="center">C&#x3D;&#x3D;1</td>
+</tr>
+<tr>
+<td align="center">CC or LO</td>
+<td align="left">Unsigned Lower (or Carry Clear)</td>
+<td align="center">C&#x3D;&#x3D;0</td>
+</tr>
+<tr>
+<td align="center">MI</td>
+<td align="left">Negative (or Minus)</td>
+<td align="center">N&#x3D;&#x3D;1</td>
+</tr>
+<tr>
+<td align="center">PL</td>
+<td align="left">Positive (or Plus)</td>
+<td align="center">N&#x3D;&#x3D;0</td>
+</tr>
+<tr>
+<td align="center">AL</td>
+<td align="left">Always executed</td>
+<td align="center">–</td>
+</tr>
+<tr>
+<td align="center">NV</td>
+<td align="left">Never executed</td>
+<td align="center">–</td>
+</tr>
+<tr>
+<td align="center">VS</td>
+<td align="left">Signed Overflow</td>
+<td align="center"><code>V==1</code></td>
+</tr>
+<tr>
+<td align="center">VC</td>
+<td align="left">No signed Overflow</td>
+<td align="center"><code>V==0</code></td>
+</tr>
+<tr>
+<td align="center">HI</td>
+<td align="left">Unsigned Higher</td>
+<td align="center"><code>(C==1) &amp;&amp; (Z==0)</code></td>
+</tr>
+<tr>
+<td align="center">LS</td>
+<td align="left">Unsigned Lower or same</td>
+<td align="center">&#96; (C&#x3D;&#x3D;0)</td>
+</tr>
+</tbody></table>
+<p>以下列程序编译为例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> b[<span class="number">50</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> a=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">30</span>;i++)&#123;</span><br><span class="line">		a+= a&lt;<span class="number">15</span>?a:<span class="number">0</span>; </span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;hello world ARM the value=%d\n&quot;</span>,a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译代码如下</p>
+<img src="/2025/12/14/ARM1/6.png" class="">
+
+<p>其中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0x0003739c &lt;+40&gt;:    cmp     r0, #30</span><br><span class="line">0x000373a0 &lt;+44&gt;:    bge     0x373e8 &lt;main+116&gt;</span><br></pre></td></tr></table></figure>
+
+<p>的含义是，r0 若大于等于（<code>greater or equal</code>）30，则跳转到 <code>0x373e8</code> 地址处，到该地址之后，就认为循环退出了，正常顺序执行 <code>printf</code> 函数。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>[1]：<a target="_blank" rel="noopener" href="https://azeria-labs.com/writing-arm-assembly-part-1/">https://azeria-labs.com/writing-arm-assembly-part-1/</a></li>
+<li>[2]：<a target="_blank" rel="noopener" href="https://azeria-labs.com/functions-and-the-stack-part-7/">https://azeria-labs.com/functions-and-the-stack-part-7/</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2025/12/14/ARM1/">https://xia0ji233.github.io/2025/12/14/ARM1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/11/26/qwb2025_final/" title="强网杯S9决赛Pwn writeup"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">强网杯S9决赛Pwn writeup</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">311</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">93</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="toc-number">1.1.</span> <span class="toc-text">编译环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">1.2.</span> <span class="toc-text">运行环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARM%E6%8C%87%E4%BB%A4%E9%9B%86%E5%AD%A6%E4%B9%A0"><span class="toc-number">2.</span> <span class="toc-text">ARM指令集学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.1.</span> <span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%AF%E5%BA%8F"><span class="toc-number">2.2.</span> <span class="toc-text">端序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ARM%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">2.3.</span> <span class="toc-text">ARM寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ARM%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.4.</span> <span class="toc-text">ARM的两种模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ARM%E6%8C%87%E4%BB%A4%E7%AE%80%E4%BB%8B"><span class="toc-number">2.5.</span> <span class="toc-text">ARM指令简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Load-Store%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.6.</span> <span class="toc-text">Load&#x2F;Store内存模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">2.6.1.</span> <span class="toc-text">简单的例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AB%8B%E5%8D%B3%E6%95%B0%E5%81%8F%E7%A7%BB"><span class="toc-number">2.6.2.</span> <span class="toc-text">立即数偏移</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E5%81%8F%E7%A7%BB"><span class="toc-number">2.6.3.</span> <span class="toc-text">寄存器偏移</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%89%A7%E8%A1%8C%E4%B8%8E%E5%88%86%E6%94%AF"><span class="toc-number">2.7.</span> <span class="toc-text">条件执行与分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">3.</span> <span class="toc-text">参考文献</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/14/ARM1/" title="ARM汇编基础学习（1）">ARM汇编基础学习（1）</a><time datetime="2025-12-14T06:00:00.000Z" title="发表于 2025-12-14 14:00:00">2025-12-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/26/qwb2025_final/" title="强网杯S9决赛Pwn writeup">强网杯S9决赛Pwn writeup</a><time datetime="2025-11-26T15:00:00.000Z" title="发表于 2025-11-26 23:00:00">2025-11-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/16/Android1/" title="Android逆向学习（1）">Android逆向学习（1）</a><time datetime="2025-11-16T02:00:00.000Z" title="发表于 2025-11-16 10:00:00">2025-11-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/10/20/qwb2025_pre_reverse/" title="强网杯S9初赛Reverse writeup">强网杯S9初赛Reverse writeup</a><time datetime="2025-10-20T02:00:00.000Z" title="发表于 2025-10-20 10:00:00">2025-10-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/14/tencent-race-2025-final/" title="腾讯游戏安全竞赛2025决赛题解">腾讯游戏安全竞赛2025决赛题解</a><time datetime="2025-04-14T02:00:00.000Z" title="发表于 2025-04-14 10:00:00">2025-04-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2025 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><script src="/live2d-widget/dist/autoload.js"></script><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
