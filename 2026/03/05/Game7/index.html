@@ -1,0 +1,626 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>OverWatch反作弊分析 | xia0ji233's blog</title><meta name="author" content="xia0ji233"><meta name="copyright" content="xia0ji233"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="由于 Ow 版本变动较大，且 CVE-2025-45737 已经公开，遂公开之前分析利用分析。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OverWatch反作弊分析">
+<meta property="og:url" content="https://xia0ji233.github.io/2026/03/05/Game7/index.html">
+<meta property="og:site_name" content="xia0ji233&#39;s blog">
+<meta property="og:description" content="由于 Ow 版本变动较大，且 CVE-2025-45737 已经公开，遂公开之前分析利用分析。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xia0ji233.github.io/img/avatar.png">
+<meta property="article:published_time" content="2026-03-05T10:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-05T10:41:48.965Z">
+<meta property="article:author" content="xia0ji233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xia0ji233.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xia0ji233.github.io/2026/03/05/Game7/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OverWatch反作弊分析',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-03-05 18:41:48'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="xia0ji233's blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">314</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">93</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/backgroud.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="xia0ji233's blog"><span class="site-name">xia0ji233's blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heartbeat"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-history"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-bars"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OverWatch反作弊分析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-05T10:00:00.000Z" title="发表于 2026-03-05 18:00:00">2026-03-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-05T10:41:48.965Z" title="更新于 2026-03-05 18:41:48">2026-03-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">计算机系统</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/">Windows</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/Windows/%E6%B8%B8%E6%88%8F%E5%AE%89%E5%85%A8/">游戏安全</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">8.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>32分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="OverWatch反作弊分析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>由于 Ow 版本变动较大，且 CVE-2025-45737 已经公开，遂公开之前分析利用分析。</p>
+<span id="more"></span>
+
+<p>上来先开驱动。</p>
+<h2 id="R0分析"><a href="#R0分析" class="headerlink" title="R0分析"></a>R0分析</h2><h3 id="DriverEntry逻辑"><a href="#DriverEntry逻辑" class="headerlink" title="DriverEntry逻辑"></a>DriverEntry逻辑</h3><h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>DriverEntry按顺序执行以下逻辑</p>
+<ol>
+<li>获取MmGetVirtualForPhysical地址特征码判断反hook反模拟器</li>
+<li>MmGetSystemRoutineAddress获取了一系列API</li>
+<li>获取ntoskrnl.exe地址并解析</li>
+<li>读取KeServiceDescriptorTableShadow+0x10获取SSDTshadow的size</li>
+<li>读取IDT获得0xE号缺页异常处理例程地址并进行一定的判断</li>
+<li>读取一些内核标志位，并根据出现的异常情况记录日志</li>
+<li>注册句柄回调，创建进程线程回调，加载模块回调和minifilter回调并建立minifilter端口通信</li>
+<li>创建四个线程，DriverEntry逻辑结束</li>
+</ol>
+<h4 id="模拟执行-动态调试"><a href="#模拟执行-动态调试" class="headerlink" title="模拟执行&amp;动态调试"></a>模拟执行&amp;动态调试</h4><p>由于 <code>DriverEntry</code> 加了混淆，遂尝试通过动态调试和模拟执行的方式尝试解出 <code>DriverEntry</code> 的逻辑。</p>
+<p>先 <code>IAT hook</code> <code>PsCreateSystemThread</code>，发现创建了五个线程。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[OwNeacSafe]ImageBase: <span class="number">0xFFFFF80281560000</span> </span><br><span class="line">[OwNeacSafe]PsCreateSystemThread: start at <span class="number">0xFFFFF80281780AAE</span> </span><br><span class="line">[OwNeacSafe]PsCreateSystemThread: start at <span class="number">0xFFFFF80281584A8D</span> </span><br><span class="line">[OwNeacSafe]PsCreateSystemThread: start at <span class="number">0xFFFFF8028157DAE2</span> </span><br><span class="line">[OwNeacSafe]PsCreateSystemThread: start at <span class="number">0xFFFFF8028157D82C</span> </span><br><span class="line">[OwNeacSafe]PsCreateSystemThread: start at <span class="number">0xFFFFF8028157D4D5</span></span><br></pre></td></tr></table></figure>
+
+<p>据此可算出五个线程的偏移：</p>
+<ul>
+<li>0x220AAE</li>
+<li>0x24A8D </li>
+<li>0x1DAE2</li>
+<li>0x1D82C</li>
+<li>0x1D4D5</li>
+</ul>
+<p>尝试模拟执行，观察第一个线程，前面仅仅是创建了一个 Log 文件，随后获取了 <code>MmGetVirtualForPhysical</code> 函数的指针，进行了数次的 <code>RtlCompareMemory</code>，最后驱动就返回失败了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[TID:<span class="number">0000</span>8dc8]  Executing ntoskrnl.exe!RtlGetVersion</span><br><span class="line">[TID:<span class="number">0000</span>8dc8]          <span class="number">10.0</span><span class="number">.22631</span></span><br><span class="line">[TID:<span class="number">0000</span>8dc8]  Executing ntoskrnl.exe!RtlInitUnicodeString</span><br><span class="line">[TID:<span class="number">0000</span>8dc8]  Executing ntoskrnl.exe!MmGetSystemRoutineAddress</span><br><span class="line">[TID:<span class="number">0000</span>8dc8]          Retrieving MmGetVirtualForPhysical ptr</span><br><span class="line">[TID:<span class="number">0000</span>8dc8]  Executing ntoskrnl.exe!RtlCompareMemory</span><br><span class="line">[TID:<span class="number">0000</span>8dc8]  Executing ntoskrnl.exe!RtlCompareMemory</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>找到对应的位置发现是特征码识别</p>
+<img src="/2026/03/05/Game7/1.png" class="">
+
+<p>这里的 <code>1400885E54</code> 对应的字节是 <code>48 8B 04 D0 48 C1 E0 19 48 BA</code></p>
+<p>那么来到 <code>ntoskrnl.exe</code> 搜索特征码，搜索得到如下结果</p>
+<img src="/2026/03/05/Game7/2.png" class="">
+
+<p>这个地方不仅可以反 <code>hook</code>，还能反模拟器，因为模拟器大概率是不能原样实现这样的函数的，所以需要想办法绕过，最好的办法自然是直接 <code>hook RtlCompareMemory</code> 直接让它 <code>return length</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[TID:<span class="number">0000</span>ac54]  Executing ntoskrnl.exe!RtlInitUnicodeString</span><br><span class="line">[TID:<span class="number">0000</span>ac54]  Executing ntoskrnl.exe!MmGetSystemRoutineAddress</span><br><span class="line">[TID:<span class="number">0000</span>ac54]          Retrieving MmGetVirtualForPhysical ptr</span><br><span class="line">[TID:<span class="number">0000</span>ac54]  Executing ntoskrnl.exe!RtlCompareMemory</span><br><span class="line">[TID:<span class="number">0000</span>ac54]  Executing ntoskrnl.exe!MmGetPhysicalMemoryRanges</span><br><span class="line">[TID:<span class="number">0000</span>ac54]  Executing ntoskrnl.exe!ExAllocatePoolWithTag</span><br><span class="line">[TID:<span class="number">0000</span>ac54]  Allocate with tag=<span class="number">466</span>b5458 size=<span class="number">0x90</span></span><br><span class="line">[TID:<span class="number">0000</span>ac54]  Executing ntoskrnl.exe!ExFreePool</span><br><span class="line">[TID:<span class="number">0000</span>ad28]  Executing ntoskrnl.exe!KeDelayExecutionThread</span><br><span class="line">[TID:<span class="number">0000</span>ad28]  Executing ntoskrnl.exe!KeDelayExecutionThread</span><br></pre></td></tr></table></figure>
+
+<p>随后模拟执行的结果是获取了物理内存的范围，然后开始检查一些东西，根据这个关键 <code>API MmGetPhysicalMemoryRanges</code> 交叉可以找到对应的位置。</p>
+<img src="/2026/03/05/Game7/3.png" class="">
+
+<p>游戏里面多次用到这个<strong>俯瞰天下</strong>的 <code>tag</code>，没想到大 <code>Neac</code> 有如此宽广的心胸抱负。</p>
+<p>随后使用 <code>MmGetSystemRoutineAddress</code> 获取了一堆的 <code>API</code>，这一部分沿用动态调试的结果。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: MmAllocateContiguousNodeMemory <span class="keyword">return</span> FFFFF8025445FF30</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeAreAllApcsDisabled <span class="keyword">return</span> FFFFF802544339C0</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeQueryActiveProcessorCount <span class="keyword">return</span> FFFFF80254713980</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeQueryActiveProcessorCountEx <span class="keyword">return</span> FFFFF80254419190</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeGetProcessorNumberFromIndex <span class="keyword">return</span> FFFFF<span class="number">802544E55</span>B0</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeSetSystemGroupAffinityThread <span class="keyword">return</span> FFFFF8025453D060</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeRevertToUserGroupAffinityThread <span class="keyword">return</span> FFFFF8025453CF00</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeSetTargetProcessorDpcEx <span class="keyword">return</span> FFFFF8025452F690</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeGetCurrentProcessorNumberEx <span class="keyword">return</span> FFFFF802544467C0</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeInvalidateAllCaches <span class="keyword">return</span> FFFFF802545A4540</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: SeLocateProcessImageName <span class="keyword">return</span> FFFFF8025484D5C0</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: PsReferenceProcessFilePointer <span class="keyword">return</span> FFFFF8025488ECE0</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: ObGetObjectType <span class="keyword">return</span> FFFFF802548CFA50</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: PsAcquireProcessExitSynchronization <span class="keyword">return</span> FFFFF80254851630</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: PsReleaseProcessExitSynchronization <span class="keyword">return</span> FFFFF802548C1760</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: ExfUnblockPushLock <span class="keyword">return</span> FFFFF802545F7730</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeGenericCallDpc <span class="keyword">return</span> FFFFF80254510FA0</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeSignalCallDpcDone <span class="keyword">return</span> FFFFF8025452F290</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeSignalCallDpcSynchronize <span class="keyword">return</span> FFFFF802547182A0</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeIpiGenericCall <span class="keyword">return</span> FFFFF802545A4260</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeIsExecutingDpc <span class="keyword">return</span> FFFFF8025450D8A0</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeRegisterProcessorChangeCallback <span class="keyword">return</span> FFFFF802549C4540</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: KeDeregisterProcessorChangeCallback <span class="keyword">return</span> FFFFF80254ABE2C0</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: PsGetProcessSessionId <span class="keyword">return</span> FFFFF80254444CC0</span><br><span class="line">[OwNeacSafe]MmGetSystemRoutineAddress: NtOpenFile <span class="keyword">return</span> FFFFF802547FBC80</span><br></pre></td></tr></table></figure>
+
+<p>随后线程退出主线程返回失败，这里为了查失败的原因看一下后半部分的模拟执行</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[TID:<span class="number">000065</span>d4]  Executing ntoskrnl.exe!ZwWriteFile</span><br><span class="line">[TID:<span class="number">000065</span>d4]  Executing ntoskrnl.exe!DbgPrintEx</span><br><span class="line">[TID:<span class="number">000065</span>d4]  Executing ntoskrnl.exe!ExReleaseResourceLite</span><br><span class="line">[TID:<span class="number">000065</span>d4]                  INSIDE STUB, RETURNING <span class="number">0</span></span><br><span class="line">[TID:<span class="number">000065</span>d4]  Executing ntoskrnl.exe!KeLeaveCriticalRegion</span><br><span class="line">[TID:<span class="number">000065</span>d4]                  INSIDE STUB, RETURNING <span class="number">0</span></span><br><span class="line">[TID:<span class="number">000065</span>d4]  Executing ntoskrnl.exe!ZwWriteFile</span><br><span class="line">[TID:<span class="number">000065</span>d4]  Executing ntoskrnl.exe!DbgPrintEx</span><br><span class="line">[TID:<span class="number">000065</span>d4]  Executing ntoskrnl.exe!ZwWaitForSingleObject</span><br><span class="line">[TID:<span class="number">0000</span>b42c]  Executing ntoskrnl.exe!PsTerminateSystemThread</span><br><span class="line">[TID:<span class="number">0000</span>b42c]          thread boom</span><br><span class="line">[TID:<span class="number">000065</span>d4]  Executing ntoskrnl.exe!ZwClose</span><br><span class="line">[TID:<span class="number">000065</span>d4]          Closing Kernel Handle : <span class="number">1</span>c0</span><br><span class="line">[TID:<span class="number">000065</span>d4]  Executing ntoskrnl.exe!ZwClose</span><br><span class="line">[TID:<span class="number">000065</span>d4]          Closing Kernel Handle : <span class="number">1</span>bc</span><br><span class="line">...</span><br><span class="line">[TID:<span class="number">000065</span>d4]  Main Thread Done! Return = c0000001</span><br></pre></td></tr></table></figure>
+
+<p>线程自杀了，找到线程的逻辑，顺便根据上下文推导这里的结构体。</p>
+<img src="/2026/03/05/Game7/4.png" class="">
+
+<p>这里的 <code>StartContext</code> 结构是存储在 <code>.data</code> 段上的。</p>
+<p>同时也找到在 <code>DriverEntry</code> 中调用的逻辑</p>
+<img src="/2026/03/05/Game7/5.png" class="">
+
+<p>标准的退出收尸动作，交叉找一下位置。</p>
+<img src="/2026/03/05/Game7/6.png" class="">
+
+<p>最后发现，返回 <code>c0000001</code> 只有可能是 <code>PsCreateSystemThread</code> 返回的，而翻看了源码之后发现不太可能返回这个值，只能向下搜索看看值是从哪里出来的。</p>
+<p>最后在模拟器栈回溯之后找到 <code>+0x24C4F8</code>。</p>
+<img src="/2026/03/05/Game7/7.png" class="">
+
+<p>抱歉，是 <code>vm</code>，再见。。。</p>
+<p>不甘心，还是要找一下，于是想到这个 <code>C0000001</code> 应该是直接在某条指令写死的，在 <code>IDA</code> 里搜一下相关的指令。</p>
+<img src="/2026/03/05/Game7/8.png" class="">
+
+<p>只有 45 条，依次打上断点，然后附加调试器运行。</p>
+<img src="/2026/03/05/Game7/9.png" class="">
+
+<p>最终断在这里，往后跟发现的确是这个函数返回了 <code>C0000001</code> 错误码。</p>
+<img src="/2026/03/05/Game7/10.png" class="">
+
+<p>于是选择去双机调试中看一下，这个地方返回值是否不同。</p>
+<img src="/2026/03/05/Game7/11.png" class="">
+
+<p>果然在对应被赋值 <code>0xC000001</code> 的内存被赋值为 0 了，翻看它原本函数的定义</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">sub_140020C52</span><span class="params">(__int64 a1, __int64 a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    *(_OWORD *)&amp;p_Event = <span class="number">0LL</span>;</span><br><span class="line">    v4[<span class="number">0</span>] = a1;</span><br><span class="line">    v4[<span class="number">1</span>] = a2;</span><br><span class="line">    p_Event = (__int64)&amp;Event;</span><br><span class="line">    v6 = <span class="number">0xC0000001</span>;</span><br><span class="line">    <span class="built_in">KeInitializeEvent</span>(&amp;Event, NotificationEvent, <span class="number">0</span>);</span><br><span class="line">    WorkItem.WorkerRoutine = (PWORKER_THREAD_ROUTINE)sub_140020B4B;</span><br><span class="line">    WorkItem.Parameter = v4;</span><br><span class="line">    WorkItem.List.Flink = <span class="number">0LL</span>;</span><br><span class="line">    <span class="built_in">ExQueueWorkItem</span>(&amp;WorkItem, DelayedWorkQueue);</span><br><span class="line">    <span class="built_in">KeWaitForSingleObject</span>(&amp;Event, Executive, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0LL</span>);</span><br><span class="line">    result = v6;</span><br><span class="line">    <span class="keyword">if</span> ( ((<span class="type">unsigned</span> __int64)&amp;v3 ^ v9) != _security_cookie )</span><br><span class="line">        __debugbreak();</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>应当是，<code>KeWaitForSingleObject</code> 等待过程中被其它线程写入了 <code>0</code> 最终返回成功。所以我的解决方法是，断点修改大法，会两次命中这个函数，给它返回值改成 0 就好了。</p>
+<p>解决这个问题之后，模拟器可以正常模拟后面的逻辑</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[TID:<span class="number">0000</span>d3c0]  Executing ntoskrnl.exe!MmGetSystemRoutineAddress</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Retrieving NtOpenFile ptr</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]  Executing ntoskrnl.exe!ExAllocatePoolWithTag</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]  Allocate with tag=<span class="number">53425458</span> size=<span class="number">0x40000</span></span><br><span class="line">[TID:<span class="number">0000</span>d3c0]  Executing ntoskrnl.exe!ZwQuerySystemInformation</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Class <span class="number">0000000</span>b status : <span class="number">00000000</span></span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Class <span class="number">0000000</span>b success</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Patching ntoskrnl.exe base from fffff8056f000000 to <span class="number">7</span>ff7a9760000</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Patching hal.dll base from fffff8056d960000 to <span class="number">1</span>c0000000</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Patching kd.dll base from fffff8056d970000 to <span class="number">528</span>f0000</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Patching FLTMGR.SYS base from fffff8056db70000 to <span class="number">7</span>ffcc7230000</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Patching CI.dll base from fffff80573600000 to <span class="number">7</span>ffcbc880000</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Patching cng.sys base from fffff<span class="number">8056e140000</span> to <span class="number">7</span>ffcbb5c0000</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Patching WDFLDR.SYS base from fffff8056dcd0000 to <span class="number">7</span>ff68a<span class="number">2e0000</span></span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Base is : <span class="number">7</span>ff7a9760000</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]  Executing ntoskrnl.exe!RtlImageNtHeader</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]  Executing ntoskrnl.exe!RtlInitAnsiString</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]  Executing ntoskrnl.exe!ExAllocatePoolWithTag</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]  Allocate with tag=<span class="number">53425458</span> size=<span class="number">0x208</span></span><br><span class="line">[TID:<span class="number">0000</span>d3c0]  Executing ntoskrnl.exe!ExFreePool</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]  Executing ntoskrnl.exe!ZwQuerySystemInformation</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Class <span class="number">000000</span>c4 status : <span class="number">00000000</span></span><br><span class="line">[TID:<span class="number">0000</span>d3c0]          Class <span class="number">000000</span>c4 success</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]  Executing ntoskrnl.exe!RtlImageNtHeader</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]  [Info] read Violation at ... execute in ...</span><br><span class="line">[TID:<span class="number">0000</span>d3c0]  Emulating read from ntoskrnl.exe:<span class="number">+00</span>cfca50</span><br><span class="line">...     </span><br></pre></td></tr></table></figure>
+
+<p>遍历了一下模块列表，调用了 <code>RtlImageNtHeader</code> 去解析了 <code>ntoskrnl.exe</code> 模块，随后多次尝试读取 <code>+00cfca50</code>，看了对应版本的内核，是 <code>KeServiceDescriptorTableShadow+0x10</code> 的位置，也就是系统描述符表的服务个数字段。</p>
+<p>随后异常在了一个内核地址，且非 <code>_KUSER_SHARED_DATA</code>，结合动态调试，发现异常函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">unsigned</span> __int64 __fastcall <span class="title">sub_140020E16</span><span class="params">(<span class="type">unsigned</span> __int8 a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    __sidt(v3);</span><br><span class="line">    result = ((<span class="type">unsigned</span> __int64)*(<span class="type">unsigned</span> <span class="type">int</span> *)(v4 + <span class="number">16</span> * (<span class="type">unsigned</span> <span class="type">int</span>)a1 + <span class="number">8</span>) &lt;&lt; <span class="number">32</span>) | (*(<span class="type">unsigned</span> __int16 *)(v4 + <span class="number">16</span> * (<span class="type">unsigned</span> <span class="type">int</span>)a1 + <span class="number">6</span>) &lt;&lt; <span class="number">16</span>) | *(<span class="type">unsigned</span> __int16 *)(v4 + <span class="number">16</span> * (<span class="type">unsigned</span> <span class="type">int</span>)a1);</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>发现是读取了 IDT 表，经过动态调试。</p>
+<img src="/2026/03/05/Game7/12.png" class="">
+
+<p>读取了 <code>idtr+0xE8</code> 位置的值，这个位置是 <code>KiPageFault</code> 的处理例程入口，走到返回的确是返回了该函数的地址。</p>
+<img src="/2026/03/05/Game7/13.png" class="">
+
+<p>由于 kace 没有实现 <code>IDT</code>，因此手动获取并填充 <code>IDT</code> 给驱动使用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> pack(push, 1)</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">IDTR</span> &#123;</span><br><span class="line">    <span class="type">uint16_t</span> limit;</span><br><span class="line">    <span class="type">uint64_t</span> base;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">IDTR</span> idtr;</span><br><span class="line">__sidt((PVOID)&amp;idtr);</span><br><span class="line">IDTRBase = idtr.base;</span><br><span class="line">IDTRLimit = idtr.limit;</span><br><span class="line">UserIDT= (<span class="type">uint64_t</span>)<span class="built_in">VirtualAlloc</span>(...);</span><br><span class="line"><span class="built_in">memset</span>((<span class="type">void</span> *)UserIDT, <span class="number">0xFF</span>, <span class="number">0x1000</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">IDTEntry64</span> &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> pack(pop)</span></span><br><span class="line"><span class="keyword">auto</span> SetIDTEntry = [](<span class="type">uint64_t</span> handler, <span class="keyword">struct</span> IDTEntry64* entry) &#123;</span><br><span class="line">    ...                                  </span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">uint64_t</span> PageFaultHandler = Provider::<span class="built_in">FindFuncImpl</span>(<span class="string">&quot;KiPageFault&quot;</span>);</span><br><span class="line"><span class="built_in">SetIDTEntry</span>((<span class="type">uint64_t</span>)PageFaultHandler,(<span class="keyword">struct</span> IDTEntry64*)(UserIDT<span class="number">+0xe0</span>));</span><br><span class="line">MemoryTracker::<span class="built_in">AddMapping</span>(IDTRBase, IDTRLimit<span class="number">+1</span>,UserIDT);</span><br></pre></td></tr></table></figure>
+
+<p>然后输出了 2w 行的 <code>log</code>，最后驱动还是返回了 <code>0xC0000205</code>，不过即使 <code>hook</code> 绕过，也没有更多的逻辑了，所以接下来着重对模拟器的 <code>log</code> 进行分析。</p>
+<p>话说读取到 IDT 的 <code>KiPageFault</code> 例程地址，之后循环读取该函数的字节码进行一些判断。</p>
+<p>之后又调用了 <code>RtlLookupFunctionEntry</code>，奈何 MSDN 的翻译太过僵硬 </p>
+<blockquote>
+<h4 id="RtlLookupFunctionEntry-函数-winnt-h"><a href="#RtlLookupFunctionEntry-函数-winnt-h" class="headerlink" title="RtlLookupFunctionEntry 函数 (winnt.h)"></a>RtlLookupFunctionEntry 函数 (winnt.h)</h4><p>在活动函数表中搜索与指定电脑值对应的条目。</p>
+</blockquote>
+<p>最后还是在<a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-147793-1.htm">看雪一篇帖子</a>的评论中找到了比较正确的回答：</p>
+<blockquote>
+<p>查找某个指令位置对应在哪一个模块的哪一个函数里面。</p>
+</blockquote>
+<p>大概看明白了，MSDN官方翻译人员把 <strong>PC Value</strong> 翻译成了电脑值，真的给不出很多很好的评价。然后根据返回地址找了当前函数的调用函数，这里大概是有一个防 hook 的一个作用，也有可能是做日志记录使用的，目前没有发现什么特殊的。</p>
+<img src="/2026/03/05/Game7/antihook.png" class="">
+
+<p>之后读取了一系列的标志位。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[TID:<span class="number">00002</span>988]  Executing ntoskrnl.exe!RtlLookupFunctionEntry</span><br><span class="line">[TID:<span class="number">00002</span>988]  [Info] read Violation at <span class="number">7</span>ff7c7bb0ad0 execute in <span class="number">0x00007FFD51A30782</span></span><br><span class="line">[TID:<span class="number">00002</span>988]  Emulating read from ntoskrnl.exe:<span class="number">+00130</span>ad0</span><br><span class="line">[TID:<span class="number">00002</span>988]  [Info] read Violation at <span class="number">7</span>ff7c7b7cd5c execute in <span class="number">0x00007FFD51A307B1</span></span><br><span class="line">[TID:<span class="number">00002</span>988]  Emulating read from ntoskrnl.exe:<span class="number">+000</span>fcd5c</span><br><span class="line">[TID:<span class="number">00002</span>988]  [Info] read Violation at <span class="number">7</span>ff7c7b62ea8 execute in <span class="number">0x00007FFD51A307B1</span></span><br><span class="line">[TID:<span class="number">00002</span>988]  Emulating read from ntoskrnl.exe:<span class="number">+000e2</span>ea8</span><br><span class="line">[TID:<span class="number">00002</span>988]  [Info] read Violation at <span class="number">7</span>ff7c7b55f48 execute in <span class="number">0x00007FFD51A307B1</span></span><br><span class="line">[TID:<span class="number">00002</span>988]  Emulating read from ntoskrnl.exe:<span class="number">+000</span>d5f48</span><br><span class="line">[TID:<span class="number">00002</span>988]  [Info] read Violation at <span class="number">7</span>ff7c7b4f798 execute in <span class="number">0x00007FFD51A307B1</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>中间多次穿插类似获取线程 <code>id</code>，获取进程名，读取 <code>KUSER_SHARED_DATA</code> 获取时间，为了记录日志，因为模拟器中可能存在部分标志位值是异常的。</p>
+<img src="/2026/03/05/Game7/14.png" class="">
+
+<p>出现一些问题会 DbgPrint 打印并同步写入日志 <code>OwNeacSafe.log</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">33.156</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	Found abnormal interrupt entry , analyzed from <span class="number">000000014001</span>A050</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">33.168</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	KiInterruptInitTable <span class="keyword">not</span> found</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">33.175</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	KiKernelExit <span class="keyword">not</span> found</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">33.190</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	ExpLargePoolTableLock <span class="keyword">not</span> found</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">33.193</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	PoolBigPageTable <span class="keyword">not</span> found</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">33.197</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	PoolBigPageTableSize <span class="keyword">not</span> found</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">33.250</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	RtlpIsFrameInBoundsEx <span class="keyword">not</span> found</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">33.267</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	PiDDBCacheTable <span class="keyword">not</span> found</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">33.272</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	KeRemoveQueueApc <span class="keyword">not</span> found</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">38.113</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	PspCidTable <span class="keyword">not</span> found.</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">38.399</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	KiPageFault <span class="keyword">not</span> found</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">38.739</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	CiOptions <span class="keyword">not</span> found</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">38.823</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	failed to find MmSetPageProtection</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">38.912</span>	ERR	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	failed to find pg entry</span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">39.009</span>	INF	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	Failed to initialize security manager context C<span class="number">0000205.</span></span><br><span class="line"><span class="number">13</span>:<span class="number">38</span>:<span class="number">40.067</span>	INF	#<span class="number">0</span>	    <span class="number">4</span>	    <span class="number">8</span>	System         	Bye!</span><br></pre></td></tr></table></figure>
+
+<p>随后注册一系列的回调</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[TID:<span class="number">0000</span>f4b4]  Executing ntoskrnl.exe!ObRegisterCallbacks</span><br><span class="line">[TID:<span class="number">0000</span>f4b4]  Executing ntoskrnl.exe!ObGetFilterVersion</span><br><span class="line">[TID:<span class="number">0000</span>f4b4]  Executing ntoskrnl.exe!RtlAnsiCharToUnicodeChar</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">[TID:<span class="number">00002</span>988]  Executing ntoskrnl.exe!ObRegisterCallbacks</span><br><span class="line">[TID:<span class="number">00002</span>988]  Executing ntoskrnl.exe!PsSetLoadImageNotifyRoutine</span><br><span class="line">[TID:<span class="number">00002</span>988]  Executing ntoskrnl.exe!PsSetCreateProcessNotifyRoutine</span><br><span class="line">[TID:<span class="number">00002</span>988]  Executing ntoskrnl.exe!PsSetCreateProcessNotifyRoutineEx</span><br><span class="line">[TID:<span class="number">00002</span>988]  Executing ntoskrnl.exe!PsSetCreateThreadNotifyRoutine</span><br></pre></td></tr></table></figure>
+
+<p> 最后注册 minifilter 回调。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[TID:<span class="number">00002</span>988]  Executing ntoskrnl.exe!MmGetSystemRoutineAddress</span><br><span class="line">[TID:<span class="number">00002</span>988]  	Retrieving CmCallbackGetKeyObjectID ptr</span><br><span class="line">[TID:<span class="number">00002</span>988]  Executing FLTMGR.SYS!FltRegisterFilter</span><br><span class="line">[TID:<span class="number">00002</span>988]  Executing FLTMGR.SYS!FltBuildDefaultSecurityDescriptor</span><br><span class="line">[TID:<span class="number">00002</span>988]  Executing ntoskrnl.exe!RtlSetDaclSecurityDescriptor</span><br><span class="line">[TID:<span class="number">00002</span>988]  Executing ntoskrnl.exe!RtlInitUnicodeString</span><br><span class="line">[TID:<span class="number">00002</span>988]  Executing FLTMGR.SYS!FltCreateCommunicationPort</span><br><span class="line">[TID:<span class="number">00002</span>988]  Executing FLTMGR.SYS!FltFreeSecurityDescriptor</span><br><span class="line">[TID:<span class="number">00002</span>988]  Executing FLTMGR.SYS!FltStartFiltering</span><br></pre></td></tr></table></figure>
+
+<p>由于笔者当时没有了解过相关回调，因此这里模拟器模拟并不成功，但是当 <code>hook</code> 并绕过的时候，<code>DriverEntry</code> 正常返回了，因此这里已经到了最后一步的逻辑。</p>
+<p>最后就是创建了四个线程，分析的结论与之前动态调试一致。</p>
+<h3 id="回调分析"><a href="#回调分析" class="headerlink" title="回调分析"></a>回调分析</h3><p>可以先用 ARK 查一下基本的回调。</p>
+<img src="/2026/03/05/Game7/16.png" class="">
+
+<p>除此之外还有 minifilter 回调，据说 Neac 就是用这个做通信的，放到最后着重分析，先简单分析前面的回调，能够正常运行游戏读写游戏内存就算成功。</p>
+<h4 id="句柄回调"><a href="#句柄回调" class="headerlink" title="句柄回调"></a>句柄回调</h4><p>如法炮制，还是像分析某二次元游戏一样 hook，拦截，查，之前的代码基本可以复用的，但是看着调试器的 <code>log</code> 陷入了沉思</p>
+<img src="/2026/03/05/Game7/17.png" class="">
+
+<p>看了一下，导入表确实没 <code>ObRegisterCallbacks</code>，而且也没用 <code>MmGetSystemRoutineAddress</code> 获取函数地址，要不是之前模拟器跑到了这个函数，我真要相信其它什么函数也能注册这个句柄回调了，由于不是高频次调用的 <code>API</code>，可以直接下断点加载驱动看看。</p>
+<img src="/2026/03/05/Game7/18.png" class="">
+
+<p>果然直接命中断点，应该是用了其它方法获取 <code>API</code> 地址，结合之前解析 <code>ntoskrnl.exe</code> 模块也能大概想到是直接 <code>ZwQueryInformation</code> 查询模块然后手动解析的。</p>
+<p>其实这里 <code>traceback</code> 也是可以找到位置的，毕竟这个混淆不是很 <code>vm</code>，找到对应的位置。</p>
+<img src="/2026/03/05/Game7/19.png" class="">
+
+<p>就是个简单的异或字符串加密，手动解一下。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0x84876DDD9EAF40B6</span>^<span class="number">0xEDE0088FF0FA22F9</span>=<span class="number">0x696765526e55624f</span></span><br><span class="line"><span class="number">0x640ABA616093A94D</span>^<span class="number">0x0866DB2212F6DD3E</span>=<span class="number">0x6c6c614372657473</span></span><br><span class="line"><span class="number">0x3BDAEC226A1093F9</span>^<span class="number">0x3BDAEC510173F29B</span>=<span class="number">0x000000736b636162</span></span><br><span class="line"><span class="number">0x3EB416FCB7EFF0B0</span>^<span class="number">0x3EB416FCB7EFF0B0</span>=<span class="number">0x0</span></span><br></pre></td></tr></table></figure>
+
+<p>转一下端序可以发现就是 <code>ObUnRegistreCallbacks</code>，看起来 <code>sub_140224927</code> 这个函数是根据模块基址和字符串名称去对应模块搜索导出函数的。</p>
+<p>解这个混淆当然是容易的，全是立即数，直接模拟执行，匹配特征码 patch。</p>
+<p>但是还有一种方法，直接做 <code>inline hook</code> 到 <code>sub_140224927</code> 函数，不仅可以解这个混淆，还可以顺带把获取的函数地址一起修改掉。为什么不直接 <code>inline hook ObUnRegistreCallbacks</code>？鉴定为：需要吃几次PG才能好。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> inlinehook &#123;</span><br><span class="line">    PVOID TargetFunction = <span class="literal">NULL</span>;</span><br><span class="line">    CHAR OriginalCode[<span class="number">12</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">    CHAR hookcode[<span class="number">12</span>] = &#123; </span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="function">VOID <span class="title">rehook</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">bypass_memcpy</span>(...);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">VOID <span class="title">unhook</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">bypass_memcpy</span>(...);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">PVOID <span class="title">gh_FindExportedFunctionAddress</span><span class="params">(...)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">unhook</span>();</span><br><span class="line">        <span class="built_in">DBG_PRINT</span>(<span class="string">&quot;FindExportedFunctionAddress %p %s\n&quot;</span>, ...);</span><br><span class="line">        <span class="keyword">auto</span> func = TargetFunction;</span><br><span class="line">        <span class="keyword">auto</span> ret = <span class="built_in">func</span>(...);</span><br><span class="line">        <span class="built_in">rehook</span>();</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">VOID <span class="title">DoHook</span><span class="params">(PVOID target)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>得到以下结果：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">[OwNeacSafe]FindExportedFunctionAddress NtQuerySystemInformation</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress ProbeForRead</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress ProbeForWrite</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress NtQueryInformationProcess</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress PsSetLoadImageNotifyRoutine</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress PsSetLoadImageNotifyRoutineEx</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress PsRemoveLoadImageNotifyRoutine</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress PsSetCreateThreadNotifyRoutine</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress PsSetCreateProcessNotifyRoutine</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress PsSetCreateProcessNotifyRoutineEx</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress RtlCompareMemory</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress RtlCaptureContext</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress RtlRestoreContext</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress KeBugCheckEx</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress ExAcquireRundownProtection</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress MmIsAddressValid</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress ExGetPreviousMode</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress ExQueueWorkItem</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress KeSetTimer</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress IoGetInitialStack</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress KeDelayExecutionThread</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress PsLookupProcessByProcessId</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress IofCallDriver</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress RtlIsGenericTableEmptyAvl</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress KeSetEvent</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress PsIsProtectedProcess</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress PsReferenceProcessFilePointer</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress ObFindHandleForObject</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress PsSuspendProcess</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress memmove</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress MmGetPhysicalAddress</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress MmProbeAndLockPages</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress MmCopyVirtualMemory</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress MmAdjustWorkingSetSize</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress CmUnRegisterCallback</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress MmMapViewInSystemSpace</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress MmAllocateMappingAddress</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress MmAllocateMappingAddressEx</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress CiInitialize</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress ObRegisterCallbacks</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress ObUnRegisterCallbacks</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress ObGetFilterVersion</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress PsSetCreateProcessNotifyRoutineEx</span><br><span class="line">[OwNeacSafe]FindExportedFunctionAddress RtlLookupFunctionEntry</span><br></pre></td></tr></table></figure>
+
+<p>在这些函数中，有些使用 <code>MmGetSystemRoutineAddress</code> 获取过，有些在导入表当中存在，同时也有两者都不存在的，类似 <code>ObRegisterCallbacks</code> 很好理解，应该就是去藏调用的，但是一般来说 <code>ARK</code> 工具是能精准定位的，因此确实不明白它藏调用的出发点。其它一些函数大概率有一个防 IAT 的替换和防 <code>MmGetSystemRoutineAddress</code> 的 <code>hook</code> 替代。</p>
+<p>稍微改一下，去 <code>hook ObRegisterCallbacks</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">PVOID <span class="title">gh_FindExportedFunctionAddress</span><span class="params">(...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">unhook</span>();</span><br><span class="line">    <span class="built_in">DBG_PRINT</span>(<span class="string">&quot;FindExportedFunctionAddress %p %s\n&quot;</span>, ...);</span><br><span class="line">    <span class="keyword">auto</span> func = (FindExportFunctionAddress)TargetFunction;</span><br><span class="line">    <span class="keyword">auto</span> ret = <span class="built_in">func</span>(Base, FunctionName);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">strcmp</span>(<span class="string">&quot;ObRegisterCallbacks&quot;</span>, FunctionName)) &#123;</span><br><span class="line">        <span class="built_in">DBG_PRINT</span>(<span class="string">&quot;Found function %s\n&quot;</span>, FunctionName);</span><br><span class="line">        ret = gh_ObRegisterCallbacks;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rehook</span>();</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看起来直接取消回调是不影响驱动加载的，并且回调函数没 <code>vm</code>，可以在创建回调的时候看到两个回调函数，它调用了两次，一次创建线程的两个回调，一次创建进程的两个回调，直接来分析线程的回调。</p>
+<h5 id="线程回调"><a href="#线程回调" class="headerlink" title="线程回调"></a>线程回调</h5><img src="/2026/03/05/Game7/20.png" class="">
+
+<p>直接看这个 <code>preOperation</code> 回调</p>
+<img src="/2026/03/05/Game7/21.png" class="">
+
+<p>（说真的，第一次见到这么裸的回调函数）</p>
+<p>大概就是判断打开的进程句柄是否为被保护的进程，取消的权限看起来只取消了 </p>
+<ul>
+<li><code>THREAD_SUSPEND_RESUME</code> </li>
+<li><code>THREAD_SET_CONTEXT</code></li>
+</ul>
+<p>第二个回调函数是在获取权限之后的操作。</p>
+<img src="/2026/03/05/Game7/22.png" class="">
+
+<p>这个<strong>誓不投降</strong> <code>tag</code> 看的我是热血沸腾，精神鼓舞，想不到 <code>Neac</code> 驱动的 <code>tag</code> 都这么富有深意。 </p>
+<p>回到函数里面，最外面判断一下被操作的进程是否为被保护进程，如果是，会创建一个结构，填充授予的权限，操作的进程线程 id，和被操作的进程线程id和一些其它信息，甚至还回溯了栈进行保存，不过后续并没有对权限进行任何操作，倒是调用了一个 <code>KeSetEvent</code> 函数，目前还没分析出有什么用。</p>
+<h5 id="进程回调"><a href="#进程回调" class="headerlink" title="进程回调"></a>进程回调</h5><p>从回调函数来看，也只取消了两个权限</p>
+<ul>
+<li>PROCESS_VM_READ</li>
+<li>PROCESS_SUSPEND_RESUME</li>
+</ul>
+<p>其它的逻辑跟线程大差不差，在 <code>ObRegisterCallbacks</code> 的函数指针交叉引用就可以很快找到这几个回调。</p>
+<hr>
+<p>其中对于进程的判断，依赖于一个全局变量，交叉之后发现，这个变量赋值是在 minifilter 的通信函数当中的，怪不得自己建的 <code>Overwatch.exe</code> 没有保护效果。。。</p>
+<p>在这个全局变量中写入对应的 PID，再尝试获取句柄</p>
+<img src="/2026/03/05/Game7/filter.png" class="">
+
+<p>发现可以成功过滤掉刚刚分析出的权限了，看来真就只降两个权限。。。</p>
+<h3 id="线程分析"><a href="#线程分析" class="headerlink" title="线程分析"></a>线程分析</h3><h4 id="线程1"><a href="#线程1" class="headerlink" title="线程1"></a>线程1</h4><p>第一个创建的线程，会在主线程中填充 <code>Context</code> 结构，主线程退出后该线程持续运行，并打印相关日志，这里的结构体通信预计是和回调相关的。</p>
+<img src="/2026/03/05/Game7/15.png" class="">
+
+<h4 id="寻找创建线程的逻辑"><a href="#寻找创建线程的逻辑" class="headerlink" title="寻找创建线程的逻辑"></a>寻找创建线程的逻辑</h4><p>找到创建回调的地方。</p>
+<img src="/2026/03/05/Game7/23.png" class="">
+
+<p>没错，非常恶心的混淆，一大堆的运算符和变量干扰，网上公开的D810插件对此束手无策，甚至能直接卡死 D810，于是选择用模拟执行的方法，跑出每一个分支，去掉这些运算符的混淆。</p>
+<p>首先可以确定一点，这些指令膨胀来源于 <code>call</code> 调用，并且只有 <code>call rax</code> 和 <code>call r10</code>，据此写出模拟 + patch 脚本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">hook_mem_unmapped</span>(<span class="params">uc, access, address, size, value, user_data</span>):</span><br><span class="line">    aligned_addr = address&amp;<span class="number">0xFFFFFFFFFFFFF000</span> <span class="comment"># 按页加载驱动的内存到 unicorn 环境</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        uc.mem_map(aligned_addr, PAGE_SIZE)</span><br><span class="line">        data=idaapi.get_bytes(aligned_addr,PAGE_SIZE)</span><br><span class="line">        uc.mem_write(aligned_addr,data)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span>  <span class="comment"># 表示错误已处理，继续执行</span></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[-] 动态映射内存页失败: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>  <span class="comment">#</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hook_code</span>(<span class="params">uc, address, size, user_data</span>):</span><br><span class="line">    <span class="comment">#处理 call rax 和 call r10</span></span><br><span class="line">    <span class="keyword">if</span> uc.mem_read(address,<span class="number">2</span>)==<span class="string">b&#x27;\xFF\xD0&#x27;</span> <span class="keyword">or</span> uc.mem_read(address,<span class="number">3</span>)==<span class="string">b&#x27;\x41\xFF\xD2&#x27;</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">        <span class="comment"># 无码</span></span><br><span class="line"></span><br><span class="line">mu = Uc(UC_ARCH_X86, UC_MODE_64)</span><br><span class="line"><span class="comment">#初始化环境</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(mu.reg_read(UC_X86_REG_RIP)))</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    mu.emu_start(fix_function_start,fix_function_end)</span><br><span class="line"><span class="keyword">except</span> UcError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>话不多说，直接放反混淆后的 F5 代码</p>
+<img src="/2026/03/05/Game7/24.png" class="">
+
+<p>这里的逻辑与之前动态调试，模拟执行得到的结论是一致的，据此直接在IDA中找到创建线程的代码。</p>
+<h4 id="线程2"><a href="#线程2" class="headerlink" title="线程2"></a>线程2</h4><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>线程2总体做了这几件事</p>
+<ul>
+<li>获取处理器核心个数</li>
+<li>判断是否已与游戏完成通信，若没有则直接退出。</li>
+<li>根据处理器核心个数创建线程，线程会循环读取 <code>Context</code> 中的 <code>vector</code> 字段并使用中断方式尝试读取指定区域的内存并写入分配的内存中，读取内存字节数被统计计入 <code>Context</code> 的 <code>Value</code> 字段用于日志输出。</li>
+<li>若全局变量中的 <code>vector</code> 不为空，则读取并存入 <code>Context</code> 的 <code>vector</code>。</li>
+</ul>
+<h5 id="主线程逻辑"><a href="#主线程逻辑" class="headerlink" title="主线程逻辑"></a>主线程逻辑</h5><p>直接分析 <code>StartRoutine2</code> 例程，直接 <code>F5</code> 十分地绝望，3000 多行，还有一堆的膨胀指令，和平坦化，和间接 <code>call</code> 混淆。流程图可以看出有平坦化还有巨量的指令膨胀</p>
+<img src="/2026/03/05/Game7/25.png" class="">
+
+<p>同样使用模拟执行+手动patch去除混淆，这里需要注意的是，call 指令有三种 <code>call rax, call r8, call r10</code>，模拟分支执行的时候，大约一半的分支是需要提供 <code>r13</code> 的值的，由于当时决定梭哈，赌了一下 <code>r13&lt;0x100</code> 去遍历，最后也去除了大部分的混淆，只有一个地方的 <code>call</code> 没有解出来。</p>
+<p>最后的平坦化混淆直接上 D810 插件，反编译大概 20 多分钟，最后得到一份清晰的代码，这是代码部分截图</p>
+<img src="/2026/03/05/Game7/26.png" class="">
+
+<p>又一次看到了<strong>誓不投降</strong>，这不正是研究游戏安全所需的决心嘛，哪怕面对再丧心病狂的混淆，也迎难而上，<strong>誓不投降</strong>。</p>
+<p>下面是线程逻辑的具体分析：</p>
+<img src="/2026/03/05/Game7/27.png" class="">
+
+<p>线程开头获取了当前逻辑核心个数，获取了当前进程结构，初始化三个 <code>Event</code>，随后进入循环，每次循环等待 <code>Event</code> （全局变量，由DriverUnload设置）十秒，如果正常返回，则直接调用 <code>PsTerminateThread</code> 结束线程。</p>
+<img src="/2026/03/05/Game7/28.png" class="">
+
+<p>随后检查了两个标志位，经过交叉查找发现一个是在驱动通信时获取的 <code>ProcessId</code>，另一个标志位也在其中设置，应该是判断游戏是否跟驱动通信上了，如果没通信上则重新循环。</p>
+<img src="/2026/03/05/Game7/29.png" class="">
+
+<p>可以看出，这一部分也陷入了循环，如果没通信上则重新等待 10 秒等 <code>KeWaitForSingleObject</code> 超时。</p>
+<p>然后后面似乎分析不动了，因为引用了大量全局变量，栈也很大，很难分析出来，所以选择找关键点，例如一开始展示的创建线程。不管是游戏正常运行还是模拟，还是直接裸驱动加载，这个线程都没有创建过，因此条件应该比较苛刻，分析这里的 <code>StartRoutine</code>，最终分析出以下结构体：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">vector</span></span><br><span class="line">&#123;</span><br><span class="line">  data *first;</span><br><span class="line">  data *last;</span><br><span class="line">  data *end;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">data6</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> p1[<span class="number">48</span>];</span><br><span class="line">  __int64 value3;</span><br><span class="line">  <span class="type">char</span> p5[<span class="number">8</span>];</span><br><span class="line">  vector vec1;</span><br><span class="line">  vector vec2;</span><br><span class="line">  FAST_MUTEX mutex;</span><br><span class="line">  PVOID Event[<span class="number">3</span>];</span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">_KPROCESS</span> *Process;</span><br><span class="line">  <span class="type">signed</span> __int64 value;</span><br><span class="line">  <span class="type">char</span> p2[<span class="number">8</span>];</span><br><span class="line">  <span class="keyword">union</span> <span class="title class_">_LARGE_INTEGER</span> Time;</span><br><span class="line">  PVOID function;</span><br><span class="line">  <span class="type">int</span> unknown[<span class="number">4</span>];</span><br><span class="line">  mem Memory;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>p开头的和 unknown 字段都是填充的暂时没发现什么其它用处。</p>
+<img src="/2026/03/05/Game7/30.png" class="">
+
+<p>可以发现，之前看上去莫名其妙的赋值现在看得非常合理了，中间的小循环是进行了一大堆的赋值运算，还有 <code>vector</code> 的初始化和一些操作，顺便手动识别了一些与 <code>vector</code> 相关的函数。</p>
+<img src="/2026/03/05/Game7/31.png" class="">
+
+<h5 id="线程6"><a href="#线程6" class="headerlink" title="线程6"></a>线程6</h5><p>看到<strong>线程2</strong>创建的例程，上面分析识别了符号之后，结果如下，还是比较清晰的。</p>
+<img src="/2026/03/05/Game7/32.png" class="">
+
+<p>如果外面传进来的线程不为 <code>PsInitialSystemProcess</code>，那么挂靠外面传进来的进程，这里通常执行不到，外面的 Context 传进来了三个 <code>Event</code>，<code>Event[0~1]</code> 是线程创建的，<code>Event[2]</code> 是全局变量，外面线程赋值的。</p>
+<p>主要看这里 <code>vector</code> 的处理，如果 <code>vector</code> 不为空，则取出最后一个值，<code>vector</code> 的元素类型是 24 字节大小的对象，随后将 <code>second-first</code> 的值加到 <code>context</code> 的 <code>value</code> 中，这个 <code>value</code> 会在线程 <code>2</code> 中使用 <code>DbgPrint</code> 打印出来，这里因为同时创建了很多线程，因此访问 <code>vector</code> 加了锁。</p>
+<p>最后使用一个函数加判断，这个函数在线程例程 2 中被赋初值。两个 <code>event</code> 任意一个正确被 <code>set</code> 为信号态，则退出，中间执行了一个 <code>function</code> 函数在线程例程 2 中被赋值，来观察这里的逻辑，深入了解之后断定该线程逻辑是去检查由其它地方上报的虚拟内存地址和范围，最后去调用对应例程。</p>
+<p>data 结构体如下，暂且还不清楚第三个字段的作用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">__unaligned</span> __declspec(<span class="built_in">align</span>(<span class="number">4</span>)) data</span><br><span class="line">&#123;</span><br><span class="line">    __int64 startAddress;</span><br><span class="line">    __int64 endAddress;</span><br><span class="line">    __int32 third;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>直接看到 <code>function</code> 函数。</p>
+<img src="/2026/03/05/Game7/33.png" class="">
+
+<p>第一个判断就是判断 <code>check</code> 的内存是否和之前分配的内存重合，如果重合则不进行 <code>check</code>，猜测在检查的时候应该要对这个内存读写，如果 <code>check</code> 本身内存可能出现一些不可预计的错误。</p>
+<p>随后检查一些基本参数正确性调用另一个函数操作，传参了之前分配的内存和检查的内存基址和大小。</p>
+<img src="/2026/03/05/Game7/34.png" class="">
+
+<p>根据 <code>Windows</code> 的版本选择合适的方式去调用例程，低版本使用 <code>DPC</code> 方式去调用该例程。</p>
+<img src="/2026/03/05/Game7/35.png" class="">
+
+<p>而高版本则使用了 <code>IPI</code> 的方式去调用该例程。</p>
+<img src="/2026/03/05/Game7/36.png" class="">
+
+<p>调用的对应例程如下：</p>
+<img src="/2026/03/05/Game7/37.png" class="">
+
+<p>这个地方不难看出，其实就保证两点：</p>
+<ul>
+<li>在调用处理例程之前所有处理器已经完成中断，正在等待</li>
+<li>调用例程执行完毕其余处理器才从中断返回。</li>
+</ul>
+<p>来看看 IPI 参数的 function，在最开始判断windows版本地方赋值的，其中多次用到了参数聚合和参数分离，建议还原结构体，看的更清晰。</p>
+<img src="/2026/03/05/Game7/38.png" class="">
+
+<p><code>sub_14003E9D3</code> 就是一个类似 <code>memcpy</code>，第四个参数返回成功写入的字节。</p>
+<img src="/2026/03/05/Game7/39.png" class="">
+
+<p>分析到这里之后，线程6的逻辑就结束了，随后把 <code>vector</code> 中的数据 <code>size</code> 加到 <code>Context-&gt;value</code> 中做一个统计，读取到的内存也会在这里释放掉，没有后续操作。</p>
+<img src="/2026/03/05/Game7/40.png" class="">
+
+<hr>
+<p>线程2后续只有一个对该 value 的一个输出，没有其它操作了，vector 的数据来自于全局变量，全局变量在通信中被引用。</p>
+<h3 id="minifilter分析"><a href="#minifilter分析" class="headerlink" title="minifilter分析"></a>minifilter分析</h3><h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p>驱动和三环使用 minifilter 的端口通信，输入数据使用了两次简单的异或加密，输出数据并未加密，该驱动有 72 个功能函数。</p>
+<h4 id="通信分析"><a href="#通信分析" class="headerlink" title="通信分析"></a>通信分析</h4><p>因为创建通信端口的代码已经明了，IDA 已经可以识别出回调函数。</p>
+<img src="/2026/03/05/Game7/41.png" class="">
+
+<p>根据连接回调函数，可以写出连接的应用程序代码。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">ConnectionContext</span> &#123;</span><br><span class="line">    DWORD magic;         <span class="comment">// 必须等于多字符字面量 &#x27;FUCK&#x27;</span></span><br><span class="line">    DWORD number;        <span class="comment">// 必须等于 8</span></span><br><span class="line">    BYTE  key1[<span class="number">16</span>];      <span class="comment">// 16 字节密钥数据</span></span><br><span class="line">    BYTE  key2[<span class="number">16</span>];      <span class="comment">// 16 字节密钥数据</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">NTSTATUS status;</span><br><span class="line">HANDLE hPort = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构造连接上下文（总共 40 字节）</span></span><br><span class="line">ConnectionContext context = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">context.magic = <span class="string">&#x27;FUCK&#x27;</span>;  <span class="comment">// 多字符字面量，保证和驱动端检查相符</span></span><br><span class="line">context.number = <span class="number">8</span>;</span><br><span class="line"><span class="built_in">memset</span>(context.key1, <span class="number">0x11</span>, <span class="built_in">sizeof</span>(context.key1));</span><br><span class="line"><span class="built_in">memset</span>(context.key2, <span class="number">0x22</span>, <span class="built_in">sizeof</span>(context.key2));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 连接到驱动创建的通信端口，端口名称需与驱动侧使用的匹配（\\OWNeacSafePort）</span></span><br><span class="line">status = <span class="built_in">FilterConnectCommunicationPort</span>(</span><br><span class="line">    <span class="string">L&quot;\\OWNeacSafePort&quot;</span>,   <span class="comment">// 通信端口的名称</span></span><br><span class="line">    <span class="literal">NULL</span>,</span><br><span class="line">    &amp;context,              <span class="comment">// 指向连接上下文数据的指针</span></span><br><span class="line">    <span class="built_in">sizeof</span>(context),       <span class="comment">// 上下文数据的大小（40字节）</span></span><br><span class="line">    <span class="literal">NULL</span>,                  <span class="comment">// 保留参数，一般使用 NULL</span></span><br><span class="line">    &amp;hPort                 <span class="comment">// 返回的端口句柄</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="built_in">NT_SUCCESS</span>(status)) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;连接通信端口失败, NTSTATUS: 0x%08X\n&quot;</span>, status);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;成功连接到通信端口！\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>通信过程中存在两个动态密钥和两个常量密钥，看到通信过程的回调。</p>
+<img src="/2026/03/05/Game7/42.png" class="">
+
+<p>这里要求了输入长度必须是 16 的倍数，经历了两次解密，第一个是常量密钥的解密。</p>
+<img src="/2026/03/05/Game7/43.png" class="">
+
+<p>全部使用 XMM 浮点指令实现，IDA比较难识别，这里通过模拟执行观察输入输出以及查阅 x86 手册使用 C 语言还原了这段代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">decrypt</span><span class="params">(<span class="type">char</span>* in, <span class="type">char</span>* out, <span class="type">int</span> idx)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">        UINT32 value = *(UINT32*)&amp;out[i &lt;&lt; <span class="number">2</span>];</span><br><span class="line">        UINT32 value2 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j++) &#123;</span><br><span class="line">            value2 = value2 &lt;&lt; <span class="number">8</span>;</span><br><span class="line">            value2 |= key2[j];</span><br><span class="line">        &#125;</span><br><span class="line">        UINT32 value3 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0xC</span> - i; j &lt; <span class="number">0xC</span> - i + <span class="number">4</span>; j++) &#123;</span><br><span class="line">            value3 = value3 &lt;&lt; <span class="number">8</span>;</span><br><span class="line">            value3 |= (<span class="type">unsigned</span> <span class="type">char</span>)(key1[j]^idx);</span><br><span class="line">        &#125;</span><br><span class="line">        *(UINT32*)&amp;out[i &lt;&lt; <span class="number">2</span>] = value ^ (value2 | value3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二个动态密钥的解密很简单，就是一个 16 字节的异或。</p>
+<p>加密和解密可以用同一个函数，虽然或运算是理论不可逆的，但是或运算的两个量在已知 <code>idx</code> 的情况下都是常量。</p>
+<img src="/2026/03/05/Game7/44.png" class="">
+
+<p>随后解密的数据的第一个字节，会作为调用号，调用该驱动的函数表，总共有 72 个功能函数，函数例程为</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NTSTATUS <span class="title">function</span><span class="params">(<span class="type">char</span> *DecryptData,<span class="type">size_t</span> len,<span class="type">char</span> *OutputBuffer,<span class="type">size_t</span> outputlen,<span class="type">size_t</span> *ReturnOutputBufferLength)</span></span>&#123;</span><br><span class="line">	;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="部分功能调用"><a href="#部分功能调用" class="headerlink" title="部分功能调用"></a>部分功能调用</h4><p>分析顺序不按号码顺序。</p>
+<h5 id="跨进程读数据（9）"><a href="#跨进程读数据（9）" class="headerlink" title="跨进程读数据（9）"></a>跨进程读数据（9）</h5><p>跨进程读数据在 9 号功能表中。</p>
+<img src="/2026/03/05/Game7/45.png" class="">
+
+<p>根据示例函数构建数据</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span>* <span class="title">Function9Item</span><span class="params">(DWORD ProcessId,<span class="type">void</span> *SourceAddress,DWORD bytes,<span class="type">size_t</span> *outlength)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> request = &#123; <span class="number">9</span>,ProcessId,SourceAddress,bytes &#125;;</span><br><span class="line">    <span class="keyword">auto</span> mem=<span class="built_in">VirtualAlloc</span>(<span class="literal">NULL</span>, <span class="number">0x1000</span>,...);</span><br><span class="line">    <span class="built_in">memcpy</span>(mem, &amp;request, <span class="built_in">sizeof</span>(MEMORY_READ_REQUEST));</span><br><span class="line">    *outlength = <span class="built_in">sizeof</span>(MEMORY_READ_REQUEST);</span><br><span class="line">    <span class="keyword">return</span> mem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>随后加密数据与 minifilter 通信，尝试读取记事本中的一串内存，看看能否成功。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">size_t</span> len;</span><br><span class="line">BYTE *mem=(BYTE*)<span class="built_in">Function9Item</span>(<span class="number">0x3C</span>, (<span class="type">void</span>*)<span class="number">0x2C54D86A440</span>, <span class="number">16</span>, &amp;len);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;源字节：&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%02X &quot;</span>, mem[i]);</span><br><span class="line">&#125;<span class="built_in">putchar</span>(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i += <span class="number">16</span>) &#123;</span><br><span class="line">    <span class="built_in">decrypt</span>(mem + i, mem + i, i / <span class="number">16</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; <span class="number">16</span>; j++) &#123;</span><br><span class="line">        mem[i + j] =~ mem[i + j] ^ key3[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;目标字节：&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%02X &quot;</span>, mem[i]);</span><br><span class="line">&#125;<span class="built_in">putchar</span>(<span class="number">10</span>);</span><br><span class="line"><span class="built_in">fflush</span>(stdout);</span><br><span class="line"><span class="type">const</span> ULONG outBufferLength = <span class="number">256</span>;</span><br><span class="line">BYTE outBuffer[outBufferLength];</span><br><span class="line">ULONG bytesReturned = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">status = <span class="built_in">FilterSendMessage</span>(</span><br><span class="line">    hPort, mem, len, outBuffer,outBufferLength,  </span><br><span class="line">    &amp;bytesReturned </span><br><span class="line">);</span><br><span class="line"><span class="keyword">if</span> (!<span class="built_in">NT_SUCCESS</span>(status)) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;FilterSendMessage 调用失败, NTSTATUS: 0x%08X\n&quot;</span>, status);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;FilterSendMessage 成功, 返回字节数: %lu\n&quot;</span>, bytesReturned);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;bytesReturned;i++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%02X &quot;</span>,outBuffer[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<img src="/2026/03/05/Game7/46.png" class="">
+
+<h5 id="查询进程信息（8）"><a href="#查询进程信息（8）" class="headerlink" title="查询进程信息（8）"></a>查询进程信息（8）</h5><p>查询进程信息在 8 号功能表中。</p>
+<img src="/2026/03/05/Game7/47.png" class="">
+
+<p>输入就是一个pid，构建好数据即可，可供返回的信息有：</p>
+<ul>
+<li>父进程 ID</li>
+<li>进程创建时间</li>
+<li>进程 CPU 运行时间</li>
+<li>会话 ID</li>
+<li><code>BreakOnTermination</code> 标志</li>
+<li>是否为 32 位进程</li>
+<li>调试端口信息</li>
+</ul>
+<p>输出结构体为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">__unaligned</span> FunctionItem8_OutBuffer</span><br><span class="line">&#123;</span><br><span class="line">    DWORD InheritedFromProcessId;</span><br><span class="line">    ULONGLONG CreateTime;</span><br><span class="line">    ULONGLONG KernelTime;</span><br><span class="line">    ULONGLONG UserTime;</span><br><span class="line">    DWORD SessionId;</span><br><span class="line">    BOOLEAN IsWow64;</span><br><span class="line">    BOOLEAN BreakOnTermination;</span><br><span class="line">    ULONGLONG DebugPort;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如法炮制，照样解析，还是以记事本为例，由于创建时间这种字段比较难以验证，可以验证的字段有：是否为32位程序，父进程id，调试端口和sessionid。</p>
+<img src="/2026/03/05/Game7/48.png" class="">
+
+<p>验证发现结果是正确的。</p>
+<h5 id="查询进程工作路径（7）"><a href="#查询进程工作路径（7）" class="headerlink" title="查询进程工作路径（7）"></a>查询进程工作路径（7）</h5><p>是直接去寻找 <code>KPROCESS</code> 结构对应的信息。</p>
+<img src="/2026/03/05/Game7/49.png" class="">
+
+<p>输入也是一个 pid，构造好输入直接发送，可以在输出缓冲区拿到 <code>WCHAR</code> 的映像路径，这个路径似乎反映了当前进程的工作目录（PWD）。</p>
+<img src="/2026/03/05/Game7/50.png" class="">
+
+<p>选个 cmd 验证一下，发现果然如此。</p>
+<img src="/2026/03/05/Game7/51.png" class="">
+
+<h5 id="查询进程启动命令（6）"><a href="#查询进程启动命令（6）" class="headerlink" title="查询进程启动命令（6）"></a>查询进程启动命令（6）</h5><p>输入同样只有一个 pid，输出是一个 WCHAR 数组，里面包含了该进程的启动命令。</p>
+<img src="/2026/03/05/Game7/52.png" class="">
+
+<h5 id="查询进程映像路径（5）"><a href="#查询进程映像路径（5）" class="headerlink" title="查询进程映像路径（5）"></a>查询进程映像路径（5）</h5><p>输入同样只有一个 pid，输出是一个 WCHAR 数组，里面包进程的映像路径。</p>
+<img src="/2026/03/05/Game7/53.png" class="">
+
+<h5 id="查询某映射虚拟内存的信息（4）"><a href="#查询某映射虚拟内存的信息（4）" class="headerlink" title="查询某映射虚拟内存的信息（4）"></a>查询某映射虚拟内存的信息（4）</h5><p>输入为 pid 和一个虚拟内存地址，返回如下结构：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">FunctionItem4_OutBuffer</span></span><br><span class="line">&#123;</span><br><span class="line">    __int64 BaseAddress;</span><br><span class="line">    __int32 Offset;</span><br><span class="line">    <span class="type">char</span> IsWow64;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>查询的内存属性一定得是映射的内存（0x1000000）。</p>
+<img src="/2026/03/05/Game7/54.png" class="">
+
+<p>随后解析 PE 头获取入口点的文件偏移（FOV），并获取是否为 32 位的PE文件。</p>
+<img src="/2026/03/05/Game7/55.png" class="">
+
+<h5 id="查询某基址对应的模块路径（3）"><a href="#查询某基址对应的模块路径（3）" class="headerlink" title="查询某基址对应的模块路径（3）"></a>查询某基址对应的模块路径（3）</h5><p>这个跟4号功能结合起来可以达到在任意地址中寻找对应的模块路径。</p>
+<img src="/2026/03/05/Game7/56.png" class="">
+
+<h5 id="获取处理器提供的高精度时间戳（2）"><a href="#获取处理器提供的高精度时间戳（2）" class="headerlink" title="获取处理器提供的高精度时间戳（2）"></a>获取处理器提供的高精度时间戳（2）</h5><p>没有参数，使用内核API直接返回完成</p>
+<img src="/2026/03/05/Game7/57.png" class="">
+
+<h5 id="数据通信（1）"><a href="#数据通信（1）" class="headerlink" title="数据通信（1）"></a>数据通信（1）</h5><p>该功能提供两个 char 类型，去写 <code>qword_140216AA8</code> 指向的某个结构体中的指定的偏移字节中写上指定的字节（具体功能需要更深入地分析）。</p>
+<img src="/2026/03/05/Game7/58.png" class="">
+
+<h5 id="获取当前启动环境的GUID标识符（71）"><a href="#获取当前启动环境的GUID标识符（71）" class="headerlink" title="获取当前启动环境的GUID标识符（71）"></a>获取当前启动环境的GUID标识符（71）</h5><p>没有参数，固定返回 16 字节的GUID。</p>
+<img src="/2026/03/05/Game7/59.png" class="">
+
+<p>可以使用 bcdedit.exe 命令验证</p>
+<img src="/2026/03/05/Game7/60.png" class="">
+
+<h5 id="在指定进程空间内实现内存拷贝（70）"><a href="#在指定进程空间内实现内存拷贝（70）" class="headerlink" title="在指定进程空间内实现内存拷贝（70）"></a>在指定进程空间内实现内存拷贝（70）</h5><p>经过测试，甚至不能读写 R0 的数据，只能本进程实现类似 memcpy 函数的功能，输入依次为</p>
+<ul>
+<li>目标虚拟地址</li>
+<li>源虚拟地址</li>
+<li>拷贝字节数</li>
+</ul>
+<img src="/2026/03/05/Game7/61.png" class="">
+
+<p>这里编写程序去测试，新建两个内存段赋上不同的值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PVOID test1, test2;</span><br><span class="line">test1=<span class="built_in">VirtualAlloc</span>(<span class="literal">NULL</span>, <span class="number">0x1000</span>, ...);</span><br><span class="line">test2=<span class="built_in">VirtualAlloc</span>(<span class="literal">NULL</span>, <span class="number">0x1000</span>, ...);</span><br><span class="line"></span><br><span class="line"><span class="built_in">memset</span>(test1, <span class="number">0xFF</span>, <span class="number">0x1000</span>);</span><br><span class="line"><span class="built_in">memset</span>(test2, <span class="number">0xDD</span>, <span class="number">0x1000</span>);</span><br><span class="line"></span><br><span class="line">BYTE* mem = (BYTE*)<span class="built_in">Function70Args</span>(test1,test2,<span class="number">0x100</span>,&amp;len);</span><br></pre></td></tr></table></figure>
+
+<p>结构构造</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span>* <span class="title">Function70Args</span><span class="params">(PVOID dest, PVOID src, SIZE_T len, <span class="type">size_t</span>* outlength)</span> </span>&#123;</span><br><span class="line">    ARGS request = &#123; <span class="number">70</span>,dest,src,len &#125;;</span><br><span class="line">    PARGS mem = (PARGS)<span class="built_in">VirtualAlloc</span>(<span class="literal">NULL</span>,<span class="number">0x1000</span>,...);</span><br><span class="line">    <span class="built_in">memcpy</span>(mem, &amp;request, <span class="built_in">sizeof</span>(ARGS));</span><br><span class="line">    *outlength = <span class="built_in">sizeof</span>(ARGS);</span><br><span class="line">    <span class="keyword">return</span> mem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后输出两段内存</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!<span class="built_in">NT_SUCCESS</span>(status)) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;FilterSendMessage 调用失败, NTSTATUS: 0x%08X\n&quot;</span>, status);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;FilterSendMessage 成功, 返回字节数: %lu\n&quot;</span>, bytesReturned);</span><br><span class="line">    <span class="built_in">Function70OutbufferProcess</span>(outBuffer, bytesReturned);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">0x10</span>; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%02X &quot;</span>,((<span class="type">unsigned</span> <span class="type">char</span>*)test1)[i]);</span><br><span class="line">    &#125;<span class="built_in">putchar</span>(<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">0x10</span>; i++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%02X &quot;</span>, ((<span class="type">unsigned</span> <span class="type">char</span>*)test2)[i]);</span><br><span class="line">    &#125;<span class="built_in">putchar</span>(<span class="number">10</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试结果：</p>
+<img src="/2026/03/05/Game7/62.png" class="">
+
+<p>最后也是研究了一下为什么不能读取内核数据，在内部实现的过程中，获取了线程的 <code>PreviouseMode</code>，而调用这个函数的 <code>PreviousMode</code> 通常是用户层，在实现锁页时调用了 <code>MmProbeAndLockPages(PoolWithQuotaTag, AccessMode, Operation);</code>，导致了访问违例。但是注意到对于拷贝的目的地址只进行了基本的 <code>MmIsAddressValid</code> 去检查，因此这里可以给一个内核地址达到写内核内存的目的，但是只能去写可写的内存，如果去写只读内存可能导致蓝屏。</p>
+<h5 id="查询总线数据（69）"><a href="#查询总线数据（69）" class="headerlink" title="查询总线数据（69）"></a>查询总线数据（69）</h5><p>没有参数，且本地无法成功调用，暂时无法确定具体用途。</p>
+<img src="/2026/03/05/Game7/63.png" class="">
+
+<h5 id="查询进程虚拟内存对应的物理地址（68）"><a href="#查询进程虚拟内存对应的物理地址（68）" class="headerlink" title="查询进程虚拟内存对应的物理地址（68）"></a>查询进程虚拟内存对应的物理地址（68）</h5><p>输入为</p>
+<ul>
+<li>pid</li>
+<li>起始虚拟地址</li>
+<li>虚拟地址大小</li>
+</ul>
+<p>目前未观察到任何返回的数据，仅仅在找不到指定进程时返回错误，其余情况均返回 0 且返回数据长度也为 0。</p>
+<img src="/2026/03/05/Game7/64.png" class="">
+
+<p>可以见得，不论 <code>FindPhysicalMemory</code> 返回何值，最终返回都为 0，且不会有任何数据返回用户层，但是特殊的情况下，内核层会调用 DbgPrint 打印虚拟地址的解析信息。</p>
+<img src="/2026/03/05/Game7/65.png" class="">
+
+<p>初步推断为方便调试的功能。</p>
+<h5 id="将指定进程的页目录表基址以读写方式挂在新分配的虚拟页（67）"><a href="#将指定进程的页目录表基址以读写方式挂在新分配的虚拟页（67）" class="headerlink" title="将指定进程的页目录表基址以读写方式挂在新分配的虚拟页（67）"></a>将指定进程的页目录表基址以读写方式挂在新分配的虚拟页（67）</h5><p>参数只有一个 pid。</p>
+<img src="/2026/03/05/Game7/66.png" class="">
+
+<p>根据进程 id 去附加该进程得到页目录基址，随后分配新的虚拟页将该页的物理地址设置为对应的 cr3。</p>
+<img src="/2026/03/05/Game7/PTE.png" class="">
+
+<p>测试结果：</p>
+<img src="/2026/03/05/Game7/67.png" class="">
+
+<h5 id="检查-HalPrivateDispatchTable-及其附近的指针是否有效（66）"><a href="#检查-HalPrivateDispatchTable-及其附近的指针是否有效（66）" class="headerlink" title="检查 HalPrivateDispatchTable 及其附近的指针是否有效（66）"></a>检查 <code>HalPrivateDispatchTable</code> 及其附近的指针是否有效（66）</h5><p>没有参数，输出值仅为一个 <code>BOOLEAN</code> 值。</p>
+<img src="/2026/03/05/Game7/68.png" class="">
+
+<h5 id="跨进程写数据（61）"><a href="#跨进程写数据（61）" class="headerlink" title="跨进程写数据（61）"></a>跨进程写数据（61）</h5><p>跟前面的跨进程读数据简直一模一样，只不过把两个 Process 顺序给交换了，达成跨进程写的目的。</p>
+<img src="/2026/03/05/Game7/69.png" class="">
+
+<p>不过这里写入的字节是通过 <code>outbuffer</code> 传递的，需要注意一下，效果：</p>
+<img src="/2026/03/05/Game7/70.png" class="">
+
+<h4 id="更深层次的利用"><a href="#更深层次的利用" class="headerlink" title="更深层次的利用"></a>更深层次的利用</h4><p>可以发现，目前实现的一些功能都有一定的限制，无法直接做到更深层次的利用，比如能够任意的读写内核数据，但是内核中有个标志位可以临时将驱动强制签名关闭，那样便可以达到加载无签名驱动的目的，而关键的判断则是 <code>ci.dll</code> 中的某个全局变量</p>
+<img src="/2026/03/05/Game7/71.png" class="">
+
+<p>当 <code>g_CiOptions==0</code> 时，可以加载任何签名，<code>g_CiOptions==6</code> 时，驱动必须强制签名，<code>g_CiOptions==8</code> 时，可以使用测试签名，所以这里在应用层用 <code>NtQuerySystemInformation</code> 获取 <code>ci.dll</code> 模块的基址，再根据偏移将该值写入 0 达到绕过驱动强制签名的限制。理论上，实时读写 <code>system32</code> 下对应的 <code>ci.dll</code> 然后下载 pdb 解析可以实现通杀。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">无码</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>成功利用的截图：</p>
+<img src="/2026/03/05/Game7/72.png" class="">
+
+<p>经本地测试，该值的修改似乎不会被 PG 蓝屏，而且即使会蓝屏，那么PG也是存在一定时间差的，修改完成加载自己的驱动后可以及时改回去。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>本篇文章于一年前完成，相关组件版本均已更新较多，遂公开本篇分析报告供学习，若有侵权请联系删除。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io">xia0ji233</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xia0ji233.github.io/2026/03/05/Game7/">https://xia0ji233.github.io/2026/03/05/Game7/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xia0ji233.github.io" target="_blank">xia0ji233's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/01/24/tencent-race-2025-final_2/" title="腾讯游戏安全竞赛2025复赛题解（加强版）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">腾讯游戏安全竞赛2025复赛题解（加强版）</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><a href="/"> <div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div></a><div class="author-info__name">xia0ji233</div><div class="author-info__description">Nepnep team</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">314</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">93</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xia0ji233"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xia0ji233" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xia0ji233@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">老当益壮，宁移白首之心？穷且益坚，不坠青云之志。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#R0%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">R0分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DriverEntry%E9%80%BB%E8%BE%91"><span class="toc-number">1.1.</span> <span class="toc-text">DriverEntry逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">1.1.1.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E6%89%A7%E8%A1%8C-%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95"><span class="toc-number">1.1.2.</span> <span class="toc-text">模拟执行&amp;动态调试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RtlLookupFunctionEntry-%E5%87%BD%E6%95%B0-winnt-h"><span class="toc-number">1.1.3.</span> <span class="toc-text">RtlLookupFunctionEntry 函数 (winnt.h)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E8%B0%83%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">回调分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%A5%E6%9F%84%E5%9B%9E%E8%B0%83"><span class="toc-number">1.2.1.</span> <span class="toc-text">句柄回调</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%9B%9E%E8%B0%83"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">线程回调</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%9B%9E%E8%B0%83"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">进程回调</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%88%86%E6%9E%90"><span class="toc-number">1.3.</span> <span class="toc-text">线程分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B1"><span class="toc-number">1.3.1.</span> <span class="toc-text">线程1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%80%BB%E8%BE%91"><span class="toc-number">1.3.2.</span> <span class="toc-text">寻找创建线程的逻辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B2"><span class="toc-number">1.3.3.</span> <span class="toc-text">线程2</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BB%E7%BA%BF%E7%A8%8B%E9%80%BB%E8%BE%91"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">主线程逻辑</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B6"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">线程6</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#minifilter%E5%88%86%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text">minifilter分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-number">1.4.1.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E5%88%86%E6%9E%90"><span class="toc-number">1.4.2.</span> <span class="toc-text">通信分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%83%A8%E5%88%86%E5%8A%9F%E8%83%BD%E8%B0%83%E7%94%A8"><span class="toc-number">1.4.3.</span> <span class="toc-text">部分功能调用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%B7%A8%E8%BF%9B%E7%A8%8B%E8%AF%BB%E6%95%B0%E6%8D%AE%EF%BC%889%EF%BC%89"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">跨进程读数据（9）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E8%BF%9B%E7%A8%8B%E4%BF%A1%E6%81%AF%EF%BC%888%EF%BC%89"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">查询进程信息（8）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E8%BF%9B%E7%A8%8B%E5%B7%A5%E4%BD%9C%E8%B7%AF%E5%BE%84%EF%BC%887%EF%BC%89"><span class="toc-number">1.4.3.3.</span> <span class="toc-text">查询进程工作路径（7）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E8%BF%9B%E7%A8%8B%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4%EF%BC%886%EF%BC%89"><span class="toc-number">1.4.3.4.</span> <span class="toc-text">查询进程启动命令（6）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E8%BF%9B%E7%A8%8B%E6%98%A0%E5%83%8F%E8%B7%AF%E5%BE%84%EF%BC%885%EF%BC%89"><span class="toc-number">1.4.3.5.</span> <span class="toc-text">查询进程映像路径（5）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%9F%90%E6%98%A0%E5%B0%84%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%9A%84%E4%BF%A1%E6%81%AF%EF%BC%884%EF%BC%89"><span class="toc-number">1.4.3.6.</span> <span class="toc-text">查询某映射虚拟内存的信息（4）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%9F%90%E5%9F%BA%E5%9D%80%E5%AF%B9%E5%BA%94%E7%9A%84%E6%A8%A1%E5%9D%97%E8%B7%AF%E5%BE%84%EF%BC%883%EF%BC%89"><span class="toc-number">1.4.3.7.</span> <span class="toc-text">查询某基址对应的模块路径（3）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%A4%84%E7%90%86%E5%99%A8%E6%8F%90%E4%BE%9B%E7%9A%84%E9%AB%98%E7%B2%BE%E5%BA%A6%E6%97%B6%E9%97%B4%E6%88%B3%EF%BC%882%EF%BC%89"><span class="toc-number">1.4.3.8.</span> <span class="toc-text">获取处理器提供的高精度时间戳（2）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%EF%BC%881%EF%BC%89"><span class="toc-number">1.4.3.9.</span> <span class="toc-text">数据通信（1）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E5%90%AF%E5%8A%A8%E7%8E%AF%E5%A2%83%E7%9A%84GUID%E6%A0%87%E8%AF%86%E7%AC%A6%EF%BC%8871%EF%BC%89"><span class="toc-number">1.4.3.10.</span> <span class="toc-text">获取当前启动环境的GUID标识符（71）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9C%A8%E6%8C%87%E5%AE%9A%E8%BF%9B%E7%A8%8B%E7%A9%BA%E9%97%B4%E5%86%85%E5%AE%9E%E7%8E%B0%E5%86%85%E5%AD%98%E6%8B%B7%E8%B4%9D%EF%BC%8870%EF%BC%89"><span class="toc-number">1.4.3.11.</span> <span class="toc-text">在指定进程空间内实现内存拷贝（70）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%80%BB%E7%BA%BF%E6%95%B0%E6%8D%AE%EF%BC%8869%EF%BC%89"><span class="toc-number">1.4.3.12.</span> <span class="toc-text">查询总线数据（69）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E8%BF%9B%E7%A8%8B%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E5%AF%B9%E5%BA%94%E7%9A%84%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%EF%BC%8868%EF%BC%89"><span class="toc-number">1.4.3.13.</span> <span class="toc-text">查询进程虚拟内存对应的物理地址（68）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%86%E6%8C%87%E5%AE%9A%E8%BF%9B%E7%A8%8B%E7%9A%84%E9%A1%B5%E7%9B%AE%E5%BD%95%E8%A1%A8%E5%9F%BA%E5%9D%80%E4%BB%A5%E8%AF%BB%E5%86%99%E6%96%B9%E5%BC%8F%E6%8C%82%E5%9C%A8%E6%96%B0%E5%88%86%E9%85%8D%E7%9A%84%E8%99%9A%E6%8B%9F%E9%A1%B5%EF%BC%8867%EF%BC%89"><span class="toc-number">1.4.3.14.</span> <span class="toc-text">将指定进程的页目录表基址以读写方式挂在新分配的虚拟页（67）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5-HalPrivateDispatchTable-%E5%8F%8A%E5%85%B6%E9%99%84%E8%BF%91%E7%9A%84%E6%8C%87%E9%92%88%E6%98%AF%E5%90%A6%E6%9C%89%E6%95%88%EF%BC%8866%EF%BC%89"><span class="toc-number">1.4.3.15.</span> <span class="toc-text">检查 HalPrivateDispatchTable 及其附近的指针是否有效（66）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%B7%A8%E8%BF%9B%E7%A8%8B%E5%86%99%E6%95%B0%E6%8D%AE%EF%BC%8861%EF%BC%89"><span class="toc-number">1.4.3.16.</span> <span class="toc-text">跨进程写数据（61）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E6%B7%B1%E5%B1%82%E6%AC%A1%E7%9A%84%E5%88%A9%E7%94%A8"><span class="toc-number">1.4.4.</span> <span class="toc-text">更深层次的利用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">2.</span> <span class="toc-text">最后</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/05/Game7/" title="OverWatch反作弊分析">OverWatch反作弊分析</a><time datetime="2026-03-05T10:00:00.000Z" title="发表于 2026-03-05 18:00:00">2026-03-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/24/tencent-race-2025-final_2/" title="腾讯游戏安全竞赛2025复赛题解（加强版）">腾讯游戏安全竞赛2025复赛题解（加强版）</a><time datetime="2026-01-24T04:00:00.000Z" title="发表于 2026-01-24 12:00:00">2026-01-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/31/Summary2025/" title="2025年终总结">2025年终总结</a><time datetime="2025-12-30T19:00:00.000Z" title="发表于 2025-12-31 03:00:00">2025-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/14/ARM1/" title="ARM汇编基础学习（1）">ARM汇编基础学习（1）</a><time datetime="2025-12-14T06:00:00.000Z" title="发表于 2025-12-14 14:00:00">2025-12-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/26/qwb2025_final/" title="强网杯S9决赛Pwn writeup">强网杯S9决赛Pwn writeup</a><time datetime="2025-11-26T15:00:00.000Z" title="发表于 2025-11-26 23:00:00">2025-11-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2026 By xia0ji233</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">welcome to my blog</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><script src="/live2d-widget/dist/autoload.js"></script><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
